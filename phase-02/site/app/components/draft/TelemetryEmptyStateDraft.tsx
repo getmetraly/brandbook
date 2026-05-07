@@ -1,0 +1,11 @@
+export default function TelemetryEmptyStateDraft() {
+  return (
+    <div className="telemetry-empty-state-draft">
+      <span className="telemetry-empty-divider" aria-hidden="true" />
+      <strong>No telemetry widgets yet</strong>
+      <p>Select a source and add your first board widget.</p>
+      <button className="btn btn-primary" type="button">Add widget</button>
+      <span className="brand-badge brand-badge-warning">draft</span>
+    </div>
+  );
+}
