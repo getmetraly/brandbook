@@ -1,0 +1,123 @@
+/* Draft telemetry primitives.
+ * Ready for dnd-kit, react-grid-layout, Zustand and Recharts wrappers.
+ */
+
+.telemetry-checkbox-draft-row,
+.telemetry-switch-shell,
+.telemetry-select-draft {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.telemetry-checkbox-draft {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.22);
+  background: rgba(255,255,255,0.02);
+  display: inline-grid;
+  place-items: center;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease;
+}
+
+.telemetry-checkbox-draft.is-checked {
+  border-color: rgba(0,229,204,0.72);
+  box-shadow: 0 0 0 1px rgba(0,229,204,0.16);
+}
+
+.telemetry-checkbox-draft.is-error {
+  border-color: rgba(239,68,68,0.72);
+}
+
+.telemetry-checkbox-draft.is-disabled {
+  opacity: 0.42;
+}
+
+.telemetry-checkbox-pulse,
+.telemetry-select-indicator,
+.telemetry-switch-pulse {
+  width: 12px;
+  height: 6px;
+  display: inline-block;
+  background: var(--cyan);
+  clip-path: polygon(0 55%, 18% 55%, 28% 8%, 42% 92%, 54% 28%, 66% 55%, 100% 55%, 100% 82%, 62% 82%, 54% 58%, 42% 100%, 28% 62%, 22% 82%, 0 82%);
+  box-shadow: 0 0 12px rgba(0,229,204,0.38);
+}
+
+.telemetry-checkbox-label,
+.telemetry-field-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-primary);
+}
+
+.telemetry-select-draft {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.telemetry-select-control {
+  position: relative;
+  width: 100%;
+}
+
+.telemetry-select-control select {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 54px 0 16px;
+  border-radius: 18px;
+  border: 1px solid var(--border-bright);
+  background: rgba(11,15,20,0.82);
+  color: var(--text-primary);
+  appearance: none;
+  font: inherit;
+}
+
+.telemetry-select-indicator {
+  position: absolute;
+  right: 18px;
+  top: calc(50% - 3px);
+}
+
+.telemetry-switch-draft {
+  position: relative;
+  width: 54px;
+  height: 30px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  padding: 0;
+  cursor: pointer;
+}
+
+.telemetry-switch-track {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.telemetry-switch-knob {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.88);
+  transition: transform 180ms ease;
+}
+
+.telemetry-switch-draft.is-active {
+  border-color: rgba(0,229,204,0.48);
+  background: rgba(0,229,204,0.08);
+}
+
+.telemetry-switch-draft.is-active .telemetry-switch-knob {
+  transform: translateX(24px);
+}
