@@ -1,36 +1,37 @@
-# Metraly Brandbook Full Archive — Phase 10
+# Metraly Brandbook Full Archive — Phase 14 Documentation Freeze
 
 This archive contains the full `brandbook-main` project tree.
 
-## What changed in Phase 10
+## What changed in Phase 14
 
-- `/components` was preserved as the baseline reference page.
-- `/draft` was corrected after visual review screenshots.
-- Hero and section telemetry lines were restored to calm thin lines.
-- Circular selected/live indicators now keep a larger pulse-wave inside the circle.
-- Sprint burndown now has a visible dashed ideal line and a readable actual line.
-- Widget registry coverage now reflects the current `getmetraly/metraly` widget registry and widget type map.
-- Drop zones were restored to dashed borders.
-- Notification and timeline rows were aligned and given larger pulse-wave markers.
-- DevOps and role icons were simplified and aligned to the Metraly line-icon style.
-- Cursor behavior was corrected: static content uses default cursor, buttons/clickable items use pointer, text fields use text, disabled states use not-allowed.
+- Updated repository-level documentation to describe the current near-production design state.
+- Added `AGENTS.md` with instructions for AI/code agents working in the brandbook repository.
+- Added `brandbook/current-design-state.md` as the canonical visual snapshot.
+- Updated key design-system docs to match the current `/draft` direction.
+- Updated draft component README with current component inventory and promotion rules.
+- Preserved `/components` as the protected baseline.
 
-## Replace instructions
+## Important files
+
+```text
+README.md
+AGENTS.md
+brandbook/current-design-state.md
+brandbook/README.md
+design-system/components.md
+design-system/micro-telemetry-primitives.md
+design-system/board-edit-mode.md
+design-system/charts.md
+framework/testing-strategy.md
+site/README.md
+site/app/components/draft/README.md
+```
+
+## Local verification
 
 ```bash
-cd brandbook-main/site
+cd site
 npm install
 npm run build
 npm run dev
-```
-
-## Files most relevant to this phase
-
-```text
-site/app/draft/page.tsx
-site/app/components/draft/draft-components.css
-site/app/components/draft/WidgetPickerCardDraft.tsx
-site/app/components/draft/TelemetryIconGalleryDraft.tsx
-brandbook/draft-page-phase-10-visual-review.md
-reports/draft-page-phase-10-visual-review.md
 ```

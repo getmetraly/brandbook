@@ -26,3 +26,9 @@ Dashboards and complex pages benefit from a responsive grid system.  Use a 12‑
 ## Density adjustments
 
 Metraly includes a **Draggable Tweaks Panel** that allows users to adjust the UI density—compact, default and comfortable.  These settings scale the spacing tokens globally (e.g. compact multiplies the base scale by 0.75, comfortable by 1.25).  Always reference tokens rather than fixed values so density changes propagate consistently.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

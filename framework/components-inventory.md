@@ -64,3 +64,9 @@ Finally, there is a single **Icon** component in `ui/src/components/shared` that
 2. Extensibility is central to the product; the dashboard widget registry is a robust pattern that should remain.  The UI framework should allow external plugins to register new components in a type‑safe manner.
 3. Many components lack formal documentation.  As part of the unification effort, each component should be catalogued in Storybook with usage examples and props documentation.
 4. None of the existing components explicitly support localisation.  When extracting primitives, ensure they accept translated strings via props and use CSS logical properties to accommodate right‑to‑left layouts.  Consider adding a `LocaleSelector` component and guidelines for date/number formatting.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

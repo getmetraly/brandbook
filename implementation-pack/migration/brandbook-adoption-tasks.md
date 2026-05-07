@@ -33,3 +33,9 @@
 - [ ] Link this pack from `brandbook/README.md`.
 - [ ] Add examples for app, website and docs usage.
 - [ ] Document migration exceptions and intentional deviations.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

@@ -34,3 +34,9 @@ This document records the corrective pass for `/draft` after screenshot review. 
 - Add keyboard interaction tests for menus, command palette, modal, drawer and drag handles.
 - Add visual regression snapshots for `/draft` at desktop, tablet and mobile widths.
 - Keep `/components` read-only unless explicitly approved, using it only as the visual baseline.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

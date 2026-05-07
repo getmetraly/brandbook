@@ -40,3 +40,9 @@ Additional overlay patterns include modals, slide‑in drawers and context menus
 Design comprehensive empty/error screens for dashboards, tables and plugin pages.  Use the `PlaceholderScreen` component to display an illustration, title and descriptive text.  Align empty states centrally and provide actionable next steps (e.g. “Add data source”).  For errors, include a helpful message and, when possible, a link to documentation or support.
 
 By cataloguing these layouts and transforming them into reusable templates, we can build new features quickly and maintain a cohesive user experience across all Metraly surfaces.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

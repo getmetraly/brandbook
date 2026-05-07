@@ -29,3 +29,9 @@ A strong logo system is essential for brand recognition across product surfaces.
 - Use vector SVGs with optimised `viewBox` attributes.  Provide separate exports for screen (SVG, PNG) and print (PDF).
 
 Once the logotype and mark are finalised, save all variants in `docs/assets/logos/` with naming conventions such as `metraly-primary-dark.svg`, `metraly-primary-light.svg`, `metraly-icon.svg`, etc.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

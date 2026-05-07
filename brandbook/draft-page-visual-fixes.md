@@ -26,3 +26,9 @@ This update only changes the `/draft` hardening surface and the draft component 
 - Drag handles remain neutral grip dots; pulse indicators are not used as drag handles.
 - Board resize affordances include horizontal, vertical and corner handles.
 - Repository table rows fit inside the card.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

@@ -116,3 +116,9 @@ Across the system, adhere to WCAG 2.2 guidelines.  Provide keyboard navigation 
 ## 11. Conclusion
 
 This research provides the evidence base for Metraly’s production‑ready brandbook, design system and UI framework.  It highlights the importance of a robust token architecture, accessible interaction patterns, responsive and performant layouts, adaptive icons and subtle motion.  The selected fonts and palettes will reinforce Metraly’s engineering‑focused identity while retaining calm, technical aesthetics.  Subsequent documents (architecture review, component audit, migration plan, etc.) will build on this foundation.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

@@ -33,3 +33,9 @@ site/app/components/page.tsx
 - Toast pulse waves align vertically with the title/copy block.
 - Hero lead text is smaller than the previous phase and reads as supporting copy.
 - `/components` remains unchanged.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

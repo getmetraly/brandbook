@@ -115,3 +115,9 @@ Set up Storybook for component documentation.  Each component should:
 6. **Plan incremental rollout:** coordinate with product teams to replace old components gradually, starting with internal dashboards, then marketing site, and finally documentation.
 
 By following this consolidation strategy, Metraly can achieve a coherent, maintainable and extensible component library that serves product, marketing and documentation surfaces while adhering to the brand’s engineering‑first identity.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

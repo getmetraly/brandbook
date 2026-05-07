@@ -21,3 +21,9 @@ This pass keeps `/components` unchanged and only tightens `/draft` after screens
 - Text inputs use text cursor.
 - Disabled examples use not-allowed cursor.
 - `/components` remains the baseline and was not modified.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

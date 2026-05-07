@@ -24,3 +24,9 @@ Establish a regular cadence (e.g. every two weeks) where the design and engineer
 Create a small cross‑functional **design system council** consisting of designers, front‑end engineers and product managers.  The council reviews proposed changes to the brandbook or UI framework, ensures they align with Metraly’s mission and approves them for inclusion.  Decisions should be documented in this repository’s issues for transparency.
 
 By maintaining a tight feedback loop between brand and implementation, Metraly can evolve its visual identity while preserving consistency and developer productivity.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

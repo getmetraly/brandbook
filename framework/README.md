@@ -53,3 +53,9 @@ All code in the framework follows the licensing guidelines specified in `AGENTS.
 5. Update the brandbook documentation and Storybook with examples of new components.
 
 By centralising our UI toolkit, we can ensure that all parts of the Metraly ecosystem speak a common visual language and evolve together.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

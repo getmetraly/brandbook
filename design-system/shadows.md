@@ -21,3 +21,9 @@ The opacity values above assume the light theme.  In the dark theme, lighten the
 4. **Contrast**: Ensure shadows provide enough contrast against their background to be perceptible.  Test both light and dark themes.
 
 Shadows complement other depth cues such as colour and separation.  Combined with the consistent spacing scale and tokens, elevation helps users navigate complex dashboards without confusion.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

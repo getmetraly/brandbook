@@ -90,3 +90,9 @@ Implementing these improvements will:
 * **Strengthen brand coherence** across the product, marketing site and documentation by adhering to tokens and design guidelines.
 
 These proposals lay the foundation for a sustainable design system that evolves with Metraly’s product roadmap and user needs.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

@@ -29,3 +29,9 @@ When a new feature requires an icon that isn’t covered above:
 5. **Document**: List the new icon in this inventory and provide usage examples in the Storybook.
 
 By keeping icons in a single registry, Metraly ensures visual consistency and simplifies code bundling.  Future work may involve replacing some internal icons with the open‑source [Feather Icons](https://feathericons.com) or integrating selected Font Awesome symbols while adhering to licensing requirements.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

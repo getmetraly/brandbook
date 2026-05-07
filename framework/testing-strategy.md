@@ -1,46 +1,69 @@
-# Testing strategy for UI components
+# Testing Strategy
 
-Robust testing ensures that the UI framework remains stable as it evolves.  This document outlines the recommended testing practices for Metraly’s components.
+Status: current QA guidance for brandbook UI hardening.
 
-## Unit tests
+## What to test
 
-Write unit tests for each component using a testing library such as React Testing Library.  Unit tests should:
+The brandbook currently needs visual and interaction verification more than deep business logic testing.
 
-- Verify that components render without crashing under various prop configurations.
-- Check conditional rendering (e.g. different variants of a button or card).
-- Assert that event handlers (click, change, etc.) are invoked with the correct arguments.
-- Mock external dependencies (e.g. context providers) where necessary.  Follow the table‑driven testing pattern described in the project guidelines【849328462375381†L62-L70】.
+Focus on:
 
-Run unit tests via `make test` as part of the continuous integration pipeline【849328462375381†L60-L65】.
+- visual regression;
+- spacing and collision checks;
+- focus-visible behavior;
+- keyboard navigation;
+- disabled states;
+- dashboard layout responsiveness;
+- DnD affordance readability;
+- chart and widget wrappers;
+- `/components` baseline preservation.
 
-## Snapshot and visual regression tests
+## Required manual QA checklist
 
-For components with significant visual complexity (cards, charts, tables), add snapshot tests or visual regression tests:
+Before shipping a visual patch:
 
-- **Snapshot tests**: Render the component with typical props and store a snapshot of the generated HTML structure.  Snapshot tests help detect unexpected changes in the DOM hierarchy.  Keep snapshots concise by using shallow rendering where possible.
-- **Visual regression**: Use tools like Storybook with Chromatic or Percy to capture reference screenshots.  Visual regression tests highlight differences in colours, spacing or layout after code changes.  Run these tests when tokens or theming changes.
+- `/components` is unchanged unless explicitly requested.
+- `/draft` renders all sections.
+- Hero text does not feel oversized.
+- Hero pulse-wave is visible and controlled.
+- Sidebar logo pulse-wave is centered.
+- Toolbar controls do not collide.
+- Widget picker icon, title, selected circle and state badge align.
+- Checkbox/radio circles are visually strong enough.
+- Toasts align pulse-wave, title and body.
+- Drop targets use dashed borders.
+- Sprint burndown ideal line is visible but secondary.
+- Static content uses default cursor.
+- Buttons/menu items use pointer cursor.
 
-## Accessibility testing
+## Automated checks
 
-Accessibility compliance is non‑negotiable.  Integrate automated accessibility tests into the pipeline:
+At minimum run:
 
-- Use `axe-core` or `@testing-library/jest-dom` to assert that rendered components are free of common accessibility issues (e.g. missing labels, insufficient colour contrast, invalid ARIA attributes).  The components should meet or exceed WCAG 2.1 AA contrast ratios; the token system is designed to support this【913460924002922†L6-L21】.
-- Test keyboard navigation by simulating Tab and arrow key presses.  Ensure that custom controls (e.g. Draggable Tweaks Panel) have proper focus management and ARIA roles.
+```bash
+cd site
+npm install
+npm run build
+```
 
-## Integration tests
+Additional recommended checks:
 
-Integration tests verify that components work together within pages:
+- TypeScript check.
+- CSS brace balance.
+- Visual screenshots for `/components` and `/draft`.
+- Reduced-motion review.
+- Keyboard tab sequence review.
 
-- Render a layout (e.g. dashboard) and simulate typical user flows—adding widgets, resizing panels, adjusting filters.
-- Test state persistence in local storage when users adjust preferences via the Draggable Tweaks Panel.
-- Ensure that data flows correctly into charts and tables.
+## Visual regression strategy
 
-## Manual QA
+Use `/components` as baseline and `/draft` as candidate surface.
 
-While automated tests catch many issues, manual QA remains essential.  For each release:
+Capture screenshots for:
 
-1. Smoke‑test major pages across supported browsers (Chrome, Firefox, Safari, Edge) and devices (desktop, tablet, mobile).
-2. Verify dark and light themes, as well as high‑contrast or reduced motion modes.
-3. Validate interactions with assistive technologies, such as screen readers.
+1. `/components` protected baseline.
+2. `/draft` hero and controls.
+3. `/draft` real dashboard scenario.
+4. `/draft` charts and DnD.
+5. `/draft` product states.
 
-By combining unit tests, visual regression, accessibility audits and manual QA, the Metraly UI framework will remain reliable and accessible even as it grows.
+A patch should not regress readability or collision behavior.

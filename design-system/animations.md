@@ -24,3 +24,9 @@ Motion reinforces the feeling of a modern, responsive interface while maintainin
 - Test animations on different devices, paying attention to slower CPUs or high refresh rate displays; adjust durations if interactions feel sluggish or abrupt.
 
 By adhering to these guidelines, motion in Metraly will help users understand how data and UI elements relate to each other without detracting from their workflow.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

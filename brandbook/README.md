@@ -1,28 +1,62 @@
 # Metraly Brandbook
 
-Metraly is a **self‑hosted, privacy‑first engineering intelligence platform** that lets teams instrument their own development data without sending it to a third party【632635575803481†L8-L13】.  This brandbook defines a single source of truth for Metraly’s visual and verbal identity.  It guides the use of colours, typography, logos, icons, motion and accessibility across **all product surfaces** – the core Metraly application, the marketing website and the documentation.  Adopting these guidelines ensures that every touchpoint reinforces Metraly’s **engineering‑first ethos** while remaining flexible for new features and products.
+Metraly Brandbook defines the visual and interaction language for Metraly: a self-hosted, privacy-first engineering intelligence platform.
 
-## Scope
+## Current design status
 
-The documents under the `docs/brandbook` folder cover the fundamental brand elements:
+The current design is near production-ready in direction. The most accurate snapshot is:
 
-- **Philosophy:** The mission and values that underpin the Metraly brand.
-- **Typography:** The selected fonts and usage guidelines for headings, body copy and code.
-- **Colours:** The palette tokens for light and dark themes, semantic statuses and chart colours.
-- **Logos:** The system of marks for different contexts (primary logo, icon mark, monochrome variants etc.).
-- **Icons:** Rules for an extensible icon set, including stroke widths, naming and categories.
-- **Motion:** Principles for animation timing, easing and interaction feedback.
-- **Accessibility:** Requirements for contrast, focus states, keyboard navigation and reduced motion.
+```text
+brandbook/current-design-state.md
+site/app/draft/page.tsx
+site/app/components/draft/draft-components.css
+site/app/components/draft/README.md
+```
 
-Each section explains the rationale, lists design tokens and provides acceptance criteria.  Together they form the baseline for the unified Metraly design system.
+## Core idea
 
-## Extended production-readiness documents
+Metraly should feel like a calm engineering observability console:
 
-The brandbook also includes deeper engineering and design-system documents:
+- precise, technical and trustworthy;
+- dark by default;
+- dense but readable;
+- telemetry-native;
+- focused on engineering analytics, dashboards and ownership of data.
 
-- **Research:** `research.md` captures the research baseline for typography, token architecture, colour, icon, motion, drag-and-drop, Zustand, Recharts and performance/accessibility trade-offs.
-- **Component audit:** `component-audit.md` reviews reusable UI patterns and identifies consolidation candidates.
-- **Architecture review:** `../framework/architecture-review.md` defines the framework direction, token hierarchy and implementation risks.
-- **Unified migration plan:** `../migration/unified-migration-plan.md` describes the phased adoption path across product, website and documentation.
-- **Draft vs components conformance:** `draft-vs-components-conformance.md` compares `/components` as the baseline against `/draft` as the working laboratory.
+## Source-of-truth structure
 
+```text
+brandbook/       Brand identity, philosophy, pulse-wave, current design state
+design-system/   Tokens, components, motion, charts, board edit mode
+framework/       Future UI framework architecture and inventory
+migration/       Adoption plan and rollout tasks
+site/            Next.js viewer and component lab
+AGENTS.md        Operating instructions for agents
+```
+
+## Protected baseline and draft lab
+
+- `/components` is the protected baseline page.
+- `/draft` is the active hardening lab.
+
+Agents and contributors must preserve `/components` unless explicitly instructed to change it. New visual exploration and production-hardening work belongs in `/draft` first.
+
+## Current visual pillars
+
+1. Dark technical surfaces.
+2. Cyan telemetry signal.
+3. Purple secondary depth.
+4. Space Grotesk / Inter typography pairing.
+5. Pulse-wave as controlled brand primitive.
+6. Stable interactions with no hover jumps.
+7. Product-like dashboard scenarios, not decorative mockups.
+8. Board editing and drag-and-drop as first-class patterns.
+
+## Canonical references
+
+- `current-design-state.md` — current visual snapshot.
+- `pulse-marker-draft.md` — pulse-wave geometry and usage rules.
+- `../design-system/components.md` — component behavior and state rules.
+- `../design-system/board-edit-mode.md` — dashboard edit mode, DnD and resize rules.
+- `../design-system/charts.md` — chart wrappers and Recharts usage.
+- `../framework/testing-strategy.md` — QA expectations.

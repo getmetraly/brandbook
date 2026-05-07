@@ -25,3 +25,9 @@ Metraly should feel like an engineering observability product: precise, self-hos
 4. Replace ad-hoc logo/pulse implementations with `react/MetralyLogo.tsx` or `assets/svg/metraly-logo-horizontal.svg`.
 5. Migrate common cards, badges, metric blocks and dashboard shells to the primitives in `react/`.
 6. Track rollout in `migration/brandbook-adoption-tasks.md`.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

@@ -24,3 +24,9 @@ The tagline encapsulates Metraly’s promise: to give engineering teams control 
 - **Inclusive:** write in a way that welcomes contributions from diverse backgrounds and experience levels.
 
 This philosophy underpins every visual and written decision in the brandbook.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

@@ -166,3 +166,9 @@ Do not change `/components`.  Use it as a visual baseline.  Continue iterating i
 - render tests and accessibility tests.
 
 Only after a component passes this checklist should it be proposed for promotion from `/draft` into canonical `/components`.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

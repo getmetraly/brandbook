@@ -36,3 +36,9 @@ Metraly’s typography system balances **readability** for dense dashboards and 
 - Reserve all‑caps styling for short labels or CTAs; never use all caps for long sentences.
 
 By adhering to this typography system, Metraly maintains a cohesive and accessible reading experience across dashboards, documentation and marketing.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

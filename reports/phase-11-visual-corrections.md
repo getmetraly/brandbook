@@ -25,3 +25,9 @@ This pass updates `/draft` only and keeps `/components` as the unchanged baselin
 - Hero telemetry line uses pulse-wave markup again.
 - Widget registry cards no longer use the previous full-width status-bar layout.
 - Sidebar in Real Dashboard Scenario no longer creates a large empty dark panel.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

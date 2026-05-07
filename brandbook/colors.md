@@ -97,3 +97,9 @@ Define these as CSS variables to ensure consistent chart colours across the app 
 - Avoid using colour alone to communicate information; accompany with icons or labels (e.g., a warning icon alongside an orange message).  Where charts rely on colour, use patterns or markers for colour‑blind accessibility.
 
 By adopting this colour system, Metraly achieves a cohesive look across dark and light themes while supporting accessibility and scalability.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

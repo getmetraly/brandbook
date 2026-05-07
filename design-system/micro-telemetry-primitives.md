@@ -1,110 +1,55 @@
 # Micro Telemetry Primitives
 
-Status: draft
+Status: active brand primitive.
 
-## Goal
+Micro telemetry primitives are small UI accents that connect Metraly controls to the product's engineering analytics identity.
 
-Micro telemetry primitives are small interactive accents that make Metraly controls feel like part of one engineering operating system.
+## Current primitive set
 
-They should:
+- Pulse-wave marker.
+- State pulse inside badges.
+- Selected control pulse inside checkbox/radio/select circles.
+- Sidebar active pulse.
+- Logo mark pulse.
+- Notification/timeline pulse markers.
+- Telemetry dividers.
+- Chart accents and sparklines.
 
-- communicate interaction state;
-- reinforce telemetry language;
-- remain subtle;
-- avoid decorative overload.
+## Pulse-wave rules
 
----
+Use pulse-wave for signal, not decoration.
 
-# Primitive Set
+Allowed:
 
-## Select indicator
+- selected checkbox/radio indicator;
+- active state badge;
+- hero telemetry line;
+- sidebar logo mark;
+- empty state divider;
+- small time/status marker;
+- widget picker icon and selected control;
+- chart accent where it supports telemetry meaning.
 
-Telemetry pulse + chevron.
+Avoid:
 
-Used for:
+- pulse before drag handles;
+- pulse before `Drag to move` text;
+- repeated pulse spam in every row;
+- random rotation;
+- aggressive animation;
+- oversized waveforms outside hero or dedicated mark containers.
 
-- select inputs;
-- filter dropdowns;
-- board presets.
+## Size guidance
 
----
+| Context | Guidance |
+|---|---|
+| Logo/sidebar mark | centered, medium-bold, clearly readable |
+| Checkbox/radio/select circle | bold enough to read at small size |
+| Badge/status | compact but legible |
+| Hero | larger pulse-wave with calm surrounding gradient |
+| Divider | low contrast, used sparingly |
+| Notification/timeline | aligned in a grid with title/body/time |
 
-## Accordion indicator
+## Motion
 
-Tiny pulse waveform before expansion chevron.
-
-Used for:
-
-- collapsible panels;
-- side navigation groups;
-- expandable cards.
-
----
-
-## Live badge
-
-Animated micro pulse.
-
-Used for:
-
-- realtime dashboards;
-- streaming metrics;
-- active incidents.
-
----
-
-## Sync state
-
-Minimal telemetry wave.
-
-States:
-
-- syncing;
-- delayed;
-- disconnected.
-
----
-
-## Drag indicator
-
-Telemetry corner highlights and edge activation.
-
-Used during:
-
-- widget dragging;
-- resizing;
-- board edit mode.
-
----
-
-## Telemetry divider
-
-Horizontal pulse separator.
-
-Used for:
-
-- section separation;
-- dashboard rhythm;
-- observability visual identity.
-
----
-
-# Rules
-
-- primitives must stay small;
-- avoid strong animation;
-- no decorative spam;
-- cyan remains operational signal color;
-- use glow sparingly.
-
----
-
-# Reference
-
-See:
-
-```text
-site/app/components
-```
-
-for current visual explorations.
+Most pulse-wave use should be static. If animated, use subtle opacity or glow changes only and respect reduced-motion preferences.

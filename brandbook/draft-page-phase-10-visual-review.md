@@ -36,3 +36,9 @@ This pass corrects screenshot-reported issues on `/draft` while keeping `/compon
 3. Add a real Storybook or Playwright visual snapshots for hover, focus, disabled, unread, warning, error, loading, and active states.
 4. Replace static drag-and-drop examples with actual dnd-kit behavior once the design language is approved.
 5. Add a visual regression threshold specifically for overlap checks around widget picker cards, notification rows, and board-edit cards.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

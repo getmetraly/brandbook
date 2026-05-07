@@ -41,6 +41,10 @@ function Mark({ size = 42 }: { size?: number }) {
   );
 }
 
+// Import the new MetralyCard component from the implementation pack.  This provides
+// a reusable card primitive with built-in states (selected, error, loading, empty).
+import { MetralyCard } from "../../implementation-pack/react/MetralyCard";
+
 export default function HomePage() {
   return (
     <main>
@@ -85,30 +89,37 @@ export default function HomePage() {
             </span>
             <span style={{ color: "var(--cyan)" }}>● healthy</span>
           </div>
-          <div className="dashboard-grid">
-            <div className="metric">
-              <div className="metric-label metraly-pulse-inline">
-                <span className="metraly-pulse-marker" />
-                PR cycle time
-              </div>
-              <div className="metric-value">2.4d</div>
-              <div className="metric-delta">-18% faster</div>
-            </div>
-            <div className="metric">
-              <div className="metric-label">Deployment health</div>
-              <div className="metric-value">99.2%</div>
-              <div className="metric-delta">+3.1%</div>
-            </div>
-            <div className="metric">
-              <div className="metric-label">Review latency</div>
-              <div className="metric-value">4h</div>
-              <div className="metric-delta">within target</div>
-            </div>
-            <div className="metric">
-              <div className="metric-label">Flow efficiency</div>
-              <div className="metric-value">81%</div>
-              <div className="metric-delta">stable</div>
-            </div>
+          {/* Use MetralyCard components to showcase metric cards. These cards follow the new design system. */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: "var(--space‑md)" }}>
+            <MetralyCard
+              icon={<span aria-hidden="true">📈</span>}
+              title="PR cycle time"
+              subtitle="Last 30 days"
+              footer={<span style={{ color: "var(--metraly-success)", fontSize: "0.75rem" }}>-18 % faster</span>}
+            >
+              <div style={{ fontFamily: "var(--metraly-font-display)", fontSize: "1.75rem", color: "var(--metraly-primary)" }}>2.4 d</div>
+            </MetralyCard>
+            <MetralyCard
+              icon={<span aria-hidden="true">❤️</span>}
+              title="Deployment health"
+              subtitle="7 days"
+              state="selected"
+              footer={<span style={{ color: "var(--metraly-success)", fontSize: "0.75rem" }}>+3.1 % ↑</span>}
+            >
+              <div style={{ fontFamily: "var(--metraly-font-display)", fontSize: "1.75rem", color: "var(--metraly-success)" }}>99.2 %</div>
+            </MetralyCard>
+            <MetralyCard
+              icon={<span aria-hidden="true">⏳</span>}
+              title="Review latency"
+              subtitle="Fetching..."
+              state="loading"
+            />
+            <MetralyCard
+              icon={<span aria-hidden="true">📉</span>}
+              title="Flow efficiency"
+              subtitle="No data"
+              state="empty"
+            />
           </div>
         </div>
       </section>

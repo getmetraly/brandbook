@@ -33,3 +33,9 @@ This roadmap outlines the chronological steps required to transition Metraly’s
 * **Governance**: Establish a design system council or maintainer group responsible for approving changes, reviewing contributions and ensuring adherence to guidelines.
 
 Following this roadmap will align the user experience across all Metraly surfaces, reduce visual debt and set a strong foundation for future growth.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

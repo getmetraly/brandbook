@@ -53,3 +53,9 @@ To support a multilingual audience, additional tasks are required:
 - [ ] Gather user feedback via surveys or user tests and refine components based on insights.
 
 This checklist is intentionally high‑level; each task may be broken down into smaller issues.  Use the labels and date naming conventions described in `AGENTS.md`【849328462375381†L32-L37】 for tracking progress.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

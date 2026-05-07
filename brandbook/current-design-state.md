@@ -1,0 +1,174 @@
+# Current Design State
+
+Status: near production-ready visual direction.
+
+This document freezes the current Metraly brandbook design so future agents and contributors can reproduce it consistently.
+
+## Source of truth
+
+- `/components` is the protected baseline reference page.
+- `/draft` is the active hardening lab.
+- The latest accepted design is represented by `site/app/draft/page.tsx` plus `site/app/components/draft/draft-components.css`.
+- `AGENTS.md` defines repository operating rules for future AI/code agents.
+
+## Visual identity
+
+Metraly is a self-hosted engineering intelligence product. The UI should feel precise, calm, technical and trustworthy.
+
+The current design is not a marketing-first landing aesthetic. It is closer to an observability console for engineering leaders:
+
+- dark product canvas;
+- dense but readable dashboard cards;
+- calm typography;
+- cyan telemetry signal;
+- purple secondary depth;
+- subtle shadows and borders;
+- stable interaction states;
+- restrained motion.
+
+## Color direction
+
+Primary colors:
+
+| Role | Token / value | Usage |
+|---|---|---|
+| Base canvas | `#0b0f14` / `--bg-base` | App background |
+| Surface | `#111722` / `--bg-surface` | Panels and page sections |
+| Card | `#151d28` / `--bg-card` | Widgets and component cards |
+| Primary signal | `#00e5cc` / `--cyan` | Active state, focus, telemetry wave |
+| Secondary depth | `#a855f7` / `--purple` | Gradient depth and secondary highlights |
+| Success | `#22c55e` | Healthy state |
+| Warning | `#f59e0b` | Delayed / warning state |
+| Error | `#ef4444` | Disconnected / destructive state |
+
+Usage rules:
+
+- Cyan should communicate operational signal, not decoration.
+- Purple should be used sparingly for depth, drag elevation or chart contrast.
+- Borders must remain low-contrast unless the element is active, selected or focused.
+- Glow must be subtle.
+
+## Typography
+
+Current direction:
+
+- UI/body: Inter or system UI fallback.
+- Display/headings: Space Grotesk / Geist-like technical display feel.
+- Code/metric internals: JetBrains Mono-style mono where useful.
+
+Current tuning:
+
+- Hero copy is calmer and smaller than early drafts.
+- Dashboard card headings should feel strong but not oversized.
+- Widget registry typography should remain close to the baseline, not inflated.
+- Secondary text should be muted and readable, usually `--text-secondary`.
+
+## Pulse-wave system
+
+The pulse wave is the strongest brand primitive.
+
+Current accepted usage:
+
+- logo mark;
+- hero telemetry line;
+- selected checkbox / radio indicator;
+- widget picker icon and selected state;
+- live/status badge pulse;
+- notification and timeline markers;
+- sidebar active icon;
+- empty state divider;
+- chart accent or telemetry divider.
+
+Rules:
+
+- Pulse-wave can be larger inside contained circular/square marks.
+- Pulse-wave should be centered inside the sidebar logo mark.
+- Pulse-wave in checkbox/radio/select circles should be bold enough to read at small sizes.
+- Do not use pulse-wave as a drag handle.
+- Do not place pulse-wave before `Drag to move` text.
+- Avoid noisy repeated pulse decorations.
+
+## `/draft` page structure
+
+The draft page currently acts as a product-scenario review surface with three screens:
+
+1. Core controls and dashboard widgets.
+2. Charts, widgets and drag-and-drop.
+3. Metraly product pages and states.
+
+It includes:
+
+- checkbox, radio, switch, dropdown, search, tabs and segmented control;
+- widget picker, widget shell, grid item and table row;
+- state badges, toast, notification center, timeline, empty state and skeleton;
+- sidebar, topbar, dashboard toolbar and real dashboard scenario;
+- Recharts gallery, heatmap, sprint burndown and widget registry coverage;
+- role icon examples from Developer to CEO;
+- board edit mode and drag-and-drop states.
+
+## Widget registry coverage
+
+The draft page should reflect the product widget map:
+
+- `stat-card`
+- `metric-chart`
+- `data-table`
+- `leaderboard`
+- `dora-overview`
+- `heatmap`
+- `sprint-burndown`
+- `anomaly-detector`
+- `ai-insight`
+
+The registry section should be readable first, decorative second. Use table-like scanning, clear labels and modest typography.
+
+## Real dashboard scenario
+
+The real dashboard scenario should show how primitives work together:
+
+- sidebar with centered logo pulse-wave;
+- clear active navigation;
+- topbar with title and actions;
+- toolbar with search, tabs, live sync and add-widget button;
+- metric cards;
+- chart panel;
+- repository health table.
+
+The toolbar must not collide. Use responsive wrapping or grid fallback.
+
+## Interaction states
+
+Every component candidate should have or document:
+
+- default;
+- hover;
+- focus-visible;
+- selected/active;
+- disabled;
+- loading;
+- unread/new;
+- delayed/stale/no-data;
+- error/disconnected.
+
+Cursor rules:
+
+- static content: `default`;
+- buttons, links, menus: `pointer`;
+- text inputs: `text`;
+- disabled: `not-allowed`;
+- drag handles: `grab` / `grabbing`;
+- resize handles: appropriate resize cursor.
+
+## Production readiness criteria
+
+A component is ready to move out of draft when it has:
+
+- stable visual states;
+- keyboard/focus behavior defined;
+- no layout collisions in dashboard scenarios;
+- tokenized colors and spacing;
+- responsive behavior;
+- clear API and prop names;
+- accessibility notes;
+- usage examples;
+- no hidden dependency on `/draft`-only CSS.

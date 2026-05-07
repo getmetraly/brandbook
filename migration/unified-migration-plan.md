@@ -65,3 +65,9 @@ The migration does not end with the last deprecation.  Ongoing tasks include:
 * Updating the brandbook and documentation whenever the design system evolves.
 
 By following this phased migration plan, Metraly can adopt the unified UI framework methodically, mitigating risk while achieving consistency, accessibility and performance improvements across all user experiences.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

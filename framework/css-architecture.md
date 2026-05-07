@@ -44,3 +44,9 @@ Within the framework repository:
 * `utilities/` — responsive hooks, ARIA helpers, and testing utilities.
 
 Documenting and enforcing this architecture helps reduce cognitive load for contributors and prevents style regressions.
+
+---
+
+## Current design status
+
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.

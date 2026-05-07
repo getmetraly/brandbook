@@ -1,149 +1,48 @@
 # Board Edit Mode
 
-Status: draft
+Status: active design direction.
 
-## Goal
+Board editing is a core Metraly surface. It must feel like an engineering workspace, not a generic dashboard builder.
 
-Board editing should feel like an engineering workspace, not a generic admin dashboard builder.
+## Current rules
 
-The editing layer must communicate:
+- Selected widgets use a cyan border, subtle glow and visible resize affordances.
+- Dragging widgets use elevation and optional purple depth, without aggressive rotation.
+- Drop targets use a visible dashed cyan border and subtle tint.
+- Drag handles use neutral grip dots, never pulse-wave.
+- Pulse-wave can appear in state badges or drop-zone decoration, not as the handle.
+- Resize handles must sit outside content rhythm and must not overlap text.
+- Full-width widgets should visibly span the grid and show a state badge.
 
-- layout structure;
-- drag state;
-- resize affordance;
-- drop targets;
-- full-width expansion;
-- selection state.
+## Required states
 
-Without introducing noisy UI.
+Board edit examples should show:
 
----
+- idle widget;
+- selected widget;
+- dragging widget;
+- dashed drop target;
+- full-width widget;
+- horizontal resize;
+- vertical resize;
+- corner resize;
+- invalid/unavailable drop target in future iterations.
 
-# Interaction Language
+## DnD compatibility
 
-## Selected widget
+Design must remain compatible with:
 
-Selected widgets use:
+- `@dnd-kit/core`;
+- `@dnd-kit/sortable`;
+- `@dnd-kit/utilities`;
+- `react-grid-layout`.
 
-- cyan outline;
-- subtle telemetry glow;
-- visible edit toolbar;
-- telemetry resize corners.
+Do not design states that require layout jumps or fragile DOM overlays.
 
-Avoid:
+## Acceptance criteria
 
-- thick borders;
-- large white handles;
-- legacy admin resize boxes.
-
----
-
-# Resize Handles
-
-Metraly uses telemetry corner handles instead of square resize boxes.
-
-## Why
-
-Square handles:
-
-- feel generic;
-- visually heavy;
-- break the telemetry language;
-- look like old dashboard tooling.
-
-Telemetry corners:
-
-- feel lighter;
-- integrate with the cyan signal language;
-- resemble engineering tooling;
-- reinforce the Metraly identity.
-
-## Recommended Style
-
-```text
-selected widget
-→ cyan edge
-→ telemetry corner handles
-→ subtle edge glow
-```
-
-Handles should feel like part of the outline system, not floating controls.
-
----
-
-# Dragging State
-
-Dragging widgets should:
-
-- elevate above the board;
-- become slightly transparent;
-- use a purple edge glow;
-- preserve layout readability.
-
-Avoid aggressive transforms or large rotations.
-
----
-
-# Drop Zones
-
-Drop targets should be explicit.
-
-Use:
-
-- dashed cyan borders;
-- subtle cyan background tint;
-- pulse markers;
-- visible empty slots.
-
-The user should immediately understand where a widget can land.
-
----
-
-# Full Width Mode
-
-Full-width widgets should:
-
-- visibly span the grid;
-- use a state badge;
-- slightly change background treatment.
-
-This prevents layout ambiguity.
-
----
-
-# Grid Language
-
-The board grid itself should remain subtle.
-
-Recommended:
-
-- low-contrast grid lines;
-- soft spacing rhythm;
-- no strong visible cells unless dragging.
-
-The grid should guide placement without overwhelming content.
-
----
-
-# Future Direction
-
-Potential future additions:
-
-- animated telemetry edge pulses;
-- hover edge activation;
-- snap-preview overlays;
-- keyboard resize mode;
-- alignment guides;
-- layout density presets.
-
----
-
-# Reference
-
-See:
-
-```text
-site/app/components/page.tsx
-```
-
-for the current visual prototype.
+- The user can visually identify where a widget can land.
+- The selected widget remains readable.
+- Resize handles do not collide with title, metric, body copy or badges.
+- Drag handles are neutral and cursor-aware.
+- Drop zone is visible enough but not visually louder than content.
