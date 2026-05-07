@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./component-overrides.css";
 
 export const metadata: Metadata = {
   title: "Metraly Brandbook",
