@@ -1,11 +1,19 @@
 type TelemetrySelectDraftProps = {
   label?: string;
   value?: string;
+  options?: Array<{ value: string; label: string }>;
 };
+
+const defaultOptions = [
+  { value: "github", label: "GitHub" },
+  { value: "ci", label: "CI/CD" },
+  { value: "incidents", label: "Incidents" },
+];
 
 export default function TelemetrySelectDraft({
   label = "Metric source",
   value = "github",
+  options = defaultOptions,
 }: TelemetrySelectDraftProps) {
   return (
     <label className="telemetry-select-draft">
@@ -15,9 +23,11 @@ export default function TelemetrySelectDraft({
       </span>
       <span className="telemetry-select-control">
         <select defaultValue={value} aria-label={label}>
-          <option value="github">GitHub</option>
-          <option value="ci">CI/CD</option>
-          <option value="incidents">Incidents</option>
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
         </select>
         <span className="telemetry-select-indicator" aria-hidden="true" />
       </span>
