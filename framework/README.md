@@ -20,6 +20,7 @@ The framework resides in its own package (e.g. `@metraly/ui`).  It exposes:
 - **Composite components**: charts (AreaChart, BarChart, Gauge, Heatmap, Sparkline), data tables, dashboards and panels built from base components.
 - **Icon library**: an internal library of SVG paths mapped to semantic names (see `Icon.tsx`), with optional wrappers for Font Awesome.
 - **Utilities**: helpers for responsive grid layouts, ARIA hooks for accessibility and testing utilities.
+  In future iterations, the framework will also expose **locale helpers** to simplify internationalisation (e.g. wrappers around `Intl` APIs and a language selector component).
 
 ## Usage
 

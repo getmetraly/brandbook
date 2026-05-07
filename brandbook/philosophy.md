@@ -8,6 +8,8 @@ Metraly exists to empower engineering teams with **transparent, extensible analy
 4. **Engineering‑first identity.**  The visual language draws from observability aesthetics – pulse waves, telemetry lines, angular dashboards and real‑time signal patterns – to evoke a feeling of performance and control.  This identity is carried through every product surface, with a clean, systems‑oriented UI and minimal marketing gloss.
 5. **Open collaboration.**  As an open‑core project, Metraly invites contribution and inspection.  The AGPL licence encourages improvements to be shared with the community while protecting the project’s long‑term viability.
 
+6. **Enterprise readiness & global reach.**  Metraly is built to scale from startups to large enterprises.  Beyond self‑hosting, the platform is designed to support complex team structures, high data volumes and stringent governance.  It also embraces internationalisation, ensuring that the UI can adapt to multiple languages, scripts and cultural conventions without sacrificing usability.
+
 ## Tagline
 
 > **Your data, your AI, your servers — by design, not as an afterthought.**【632635575803481†L2-L7】

@@ -35,6 +35,17 @@ To operationalise the migration roadmap, break the work down into actionable tas
 - [ ] Replace marketing site hero components and cards with framework versions.  Preserve unique marketing patterns (e.g. gradients) by passing custom props or using CSS overrides.
 - [ ] Build the documentation site using framework components; include code examples and live previews.
 
+## Internationalisation
+
+To support a multilingual audience, additional tasks are required:
+
+- [ ] **Set up i18n infrastructure**: Integrate a translation library (e.g. i18next) into the product app, website and documentation.  Define a default locale and initial set of languages.
+- [ ] **Create translation keys**: Replace hard‑coded UI strings with keyed messages in translation files.  Organise keys by domain (dashboards, charts, navigation, etc.).
+- [ ] **Implement locale switching**: Build a language selector component and persist user preference.  Ensure directionality (LTR/RTL) is applied automatically.
+- [ ] **Test layouts across locales**: Audit screens in at least two languages (one LTR and one RTL) to catch overflow, wrapping and alignment issues.  Adjust components to use CSS logical properties where necessary.
+- [ ] **Localise dates, numbers and units**: Use the Intl API or i18n helpers to format dates, times, currencies and numbers according to the active locale.
+- [ ] **Update documentation**: Document i18n guidelines in the design system and include examples of localisation hooks in Storybook.
+
 ## Verification
 
 - [ ] Conduct performance profiling and ensure that the new framework does not regress load times.
