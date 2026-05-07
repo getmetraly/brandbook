@@ -1,15 +1,4 @@
 import RechartsShowcase from "./RechartsShowcase";
-import TelemetryCheckboxDraft from "./draft/TelemetryCheckboxDraft";
-import TelemetrySelectDraft from "./draft/TelemetrySelectDraft";
-import TelemetrySwitchDraft from "./draft/TelemetrySwitchDraft";
-import TelemetryTabsDraft from "./draft/TelemetryTabsDraft";
-import WidgetPickerCardDraft from "./draft/WidgetPickerCardDraft";
-import TelemetryTableRowDraft from "./draft/TelemetryTableRowDraft";
-import TelemetryToastDraft from "./draft/TelemetryToastDraft";
-import TelemetryDrawerDraft from "./draft/TelemetryDrawerDraft";
-import TelemetryModalDraft from "./draft/TelemetryModalDraft";
-import TelemetrySkeletonDraft from "./draft/TelemetrySkeletonDraft";
-import RechartsTelemetryCardDraft from "./draft/RechartsTelemetryCardDraft";
 
 function Section({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (
@@ -208,22 +197,6 @@ export default function ComponentsPage() {
                 <button className="btn btn-primary">Create widget</button>
               </div>
             </div>
-          </div>
-        </Section>
-
-        <Section title="Telemetry draft primitives" description="New draft components are appended below the original component lab so they can be validated before promotion.">
-          <div className="component-grid">
-            <div className="component-card"><h3>Checkbox</h3><TelemetryCheckboxDraft checked label="Selected widget" /></div>
-            <div className="component-card"><h3>Select</h3><TelemetrySelectDraft /></div>
-            <div className="component-card"><h3>Switch</h3><TelemetrySwitchDraft /></div>
-            <div className="component-card"><h3>Tabs</h3><TelemetryTabsDraft /></div>
-            <div className="component-card"><h3>Widget picker</h3><WidgetPickerCardDraft /></div>
-            <div className="component-card"><h3>Table row</h3><TelemetryTableRowDraft /></div>
-            <div className="component-card"><h3>Toast</h3><TelemetryToastDraft /></div>
-            <div className="component-card"><h3>Drawer</h3><TelemetryDrawerDraft /></div>
-            <div className="component-card"><h3>Modal</h3><TelemetryModalDraft /></div>
-            <div className="component-card"><h3>Skeleton</h3><TelemetrySkeletonDraft /></div>
-            <div className="component-card"><h3>Recharts wrapper</h3><RechartsTelemetryCardDraft /></div>
           </div>
         </Section>
       </div>
