@@ -54,6 +54,7 @@ export default function HomePage() {
             <a href="#principles">Principles</a>
             <a href="#colors">Colors</a>
             <a href="#logo">Logo</a>
+            <a href="#pulse-marker">Pulse marker</a>
             <a href="#implementation">Implementation</a>
           </nav>
         </div>
@@ -61,7 +62,10 @@ export default function HomePage() {
 
       <section id="top" className="shell hero">
         <div>
-          <div className="eyebrow">Self-hosted engineering intelligence</div>
+          <div className="eyebrow">
+            <span className="metraly-pulse-marker" />
+            Self-hosted engineering intelligence
+          </div>
           <h1>One brand system for product, website and docs.</h1>
           <p className="lead">
             A local-first Next.js viewer for the Metraly brandbook: visual identity, tokens, logo assets,
@@ -75,12 +79,18 @@ export default function HomePage() {
 
         <div className="panel preview-card" aria-label="Dashboard style preview">
           <div className="preview-header">
-            <span>Metraly / live system preview</span>
+            <span className="metraly-pulse-inline">
+              <span className="metraly-pulse-marker" />
+              Metraly / live system preview
+            </span>
             <span style={{ color: "var(--cyan)" }}>● healthy</span>
           </div>
           <div className="dashboard-grid">
             <div className="metric">
-              <div className="metric-label">PR cycle time</div>
+              <div className="metric-label metraly-pulse-inline">
+                <span className="metraly-pulse-marker" />
+                PR cycle time
+              </div>
               <div className="metric-value">2.4d</div>
               <div className="metric-delta">-18% faster</div>
             </div>
@@ -151,6 +161,66 @@ export default function HomePage() {
           </div>
           <div className="logo-tile">
             <Mark size={112} />
+          </div>
+        </div>
+      </section>
+
+      <section id="pulse-marker" className="shell section">
+        <div className="section-head">
+          <h2>Pulse marker draft</h2>
+          <p>The telemetry pulse polygon can become a reusable UI primitive for paragraph intros, metric labels, separators and navigation accents.</p>
+        </div>
+
+        <div className="pulse-examples">
+          <div className="pulse-example">
+            <div className="metraly-pulse-inline" style={{ marginBottom: 14 }}>
+              <span className="metraly-pulse-marker metraly-pulse-marker--lg" />
+              <strong>Paragraph intro</strong>
+            </div>
+            <p>
+              Metraly uses telemetry-inspired geometry to visually connect engineering metrics,
+              observability workflows and system health surfaces.
+            </p>
+          </div>
+
+          <div className="pulse-example">
+            <div className="metraly-pulse-inline" style={{ marginBottom: 14 }}>
+              <span className="metraly-pulse-marker" />
+              <strong>Divider usage</strong>
+            </div>
+            <div className="metraly-divider" />
+          </div>
+
+          <div className="pulse-example">
+            <div className="metraly-pulse-inline" style={{ marginBottom: 14 }}>
+              <span className="metraly-pulse-marker" />
+              <strong>Metric labels</strong>
+            </div>
+            <div className="metric">
+              <div className="metric-label metraly-pulse-inline">
+                <span className="metraly-pulse-marker" />
+                CI stability
+              </div>
+              <div className="metric-value">98.7%</div>
+              <div className="metric-delta">healthy</div>
+            </div>
+          </div>
+
+          <div className="pulse-example">
+            <div className="metraly-pulse-inline" style={{ marginBottom: 14 }}>
+              <span className="metraly-pulse-marker" />
+              <strong>Navigation accent</strong>
+            </div>
+            <div className="nav-links" style={{ display: "flex" }}>
+              <a href="#">Overview</a>
+              <a href="#" style={{ color: "var(--text-primary)" }}>
+                <span className="metraly-pulse-inline">
+                  <span className="metraly-pulse-marker" />
+                  Brandbook
+                </span>
+              </a>
+              <a href="#">Tokens</a>
+            </div>
           </div>
         </div>
       </section>
