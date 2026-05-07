@@ -172,24 +172,62 @@
 
 .resize-handle {
   position: absolute;
-  width: 16px;
-  height: 16px;
-  border-radius: 6px;
-  border: 1px solid rgba(0,229,204,0.7);
-  background: #0b0f14;
-  box-shadow: 0 0 16px rgba(0,229,204,0.22);
+  width: 18px;
+  height: 18px;
+  opacity: 0.9;
+}
+
+.resize-handle::before,
+.resize-handle::after {
+  content: "";
+  position: absolute;
+  background: var(--cyan);
+  border-radius: 999px;
+  box-shadow: 0 0 14px rgba(0,229,204,0.34);
+}
+
+.resize-handle::before {
+  width: 2px;
+  height: 18px;
+}
+
+.resize-handle::after {
+  width: 18px;
+  height: 2px;
 }
 
 .resize-handle-se {
   right: 10px;
   bottom: 10px;
   cursor: nwse-resize;
+  transform: rotate(180deg);
+}
+
+.resize-handle-se::before {
+  right: 0;
+  top: 0;
+}
+
+.resize-handle-se::after {
+  right: 0;
+  bottom: 0;
 }
 
 .resize-handle-e {
   right: 10px;
-  top: calc(50% - 8px);
+  top: calc(50% - 9px);
   cursor: ew-resize;
+  transform: rotate(90deg);
+}
+
+.resize-handle-e::before {
+  right: 0;
+  top: 0;
+}
+
+.resize-handle-e::after {
+  right: 0;
+  bottom: 0;
 }
 
 @media (max-width: 900px) {
