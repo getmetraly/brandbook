@@ -1,10 +1,4 @@
-const chartData = [
-  { label: "Mon", value: 42 },
-  { label: "Tue", value: 56 },
-  { label: "Wed", value: 68 },
-  { label: "Thu", value: 74 },
-  { label: "Fri", value: 88 },
-];
+import RechartsShowcase from "./RechartsShowcase";
 
 function Section({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (
@@ -18,6 +12,68 @@ function Section({ title, description, children }: { title: string; description:
   );
 }
 
+function BoardEditModePreview() {
+  return (
+    <div className="board-edit-shell panel">
+      <div className="board-edit-toolbar">
+        <div>
+          <strong>Edit board layout</strong>
+          <span>Drag widgets, resize from corners, or toggle full-width mode.</span>
+        </div>
+        <div className="component-row" style={{ marginTop: 0 }}>
+          <button className="btn btn-secondary">Cancel</button>
+          <button className="btn btn-primary">Save layout</button>
+        </div>
+      </div>
+
+      <div className="board-grid-edit">
+        <div className="edit-widget is-selected">
+          <div className="widget-edit-topbar">
+            <span className="drag-handle" aria-label="Drag handle">⋮⋮</span>
+            <strong>Flow efficiency</strong>
+            <span className="brand-badge brand-badge-primary">selected</span>
+          </div>
+          <div className="metric-value">81%</div>
+          <p>Selected widget: show border, toolbar and resize handles.</p>
+          <span className="resize-handle resize-handle-se" />
+          <span className="resize-handle resize-handle-e" />
+        </div>
+
+        <div className="edit-widget is-dragging">
+          <div className="widget-edit-topbar">
+            <span className="drag-handle">⋮⋮</span>
+            <strong>Review latency</strong>
+          </div>
+          <div className="metric-value">4h</div>
+          <p>Dragging state: elevated, slightly transparent and cyan outline.</p>
+        </div>
+
+        <div className="drop-zone">
+          <span className="metraly-pulse-marker metraly-pulse-marker--lg" />
+          <strong>Drop widget here</strong>
+          <p>Dashed area makes available slots obvious.</p>
+        </div>
+
+        <div className="edit-widget is-full-width">
+          <div className="widget-edit-topbar">
+            <span className="drag-handle">⋮⋮</span>
+            <strong>Deployment health</strong>
+            <span className="brand-badge brand-badge-success">full width</span>
+          </div>
+          <div className="metraly-divider" />
+          <p>Full-width widgets should span the board and use a visible state badge.</p>
+          <span className="resize-handle resize-handle-se" />
+        </div>
+
+        <div className="ghost-widget">
+          <strong>Ghost preview</strong>
+          <p>Shows where the widget will land before drop.</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ComponentsPage() {
   return (
     <main>
@@ -26,7 +82,7 @@ export default function ComponentsPage() {
           <div className="eyebrow"><span className="metraly-pulse-marker" />Component system draft</div>
           <h1>Visual React component lab for Metraly.</h1>
           <p className="lead">
-            Buttons, badges, cards, widgets, charts, forms and layout patterns in one page before they move into the product and website.
+            Buttons, badges, cards, widgets, charts, forms, board edit mode and layout patterns before they move into the product and website.
           </p>
         </div>
         <div className="panel preview-card">
@@ -84,6 +140,10 @@ export default function ComponentsPage() {
           </div>
         </Section>
 
+        <Section title="Board edit mode" description="Visual states for drag-and-drop board configuration: selected, dragging, drop zone, ghost preview and full-width widget.">
+          <BoardEditModePreview />
+        </Section>
+
         <Section title="Layout system" description="Dashboard shell with sidebar, toolbar and responsive board area.">
           <div className="dashboard-layout-demo">
             <aside className="sidebar-demo panel">
@@ -115,32 +175,8 @@ export default function ComponentsPage() {
           </div>
         </Section>
 
-        <Section title="Charts" description="CSS/SVG chart drafts using Metraly graph colors. These can later be replaced with Recharts primitives.">
-          <div className="chart-grid">
-            <div className="component-card chart-card">
-              <h3>Bar chart</h3>
-              <div className="bar-chart-demo">
-                {chartData.map((item) => (
-                  <div className="bar-item" key={item.label}>
-                    <div className="bar-track"><span style={{ height: `${item.value}%` }} /></div>
-                    <small>{item.label}</small>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="component-card chart-card">
-              <h3>Line chart</h3>
-              <svg className="line-chart-demo" viewBox="0 0 420 180" role="img" aria-label="Line chart demo">
-                <path d="M20 140 L115 108 L210 82 L305 64 L400 32" fill="none" stroke="#00e5cc" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M20 140 L115 108 L210 82 L305 64 L400 32 L400 170 L20 170 Z" fill="rgba(0,229,204,0.12)" />
-              </svg>
-            </div>
-            <div className="component-card chart-card chart-wide">
-              <h3>Telemetry pulse chart</h3>
-              <div className="metraly-divider" />
-              <p>Use the pulse marker for dividers, live status breaks and observability-flavored section rhythm.</p>
-            </div>
-          </div>
+        <Section title="Charts" description="Recommended chart primitive: Recharts, wrapped by Metraly chart components and fed by brand tokens.">
+          <RechartsShowcase />
         </Section>
 
         <Section title="Forms and states" description="Inputs, selects and empty states for dashboard creation flows.">
