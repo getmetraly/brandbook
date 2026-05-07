@@ -11,11 +11,11 @@ import {
   type Dashboard,
   type WidgetConfig,
 } from "../../lib/fakeDashboardApi";
-// Import responsive grid layout and width provider from react-grid-layout
-import { Responsive, WidthProvider } from "react-grid-layout";
+// Import responsive grid layout from react-grid-layout
+import { Responsive } from "react-grid-layout";
 
-// Wrap Responsive component with WidthProvider to auto-calc width
-const ResponsiveGridLayout = WidthProvider(Responsive);
+// Use Responsive directly - it handles width internally in this version
+const ResponsiveGridLayout = Responsive;
 
 // Define a small registry of available widget templates.  In a real
 // application this would be fetched from a plugin registry or API.
