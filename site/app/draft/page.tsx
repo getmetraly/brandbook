@@ -12,6 +12,8 @@ import RechartsTelemetryCardDraft from "../components/draft/RechartsTelemetryCar
 import TelemetryDragOverlayDraft from "../components/draft/TelemetryDragOverlayDraft";
 import TelemetryGridItemDraft from "../components/draft/TelemetryGridItemDraft";
 import TelemetryEmptyStateDraft from "../components/draft/TelemetryEmptyStateDraft";
+import TelemetryToolbarDraft from "../components/draft/TelemetryToolbarDraft";
+import TelemetryActionMenuDraft from "../components/draft/TelemetryActionMenuDraft";
 
 function DraftSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -50,10 +52,12 @@ export default function DraftPage() {
 
         <DraftSection title="Board and dashboard">
           <div className="component-grid">
+            <div className="component-card"><h3>Toolbar</h3><TelemetryToolbarDraft /></div>
             <div className="component-card"><h3>Widget picker</h3><WidgetPickerCardDraft /></div>
             <div className="component-card"><h3>Table row</h3><TelemetryTableRowDraft /></div>
             <div className="component-card"><h3>Grid item</h3><TelemetryGridItemDraft /></div>
             <div className="component-card"><h3>Drag overlay</h3><TelemetryDragOverlayDraft /></div>
+            <div className="component-card"><h3>Action menu</h3><TelemetryActionMenuDraft /></div>
           </div>
         </DraftSection>
 
