@@ -18,10 +18,6 @@
   background: rgba(255,255,255,0.02);
   display: inline-grid;
   place-items: center;
-  transition:
-    border-color 160ms ease,
-    box-shadow 160ms ease,
-    background-color 160ms ease;
 }
 
 .telemetry-checkbox-draft.is-checked {
@@ -29,19 +25,12 @@
   box-shadow: 0 0 0 1px rgba(0,229,204,0.16);
 }
 
-.telemetry-checkbox-draft.is-error {
-  border-color: rgba(239,68,68,0.72);
-}
-
-.telemetry-checkbox-draft.is-disabled {
-  opacity: 0.42;
-}
-
 .telemetry-checkbox-pulse,
 .telemetry-select-indicator,
 .telemetry-switch-pulse,
 .telemetry-state-pulse,
-.telemetry-tab-pulse {
+.telemetry-tab-pulse,
+.telemetry-table-sparkline {
   width: 12px;
   height: 6px;
   display: inline-block;
@@ -80,21 +69,6 @@
   appearance: none;
   font: inherit;
   outline: none;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.02),
-    0 0 0 1px rgba(255,255,255,0.02);
-  transition:
-    border-color 160ms ease,
-    box-shadow 160ms ease,
-    background-color 160ms ease;
-}
-
-.telemetry-select-control select:hover,
-.telemetry-select-control select:focus {
-  border-color: rgba(0,229,204,0.22);
-  box-shadow:
-    0 0 0 1px rgba(0,229,204,0.12),
-    0 0 18px rgba(0,229,204,0.06);
 }
 
 .telemetry-select-control option {
@@ -117,7 +91,6 @@
   border: 1px solid rgba(255,255,255,0.12);
   background: rgba(255,255,255,0.04);
   padding: 0;
-  cursor: pointer;
 }
 
 .telemetry-switch-track {
@@ -160,7 +133,6 @@
 }
 
 .telemetry-tab {
-  position: relative;
   min-height: 42px;
   padding: 0 14px;
   border-radius: 14px;
@@ -192,14 +164,6 @@
 
 .telemetry-state-badge-draft.is-live {
   border-color: rgba(0,229,204,0.24);
-}
-
-.telemetry-state-badge-draft.is-delayed {
-  border-color: rgba(245,158,11,0.24);
-}
-
-.telemetry-state-badge-draft.is-disconnected {
-  border-color: rgba(239,68,68,0.28);
 }
 
 .widget-picker-card-draft {
@@ -236,8 +200,96 @@
   place-items: center;
 }
 
-.widget-picker-card-draft p {
+.widget-picker-card-draft p,
+.telemetry-toast-copy p,
+.telemetry-drawer-head p {
   margin: 0;
   color: var(--text-secondary);
   line-height: 1.6;
+}
+
+.telemetry-table-row-draft {
+  display: grid;
+  grid-template-columns: 32px minmax(140px,1fr) 120px 120px 80px auto;
+  align-items: center;
+  gap: 14px;
+  min-height: 72px;
+  padding: 0 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02);
+}
+
+.telemetry-table-row-draft.is-selected {
+  border-color: rgba(0,229,204,0.24);
+  background: rgba(0,229,204,0.04);
+}
+
+.telemetry-table-health,
+.telemetry-drag-preview {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+}
+
+.telemetry-table-muted {
+  color: var(--text-muted);
+}
+
+.telemetry-toast-draft {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(11,15,20,0.92);
+}
+
+.telemetry-toast-draft.is-live {
+  border-color: rgba(0,229,204,0.22);
+}
+
+.telemetry-toast-draft.is-delayed {
+  border-color: rgba(245,158,11,0.22);
+}
+
+.telemetry-toast-draft.is-disconnected {
+  border-color: rgba(239,68,68,0.22);
+}
+
+.telemetry-toast-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.telemetry-drawer-draft {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 24px;
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(8,12,18,0.96);
+}
+
+.telemetry-drawer-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.telemetry-drawer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.telemetry-drag-grip {
+  opacity: 0.58;
+  letter-spacing: 2px;
 }
