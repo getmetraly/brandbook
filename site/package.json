@@ -10,13 +10,17 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@dnd-kit/core": "latest",
+    "@dnd-kit/sortable": "latest",
+    "@dnd-kit/utilities": "latest",
     "@next/mdx": "latest",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "recharts": "latest"
-    , "@dnd-kit/core": "latest"
-    , "react-grid-layout": "latest"
+    "react-grid-layout": "latest",
+    "react-resizable": "latest",
+    "recharts": "latest",
+    "zustand": "latest"
   },
   "devDependencies": {
     "@types/node": "latest",

@@ -5,8 +5,8 @@ import MetralyTable from '../implementation-pack/react/MetralyTable';
 describe('MetralyTable', () => {
   it('renders headers and data correctly', () => {
     const columns = [
-      { key: 'name', header: 'Name' },
-      { key: 'age', header: 'Age', align: 'right' as const },
+      { key: 'name' as const, header: 'Name' },
+      { key: 'age' as const, header: 'Age', align: 'right' as const },
     ];
     const data = [
       { name: 'Alice', age: 30 },
@@ -24,7 +24,7 @@ describe('MetralyTable', () => {
   });
 
   it('shows empty state when no data', () => {
-    const columns = [ { key: 'col', header: 'Column' } ];
+    const columns = [ { key: 'col' as const, header: 'Column' } ];
     render(<MetralyTable columns={columns} data={[]} emptyText="No rows" />);
     expect(screen.getByText('No rows')).toBeInTheDocument();
   });

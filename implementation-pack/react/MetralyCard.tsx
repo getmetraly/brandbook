@@ -55,7 +55,7 @@ export function MetralyCard({
       </div>
       <div className="metraly-card-body">
         {state === "loading" && (
-          <div className="metraly-card-skeleton">
+          <div className="metraly-card-skeleton" role="status" aria-label="Loading card content">
             <div className="skeleton-bar skeleton-bar--short" />
             <div className="skeleton-bar skeleton-bar--medium" />
             <div className="skeleton-bar skeleton-bar--long" />

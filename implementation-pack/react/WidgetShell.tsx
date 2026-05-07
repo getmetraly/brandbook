@@ -32,14 +32,6 @@ export interface WidgetShellProps {
   children?: React.ReactNode;
   /** Additional class names appended to the container. */
   className?: string;
-  /** Called when the user begins dragging via the handle. */
-  onDragStart?: React.MouseEventHandler<HTMLSpanElement>;
-  /** Called when the user stops dragging via the handle. */
-  onDragEnd?: React.MouseEventHandler<HTMLSpanElement>;
-  /** Called when the user begins resizing via the handle. */
-  onResizeStart?: React.MouseEventHandler<HTMLDivElement>;
-  /** Called when the user stops resizing via the handle. */
-  onResizeEnd?: React.MouseEventHandler<HTMLDivElement>;
 }
 
 /**
@@ -69,10 +61,6 @@ export function WidgetShell({
   fullWidth = false,
   children,
   className,
-  onDragStart,
-  onDragEnd,
-  onResizeStart,
-  onResizeEnd,
 }: WidgetShellProps) {
   const classes = [
     "metraly-widget-shell",
@@ -106,8 +94,6 @@ export function WidgetShell({
           role="button"
           tabIndex={0}
           aria-label="Drag widget"
-          onMouseDown={onDragStart}
-          onMouseUp={onDragEnd}
         >
           <span aria-hidden="true">⋮⋮</span>
         </span>
@@ -116,8 +102,6 @@ export function WidgetShell({
         <div
           className="metraly-widget-shell-resize-handle"
           aria-hidden="true"
-          onMouseDown={onResizeStart}
-          onMouseUp={onResizeEnd}
         />
       )}
     </div>

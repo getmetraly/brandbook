@@ -22,15 +22,13 @@ export interface MetralyTableProps<T extends Record<string, any>> {
   emptyText?: string;
   /** Function returning a unique key for each row; default uses index. */
   rowKey?: (row: T, index: number) => string;
-  /** Handler invoked when a row is clicked. */
-  onRowClick?: (row: T) => void;
   /** Additional class names for the table. */
   className?: string;
 }
 
 /**
  * A simple table component consistent with Metraly’s design system.  Supports
- * loading and empty states, click callbacks and basic cell alignment.  For
+ * loading and empty states and basic cell alignment.  For
  * sorting, filtering and pagination, wrap this component with custom logic.
  */
 export function MetralyTable<T extends Record<string, any>>({
@@ -39,7 +37,6 @@ export function MetralyTable<T extends Record<string, any>>({
   loading = false,
   emptyText = "No records",
   rowKey,
-  onRowClick,
   className,
 }: MetralyTableProps<T>) {
   const classes = ["metraly-table", className].filter(Boolean).join(" ");
@@ -88,7 +85,6 @@ export function MetralyTable<T extends Record<string, any>>({
                 key={key}
                 role="row"
                 className="metraly-table-row"
-                onClick={() => onRowClick?.(row)}
               >
                 {columns.map((col) => (
                   <td

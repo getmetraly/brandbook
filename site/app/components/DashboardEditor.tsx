@@ -10,19 +10,12 @@ import {
   removeWidget,
   type Dashboard,
   type WidgetConfig,
-} from "../lib/fakeDashboardApi";
+} from "../../lib/fakeDashboardApi";
 // Import responsive grid layout and width provider from react-grid-layout
 import { Responsive, WidthProvider } from "react-grid-layout";
 
 // Wrap Responsive component with WidthProvider to auto-calc width
 const ResponsiveGridLayout = WidthProvider(Responsive);
-
-// Import grid and resizable styles.  Without these imports the grid
-// will not display correctly.  Note: these packages are provided by
-// react-grid-layout; when migrating to production ensure they are
-// installed and available.
-import "react-grid-layout/css/styles.css";
-import "react-resizable/css/styles.css";
 
 // Define a small registry of available widget templates.  In a real
 // application this would be fetched from a plugin registry or API.
@@ -154,6 +147,7 @@ export default function DashboardEditor() {
             breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
             cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
             rowHeight={160}
+            draggableHandle=".metraly-widget-shell-drag-handle"
             onLayoutChange={(currentLayout) => {
               // currentLayout is array of items with updated x/y/w/h
               setDashboard((prev) => {

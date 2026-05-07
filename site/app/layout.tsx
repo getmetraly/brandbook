@@ -12,6 +12,10 @@ import "../../implementation-pack/css/metraly-table.css";
 // Import widget shell styles.  This must come after card and table styles to
 // override any generic panel defaults where necessary.
 import "../../implementation-pack/css/metraly-widget-shell.css";
+// Global styles for react-grid-layout must be imported from the root layout,
+// not from a nested Client Component.
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
 
 export const metadata: Metadata = {
   title: "Metraly Brandbook",

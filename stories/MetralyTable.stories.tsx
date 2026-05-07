@@ -7,8 +7,8 @@ interface Row {
 }
 
 const columns = [
-  { key: 'name', header: 'Name' },
-  { key: 'value', header: 'Value', align: 'right' as const },
+  { key: 'name' as const, header: 'Name' },
+  { key: 'value' as const, header: 'Value', align: 'right' as const },
 ];
 
 const data: Row[] = [
