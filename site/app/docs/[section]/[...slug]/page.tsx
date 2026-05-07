@@ -9,19 +9,23 @@ const validSections = new Set<DocSection>([
   "migration",
 ]);
 
-export default function DocPage({
+type DocPageParams = {
+  section: DocSection;
+  slug: string[];
+};
+
+export default async function DocPage({
   params,
 }: {
-  params: {
-    section: DocSection;
-    slug: string[];
-  };
+  params: Promise<DocPageParams>;
 }) {
-  if (!validSections.has(params.section)) {
+  const resolvedParams = await params;
+
+  if (!validSections.has(resolvedParams.section)) {
     notFound();
   }
 
-  const doc = getDocBySlug(params.section, params.slug);
+  const doc = getDocBySlug(resolvedParams.section, resolvedParams.slug);
 
   if (!doc) {
     notFound();
@@ -35,7 +39,7 @@ export default function DocPage({
         <div>
           <div className="eyebrow">
             <span className="metraly-pulse-marker" />
-            {params.section}
+            {resolvedParams.section}
           </div>
           <h1 style={{ fontSize: "clamp(38px,5vw,72px)", marginTop: 20 }}>
             {doc.title}
