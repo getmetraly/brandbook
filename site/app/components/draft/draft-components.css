@@ -61,6 +61,7 @@
 .telemetry-select-draft {
   flex-direction: column;
   align-items: flex-start;
+  width: 100%;
 }
 
 .telemetry-select-control {
@@ -70,20 +71,42 @@
 
 .telemetry-select-control select {
   width: 100%;
-  min-height: 52px;
-  padding: 0 54px 0 16px;
+  min-height: 56px;
+  padding: 0 56px 0 18px;
   border-radius: 18px;
-  border: 1px solid var(--border-bright);
-  background: rgba(11,15,20,0.82);
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(8,12,18,0.92);
   color: var(--text-primary);
   appearance: none;
   font: inherit;
+  outline: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.02),
+    0 0 0 1px rgba(255,255,255,0.02);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease;
+}
+
+.telemetry-select-control select:hover,
+.telemetry-select-control select:focus {
+  border-color: rgba(0,229,204,0.22);
+  box-shadow:
+    0 0 0 1px rgba(0,229,204,0.12),
+    0 0 18px rgba(0,229,204,0.06);
+}
+
+.telemetry-select-control option {
+  background: rgb(10,14,20);
+  color: var(--text-primary);
 }
 
 .telemetry-select-indicator {
   position: absolute;
   right: 18px;
   top: calc(50% - 3px);
+  pointer-events: none;
 }
 
 .telemetry-switch-draft {
