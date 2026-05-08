@@ -1,6 +1,6 @@
 import { DashboardToolbar, DashboardWidget, StateBadge } from "@metraly/ui";
 import DocsShell from "../../components/docs/DocsShell";
-import { DocsSection, LegacyNotice } from "../../components/docs/DocsBlocks";
+import { DocsCardGrid, DocsRouteCard, DocsSection, LegacyNotice } from "../../components/docs/DocsBlocks";
 import { getRelatedLinks } from "../../lib/docs/navigation";
 
 export default function DeliveryHealthExamplePage() {
@@ -8,7 +8,7 @@ export default function DeliveryHealthExamplePage() {
     <DocsShell currentPath="/examples/delivery-health" title="Delivery Health" description="Deployment and review health surface composed from current primitives." status="draft" related={getRelatedLinks(["/components/dashboard", "/components/data-display", "/patterns/dashboard-layout"])}>
       <DocsSection id="preview" title="Preview scaffold">
         <div className="docs-dashboard-preview">
-          <DashboardToolbar title="Delivery Health" description="Example page prepared for the next content pass." actions={<StateBadge state="live" label="Draft" />} />
+          <DashboardToolbar title="Delivery Health" description="Example page prepared for the next content pass." actions={<StateBadge state="stale" label="Preview" />} />
           <div className="docs-dashboard-preview-grid">
             <DashboardWidget title="Primary signal" state="live"><strong className="metric-value">81%</strong></DashboardWidget>
             <DashboardWidget title="Secondary signal" state="delayed"><strong className="metric-value">4h</strong></DashboardWidget>
@@ -16,6 +16,13 @@ export default function DeliveryHealthExamplePage() {
           </div>
         </div>
         <LegacyNotice>Fill this example with a real dashboard scenario, then link it back to the relevant component and pattern pages.</LegacyNotice>
+      </DocsSection>
+      <DocsSection id="related" title="Where this fits" description="This scenario should connect back to dashboard, table and layout guidance.">
+        <DocsCardGrid>
+          <DocsRouteCard item={{ title: "Dashboard", href: "/components/dashboard", description: "Editor-ready board primitives." }} />
+          <DocsRouteCard item={{ title: "Data Display", href: "/components/data-display", description: "Tables and status summaries." }} />
+          <DocsRouteCard item={{ title: "Dashboard Layout", href: "/patterns/dashboard-layout", description: "Page-level composition rules." }} />
+        </DocsCardGrid>
       </DocsSection>
     </DocsShell>
   );

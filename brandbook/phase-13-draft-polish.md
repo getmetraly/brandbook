@@ -2,7 +2,7 @@
 
 Status: draft page correction pass
 
-This pass applies the latest visual corrections to `/draft` while keeping `/components` unchanged as the baseline reference.
+This pass applies the latest visual corrections to `/legacy-sandbox` while keeping `/components` unchanged as the baseline reference.
 
 ## Changes
 
@@ -17,7 +17,7 @@ This pass applies the latest visual corrections to `/draft` while keeping `/comp
 Changed file:
 
 ```text
-site/app/components/draft/draft-components.css
+site/app/components/previews/previews.css
 ```
 
 Unchanged file:
@@ -38,4 +38,4 @@ site/app/components/page.tsx
 
 ## Current design status
 
-This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/legacy-sandbox` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/legacy-sandbox` as the active hardening lab.

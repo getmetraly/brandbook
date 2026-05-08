@@ -4,6 +4,8 @@ Status: active design direction.
 
 Board editing is a core Metraly surface. It must feel like an engineering workspace, not a generic dashboard builder.
 
+Canonical board-edit previews now live in `/patterns/widget-editor`, `/components/dashboard` and `/components/feedback`. Keep `/legacy-sandbox` as a legacy comparison surface only.
+
 ## Current rules
 
 - Selected widgets use a cyan border, subtle glow and visible resize affordances.

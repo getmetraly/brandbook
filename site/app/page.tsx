@@ -3,20 +3,33 @@ import DocsShell from "./components/docs/DocsShell";
 import { DocsCardGrid, DocsRouteCard, DocsSection, LegacyNotice } from "./components/docs/DocsBlocks";
 import { docsNavigation, getRelatedLinks } from "./lib/docs/navigation";
 
+const componentGroup = docsNavigation.find((group) => group.href === "/components")!;
+
 export default function HomePage() {
   return (
     <DocsShell
       currentPath="/"
-      eyebrow="Metraly design system"
+      eyebrow="Metraly docs portal"
       title="A clean portal for brand, UI and dashboard patterns."
-      description="The brandbook site is now structured as a Next.js documentation portal instead of a single oversized draft page. Use the grouped sections to inspect foundations, component previews, patterns, examples and the dashboard editor flow."
+      description="The brandbook site is now structured as a registry-driven Next.js documentation portal. Use the grouped sections to inspect foundations, component previews, patterns, examples and the dashboard editor flow."
       related={getRelatedLinks(["/components/forms", "/components/dashboard", "/examples/engineering-dashboard", "/editor"])}
-      toc={[{ title: "Start here", href: "#start" }, { title: "Current architecture", href: "#architecture" }, { title: "Legacy cleanup", href: "#legacy" }]}
+      toc={[
+        { title: "Portal map", href: "#portal-map" },
+        { title: "Component groups", href: "#component-groups" },
+      ]}
     >
-      <DocsSection id="start" title="Start here" description="Every primary page is linked from the sidebar and top navigation. Component previews are grouped by domain so pages do not grow like the legacy /draft sandbox.">
+      <DocsSection id="portal-map" title="Portal map" description="Every primary page is linked from the sidebar and top navigation. Canonical previews are grouped by domain so pages do not grow like the legacy sandbox.">
         <DocsCardGrid>
-          {docsNavigation.slice(0, 4).map((group) => (
+          {docsNavigation.map((group) => (
             <DocsRouteCard key={group.href} item={{ title: group.title, href: group.href, description: group.description }} />
+          ))}
+        </DocsCardGrid>
+      </DocsSection>
+
+      <DocsSection id="component-groups" title="Component groups" description="These sections replace the old single-page dump and keep previews focused on one product surface at a time.">
+        <DocsCardGrid>
+          {componentGroup?.items.map((item) => (
+            <DocsRouteCard key={item.href} item={item} />
           ))}
         </DocsCardGrid>
       </DocsSection>
@@ -29,21 +42,6 @@ export default function HomePage() {
           <MetralyCard title="Navigation model" subtitle="Registry-driven links" footer={<StateBadge state="live" label="Ready" />}>
             <p>All top-level documentation links are defined in <code>site/app/lib/docs/navigation.ts</code>.</p>
           </MetralyCard>
-        </div>
-      </DocsSection>
-
-      <DocsSection id="legacy" title="Legacy cleanup" description="The draft page remains available while previews are migrated into grouped canonical pages.">
-        <LegacyNotice>
-          /draft is now a legacy sandbox. New previews should land under /components, /patterns or /examples. The next cleanup pass should remove migrated blocks from /draft and then delete draft-only CSS that no longer has consumers.
-        </LegacyNotice>
-        <div className="component-preview panel" style={{ marginTop: 16 }}>
-          <div className="component-preview-copy">
-            <h3>Metraly identity</h3>
-            <p>The logo and core surfaces are reusable through @metraly/ui and should be shown in the portal instead of recreated per page.</p>
-          </div>
-          <div className="component-preview-stage">
-            <MetralyLogo />
-          </div>
         </div>
       </DocsSection>
     </DocsShell>

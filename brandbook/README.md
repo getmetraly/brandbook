@@ -8,9 +8,8 @@ The current design is near production-ready in direction. The most accurate snap
 
 ```text
 brandbook/current-design-state.md
-site/app/draft/page.tsx
-site/app/components/draft/draft-components.css
-site/app/components/draft/README.md
+site/app/components/previews/previews.css
+site/app/components/previews/README.md
 ```
 
 ## Core idea
@@ -37,9 +36,9 @@ AGENTS.md        Operating instructions for agents
 ## Protected baseline and draft lab
 
 - `/components` is the protected baseline page.
-- `/draft` is the active hardening lab.
+- `site/app/components/previews/` is the active preview hardening surface.
 
-Agents and contributors must preserve `/components` unless explicitly instructed to change it. New visual exploration and production-hardening work belongs in `/draft` first.
+Agents and contributors must preserve `/components` unless explicitly instructed to change it. New visual exploration and production-hardening work belongs in `site/app/components/previews/` first.
 
 ## Current visual pillars
 

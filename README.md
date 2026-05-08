@@ -9,9 +9,8 @@ Status: near production-ready design direction.
 The current design is centered on a dark, engineering-first, telemetry-native interface:
 
 - `/components` is the protected baseline/reference gallery. Do not change it without explicit approval.
-- `/draft` is the hardening lab for near-production component patterns and real product scenarios.
-- `site/app/components/draft/` contains the draft component implementations used by `/draft`.
-- `site/app/components/draft/draft-components.css` contains the latest visual polish for the draft system.
+- `site/app/components/previews/` contains the preview component implementations used by the docs portal.
+- `site/app/components/previews/previews.css` contains the latest visual polish for the preview system.
 - `brandbook/current-design-state.md` is the canonical snapshot for the current design.
 - `AGENTS.md` defines how agents should work with this repository.
 
@@ -36,8 +35,7 @@ Core qualities:
 ```text
 site/app/page.tsx                Brandbook landing page
 site/app/components/page.tsx     Protected baseline component reference
-site/app/draft/page.tsx          Current draft hardening lab
-site/app/components/draft/       Draft component candidates
+site/app/components/previews/       Preview component candidates
 ```
 
 ## Documentation map
@@ -46,7 +44,6 @@ site/app/components/draft/       Draft component candidates
 brandbook/current-design-state.md       Current canonical visual snapshot
 brandbook/pulse-marker-draft.md         Pulse-wave primitive rules
 brandbook/phase-13-final-polish.md      Latest visual polish notes
-brandbook/draft-vs-components-conformance.md
 
 design-system/components.md             Component rules and states
 design-system/board-edit-mode.md        Dashboard edit mode and DnD guidance
@@ -72,7 +69,7 @@ npm run build
 
 - Keep all brandbook documentation in English.
 - Do not edit `/components` unless explicitly instructed.
-- Use `/draft` for experiments, review surfaces and component hardening.
+- Use the preview component set for experiments, review surfaces and component hardening.
 - Do not use pulse indicators as drag handles.
 - Use neutral grip dots for drag affordances.
 - Keep hover/focus states stable: no vertical jumps.

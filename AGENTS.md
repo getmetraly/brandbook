@@ -12,7 +12,7 @@ This repository is the visual source of truth for Metraly. It contains:
 - implementation assets;
 - the Next.js brandbook site;
 - protected baseline examples in `/components`;
-- active draft hardening work in `/draft`.
+- active preview hardening work in `site/app/components/previews`.
 
 ## Language rule
 
@@ -38,9 +38,9 @@ Not allowed without approval:
 - removing the `Metric source` example;
 - rewriting CSS specifically for `/components`.
 
-### `/draft`
+### Preview hardening
 
-`site/app/draft/page.tsx` is the active working lab. Use this page for experiments, component hardening, screenshot review, state coverage and product scenario examples.
+`site/app/components/previews/` is the active working surface for experiments, component hardening, screenshot review, state coverage and product scenario examples.
 
 ## Current design snapshot
 
@@ -48,7 +48,7 @@ Before editing UI or docs, read:
 
 ```text
 brandbook/current-design-state.md
-site/app/components/draft/README.md
+site/app/components/previews/README.md
 design-system/components.md
 design-system/micro-telemetry-primitives.md
 design-system/board-edit-mode.md
@@ -111,7 +111,7 @@ Every component candidate should show or support the relevant states:
 When changing UI or visual direction, update the relevant `.md` docs in the same patch:
 
 - `brandbook/current-design-state.md`
-- `site/app/components/draft/README.md`
+- `site/app/components/previews/README.md`
 - `design-system/components.md`
 - `design-system/micro-telemetry-primitives.md`
 - `design-system/board-edit-mode.md`
@@ -123,7 +123,7 @@ When changing UI or visual direction, update the relevant `.md` docs in the same
 Before returning a patch/archive:
 
 - `/components` unchanged unless explicitly requested.
-- `/draft` compiles conceptually and imports existing components.
+- preview hardening surfaces compile conceptually and import existing components.
 - CSS braces are balanced.
 - No visible `draft` badges unless requested.
 - No pulse before drag handles.

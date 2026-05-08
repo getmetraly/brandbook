@@ -7,8 +7,8 @@ This document freezes the current Metraly brandbook design so future agents and 
 ## Source of truth
 
 - `/components` is the protected baseline reference page.
-- `/draft` is the active hardening lab.
-- The latest accepted design is represented by `site/app/draft/page.tsx` plus `site/app/components/draft/draft-components.css`.
+- The preview hardening surface is represented by the grouped docs pages under `site/app/components`, `site/app/patterns`, `site/app/examples`, `site/app/foundations` and `site/app/editor`.
+- The preview component set remains represented by `site/app/components/previews/` plus `site/app/components/previews/previews.css`.
 - `AGENTS.md` defines repository operating rules for future AI/code agents.
 
 ## Visual identity
@@ -88,9 +88,24 @@ Rules:
 - Do not place pulse-wave before `Drag to move` text.
 - Avoid noisy repeated pulse decorations.
 
-## `/draft` page structure
+## Docs portal structure
 
-The draft page currently acts as a product-scenario review surface with three screens:
+The current site structure uses grouped docs pages instead of one oversized showcase page. The main route groups are:
+
+- `/foundations`
+- `/components/primitives`
+- `/components/forms`
+- `/components/data-display`
+- `/components/dashboard`
+- `/components/charts`
+- `/patterns/dashboard-layout`
+- `/patterns/widget-editor`
+- `/examples/engineering-dashboard`
+- `/editor`
+
+## Preview hardening structure
+
+The preview component set complements the grouped docs pages and still covers the product-scenario review surfaces:
 
 1. Core controls and dashboard widgets.
 2. Charts, widgets and drag-and-drop.
@@ -171,4 +186,4 @@ A component is ready to move out of draft when it has:
 - clear API and prop names;
 - accessibility notes;
 - usage examples;
-- no hidden dependency on `/draft`-only CSS.
+- no hidden dependency on preview-only CSS.

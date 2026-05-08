@@ -6,6 +6,10 @@ import {
   WidgetPickerCard,
   type DashboardWidgetInstance,
 } from "@metraly/ui";
+import TelemetryEmptyState from "../../components/previews/TelemetryEmptyState";
+import TelemetryGridItem from "../../components/previews/TelemetryGridItem";
+import TelemetryWidgetShell from "../../components/previews/TelemetryWidgetShell";
+import WidgetPickerCardPreview from "../../components/previews/WidgetPickerCard";
 import DocsShell from "../../components/docs/DocsShell";
 import { ComponentPreview, ComponentStateGrid, DocsSection } from "../../components/docs/DocsBlocks";
 import { getRelatedLinks } from "../../lib/docs/navigation";
@@ -38,6 +42,9 @@ export default function DashboardComponentsPage() {
         <ComponentPreview title="DashboardEmptyState" description="First-run surface for new boards." states={["no widgets", "call to action"]}>
           <DashboardEmptyState action={<span className="btn btn-primary">Add widget</span>} />
         </ComponentPreview>
+        <ComponentPreview title="TelemetryEmptyState" description="Legacy empty state preview used while the canonical board empty state is hardened." states={["empty", "call to action"]}>
+          <TelemetryEmptyState />
+        </ComponentPreview>
       </DocsSection>
       <DocsSection id="picker" title="Widget picker">
         <ComponentPreview title="WidgetPickerCard" description="Selectable card for widget catalog and dashboard editor flows." states={["default", "selected", "disabled"]}>
@@ -45,6 +52,20 @@ export default function DashboardComponentsPage() {
             <WidgetPickerCard title="Flow efficiency" description="Track delivery throughput and flow." selected />
             <WidgetPickerCard title="Review latency" description="Track PR waiting time." state="delayed" tags={["github", "review"]} />
           </ComponentStateGrid>
+        </ComponentPreview>
+        <ComponentPreview title="WidgetPickerCard / preview" description="Preview wrapper aligned with the canonical picker contract while the editor migrates." states={["selected", "delayed", "no-data"]}>
+          <ComponentStateGrid>
+            <WidgetPickerCardPreview />
+            <WidgetPickerCardPreview title="Review latency" description="Track PR waiting time." state="delayed" tags={["github", "review"]} selected={false} />
+          </ComponentStateGrid>
+        </ComponentPreview>
+      </DocsSection>
+      <DocsSection id="shells" title="Widget shells" description="Reusable widget shells should stay readable inside cards and grid layouts.">
+        <ComponentPreview title="TelemetryWidgetShell" description="Widget shell used for dashboard content, metrics and empty states." states={["live", "resizable", "selected"]}>
+          <TelemetryWidgetShell />
+        </ComponentPreview>
+        <ComponentPreview title="TelemetryGridItem" description="Grid-item wrapper showing resize affordances and board-friendly spacing." states={["live", "resizable", "board"]}>
+          <TelemetryGridItem />
         </ComponentPreview>
       </DocsSection>
     </DocsShell>

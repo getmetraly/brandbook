@@ -26,7 +26,7 @@ export interface DocsShellProps {
 
 function StatusBadge({ status }: { status?: DocsNavItem["status"] }) {
   if (!status) return null;
-  const label = status === "ready" ? "Ready" : status === "legacy" ? "Legacy" : status === "planned" ? "Planned" : "Draft";
+  const label = status === "ready" ? "Ready" : status === "legacy" ? "Legacy" : status === "planned" ? "Planned" : "Preview";
   return <span className={`docs-status docs-status-${status}`}>{label}</span>;
 }
 

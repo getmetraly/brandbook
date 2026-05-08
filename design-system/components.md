@@ -1,6 +1,6 @@
 # Component Guidelines
 
-Status: current design direction aligned with `/draft` phase 13.
+Status: current design direction aligned with the grouped docs portal and legacy `/legacy-sandbox` sandbox.
 
 ## Component philosophy
 
@@ -9,7 +9,7 @@ Metraly components must feel like engineering tools: calm, precise, dense and re
 ## Baseline vs draft
 
 - `/components` is the protected baseline.
-- `/draft` is where component candidates are hardened against real product scenarios.
+- `/legacy-sandbox` is where component candidates are hardened against real product scenarios, but it is no longer the canonical component documentation surface.
 
 ## Current component language
 

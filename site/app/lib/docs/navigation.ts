@@ -62,16 +62,6 @@ export const docsNavigation: DocsNavGroup[] = [
       { title: "Team Performance", href: "/examples/team-performance", description: "Team comparison and flow signals.", status: "draft" },
     ],
   },
-  {
-    title: "Sandbox",
-    href: "/draft",
-    description: "Legacy draft laboratory retained temporarily during migration.",
-    items: [
-      { title: "Legacy Draft", href: "/draft", description: "Large legacy showcase. Use grouped pages as canonical previews.", status: "legacy" },
-      { title: "Editor", href: "/editor", description: "Client dashboard editor with local persistence.", status: "ready" },
-      { title: "Source Docs", href: "/docs", description: "Raw markdown browser for repository documentation.", status: "draft" },
-    ],
-  },
 ];
 
 export const topLevelDocsLinks = [
@@ -80,7 +70,7 @@ export const topLevelDocsLinks = [
   { title: "Patterns", href: "/patterns" },
   { title: "Examples", href: "/examples" },
   { title: "Editor", href: "/editor" },
-  { title: "Source Docs", href: "/docs" },
+  { title: "Docs", href: "/docs" },
 ];
 
 export function flattenDocsNavigation(): DocsNavItem[] {
@@ -95,7 +85,7 @@ export function getDocsItem(href: string): DocsNavItem | undefined {
 }
 
 export function getPrevNext(href: string): { previous?: DocsNavItem; next?: DocsNavItem } {
-  const items = flattenDocsNavigation().filter((item) => item.href !== "/draft");
+  const items = flattenDocsNavigation();
   const index = items.findIndex((item) => item.href === href);
   return {
     previous: index > 0 ? items[index - 1] : undefined,

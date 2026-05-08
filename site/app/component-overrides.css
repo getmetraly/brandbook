@@ -249,7 +249,7 @@
   }
 }
 
-/* Draft page hardening: realistic analytics dashboard scenarios. */
+/* Preview page hardening: realistic analytics dashboard scenarios. */
 .draft-hero {
   grid-template-columns: minmax(0, 1fr) 360px;
   align-items: stretch;

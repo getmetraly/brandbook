@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import "./globals.css";
 import "./component-overrides.css";
-import "./components/draft/draft-components.css";
+import "./components/previews/previews.css";
 import "./components/docs/docs.css";
 // Import Metraly theme and component styles from @metraly/ui.  These
 // styles define the design tokens and the base UI primitives used across

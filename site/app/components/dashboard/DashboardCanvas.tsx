@@ -7,10 +7,41 @@ import {
   type DashboardLayoutItem,
   type DashboardWidgetInstance,
 } from "@metraly/ui";
-import { useEffect, useRef, useState, type ComponentProps } from "react";
+import { createElement, useEffect, useRef, useState, type ReactElement, type ReactNode } from "react";
 import DashboardWidgetRenderer from "./DashboardWidgetRenderer";
 
-type ResponsiveGridLayoutProps = ComponentProps<typeof Responsive>;
+type ResponsiveDashboardResizeHandle = "s" | "w" | "e" | "n" | "sw" | "nw" | "se" | "ne";
+
+type ResponsiveDashboardCompactType = "vertical" | "horizontal" | null;
+
+type ResponsiveDashboardBreakpoint = "lg" | "md" | "sm" | "xs" | "xxs";
+
+/**
+ * Local compatibility surface for react-grid-layout Responsive.
+ *
+ * The runtime package accepts these props, but the v2.2.x TypeScript surface
+ * exposed through the ESM entry is narrower under Next/Turbopack and omits
+ * several supported runtime props. Keeping the full prop surface here avoids
+ * leaking casts into the editor code while preserving build-time checks for
+ * the values we own.
+ */
+type ResponsiveDashboardGridProps = {
+  children: ReactNode;
+  className?: string;
+  layouts: Record<ResponsiveDashboardBreakpoint, DashboardLayoutItem[]>;
+  breakpoints: Record<ResponsiveDashboardBreakpoint, number>;
+  cols: Record<ResponsiveDashboardBreakpoint, number>;
+  rowHeight: number;
+  margin?: [number, number];
+  containerPadding?: [number, number];
+  draggableHandle?: string;
+  resizeHandles?: ResponsiveDashboardResizeHandle[];
+  compactType?: ResponsiveDashboardCompactType;
+  preventCollision?: boolean;
+  isDraggable?: boolean;
+  isResizable?: boolean;
+  onLayoutChange?: (currentLayout: readonly DashboardLayoutItem[]) => void;
+};
 
 function useElementWidth<TElement extends HTMLElement>() {
   const ref = useRef<TElement | null>(null);
@@ -40,12 +71,18 @@ function useElementWidth<TElement extends HTMLElement>() {
   return { ref, width };
 }
 
-function ResponsiveDashboardGrid(props: Omit<ResponsiveGridLayoutProps, "width">) {
+type ResponsiveDashboardGridRuntimeProps = ResponsiveDashboardGridProps & { width: number };
+
+const ResponsiveDashboardGridRuntime = Responsive as unknown as (
+  props: ResponsiveDashboardGridRuntimeProps,
+) => ReactElement;
+
+function ResponsiveDashboardGrid(props: ResponsiveDashboardGridProps) {
   const { ref, width } = useElementWidth<HTMLDivElement>();
 
   return (
     <div ref={ref} className="dashboard-grid-width-provider">
-      <Responsive {...props} width={width} />
+      <ResponsiveDashboardGridRuntime {...props} width={width} />
     </div>
   );
 }
@@ -103,35 +140,32 @@ export function DashboardCanvas({
 
   const layout = toLayout(widgets);
 
-  return (
-    <ResponsiveDashboardGrid
-      className="dashboard-grid dashboard-grid-rgl"
-      layouts={{ lg: layout, md: layout, sm: layout, xs: layout, xxs: layout }}
-      breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-      cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-      rowHeight={112}
-      margin={[16, 16]}
-      containerPadding={[0, 0]}
-      draggableHandle=".metraly-widget-shell-drag-handle"
-      resizeHandles={["se"]}
-      compactType="vertical"
-      preventCollision={false}
-      onLayoutChange={(currentLayout) =>
-        onLayoutChange(toDashboardLayoutItems(currentLayout as readonly DashboardLayoutItem[]))
-      }
-    >
-      {widgets.map((widget) => (
-        <div key={widget.id} className="metraly-dashboard-grid-shell">
-          <DashboardWidgetRenderer
-            widget={widget}
-            selected={selectedWidgetId === widget.id}
-            onSelect={onSelectWidget}
-            onRemove={onRemoveWidget}
-          />
-        </div>
-      ))}
-    </ResponsiveDashboardGrid>
-  );
+  const responsiveGridProps: ResponsiveDashboardGridProps = {
+    className: "dashboard-grid dashboard-grid-rgl",
+    layouts: { lg: layout, md: layout, sm: layout, xs: layout, xxs: layout },
+    breakpoints: { lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 },
+    cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
+    rowHeight: 112,
+    margin: [16, 16],
+    containerPadding: [0, 0],
+    draggableHandle: ".metraly-widget-shell-drag-handle",
+    resizeHandles: ["se"],
+    compactType: "vertical",
+    preventCollision: false,
+    onLayoutChange: (currentLayout) => onLayoutChange(toDashboardLayoutItems(currentLayout)),
+    children: widgets.map((widget) => (
+      <div key={widget.id} className="metraly-dashboard-grid-shell">
+        <DashboardWidgetRenderer
+          widget={widget}
+          selected={selectedWidgetId === widget.id}
+          onSelect={onSelectWidget}
+          onRemove={onRemoveWidget}
+        />
+      </div>
+    )),
+  };
+
+  return createElement(ResponsiveDashboardGrid, responsiveGridProps);
 }
 
 export default DashboardCanvas;
