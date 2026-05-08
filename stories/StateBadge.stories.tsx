@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { StateBadge } from '@metraly/ui';
+import '@metraly/ui/styles/metraly-state-badge.css';
 
 const meta: Meta<typeof StateBadge> = {
   title: 'Metraly/StateBadge',

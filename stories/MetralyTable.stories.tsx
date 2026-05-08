@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { MetralyTable } from '@metraly/ui';
+import '@metraly/ui/styles/metraly-table.css';
 
 interface Row {
   name: string;

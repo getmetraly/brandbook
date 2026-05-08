@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { MetralyCheckbox, MetralyRadio, MetralySelect, MetralySwitch, MetralyTabs } from '@metraly/ui';
+import '@metraly/ui/styles/metraly-forms.css';
 
 function FormsShowcase() {
   return (

@@ -6,6 +6,9 @@ import {
   defaultDashboardWidgetRegistry,
   type DashboardWidgetInstance,
 } from '@metraly/ui';
+import '@metraly/ui/styles/metraly-state-badge.css';
+import '@metraly/ui/styles/metraly-widget-shell.css';
+import '@metraly/ui/styles/metraly-dashboard.css';
 
 const sampleWidgets: DashboardWidgetInstance[] = [
   {
