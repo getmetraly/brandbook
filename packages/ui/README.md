@@ -46,6 +46,7 @@ The current canonical `@metraly/ui` export surface covers the following base pri
   - `DashboardResizeHandle`
   - `defaultDashboardWidgetRegistry`
   - `findDashboardWidgetDefinition`
+  - `createDashboardWidgetInstance`
 
 ## Import policy
 

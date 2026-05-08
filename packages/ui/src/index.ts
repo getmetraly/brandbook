@@ -60,7 +60,7 @@ export type { DashboardDropZoneProps } from "./dashboard/DashboardDropZone";
 export { DashboardResizeHandle } from "./dashboard/DashboardResizeHandle";
 export type { DashboardResizeHandleProps } from "./dashboard/DashboardResizeHandle";
 
-export { defaultDashboardWidgetRegistry, findDashboardWidgetDefinition } from "./dashboard/WidgetRegistry";
+export { defaultDashboardWidgetRegistry, findDashboardWidgetDefinition, createDashboardWidgetInstance } from "./dashboard/WidgetRegistry";
 export type {
   DashboardLayoutItem,
   DashboardWidgetDefinition,

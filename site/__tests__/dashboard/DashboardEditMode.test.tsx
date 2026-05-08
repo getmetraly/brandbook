@@ -4,6 +4,7 @@ import {
   DashboardDropZone,
   DashboardResizeHandle,
   defaultDashboardWidgetRegistry,
+  createDashboardWidgetInstance,
   findDashboardWidgetDefinition,
 } from '@metraly/ui';
 
@@ -28,5 +29,19 @@ describe('dashboard edit mode primitives', () => {
       state: 'live',
     });
     expect(findDashboardWidgetDefinition(defaultDashboardWidgetRegistry, 'missing-type')).toBeUndefined();
+  });
+
+  it('creates widget instances from a registry definition', () => {
+    const definition = findDashboardWidgetDefinition(defaultDashboardWidgetRegistry, 'stat-card');
+    expect(definition).toBeDefined();
+
+    const widget = createDashboardWidgetInstance(definition!);
+
+    expect(widget).toMatchObject({
+      type: 'stat-card',
+      title: 'Stat Card',
+      state: 'live',
+      position: { x: 0, y: 0, w: 4, h: 2, minW: 3, minH: 2 },
+    });
   });
 });

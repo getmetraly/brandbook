@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import {
   DashboardToolbar,
   defaultDashboardWidgetRegistry,
+  createDashboardWidgetInstance,
   findDashboardWidgetDefinition,
   type DashboardLayoutItem,
 } from "@metraly/ui";
@@ -65,16 +66,16 @@ export function DashboardEditor() {
   async function handleAddWidget(type: string) {
     if (!dashboard) return;
     const definition = findDashboardWidgetDefinition(defaultDashboardWidgetRegistry, type);
-    const widget = dashboardRepository.createWidget(type, {
-      title: definition?.title ?? type,
-      description: definition?.description,
-      state: definition?.state ?? "live",
-      stateLabel: definition?.stateLabel,
-      position: {
-        ...(definition?.defaultLayout ?? { x: 0, y: dashboard.widgets.length * 2, w: 4, h: 2 }),
-        y: dashboard.widgets.length * 2,
-      },
-    });
+    const widget = definition
+      ? createDashboardWidgetInstance(definition, {
+          position: {
+            y: dashboard.widgets.length * 2,
+          },
+        })
+      : dashboardRepository.createWidget(type, {
+          title: type,
+          position: { x: 0, y: dashboard.widgets.length * 2, w: 4, h: 2 },
+        });
 
     const result = await dashboardRepository.upsertWidget(dashboard, widget);
     setDashboard(result.dashboard);

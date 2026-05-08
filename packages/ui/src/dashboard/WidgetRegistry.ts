@@ -1,4 +1,4 @@
-import type { DashboardWidgetDefinition } from "./types";
+import type { DashboardLayoutItem, DashboardWidgetDefinition, DashboardWidgetInstance } from "./types";
 
 export const defaultDashboardWidgetRegistry: DashboardWidgetDefinition[] = [
   {
@@ -35,4 +35,29 @@ export function findDashboardWidgetDefinition(
   type: string,
 ): DashboardWidgetDefinition | undefined {
   return registry.find((definition) => definition.type === type);
+}
+
+type CreateDashboardWidgetInstanceOptions = Partial<
+  Pick<DashboardWidgetInstance, "id" | "title" | "description" | "state" | "stateLabel" | "settings">
+> & {
+  position?: Partial<Omit<DashboardLayoutItem, "i">>;
+};
+
+export function createDashboardWidgetInstance(
+  definition: DashboardWidgetDefinition,
+  options: CreateDashboardWidgetInstanceOptions = {},
+): DashboardWidgetInstance {
+  return {
+    id: options.id ?? `widget_${definition.type}_${Math.random().toString(36).slice(2, 10)}`,
+    type: definition.type,
+    title: options.title ?? definition.title,
+    description: options.description ?? definition.description,
+    state: options.state ?? definition.state,
+    stateLabel: options.stateLabel ?? definition.stateLabel,
+    position: {
+      ...definition.defaultLayout,
+      ...(options.position ?? {}),
+    },
+    settings: options.settings,
+  };
 }
