@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import MetralyCard from '../implementation-pack/react/MetralyCard';
+import { MetralyCard } from '@metraly/ui';
 
 const meta: Meta<typeof MetralyCard> = {
   title: 'Metraly/MetralyCard',

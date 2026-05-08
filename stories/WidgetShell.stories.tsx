@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import WidgetShell from '../implementation-pack/react/WidgetShell';
+import { WidgetShell } from '@metraly/ui';
 
 const meta: Meta<typeof WidgetShell> = {
   title: 'Metraly/WidgetShell',

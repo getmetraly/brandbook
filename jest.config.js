@@ -1,14 +1,15 @@
 /** @type {import('jest').Config} */
 module.exports = {
-  testEnvironment: 'jsdom',
+  testEnvironment: "jsdom",
   transform: {
-    '^.+\\.(t|j)sx?$': 'babel-jest',
+    "^.+\\.(t|j)sx?$": ["babel-jest", { presets: ["next/babel"] }],
   },
   moduleNameMapper: {
-    // Map CSS modules to identity proxy to ignore during tests
-    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
-    // Alias for implementation pack
-    '^@/implementation-pack/(.*)$': '<rootDir>/unzipped/implementation-pack/$1',
+    "\\.(css|less|scss|sass)$": "identity-obj-proxy",
+    "^@metraly/ui$": "<rootDir>/packages/ui/src/index.ts",
+    "^@metraly/ui/components/(.*)$": "<rootDir>/packages/ui/src/components/$1.tsx",
+    "^@metraly/ui/styles/(.*)$": "<rootDir>/packages/ui/src/styles/$1"
   },
-  setupFilesAfterEnv: ['<rootDir>/unzipped/jest.setup.ts'],
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/site/node_modules/"],
 };
