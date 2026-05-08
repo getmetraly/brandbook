@@ -48,6 +48,50 @@ Usage rules:
 - Borders must remain low-contrast unless the element is active, selected or focused.
 - Glow must be subtle.
 
+## Theme contract
+
+The current theme contract is CSS-variable based and is applied through the shared Metraly theme wrapper.
+
+Canonical variables:
+
+- `--metraly-bg-base`
+- `--metraly-bg-surface`
+- `--metraly-bg-card`
+- `--metraly-bg-card-hover`
+- `--metraly-border`
+- `--metraly-border-bright`
+- `--metraly-text-primary`
+- `--metraly-text-secondary`
+- `--metraly-text-muted`
+- `--metraly-cyan`
+- `--metraly-purple`
+- `--metraly-green`
+- `--metraly-warning`
+- `--metraly-error`
+- `--metraly-info`
+- `--metraly-font-ui`
+- `--metraly-font-display`
+- `--metraly-font-mono`
+- `--metraly-radius-sm`
+- `--metraly-radius-md`
+- `--metraly-radius-lg`
+- `--metraly-radius-xl`
+- `--metraly-radius-pill`
+- `--metraly-shadow-panel`
+- `--metraly-glow-cyan`
+- `--metraly-glow-purple`
+- `--metraly-motion-fast`
+- `--metraly-motion-base`
+- `--metraly-motion-slow`
+- `--metraly-ease-out`
+
+Rules:
+
+- Dark is the default theme for brandbook and product surfaces.
+- Light mode stays available as a supported token set, but it is not the primary visual direction.
+- Theme switching should only change token values, not component APIs.
+- The `ThemeProvider` wrapper sets the `data-theme` contract and the shared `.metraly-theme` class.
+
 ## Typography
 
 Current direction:

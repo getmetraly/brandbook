@@ -18,6 +18,9 @@ export type { MetralyTableColumn, MetralyTableProps } from "./components/Metraly
 export { MetralyTelemetryLine } from "./components/MetralyTelemetryLine";
 export type { MetralyTelemetryLineProps } from "./components/MetralyTelemetryLine";
 
+export { ThemeProvider, MetralyThemeProvider } from "./components/ThemeProvider";
+export type { ThemeMode, ThemeProviderProps } from "./components/ThemeProvider";
+
 export { StateBadge } from "./components/StateBadge";
 export type { StateBadgeProps, StateBadgeState } from "./components/StateBadge";
 

@@ -23,7 +23,7 @@ This package turns the Metraly brandbook into reusable implementation files for 
 Prefer package-level component imports:
 
 ```ts
-import { MetralyCard, StateBadge, WidgetShell } from "@metraly/ui";
+import { MetralyCard, StateBadge, ThemeProvider, WidgetShell } from "@metraly/ui";
 ```
 
 Prefer style imports from the style subpath:
@@ -43,9 +43,10 @@ Metraly should feel like an engineering observability product: precise, self-hos
 1. Install the local package with `"@metraly/ui": "file:../packages/ui"`.
 2. Add `@metraly/ui` to `transpilePackages` in Next.js apps.
 3. Import `@metraly/ui/styles/metraly-theme.css` at the application root.
-4. Replace ad-hoc logo/pulse implementations with `MetralyLogo` or package assets.
-5. Migrate common cards, badges, metric blocks and dashboard shells to package components.
-6. Track rollout in `migration/brandbook-adoption-tasks.md`.
+4. Wrap the app shell in `ThemeProvider` when explicit theme switching is required.
+5. Replace ad-hoc logo/pulse implementations with `MetralyLogo` or package assets.
+6. Migrate common cards, badges, metric blocks and dashboard shells to package components.
+7. Track rollout in `migration/brandbook-adoption-tasks.md`.
 
 ## Current design status
 

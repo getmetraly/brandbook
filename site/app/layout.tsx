@@ -7,6 +7,7 @@ import "./components/docs/docs.css";
 // Import Metraly theme and component styles from @metraly/ui.  These
 // styles define the design tokens and the base UI primitives used across
 // the brandbook and draft dashboards.
+import { ThemeProvider } from "@metraly/ui";
 import "@metraly/ui/styles/metraly-theme.css";
 import "@metraly/ui/styles/metraly-card.css";
 import "@metraly/ui/styles/metraly-state-badge.css";
@@ -30,7 +31,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" data-theme="dark">
-      <body>{children}</body>
+      <body>
+        <ThemeProvider theme="dark">{children}</ThemeProvider>
+      </body>
     </html>
   );
 }
