@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { DashboardEmptyState, DashboardGrid, DashboardToolbar, DashboardWidget } from '@metraly/ui';
 
@@ -27,5 +27,27 @@ describe('dashboard components', () => {
     render(<DashboardWidget id="w1" title="Flow efficiency">81%</DashboardWidget>);
     expect(screen.getByText('Flow efficiency')).toBeInTheDocument();
     expect(screen.getByText('81%')).toBeInTheDocument();
+  });
+
+  it('supports selection and removal actions', () => {
+    const onSelect = jest.fn();
+    const onRemove = jest.fn();
+
+    render(
+      <DashboardWidget id="w1" title="Flow efficiency" onSelect={onSelect} onRemove={onRemove}>
+        81%
+      </DashboardWidget>
+    );
+
+    const widget = screen.getByRole('button', { name: /Flow efficiency/ });
+    fireEvent.click(widget);
+    fireEvent.keyDown(widget, { key: 'Enter' });
+    fireEvent.click(screen.getByRole('button', { name: 'Remove' }));
+
+    expect(onSelect).toHaveBeenCalledTimes(2);
+    expect(onSelect).toHaveBeenNthCalledWith(1, 'w1');
+    expect(onSelect).toHaveBeenNthCalledWith(2, 'w1');
+    expect(onRemove).toHaveBeenCalledTimes(1);
+    expect(onRemove).toHaveBeenCalledWith('w1');
   });
 });

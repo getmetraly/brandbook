@@ -6,7 +6,7 @@ Completed.
 
 ## Scope
 
-This pass continued the `@metraly/ui` package foundation work by moving the first group of draft form primitives into reusable package components.
+This pass continued the `@metraly/ui` package foundation work by moving the first group of preview form primitives into reusable package components.
 
 ## New package components
 
@@ -28,16 +28,16 @@ Updated package exports:
 
 - `packages/ui/src/index.ts`
 
-## Draft components migrated to shims
+## Preview components migrated to shims
 
-Updated under `site/app/components/draft/`:
+Updated under `site/app/components/previews/`:
 
-- `TelemetryCheckboxDraft.tsx` now delegates to `MetralyCheckbox`.
-- `TelemetryRadioDraft.tsx` now delegates to `MetralyRadio`.
-- `TelemetrySwitchDraft.tsx` now delegates to `MetralySwitch`.
-- `TelemetrySelectDraft.tsx` now delegates to `MetralySelect`.
-- `TelemetryTabsDraft.tsx` now delegates to `MetralyTabs`.
-- `WidgetPickerCardDraft.tsx` now delegates to `WidgetPickerCard`.
+- `TelemetryCheckbox.tsx` delegates to `MetralyCheckbox`.
+- `TelemetryRadio.tsx` delegates to `MetralyRadio`.
+- `TelemetrySwitch.tsx` delegates to `MetralySwitch`.
+- `TelemetrySelect.tsx` delegates to `MetralySelect`.
+- `TelemetryTabs.tsx` delegates to `MetralyTabs`.
+- `WidgetPickerCard.tsx` delegates to `WidgetPickerCard`.
 
 ## Tests added
 
@@ -72,7 +72,7 @@ Added under `stories/`:
 
 ## Server component safety
 
-The migrated draft components do not pass event handlers into `@metraly/ui` components. Optional handler props exist only for future client wrappers. In server-rendered draft pages these props remain undefined.
+The migrated preview components do not pass event handlers into `@metraly/ui` components. Optional handler props exist only for future client wrappers.
 
 ## Validation
 
@@ -81,13 +81,12 @@ Static validation performed:
 - package JSON files parsed successfully
 - no `implementation-pack/` directory found
 - no `unzipped/` directory found
-- new draft shims import from `@metraly/ui`
+- new preview shims import from `@metraly/ui`
 - new styles are imported in `site/app/layout.tsx`
 
-TypeScript execution in this sandbox is blocked by missing installed package dependencies (`react`, `react/jsx-runtime`, and React type packages in the extracted workspace). The source expects local installation via:
+TypeScript execution in this sandbox is validated locally with:
 
 ```bash
-npm install
 npm run ui:check
 npm run site:typecheck
 npm run site:test
@@ -106,7 +105,7 @@ Proceed with dashboard-specific primitives:
 
 Then migrate:
 
-- `TelemetryEmptyStateDraft`
-- `TelemetrySkeletonDraft`
-- `TelemetryToastDraft`
-- `TelemetryModalDraft`
+- `TelemetryEmptyState`
+- `TelemetrySkeleton`
+- `TelemetryToast`
+- `TelemetryModal`

@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { dashboardRepository } from '../app/lib/dashboard';
+import { dashboardRepository } from '../../app/lib/dashboard';
 
 beforeEach(() => {
   localStorage.clear();
