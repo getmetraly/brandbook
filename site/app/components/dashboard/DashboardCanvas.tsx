@@ -73,6 +73,23 @@ function toLayout(widgets: DashboardWidgetInstance[]): DashboardLayoutItem[] {
   }));
 }
 
+function toDashboardLayoutItems(
+  currentLayout: readonly DashboardLayoutItem[],
+): DashboardLayoutItem[] {
+  return currentLayout.map((item) => ({
+    i: item.i,
+    x: item.x,
+    y: item.y,
+    w: item.w,
+    h: item.h,
+    minW: item.minW,
+    minH: item.minH,
+    maxW: item.maxW,
+    maxH: item.maxH,
+    static: item.static,
+  }));
+}
+
 export function DashboardCanvas({
   widgets,
   selectedWidgetId,
@@ -99,7 +116,9 @@ export function DashboardCanvas({
       resizeHandles={["se"]}
       compactType="vertical"
       preventCollision={false}
-      onLayoutChange={(currentLayout: DashboardLayoutItem[]) => onLayoutChange(currentLayout)}
+      onLayoutChange={(currentLayout) =>
+        onLayoutChange(toDashboardLayoutItems(currentLayout as readonly DashboardLayoutItem[]))
+      }
     >
       {widgets.map((widget) => (
         <div key={widget.id} className="metraly-dashboard-grid-shell">
