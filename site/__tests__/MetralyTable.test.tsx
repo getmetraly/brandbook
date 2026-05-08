@@ -28,4 +28,42 @@ describe('MetralyTable', () => {
     render(<MetralyTable columns={columns} data={[]} emptyText="No rows" />);
     expect(screen.getByText('No rows')).toBeInTheDocument();
   });
+
+  it('marks the table busy and renders loading skeleton rows', () => {
+    const columns = [
+      { key: 'name' as const, header: 'Name' },
+      { key: 'status' as const, header: 'Status' },
+    ];
+
+    render(<MetralyTable columns={columns} data={[]} loading ariaLabel="Loading table" />);
+
+    const table = screen.getByRole('table', { name: 'Loading table' });
+    expect(table).toHaveAttribute('aria-busy', 'true');
+    expect(screen.getAllByRole('row')).toHaveLength(4);
+    expect(document.querySelectorAll('.metraly-table-row.is-loading')).toHaveLength(3);
+  });
+
+  it('marks selected rows using stable row keys', () => {
+    const columns = [
+      { key: 'name' as const, header: 'Name' },
+      { key: 'status' as const, header: 'Status' },
+    ];
+    const data = [
+      { id: 'a', name: 'Alice', status: 'Live' },
+      { id: 'b', name: 'Bob', status: 'Delayed' },
+    ];
+
+    render(
+      <MetralyTable
+        columns={columns}
+        data={data}
+        rowKey={(row) => row.id}
+        selectedRowKeys={['b']}
+      />,
+    );
+
+    expect(screen.getByText('Alice').closest('tr')).not.toHaveAttribute('aria-selected');
+    expect(screen.getByText('Bob').closest('tr')).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByText('Bob').closest('tr')).toHaveClass('is-selected');
+  });
 });

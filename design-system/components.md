@@ -24,7 +24,6 @@ The reusable base lives in `@metraly/ui`. The current canonical primitive set is
 - `MetralySwitch`
 - `MetralySelect`
 - `MetralyTabs`
-- `WidgetShell`
 - `WidgetPickerCard`
 - `DashboardGrid`
 - `DashboardWidget`
@@ -97,6 +96,17 @@ Widget cards should use:
 - muted body copy;
 - no nested collision;
 - resize handles outside text rhythm.
+
+### Tables
+
+`MetralyTable` is a display-first primitive for dense engineering data.
+
+Rules:
+
+- prefer `selectedRowKeys` for visual selection only; keep interaction state outside the primitive;
+- use `loading` for skeleton rows and `emptyText` for the no-data surface;
+- keep row keys stable through the `rowKey` prop when a row identity matters;
+- add sort, filter and pagination wrappers above the primitive instead of inside it.
 
 ### Notifications and timelines
 

@@ -1,6 +1,5 @@
 import * as React from "react";
-import { WidgetShell } from "../components/WidgetShell";
-import type { StateBadgeState } from "../components/StateBadge";
+import StateBadge, { type StateBadgeState } from "../components/StateBadge";
 
 export interface DashboardWidgetProps {
   id?: string;
@@ -11,11 +10,17 @@ export interface DashboardWidgetProps {
   selected?: boolean;
   dragging?: boolean;
   resizable?: boolean;
+  fullWidth?: boolean;
   children?: React.ReactNode;
   footer?: React.ReactNode;
   className?: string;
   onSelect?: (id: string) => void;
   onRemove?: (id: string) => void;
+}
+
+function defaultStateLabel(state: StateBadgeState): string {
+  const spaced = state.replace(/([A-Z])/g, " $1");
+  return spaced.charAt(0).toUpperCase() + spaced.slice(1);
 }
 
 export function DashboardWidget({
@@ -27,6 +32,7 @@ export function DashboardWidget({
   selected = false,
   dragging = false,
   resizable = true,
+  fullWidth = false,
   children,
   footer,
   className,
@@ -57,34 +63,63 @@ export function DashboardWidget({
       data-widget-id={id}
       {...rootProps}
     >
-      <WidgetShell
-        title={title}
-        subtitle={subtitle}
-        state={state}
-        stateLabel={stateLabel}
-        selected={selected}
-        dragging={dragging}
-        resizable={resizable}
+      <div
+        className={[
+          "metraly-widget-shell",
+          selected && "is-selected",
+          dragging && "is-dragging",
+          fullWidth && "is-fullwidth",
+          resizable && "is-resizable",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        data-testid="widget-shell"
       >
-        <div className="metraly-dashboard-widget-content">{children}</div>
-        {(footer || canRemove) ? (
-          <div className="metraly-dashboard-widget-footer">
-            {footer}
-            {canRemove ? (
-              <button
-                type="button"
-                className="metraly-dashboard-widget-remove metraly-focus-ring"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  onRemove?.(id!);
-                }}
-              >
-                Remove
-              </button>
-            ) : null}
+        <header className="metraly-widget-shell-head">
+          <div className="metraly-widget-shell-heading">
+            <div className="metraly-widget-shell-title">{title}</div>
+            {subtitle && <div className="metraly-widget-shell-subtitle">{subtitle}</div>}
           </div>
-        ) : null}
-      </WidgetShell>
+          {state && (
+            <StateBadge
+              state={state}
+              label={stateLabel ?? defaultStateLabel(state)}
+              className="metraly-widget-shell-badge"
+            />
+          )}
+        </header>
+        <div className="metraly-widget-shell-body">
+          <div className="metraly-dashboard-widget-content">{children}</div>
+          {(footer || canRemove) ? (
+            <div className="metraly-dashboard-widget-footer">
+              {footer}
+              {canRemove ? (
+                <button
+                  type="button"
+                  className="metraly-dashboard-widget-remove metraly-focus-ring"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    onRemove?.(id!);
+                  }}
+                >
+                  Remove
+                </button>
+              ) : null}
+            </div>
+          ) : null}
+        </div>
+        <footer className="metraly-widget-shell-foot">
+          <span
+            className="metraly-widget-shell-drag-handle metraly-focus-ring"
+            role="button"
+            tabIndex={0}
+            aria-label="Drag widget"
+          >
+            <span aria-hidden="true">⋮⋮</span>
+          </span>
+        </footer>
+        {resizable && <div className="metraly-widget-shell-resize-handle" aria-hidden="true" />}
+      </div>
     </div>
   );
 }

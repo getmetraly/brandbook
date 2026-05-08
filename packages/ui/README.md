@@ -36,7 +36,6 @@ The current canonical `@metraly/ui` export surface covers the following base pri
 - `MetralySwitch`
 - `MetralySelect`
 - `MetralyTabs`
-- `WidgetShell`
 - `WidgetPickerCard`
 - dashboard primitives:
   - `DashboardGrid`
@@ -53,7 +52,7 @@ The current canonical `@metraly/ui` export surface covers the following base pri
 Prefer package-level component imports:
 
 ```ts
-import { MetralyCard, StateBadge, ThemeProvider, WidgetShell } from "@metraly/ui";
+import { DashboardWidget, MetralyCard, StateBadge, ThemeProvider } from "@metraly/ui";
 ```
 
 Application code should not import from `packages/ui/src` directly. Keep imports on the public package surface or the documented public subpaths.

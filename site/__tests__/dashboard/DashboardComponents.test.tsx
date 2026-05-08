@@ -29,6 +29,14 @@ describe('dashboard components', () => {
     expect(screen.getByText('81%')).toBeInTheDocument();
   });
 
+  it('renders the canonical widget chrome', () => {
+    const { container } = render(<DashboardWidget id="w1" title="Flow efficiency">81%</DashboardWidget>);
+
+    expect(screen.getByLabelText('Drag widget')).toBeInTheDocument();
+    expect(container.querySelector('.metraly-widget-shell-resize-handle')).toBeInTheDocument();
+    expect(container.querySelector('.metraly-widget-shell')).toBeInTheDocument();
+  });
+
   it('supports selection and removal actions', () => {
     const onSelect = jest.fn();
     const onRemove = jest.fn();

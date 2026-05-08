@@ -37,7 +37,7 @@ Several components under `ui/src/components/ui` overlap in purpose:
 * **DataTable** is the sole table component.  Define a reusable `MetralyTable` primitive with variant props for sorting, pagination and selectable rows.  Provide accessible semantics and keyboard navigation.
 * **Leaderboard** replicates the table pattern for ranking items.  Implement it as a composition of `MetralyTable` with a ranking column.
 * **PlaceholderScreen** is used for empty and error states.  Align its visuals with the design‑system guideline: centralised illustration, title, description and action【849328462375381†L73-L79】.
-* **Widget** acts as a thin wrapper; unify it with the new `DashboardGrid` and `WidgetShell` to standardise widget padding, shadows and selection states.
+* **Widget** acts as a thin wrapper; unify it with the new `DashboardGrid` and `DashboardWidget` to standardise widget padding, shadows and selection states.
 
 ### 1.5 Icons and Micro Telemetry
 

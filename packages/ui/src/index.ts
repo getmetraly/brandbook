@@ -24,9 +24,6 @@ export type { ThemeMode, ThemeProviderProps } from "./components/ThemeProvider";
 export { StateBadge } from "./components/StateBadge";
 export type { StateBadgeProps, StateBadgeState } from "./components/StateBadge";
 
-export { WidgetShell } from "./components/WidgetShell";
-export type { WidgetShellProps } from "./components/WidgetShell";
-
 export { MetralyCheckbox } from "./components/MetralyCheckbox";
 export type { MetralyCheckboxProps } from "./components/MetralyCheckbox";
 

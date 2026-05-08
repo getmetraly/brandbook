@@ -185,7 +185,6 @@ The canonical reusable base currently lives in `@metraly/ui`. These components a
 - `MetralySwitch`
 - `MetralySelect`
 - `MetralyTabs`
-- `WidgetShell`
 - `WidgetPickerCard`
 - `DashboardGrid`
 - `DashboardWidget`
@@ -200,6 +199,18 @@ Usage rules:
 - Use composites like `WidgetPickerCard` and `DashboardWidget` only when the page needs dashboard-specific density or interaction state.
 - Keep page-specific embellishments outside the primitive layer so the base API stays stable.
 - If a new primitive is needed, document the need in migration notes before expanding the export surface.
+
+## Table surfaces
+
+`MetralyTable` is the canonical display-first table primitive.
+
+Current contract:
+
+- loading renders skeleton rows and should not shift layout;
+- empty data uses calm explicit copy rather than a noisy empty shell;
+- `selectedRowKeys` marks rows as selected without moving interaction state into the primitive;
+- `rowKey` should stay stable when row identity matters;
+- sorting, filtering and pagination belong in wrappers above the primitive.
 
 ## Widget registry coverage
 

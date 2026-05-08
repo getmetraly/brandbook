@@ -1,19 +1,19 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { WidgetShell } from '@metraly/ui';
+import { DashboardWidget } from '@metraly/ui';
 
-describe('WidgetShell', () => {
+describe('DashboardWidget', () => {
   it('renders title and badge', () => {
-    render(<WidgetShell title="My Widget" state="live">Body content</WidgetShell>);
+    render(<DashboardWidget title="My Widget" state="live">Body content</DashboardWidget>);
     expect(screen.getByText('My Widget')).toBeInTheDocument();
-    // The badge label defaults to capitalised state
     expect(screen.getByText('Live')).toBeInTheDocument();
   });
+
   it('renders custom state label', () => {
     render(
-      <WidgetShell title="Widget" state="delayed" stateLabel="Waiting">
+      <DashboardWidget title="Widget" state="delayed" stateLabel="Waiting">
         Content
-      </WidgetShell>
+      </DashboardWidget>
     );
     expect(screen.getByText('Waiting')).toBeInTheDocument();
   });

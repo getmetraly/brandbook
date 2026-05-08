@@ -8,7 +8,7 @@ import {
 } from "@metraly/ui";
 import TelemetryEmptyState from "../../components/previews/TelemetryEmptyState";
 import TelemetryGridItem from "../../components/previews/TelemetryGridItem";
-import TelemetryWidgetShell from "../../components/previews/TelemetryWidgetShell";
+import TelemetryDashboardWidget from "../../components/previews/TelemetryDashboardWidget";
 import WidgetPickerCardPreview from "../../components/previews/WidgetPickerCard";
 import DocsShell from "../../components/docs/DocsShell";
 import { ComponentPreview, ComponentStateGrid, DocsSection } from "../../components/docs/DocsBlocks";
@@ -21,7 +21,7 @@ const widgets: DashboardWidgetInstance[] = [
 
 export default function DashboardComponentsPage() {
   return (
-    <DocsShell currentPath="/components/dashboard" title="Dashboard" description="Dashboard-specific components for board layout, widget selection and editor surfaces." status="ready" related={getRelatedLinks(["/patterns/widget-editor", "/editor", "/examples/engineering-dashboard"])} toc={[{ title: "Widget shell", href: "#widgets" }, { title: "Grid", href: "#grid" }, { title: "Picker", href: "#picker" }]}> 
+      <DocsShell currentPath="/components/dashboard" title="Dashboard" description="Dashboard-specific components for board layout, widget selection and editor surfaces." status="ready" related={getRelatedLinks(["/patterns/widget-editor", "/editor", "/examples/engineering-dashboard"])} toc={[{ title: "Widget surfaces", href: "#widgets" }, { title: "Grid", href: "#grid" }, { title: "Picker", href: "#picker" }, { title: "Frames", href: "#frames" }]}> 
       <DocsSection id="widgets" title="Widget surfaces">
         <ComponentPreview title="DashboardToolbar / DashboardWidget" description="Toolbar and widget wrapper for dashboard editor pages." states={["selected", "resizable", "live", "delayed"]} code={'import { DashboardWidget } from "@metraly/ui";'}>
           <div className="docs-dashboard-preview">
@@ -60,9 +60,9 @@ export default function DashboardComponentsPage() {
           </ComponentStateGrid>
         </ComponentPreview>
       </DocsSection>
-      <DocsSection id="shells" title="Widget shells" description="Reusable widget shells should stay readable inside cards and grid layouts.">
-        <ComponentPreview title="TelemetryWidgetShell" description="Widget shell used for dashboard content, metrics and empty states." states={["live", "resizable", "selected"]}>
-          <TelemetryWidgetShell />
+      <DocsSection id="frames" title="Widget frames" description="Reusable widget frames should stay readable inside cards and grid layouts.">
+        <ComponentPreview title="DashboardWidget" description="Canonical widget frame for dashboard content, metrics and empty states." states={["live", "resizable", "selected"]}>
+          <TelemetryDashboardWidget />
         </ComponentPreview>
         <ComponentPreview title="TelemetryGridItem" description="Grid-item wrapper showing resize affordances and board-friendly spacing." states={["live", "resizable", "board"]}>
           <TelemetryGridItem />

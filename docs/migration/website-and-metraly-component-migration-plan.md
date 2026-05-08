@@ -292,7 +292,7 @@ These exist in the app or website already and should be treated as migration tar
 ### Tasks
 
 - Pin and document the canonical color, spacing, typography and motion tokens.
-- Keep `MetralyCard`, `MetralyPanel`, `MetralyLogo`, `MetralyBadge`, `StateBadge`, `MetralyMetricCard` and `WidgetShell` as the baseline primitive set.
+- Keep `MetralyCard`, `MetralyPanel`, `MetralyLogo`, `MetralyBadge`, `StateBadge`, `MetralyMetricCard` and `DashboardWidget` as the baseline primitive set.
 - Add missing base primitives only when they are clearly reusable across brandbook, app and website.
 - Remove one-off styling from future primitive candidates.
 

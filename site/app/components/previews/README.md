@@ -20,13 +20,13 @@ Use the preview component set to test:
 
 Do not modify `/components` while working on preview hardening unless explicitly instructed.
 
-Board-edit shells, overlay helpers, command palette, empty states and drawer previews are now being promoted into grouped canonical pages. Keep the preview component set focused on migration comparison and residual hardening surfaces.
+Board-edit frames, overlay helpers, command palette, empty states and drawer previews are now being promoted into grouped canonical pages. Keep the preview component set focused on migration comparison and residual hardening surfaces.
 
 Storybook should mirror the same hardening surface with companion stories for:
 
 - control states;
 - overlay primitives;
-- dashboard shells;
+- dashboard frames;
 - widget picker and state badge examples.
 
 ## Current component set
@@ -44,7 +44,7 @@ Core controls:
 Dashboard primitives:
 
 - `WidgetPickerCard`
-- `TelemetryWidgetShell`
+- `DashboardWidget` preview
 - `TelemetryGridItem`
 - `TelemetryTableRow`
 - `RechartsTelemetryCard`

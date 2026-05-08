@@ -50,7 +50,7 @@ Make tokens, primitive APIs and theme behavior stable enough to serve as the reu
   - `MetralyBadge`
   - `StateBadge`
   - `MetralyMetricCard`
-  - `WidgetShell`
+  - `DashboardWidget` as the canonical widget frame
   - `MetralyTable`
 - Review whether any primitive needs a smaller or more explicit API surface.
 - Remove or flag one-off styling that does not belong in the base layer.
@@ -110,4 +110,3 @@ Make tokens, primitive APIs and theme behavior stable enough to serve as the reu
 - Over-abstracting the base layer can make later component migration harder.
 - Leaving floating dependencies at the foundation layer increases the cost of every downstream phase.
 - If token names remain ambiguous, the website and app may drift in interpretation even if they share the same CSS values.
-

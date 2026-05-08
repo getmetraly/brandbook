@@ -191,7 +191,6 @@ Treat brandbook as the canonical contract, then migrate the app and website by p
   - `MetralySwitch`
   - `MetralySelect`
   - `MetralyTabs`
-  - `WidgetShell`
   - `WidgetPickerCard`
   - `MetralyLogo`
   - `MetralyTelemetryLine`
@@ -390,7 +389,7 @@ These pages are not all meant to be copied into brandbook as literal pages. They
 | State badges | Ready | Brandbook + app | Strong | Good | Good | Good | High | High | Two concepts exist: brand/category badges and telemetry state badges. | Keep both concepts but name them explicitly. |
 | Metric cards | Ready | Brandbook + app | Strong | Good | Good | Medium | High | High | App still has `StatCard`/`InlineInsight`/`AIInsightCard` overlap. | Unify into `InsightCard`-style contract in future phases. |
 | Tables | Ready | Brandbook + app | Strong | Good | Medium | Good | High | High | App tables are still more opinionated than the package primitive. | Keep package table display-only and layer interactions above it. |
-| Dashboard widgets | Ready | Brandbook + app | Strong | Good | Good | Good | High | High | Package and app still have duplicate widget shell ideas. | Standardize around `WidgetShell` + `DashboardWidget`. |
+| Dashboard widgets | Ready | Brandbook + app | Strong | Good | Good | Good | High | High | Package and app still have duplicate widget frame ideas. | Standardize around `DashboardWidget`. |
 | Dashboard editor / board edit mode | Needs refinement | Brandbook + app | Strong | Good | Medium | Good | Medium | High | Drag/resize behavior is still the main risk surface. | Keep `react-grid-layout` adapter isolated and expand Playwright coverage. |
 | Overlays and feedback | Needs refinement | Brandbook + app | Strong | Good | Medium | Medium | Medium | High | Modal, drawer, command palette, tooltip and popover still need stricter API contracts. | Promote one overlay primitive at a time and test keyboard flows. |
 | Navigation shells | Needs refinement | Brandbook + website + app | Strong | Good | Good | Medium | Medium | The app and website each have their own shell patterns. | Create `AppShell` and migrate gradually. |
@@ -438,7 +437,7 @@ These pages are not all meant to be copied into brandbook as literal pages. They
 - `DashboardRenderer`, `DraggableDashboardRenderer`, `DashboardGrid` → a clean render/edit split with shared registry semantics
 - `PlaceholderScreen`, `DashboardEmptyState`, `TelemetryEmptyState` → a family of empty-state primitives
 - `Sidebar`, `Topbar`, `SiteNav`, docs shell navigation → a shell/navigation system with reusable slots
-- `Widget`, `WidgetShell`, `DashboardWidget`, `WidgetPickerCard` → a single dashboard composition vocabulary
+- `Widget`, `DashboardWidget`, `WidgetPickerCard` → a single dashboard composition vocabulary, with `DashboardWidget` as the canonical frame
 
 ## Components To Deprecate
 

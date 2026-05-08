@@ -47,6 +47,7 @@ export function MetralyTable<T extends Record<string, any>>({
 }: MetralyTableProps<T>) {
   const classes = ["metraly-table", className].filter(Boolean).join(" ");
   const getRowKey = rowKey || ((_: T, index: number) => String(index));
+  const isBusy = loading || undefined;
 
   // Render skeleton rows when loading
   const renderSkeletonRows = () => {
@@ -62,7 +63,7 @@ export function MetralyTable<T extends Record<string, any>>({
   };
 
   return (
-    <table className={classes} role="table" aria-label={ariaLabel}>
+    <table className={classes} role="table" aria-label={ariaLabel} aria-busy={isBusy}>
       <thead>
         <tr role="row">
           {columns.map((col) => (

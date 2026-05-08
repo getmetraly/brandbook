@@ -64,7 +64,7 @@ Unify the high-density data surfaces so the same card, table, badge and empty-st
 
 ### 3.6 Harden Widget Shell Chrome
 
-- Confirm the `WidgetShell` API and its selected, dragging, resizable and full-width states.
+- Confirm the `DashboardWidget` API and its selected, dragging, resizable and full-width states.
 - Verify title, subtitle, badge and drag handle alignment.
 - Ensure the drag handle remains neutral and does not inherit pulse decoration.
 - Document how widget shell chrome differs from the content inside the widget.
@@ -110,4 +110,3 @@ Unify the high-density data surfaces so the same card, table, badge and empty-st
 - Table interactions can grow beyond the display-first primitive if not constrained.
 - If state badges become purely visual, accessibility and meaning will degrade.
 - Empty-state copy can diverge across pages if the canonical wording is not documented.
-

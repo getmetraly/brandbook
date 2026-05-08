@@ -1,7 +1,7 @@
 import TelemetryDrawer from "../../components/previews/TelemetryDrawer";
 import TelemetryDragOverlay from "../../components/previews/TelemetryDragOverlay";
 import TelemetryGridItem from "../../components/previews/TelemetryGridItem";
-import TelemetryWidgetShell from "../../components/previews/TelemetryWidgetShell";
+import TelemetryDashboardWidget from "../../components/previews/TelemetryDashboardWidget";
 import DocsShell from "../../components/docs/DocsShell";
 import { CodeBlock, ComponentPreview, ComponentStateGrid, DocsCardGrid, DocsRouteCard, DocsSection, LegacyNotice } from "../../components/docs/DocsBlocks";
 import { getRelatedLinks } from "../../lib/docs/navigation";
@@ -14,9 +14,9 @@ export default function WidgetEditorPatternPage() {
         <LegacyNotice>The editor is intentionally Client-only. Avoid moving localStorage, react-grid-layout or event-heavy widgets into Server Components.</LegacyNotice>
       </DocsSection>
       <DocsSection id="board-edit" title="Board edit mode" description="The editor should show the selected widget, dragging state, drop target and resize affordances in one flow.">
-        <ComponentPreview title="WidgetShell / GridItem / Drawer / DragOverlay" description="Board edit state surfaces used by the editor and dashboard workflows." states={["selected", "dragging", "drop target", "resizable"]}>
+        <ComponentPreview title="DashboardWidget / GridItem / Drawer / DragOverlay" description="Board edit state surfaces used by the editor and dashboard workflows." states={["selected", "dragging", "drop target", "resizable"]}>
           <ComponentStateGrid>
-            <TelemetryWidgetShell />
+            <TelemetryDashboardWidget />
             <TelemetryGridItem />
             <TelemetryDrawer />
             <TelemetryDragOverlay />
