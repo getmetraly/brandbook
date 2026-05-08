@@ -1,0 +1,129 @@
+.metraly-widget-picker-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  padding: 18px;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(15,19,26,0.86);
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.metraly-widget-picker-card.is-selected {
+  border-color: rgba(0,229,204,0.34);
+  box-shadow: 0 0 0 1px rgba(0,229,204,0.14);
+}
+
+.metraly-widget-picker-head {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr) auto;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
+}
+
+.metraly-widget-picker-icon,
+.metraly-widget-picker-select-control {
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  display: grid;
+  place-items: center;
+}
+
+.metraly-widget-picker-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+}
+
+.metraly-widget-picker-icon small {
+  color: var(--text-secondary, #8b9bb4);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.metraly-widget-picker-icon-pulse,
+.metraly-widget-picker-select-pulse {
+  width: 42px;
+  height: 18px;
+  display: inline-block;
+  background: var(--cyan, #00e5cc);
+  clip-path: var(--metraly-pulse-marker-path, polygon(0 52%, 20% 52%, 26% 25%, 36% 82%, 47% 8%, 58% 52%, 100% 52%, 100% 66%, 52% 66%, 47% 48%, 37% 100%, 27% 55%, 23% 66%, 0 66%));
+  box-shadow: 0 0 18px rgba(0,229,204,0.42);
+}
+
+.metraly-widget-picker-title-copy {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.metraly-widget-picker-title-copy strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metraly-widget-picker-title-copy span {
+  color: var(--text-secondary, #8b9bb4);
+  font-size: 12px;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.metraly-widget-picker-select-control {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+}
+
+.metraly-widget-picker-select-control:not(.is-selected) .metraly-widget-picker-select-pulse {
+  opacity: 0;
+}
+
+.metraly-widget-picker-select-pulse {
+  width: 18px;
+  height: 8px;
+}
+
+.metraly-widget-picker-meta,
+.metraly-widget-picker-tags {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.metraly-widget-picker-card p {
+  margin: 0;
+  color: var(--text-secondary, #8b9bb4);
+  line-height: 1.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .metraly-widget-picker-card {
+    transition: none;
+  }
+}
+
+button.metraly-widget-picker-card {
+  width: 100%;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+button.metraly-widget-picker-card:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+button.metraly-widget-picker-card:focus-visible {
+  outline: 2px solid var(--metraly-primary, #00e5cc);
+  outline-offset: 3px;
+}

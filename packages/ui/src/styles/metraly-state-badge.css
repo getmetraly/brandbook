@@ -1,0 +1,56 @@
+.metraly-state-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.625rem; /* 4px 10px */
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--metraly-radius-pill);
+  border: 1px solid var(--metraly-border);
+  background: var(--metraly-bg-card-hover);
+  color: var(--metraly-text-secondary);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.metraly-state-badge .metraly-state-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  background: currentColor;
+}
+
+/* Live: healthy data (success) */
+.metraly-state-badge.is-live {
+  color: var(--metraly-success);
+  border-color: rgba(34, 197, 94, 0.24); /* success green with transparency */
+  background: var(--metraly-green-dim);
+}
+
+/* Stale: neutral (secondary) */
+.metraly-state-badge.is-stale {
+  color: var(--metraly-text-secondary);
+  border-color: rgba(139, 155, 180, 0.2);
+  background: rgba(139, 155, 180, 0.05);
+}
+
+/* Delayed: warning (orange) */
+.metraly-state-badge.is-delayed {
+  color: var(--metraly-warning);
+  border-color: rgba(245, 158, 11, 0.28);
+  background: var(--metraly-warning-dim);
+}
+
+/* Disconnected: error (red) */
+.metraly-state-badge.is-disconnected {
+  color: var(--metraly-error);
+  border-color: rgba(239, 68, 68, 0.28);
+  background: var(--metraly-error-dim);
+}
+
+/* No data: muted */
+.metraly-state-badge.is-noData {
+  color: var(--metraly-text-muted);
+  border-color: rgba(139, 155, 180, 0.18);
+  background: rgba(139, 155, 180, 0.04);
+}

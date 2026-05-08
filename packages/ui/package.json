@@ -1,0 +1,36 @@
+{
+  "name": "@metraly/ui",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": [
+    "./src/styles/*.css"
+  ],
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./components/*": "./src/components/*.tsx",
+    "./styles/*": "./src/styles/*",
+    "./assets/*": "./assets/*",
+    "./dashboard": "./src/dashboard/WidgetRegistry.ts",
+    "./dashboard/types": "./src/dashboard/types.ts",
+    "./dashboard/DashboardGrid": "./src/dashboard/DashboardGrid.tsx",
+    "./dashboard/DashboardWidget": "./src/dashboard/DashboardWidget.tsx",
+    "./dashboard/DashboardToolbar": "./src/dashboard/DashboardToolbar.tsx",
+    "./dashboard/DashboardEmptyState": "./src/dashboard/DashboardEmptyState.tsx",
+    "./dashboard/DashboardDropZone": "./src/dashboard/DashboardDropZone.tsx",
+    "./dashboard/DashboardResizeHandle": "./src/dashboard/DashboardResizeHandle.tsx",
+    "./dashboard/WidgetRegistry": "./src/dashboard/WidgetRegistry.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "devDependencies": {
+    "typescript": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest"
+  }
+}
