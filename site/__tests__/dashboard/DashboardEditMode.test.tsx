@@ -44,4 +44,14 @@ describe('dashboard edit mode primitives', () => {
       position: { x: 0, y: 0, w: 4, h: 2, minW: 3, minH: 2 },
     });
   });
+
+  it('renders widget bodies from the shared registry definition', () => {
+    const definition = findDashboardWidgetDefinition(defaultDashboardWidgetRegistry, 'data-table');
+    expect(definition?.render).toBeDefined();
+
+    render(<>{definition?.render?.()}</>);
+
+    expect(screen.getByRole('table', { name: 'Data table' })).toBeInTheDocument();
+    expect(screen.getByText('metraly/app')).toBeInTheDocument();
+  });
 });

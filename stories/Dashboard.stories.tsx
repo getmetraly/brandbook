@@ -4,6 +4,7 @@ import {
   DashboardToolbar,
   DashboardWidget,
   defaultDashboardWidgetRegistry,
+  findDashboardWidgetDefinition,
   type DashboardWidgetInstance,
 } from '@metraly/ui';
 import '@metraly/ui/styles/metraly-state-badge.css';
@@ -43,7 +44,7 @@ function DashboardPreview() {
         layout={sampleWidgets.map((widget) => ({ i: widget.id, ...widget.position }))}
         renderWidget={(widget) => (
           <DashboardWidget title={widget.title} subtitle={widget.description} state={widget.state} selected={widget.id === 'flow-efficiency'}>
-            <strong>81%</strong>
+            {findDashboardWidgetDefinition(defaultDashboardWidgetRegistry, widget.type)?.render?.()}
           </DashboardWidget>
         )}
       />

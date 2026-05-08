@@ -20,6 +20,17 @@ describe('dashboardRepository', () => {
     expect(fetched?.widgets[0]?.title).toBe('Stat Card');
   });
 
+  it('creates registry-backed widgets with canonical defaults', () => {
+    const widget = dashboardRepository.createWidget('stat-card');
+
+    expect(widget).toMatchObject({
+      type: 'stat-card',
+      title: 'Stat Card',
+      state: 'live',
+      position: { x: 0, y: 0, w: 4, h: 2, minW: 3, minH: 2 },
+    });
+  });
+
   it('persists layout updates immutably', async () => {
     const dashboard = await dashboardRepository.create({ name: 'Layout board' });
     const widget = dashboardRepository.createWidget('stat-card', { title: 'Stat Card' });

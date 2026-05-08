@@ -6,6 +6,8 @@ Board editing is a core Metraly surface. It must feel like an engineering worksp
 
 Canonical board-edit previews now live in `/patterns/widget-editor`, `/components/dashboard` and `/components/feedback`. Keep `/legacy-sandbox` as a legacy comparison surface only.
 
+The editor add flow should stay thin: choose a widget type, call `dashboardRepository.createWidget`, persist the instance, then reload and continue editing the same widget record. Registry-backed defaults belong in the shared widget registry, not in the editor component.
+
 ## Current rules
 
 - Selected widgets use a cyan border, subtle glow and visible resize affordances.

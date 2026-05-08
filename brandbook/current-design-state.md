@@ -200,6 +200,12 @@ Usage rules:
 - Keep page-specific embellishments outside the primitive layer so the base API stays stable.
 - If a new primitive is needed, document the need in migration notes before expanding the export surface.
 
+Board flow contract:
+
+- `dashboardRepository.createWidget` is the canonical widget constructor for the editor flow.
+- It resolves registry-backed defaults for known widget types and accepts partial layout overrides.
+- The editor should remain orchestration-only: select a widget type, create the instance through the repository, persist, reload and re-enter edit mode with the same instance.
+
 ## Table surfaces
 
 `MetralyTable` is the canonical display-first table primitive.

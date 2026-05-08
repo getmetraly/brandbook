@@ -11,6 +11,10 @@ import {
   upsertWidget,
 } from "./dashboard.fake-api";
 
+type CreateWidgetOptions = Omit<Partial<DashboardWidgetInstance>, "position"> & {
+  position?: Partial<DashboardWidgetInstance["position"]>;
+};
+
 export const dashboardRepository = {
   create: createDashboard,
   createWidget: createWidgetInstance,
@@ -22,7 +26,7 @@ export const dashboardRepository = {
   updateLayout: updateDashboardLayout,
 } satisfies {
   create(input?: CreateDashboardInput): Promise<Dashboard>;
-  createWidget(type: string, options?: Partial<DashboardWidgetInstance>): DashboardWidgetInstance;
+  createWidget(type: string, options?: CreateWidgetOptions): DashboardWidgetInstance;
   fetch(id: string): Promise<Dashboard | undefined>;
   save(dashboard: Dashboard): Promise<{ dashboard: Dashboard; persisted: boolean }>;
   delete(id: string): Promise<boolean>;

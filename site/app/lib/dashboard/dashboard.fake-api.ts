@@ -4,7 +4,12 @@ import type {
   DashboardLayoutUpdate,
   DashboardMutationResult,
 } from "./dashboard.types";
-import type { DashboardWidgetInstance } from "@metraly/ui";
+import {
+  createDashboardWidgetInstance,
+  defaultDashboardWidgetRegistry,
+  findDashboardWidgetDefinition,
+  type DashboardWidgetInstance,
+} from "@metraly/ui";
 import {
   deleteDashboardFromStorage,
   readDashboardFromStorage,
@@ -18,6 +23,10 @@ function now(): string {
 function uid(prefix = "dash"): string {
   return `${prefix}_${Math.random().toString(36).slice(2, 10)}`;
 }
+
+type CreateWidgetOptions = Omit<Partial<DashboardWidgetInstance>, "position"> & {
+  position?: Partial<DashboardWidgetInstance["position"]>;
+};
 
 function cloneDashboard(dashboard: Dashboard): Dashboard {
   return {
@@ -110,8 +119,21 @@ export async function deleteDashboard(id: string): Promise<boolean> {
 
 export function createWidgetInstance(
   type: string,
-  options: Partial<DashboardWidgetInstance> = {},
+  options: CreateWidgetOptions = {},
 ): DashboardWidgetInstance {
+  const definition = findDashboardWidgetDefinition(defaultDashboardWidgetRegistry, type);
+  if (definition) {
+    return createDashboardWidgetInstance(definition, {
+      id: options.id,
+      title: options.title,
+      description: options.description,
+      state: options.state,
+      stateLabel: options.stateLabel,
+      settings: options.settings,
+      position: options.position,
+    });
+  }
+
   return {
     id: options.id ?? uid("widget"),
     type,
