@@ -62,6 +62,7 @@ The `/editor` flow now supports:
 
 - `DashboardRepository.test.ts`
 - `DashboardComponents.test.tsx`
+- `DashboardEditMode.test.tsx`
 
 ## Storybook added
 
