@@ -7,13 +7,15 @@ This is the Next.js site used to view and harden the Metraly brandbook.
 ```text
 /             Brandbook landing page
 /components   Protected baseline component reference
-/draft        Active component hardening lab
+/components/* Grouped canonical preview pages
+site/app/components/previews/  Preview hardening surface
 ```
 
 ## Current workflow
 
 - Use `/components` as the stable reference.
-- Use `/draft` for new component examples, visual corrections and product-like scenarios.
+- Use `/components/*`, `/patterns/*`, `/examples/*` and `/editor` for canonical preview examples and product-like scenarios.
+- Use `site/app/components/previews/` for temporary hardening surfaces while a component is still being promoted.
 - Keep documentation in sync with UI changes.
 
 ## Local development
@@ -42,7 +44,8 @@ The site reflects the current Metraly design:
 - pulse-wave as a controlled brand primitive;
 - stable hover/focus states;
 - no layout jumps;
-- real dashboard scenarios over decorative mockups.
+- real dashboard scenarios over decorative mockups;
+- grouped preview pages instead of a single oversized showcase.
 
 ## Agent note
 

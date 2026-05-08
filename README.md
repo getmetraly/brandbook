@@ -42,7 +42,7 @@ site/app/components/previews/       Preview component candidates
 
 ```text
 brandbook/current-design-state.md       Current canonical visual snapshot
-brandbook/pulse-marker-draft.md         Pulse-wave primitive rules
+brandbook/pulse-marker.md               Pulse-wave primitive rules
 brandbook/phase-13-final-polish.md      Latest visual polish notes
 
 design-system/components.md             Component rules and states

@@ -33,7 +33,7 @@ site/            Next.js viewer and component lab
 AGENTS.md        Operating instructions for agents
 ```
 
-## Protected baseline and draft lab
+## Protected baseline and preview hardening surface
 
 - `/components` is the protected baseline page.
 - `site/app/components/previews/` is the active preview hardening surface.
@@ -54,7 +54,7 @@ Agents and contributors must preserve `/components` unless explicitly instructed
 ## Canonical references
 
 - `current-design-state.md` — current visual snapshot.
-- `pulse-marker-draft.md` — pulse-wave geometry and usage rules.
+- `pulse-marker.md` — pulse-wave geometry and usage rules.
 - `../design-system/components.md` — component behavior and state rules.
 - `../design-system/board-edit-mode.md` — dashboard edit mode, DnD and resize rules.
 - `../design-system/charts.md` — chart wrappers and Recharts usage.

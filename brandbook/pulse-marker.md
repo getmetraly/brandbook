@@ -1,6 +1,6 @@
-# Pulse Marker Draft
+# Pulse Marker
 
-Status: draft / experimental
+Status: reference primitive
 
 ## Purpose
 
@@ -61,4 +61,4 @@ The shape is intentionally angular and graph-like to reinforce the Metraly obser
 
 ## Current design status
 
-This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.
+This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the grouped preview hardening design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and grouped preview pages as the canonical surface.

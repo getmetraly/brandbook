@@ -123,7 +123,7 @@ It includes:
 
 ## Widget registry coverage
 
-The draft page should reflect the product widget map:
+The preview hardening workspace should reflect the product widget map:
 
 - `stat-card`
 - `metric-chart`
@@ -176,7 +176,7 @@ Cursor rules:
 
 ## Production readiness criteria
 
-A component is ready to move out of draft when it has:
+A component is ready to move out of the preview hardening workspace when it has:
 
 - stable visual states;
 - keyboard/focus behavior defined;

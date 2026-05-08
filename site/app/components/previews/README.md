@@ -1,6 +1,6 @@
 # Telemetry Components
 
-Status: legacy sandbox / active hardening lab during migration.
+Status: preview hardening workspace for residual migration surfaces.
 
 This workspace contains Metraly UI component candidates before they are promoted into grouped docs pages or future `@metraly/ui` package exports.
 
@@ -98,7 +98,7 @@ Each component candidate should be reviewed against:
 
 ## Promotion checklist
 
-Before moving a component from draft to implementation pack:
+Before moving a component from preview hardening to implementation pack:
 
 - API is explicit and stable.
 - Colors and spacing are tokenized.

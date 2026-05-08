@@ -23,7 +23,7 @@ Focus on:
 Before shipping a visual patch:
 
 - `/components` is unchanged unless explicitly requested.
-- `/draft` renders all sections.
+- the grouped preview pages render all sections.
 - Hero text does not feel oversized.
 - Hero pulse-wave is visible and controlled.
 - Sidebar logo pulse-wave is centered.
@@ -50,20 +50,20 @@ Additional recommended checks:
 
 - TypeScript check.
 - CSS brace balance.
-- Visual screenshots for `/components` and `/draft`.
+- Visual screenshots for `/components` and the grouped preview pages.
 - Reduced-motion review.
 - Keyboard tab sequence review.
 
 ## Visual regression strategy
 
-Use `/components` as baseline and `/draft` as candidate surface.
+Use `/components` as baseline and the grouped preview pages as candidate surfaces.
 
 Capture screenshots for:
 
 1. `/components` protected baseline.
-2. `/draft` hero and controls.
-3. `/draft` real dashboard scenario.
-4. `/draft` charts and DnD.
-5. `/draft` product states.
+2. grouped preview hero and controls.
+3. grouped preview real dashboard scenario.
+4. grouped preview charts and DnD.
+5. grouped preview product states.
 
 A patch should not regress readability or collision behavior.

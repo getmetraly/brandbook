@@ -1,15 +1,15 @@
 # Component Guidelines
 
-Status: current design direction aligned with the grouped docs portal and legacy `/legacy-sandbox` sandbox.
+Status: current design direction aligned with the grouped docs portal and grouped preview hardening workspace.
 
 ## Component philosophy
 
 Metraly components must feel like engineering tools: calm, precise, dense and readable. They should not feel like generic admin templates or decorative Dribbble UI.
 
-## Baseline vs draft
+## Baseline vs preview
 
 - `/components` is the protected baseline.
-- `/legacy-sandbox` is where component candidates are hardened against real product scenarios, but it is no longer the canonical component documentation surface.
+- The preview hardening workspace is where component candidates are hardened against real product scenarios, but it is no longer the canonical component documentation surface.
 
 ## Current component language
 
@@ -98,7 +98,7 @@ Each component should define these states where relevant:
 
 ## Promotion criteria
 
-A component can move from draft to implementation when:
+A component can move from preview hardening to implementation when:
 
 - its API is clear;
 - token usage is complete;

@@ -33,7 +33,7 @@ MetralyChartTooltip
 - Axis labels muted and readable.
 - No chart animation loops.
 
-## Current chart examples on `/draft`
+## Current chart examples on grouped preview pages
 
 - Recharts gallery from `/components`.
 - Flow efficiency area chart.

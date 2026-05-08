@@ -18,7 +18,7 @@ export default function HomePage() {
         { title: "Component groups", href: "#component-groups" },
       ]}
     >
-      <DocsSection id="portal-map" title="Portal map" description="Every primary page is linked from the sidebar and top navigation. Canonical previews are grouped by domain so pages do not grow like the legacy sandbox.">
+      <DocsSection id="portal-map" title="Portal map" description="Every primary page is linked from the sidebar and top navigation. Canonical previews are grouped by domain so pages stay focused and do not collapse into one oversized showcase.">
         <DocsCardGrid>
           {docsNavigation.map((group) => (
             <DocsRouteCard key={group.href} item={{ title: group.title, href: group.href, description: group.description }} />
