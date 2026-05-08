@@ -2,6 +2,8 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import TelemetryDrawer from '../../app/components/previews/TelemetryDrawer';
 import TelemetryModal from '../../app/components/previews/TelemetryModal';
+import TelemetryPopover from '../../app/components/previews/TelemetryPopover';
+import TelemetryTooltip from '../../app/components/previews/TelemetryTooltip';
 import TelemetryToast from '../../app/components/previews/TelemetryToast';
 
 describe('preview overlay surfaces', () => {
@@ -31,10 +33,25 @@ describe('preview overlay surfaces', () => {
   it('renders the drawer controls and drag guidance', () => {
     render(<TelemetryDrawer />);
 
+    expect(screen.getByRole('dialog', { name: 'Telemetry drawer' })).toBeInTheDocument();
     expect(screen.getByText('Edit telemetry source')).toBeInTheDocument();
     expect(screen.getByText('Drawer shell draft for board/widget configuration.')).toBeInTheDocument();
     expect(screen.getByRole('combobox', { name: 'Metric source' })).toHaveValue('github');
     expect(screen.getByRole('switch', { name: 'Live sync' })).toHaveAttribute('aria-checked', 'true');
     expect(screen.getByText('Drag to move')).toBeInTheDocument();
+  });
+
+  it('renders the popover and tooltip shells with semantic roles', () => {
+    render(
+      <>
+        <TelemetryPopover />
+        <TelemetryTooltip />
+      </>
+    );
+
+    expect(screen.getByRole('dialog', { name: 'Telemetry popover' })).toBeInTheDocument();
+    expect(screen.getByRole('tooltip', { name: 'Telemetry tooltip' })).toBeInTheDocument();
+    expect(screen.getByText('Telemetry details')).toBeInTheDocument();
+    expect(screen.getByText('Live sync is enabled')).toBeInTheDocument();
   });
 });

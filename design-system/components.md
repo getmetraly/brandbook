@@ -106,6 +106,24 @@ Notification rows should align pulse-wave, title, body and time in a stable grid
 
 Sidebar and topbar should stay compact. Sidebar logo pulse-wave must be centered inside the mark. Active navigation may use pulse-wave; inactive items may use short labels or simple icons.
 
+### Overlays
+
+Overlay primitives should stay narrow and semantically clear:
+
+- tooltip: passive, non-modal hint surface with no focus trap;
+- popover: compact contextual surface for small actions or summaries;
+- modal: blocking dialog for destructive or confirm flows;
+- drawer: side panel for settings or edit flows;
+- command palette: input-first action surface for search and quick navigation.
+
+Rules:
+
+- modal and drawer surfaces should clearly announce their label to assistive technology;
+- tooltip should remain informational and lightweight;
+- popover should stay compact and not imitate a full modal;
+- command palette should be discoverable as a search/action surface rather than a generic dialog;
+- overlay shells should not add decorative pulse-wave noise beyond semantic state markers.
+
 ## Interaction states
 
 Each component should define these states where relevant:

@@ -1,6 +1,6 @@
 export default function TelemetryPopover() {
   return (
-    <div className="telemetry-popover-draft">
+    <div className="telemetry-popover-draft" role="dialog" aria-label="Telemetry popover">
       <div className="telemetry-popover-head">
         <strong>Telemetry details</strong>
       </div>

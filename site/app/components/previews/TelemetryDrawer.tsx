@@ -3,7 +3,7 @@ import TelemetrySwitch from "./TelemetrySwitch";
 
 export default function TelemetryDrawer() {
   return (
-    <div className="telemetry-drawer-draft">
+    <div className="telemetry-drawer-draft" role="dialog" aria-label="Telemetry drawer">
       <div className="telemetry-drawer-head">
         <div>
           <strong>Edit telemetry source</strong>

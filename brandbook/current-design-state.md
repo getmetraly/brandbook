@@ -252,6 +252,26 @@ Cursor rules:
 - drag handles: `grab` / `grabbing`;
 - resize handles: appropriate resize cursor.
 
+## Overlay primitives
+
+The preview hardening workspace still carries the canonical overlay comparison surfaces while the reusable package-level contract is being formalized.
+
+Current contract:
+
+- tooltip is passive and informational;
+- popover is compact and contextual;
+- modal is blocking and explicit about destructive or irreversible actions;
+- drawer is used for side-panel editing or configuration;
+- command palette is input-first and should read like a search/action surface.
+
+Accessibility rules:
+
+- modal and drawer shells should expose a clear accessible name;
+- tooltip should remain lightweight and non-modal;
+- popover should stay compact and should not imitate a full-screen dialog;
+- focus behavior should be predictable and should not steal focus unexpectedly on hover;
+- overlay shells should keep pulse-wave usage semantic, not decorative.
+
 ## Production readiness criteria
 
 A component is ready to move out of the preview hardening workspace when it has:
