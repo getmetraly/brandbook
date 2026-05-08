@@ -155,6 +155,8 @@ The preview component set complements the grouped docs pages and still covers th
 2. Charts, widgets and drag-and-drop.
 3. Metraly product pages and states.
 
+Companion Storybook stories in `stories/` should mirror the same state vocabulary and keep the interaction and surface contracts easy to scan.
+
 It includes:
 
 - checkbox, radio, switch, dropdown, search, tabs and segmented control;

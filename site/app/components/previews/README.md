@@ -22,6 +22,13 @@ Do not modify `/components` while working on preview hardening unless explicitly
 
 Board-edit shells, overlay helpers, command palette, empty states and drawer previews are now being promoted into grouped canonical pages. Keep the preview component set focused on migration comparison and residual hardening surfaces.
 
+Storybook should mirror the same hardening surface with companion stories for:
+
+- control states;
+- overlay primitives;
+- dashboard shells;
+- widget picker and state badge examples.
+
 ## Current component set
 
 Core controls:

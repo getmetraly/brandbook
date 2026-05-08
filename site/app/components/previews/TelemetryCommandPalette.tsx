@@ -1,6 +1,6 @@
 export default function TelemetryCommandPalette() {
   return (
-    <div className="telemetry-command-palette-draft">
+    <div className="telemetry-command-palette-draft" role="dialog" aria-label="Command palette">
       <div className="telemetry-command-input">
         <span aria-hidden="true">⌘</span>
         <input type="text" placeholder="Search commands, widgets or boards" />

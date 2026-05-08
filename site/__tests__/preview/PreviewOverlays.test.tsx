@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import TelemetryDrawer from '../../app/components/previews/TelemetryDrawer';
 import TelemetryModal from '../../app/components/previews/TelemetryModal';
+import TelemetryCommandPalette from '../../app/components/previews/TelemetryCommandPalette';
 import TelemetryPopover from '../../app/components/previews/TelemetryPopover';
 import TelemetryTooltip from '../../app/components/previews/TelemetryTooltip';
 import TelemetryToast from '../../app/components/previews/TelemetryToast';
@@ -53,5 +54,13 @@ describe('preview overlay surfaces', () => {
     expect(screen.getByRole('tooltip', { name: 'Telemetry tooltip' })).toBeInTheDocument();
     expect(screen.getByText('Telemetry details')).toBeInTheDocument();
     expect(screen.getByText('Live sync is enabled')).toBeInTheDocument();
+  });
+
+  it('renders the command palette as a labelled dialog', () => {
+    render(<TelemetryCommandPalette />);
+
+    expect(screen.getByRole('dialog', { name: 'Command palette' })).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Search commands, widgets or boards')).toBeInTheDocument();
+    expect(screen.getByText('Create widget')).toBeInTheDocument();
   });
 });
