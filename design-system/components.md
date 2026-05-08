@@ -6,6 +6,40 @@ Status: current design direction aligned with the grouped docs portal and groupe
 
 Metraly components must feel like engineering tools: calm, precise, dense and readable. They should not feel like generic admin templates or decorative Dribbble UI.
 
+## Canonical primitive set
+
+The reusable base lives in `@metraly/ui`. The current canonical primitive set is intentionally small:
+
+- `ThemeProvider`
+- `MetralyCard`
+- `MetralyPanel`
+- `MetralyBadge`
+- `StateBadge`
+- `MetralyLogo`
+- `MetralyMetricCard`
+- `MetralyTable`
+- `MetralyTelemetryLine`
+- `MetralyCheckbox`
+- `MetralyRadio`
+- `MetralySwitch`
+- `MetralySelect`
+- `MetralyTabs`
+- `WidgetShell`
+- `WidgetPickerCard`
+- `DashboardGrid`
+- `DashboardWidget`
+- `DashboardToolbar`
+- `DashboardEmptyState`
+- `DashboardDropZone`
+- `DashboardResizeHandle`
+
+Rules:
+
+- Prefer the primitive that already expresses the intended state and density.
+- Prefer composites only when the page needs a dashboard-specific contract.
+- Avoid cloning these patterns locally in app code unless a migration note explains the exception.
+- If a future need cannot be expressed with the current base set, treat it as a migration decision rather than an ad hoc local component.
+
 ## Baseline vs preview
 
 - `/components` is the protected baseline.
@@ -106,3 +140,12 @@ A component can move from preview hardening to implementation when:
 - focus/keyboard behavior is defined;
 - it appears in at least one product-like scenario;
 - it has documentation and visual-state examples.
+
+## Export alignment
+
+The `@metraly/ui` package should keep its public export surface aligned with this document. When adding a primitive:
+
+- update the export list in `packages/ui/src/index.ts`;
+- document the intended usage here;
+- add or update tests that cover the interactive states and accessibility semantics;
+- update migration notes if the component changes the rollout order.

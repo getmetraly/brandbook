@@ -18,6 +18,36 @@ This package turns the Metraly brandbook into reusable implementation files for 
 - `assets/favicon/` — favicon-safe app icon.
 - `migration/` — adoption tasks for Metraly apps and sites.
 
+## Canonical exports
+
+The current canonical `@metraly/ui` export surface covers the following base primitives:
+
+- `ThemeProvider`
+- `MetralyCard`
+- `MetralyPanel`
+- `MetralyBadge`
+- `StateBadge`
+- `MetralyLogo`
+- `MetralyMetricCard`
+- `MetralyTable`
+- `MetralyTelemetryLine`
+- `MetralyCheckbox`
+- `MetralyRadio`
+- `MetralySwitch`
+- `MetralySelect`
+- `MetralyTabs`
+- `WidgetShell`
+- `WidgetPickerCard`
+- dashboard primitives:
+  - `DashboardGrid`
+  - `DashboardWidget`
+  - `DashboardToolbar`
+  - `DashboardEmptyState`
+  - `DashboardDropZone`
+  - `DashboardResizeHandle`
+  - `defaultDashboardWidgetRegistry`
+  - `findDashboardWidgetDefinition`
+
 ## Import policy
 
 Prefer package-level component imports:
@@ -25,6 +55,8 @@ Prefer package-level component imports:
 ```ts
 import { MetralyCard, StateBadge, ThemeProvider, WidgetShell } from "@metraly/ui";
 ```
+
+Application code should not import from `packages/ui/src` directly. Keep imports on the public package surface or the documented public subpaths.
 
 Prefer style imports from the style subpath:
 

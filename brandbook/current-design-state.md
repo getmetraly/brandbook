@@ -165,6 +165,40 @@ It includes:
 - role icon examples from Developer to CEO;
 - board edit mode and drag-and-drop states.
 
+## Core primitive set
+
+The canonical reusable base currently lives in `@metraly/ui`. These components are the stable starting point for both the brandbook site and downstream migrations:
+
+- `ThemeProvider`
+- `MetralyCard`
+- `MetralyPanel`
+- `MetralyBadge`
+- `StateBadge`
+- `MetralyLogo`
+- `MetralyMetricCard`
+- `MetralyTable`
+- `MetralyTelemetryLine`
+- `MetralyCheckbox`
+- `MetralyRadio`
+- `MetralySwitch`
+- `MetralySelect`
+- `MetralyTabs`
+- `WidgetShell`
+- `WidgetPickerCard`
+- `DashboardGrid`
+- `DashboardWidget`
+- `DashboardToolbar`
+- `DashboardEmptyState`
+- `DashboardDropZone`
+- `DashboardResizeHandle`
+
+Usage rules:
+
+- Prefer these primitives over ad hoc local reimplementations when the visual and behavioral contract matches.
+- Use composites like `WidgetPickerCard` and `DashboardWidget` only when the page needs dashboard-specific density or interaction state.
+- Keep page-specific embellishments outside the primitive layer so the base API stays stable.
+- If a new primitive is needed, document the need in migration notes before expanding the export surface.
+
 ## Widget registry coverage
 
 The preview hardening workspace should reflect the product widget map:

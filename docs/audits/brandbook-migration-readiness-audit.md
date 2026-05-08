@@ -133,10 +133,10 @@ Treat brandbook as the canonical contract, then migrate the app and website by p
 | `react` / `react-dom` | `19.2.0` | Ready | Aligns with the current brandbook site. |
 | `react-grid-layout` | `2.2.3` | Risk | Requires a local compatibility adapter for incomplete TypeScript surfaces. |
 | `@dnd-kit/core` / `sortable` / `utilities` | `6.3.1` / `10.0.0` / `3.2.2` | Ready | Good enough for the current editor path, but should be kept aligned if editor complexity grows. |
-| `zustand` | `5.0.12` | Ready | Used for dashboard/editor state; selector-friendly pattern is in place. |
+| `zustand` | `5.0.13` | Ready | Used for dashboard/editor state; selector-friendly pattern is in place. |
 | `recharts` | `3.8.1` | Ready | Pinned to the resolved lockfile version so chart-wrapper work has a stable baseline. |
 | Storybook | `10.0.8` | Ready | Correct compatibility direction for the current Next.js generation. |
-| Jest | `30.2.x` | Ready | Stable enough, though JSX transform warnings still need cleanup later. |
+| Jest | `30.2.0` | Ready | Stable enough, though JSX transform warnings still need cleanup later. |
 
 ### Metraly Dependencies
 
@@ -164,12 +164,12 @@ Treat brandbook as the canonical contract, then migrate the app and website by p
 
 1. `react-grid-layout@2.2.3` is the highest frontend runtime risk because the TypeScript surface is incomplete in the same way the brandbook editor already encountered.
 2. React 18 in the product app and React 19 in brandbook/website means migration code should not assume identical runtime behavior for hooks, compiler warnings or peer dependency resolution.
-3. Floating `latest` dependencies in brandbook (`typescript`) are undesirable for a source-of-truth repo. A canonical reference should pin the exact versions it validates against.
+3. Floating `latest` dependencies in brandbook have been pinned. Keep the source-of-truth repo on exact versions so the validated baseline stays reproducible.
 4. The website and app repos have different build stacks (`Next 16` vs `Vite`), so migration recommendations must stay component- and contract-focused rather than framework-prescriptive.
 
 ## Recommended Dependency Updates
 
-- Pin the remaining floating brandbook dependencies instead of leaving them floating.
+- Keep the pinned brandbook dependencies exact and update them deliberately, one compatibility slice at a time.
 - Keep the `react-grid-layout` adapter isolated in the brandbook editor code and mirror the same contract in the app migration plan.
 - Avoid forcing React 19 into the app repository until the migration plan for that repo is explicit and tested.
 - Keep website and brandbook on the same Next.js major line for docs/marketing convergence.
