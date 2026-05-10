@@ -61,15 +61,16 @@ The current brandbook implementation now includes:
 
 The implementation remains intentionally static in the preview surface where full drag-and-drop behavior would add risk. The selected, dragging, drop-target and resize states are shown as hardening previews instead of being promoted as reusable production contracts.
 
-At the last recorded verification point, typechecking, unit tests and Storybook build passed. `next build` still needs follow-up if the static generation worker aborts during prerender.
+At the last recorded verification point in `docs/fix-plan-progress.md`, typechecking, unit tests and production build passed. Storybook build coverage should remain part of every follow-up component hardening PR.
 
 ## Next Steps
 
-1. Re-run the production build and isolate the failing prerender route if the worker abort still occurs.
-2. If the build failure is chart-related, move the Recharts-backed preview rendering behind a client-only boundary or a smaller dynamic wrapper.
-3. Add or adjust Playwright coverage for `/components/previews` and the dashboard editor scenario at desktop and mobile widths.
-4. Tighten any remaining accessibility gaps on `Select`, `Tabs`, `Table` and dashboard editor controls before any promotion beyond preview hardening.
-5. Keep future adoption of Claude Design ideas constrained to Metraly engineering-intelligence examples and tokenized @metraly/ui primitives.
+1. Keep the Claude Design artifact as a reference only and continue work through the component promotion lifecycle.
+2. Use `docs/migration/component-status.md` to track component maturity.
+3. Use `docs/migration/visual-checkpoints.md` to record visual review routes and viewport checks.
+4. Promote low-risk primitives first: `StateBadge`, `MetralyCard`, `MetralyPanel`, `MetralyMetricCard` and `MetralyTable` as display-only primitive.
+5. Keep `Select`, `Tabs`, full dashboard editor composition, real DnD behavior and complex chart wrappers in Hardening or Preview-only until API, accessibility and downstream adoption are verified.
+6. Pilot components in `website` and `metraly` only after they reach Release Candidate status.
 
 ## Readiness Labels
 
