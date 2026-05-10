@@ -136,12 +136,3 @@ Before returning a patch/archive:
 When asked to provide a patch, include complete files, not diff fragments.
 When asked for a full archive, include the full project tree.
 When a file should be deleted, list it in a delete list instead of deleting it silently.
-
-
-<claude-mem-context>
-# Memory Context
-
-# [brandbook] recent context, 2026-05-10 3:40pm GMT+3
-
-No previous sessions found.
-</claude-mem-context>
