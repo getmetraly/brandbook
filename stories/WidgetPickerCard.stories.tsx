@@ -34,3 +34,13 @@ export const Delayed: Story = {
     stateLabel: 'Delayed',
   },
 };
+
+export const Disabled: Story = {
+  args: {
+    selected: false,
+    disabled: true,
+    title: 'WIP per engineer',
+    description: 'Source is not connected yet.',
+    state: 'noData',
+  },
+};

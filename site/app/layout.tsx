@@ -18,6 +18,7 @@ import "@metraly/ui/styles/metraly-forms.css";
 import "@metraly/ui/styles/metraly-widget-shell.css";
 import "@metraly/ui/styles/metraly-widget-picker.css";
 import "@metraly/ui/styles/metraly-dashboard.css";
+import "@metraly/ui/styles/metraly-charts.css";
 // Global styles for react-grid-layout must be imported from the root layout,
 // not from a nested Client Component.
 import "react-grid-layout/css/styles.css";

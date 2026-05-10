@@ -15,6 +15,7 @@ This package turns the Metraly brandbook into reusable implementation files for 
 - `src/components/` — reusable React primitives and dashboard-ready components.
 - `src/styles/` — CSS variables, themes, component styles and interaction primitives.
 - `assets/svg/` — SVG logo marks and wordmarks.
+- `src/charts/` — Recharts wrappers for preview-safe Engineering Intelligence chart surfaces.
 - `assets/favicon/` — favicon-safe app icon.
 - `migration/` — adoption tasks for Metraly apps and sites.
 
@@ -47,6 +48,17 @@ The current canonical `@metraly/ui` export surface covers the following base pri
   - `defaultDashboardWidgetRegistry`
   - `findDashboardWidgetDefinition`
   - `createDashboardWidgetInstance`
+
+Chart wrappers are exported from the public chart subpath:
+
+- `@metraly/ui/charts`
+  - `MetralyChartCard`
+  - `MetralyLineChart`
+  - `MetralyAreaChart`
+  - `MetralyBarChart`
+  - `MetralyComposedChart`
+  - `MetralySparkline`
+  - `MetralyChartTooltip`
 
 ## Import policy
 

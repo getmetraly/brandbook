@@ -71,3 +71,23 @@ By following this phased migration plan, Metraly can adopt the unified UI framew
 ## Current design status
 
 This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the grouped preview hardening design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and grouped preview pages as the canonical surface.
+
+## Claude Design Reference Adoption
+
+`brandbook-metraly(2).zip` has been ingested as a visual reference only. The production adoption path is:
+
+1. Capture reference decisions in `site/app/components/previews/claude-design-handoff.md`.
+2. Translate the component state board into `/components/previews` using `@metraly/ui` primitives.
+3. Keep the dashboard editor scenario static until native DnD, keyboard behavior and persistence are verified through the existing editor abstractions.
+4. Route Recharts usage through `@metraly/ui/charts` wrappers before product adoption.
+5. Use Engineering Intelligence examples only: review latency, cycle time, lead time, deployment frequency, change failure rate, MTTR, CI failure rate, flaky builds, blocked work, flow efficiency, WIP and DORA overview.
+
+Do not migrate the visual reference's browser-Babel architecture, global window component model, inline-style-heavy implementation or generic infrastructure-observability examples.
+
+Current readiness:
+
+- Component state board: Hardening.
+- Dashboard editor scenario: Preview-only.
+- DashboardToolbar, DashboardDropZone and DashboardResizeHandle: Hardening.
+- Chart wrappers: Hardening.
+- Native/prototype DnD flows: not Ready.

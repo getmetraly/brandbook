@@ -1,0 +1,111 @@
+import { render, screen, within } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import {
+  ComponentStateBoard,
+  EngineeringDashboardEditorPreview,
+} from '../../app/components/previews/ClaudeDesignStateBoard';
+import { MetralyTable, type MetralyTableColumn } from '@metraly/ui';
+
+jest.mock('recharts', () => {
+  const React = require('react');
+  const Chart = ({ children, title }: { children?: React.ReactNode; title?: string }) =>
+    React.createElement('svg', { role: 'presentation', 'data-chart-title': title }, children);
+  const Primitive = () => null;
+  return {
+    ResponsiveContainer: ({ children }: { children?: React.ReactNode }) => React.createElement('div', null, children),
+    LineChart: Chart,
+    AreaChart: Chart,
+    BarChart: Chart,
+    ComposedChart: Chart,
+    CartesianGrid: Primitive,
+    XAxis: Primitive,
+    YAxis: Primitive,
+    Tooltip: Primitive,
+    Line: Primitive,
+    Area: Primitive,
+    Bar: Primitive,
+  };
+});
+
+type TestRow = {
+  team: string;
+  status: string;
+};
+
+const columns: MetralyTableColumn<TestRow>[] = [
+  { key: 'team', header: 'Team' },
+  { key: 'status', header: 'Status' },
+];
+
+describe('Claude Design preview hardening surface', () => {
+  it('renders all required component state groups without visible draft copy', () => {
+    render(<ComponentStateBoard />);
+
+    [
+      'MetralyCheckbox',
+      'MetralyRadio / MetralySwitch',
+      'MetralySelect / MetralyTabs',
+      'StateBadge / WidgetPickerCard',
+      'DashboardWidget / MetralyTable',
+      'DashboardToolbar / DropZone / ResizeHandle',
+    ].forEach((group) => {
+      expect(screen.getByRole('region', { name: group })).toBeInTheDocument();
+    });
+
+    expect(screen.queryByText(/draft/i)).not.toBeInTheDocument();
+  });
+
+  it('renders disabled controls, tab semantics and selected table rows', () => {
+    render(<ComponentStateBoard />);
+
+    expect(screen.getByRole('checkbox', { name: 'Locked policy' })).toBeDisabled();
+    expect(screen.getByRole('switch', { name: 'Read-only board' })).toBeDisabled();
+    expect(screen.getAllByRole('tablist').length).toBeGreaterThan(0);
+    expect(screen.getAllByRole('tab', { selected: true }).length).toBeGreaterThan(0);
+    expect(screen.getByRole('row', { selected: true })).toHaveTextContent('Growth');
+  });
+
+  it('covers loading and empty table states with accessible labels', () => {
+    const { rerender } = render(<MetralyTable columns={columns} data={[]} loading ariaLabel="Loading delivery table" />);
+
+    expect(screen.getByRole('table', { name: 'Loading delivery table' })).toHaveAttribute('aria-busy', 'true');
+    expect(document.querySelectorAll('.metraly-table-row.is-loading')).toHaveLength(3);
+
+    rerender(<MetralyTable columns={columns} data={[]} emptyText="No delivery data in this window." ariaLabel="Empty delivery table" />);
+
+    expect(screen.getByRole('table', { name: 'Empty delivery table' })).toBeInTheDocument();
+    expect(screen.getByText('No delivery data in this window.')).toBeInTheDocument();
+  });
+
+  it('renders dashboard editor scenario landmarks and editor states', () => {
+    const { container } = render(<EngineeringDashboardEditorPreview />);
+
+    expect(screen.getByRole('complementary', { name: 'Dashboard navigation' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Engineering Dashboard Editor' })).toBeInTheDocument();
+    expect(screen.getByRole('complementary', { name: 'Widget picker' })).toBeInTheDocument();
+    expect(screen.getAllByRole('status', { name: 'Live sync' }).length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText('Release to add widget')).toBeInTheDocument();
+    expect(screen.getByRole('alert')).toHaveTextContent('Pipeline source disconnected');
+    expect(screen.getByRole('table', { name: 'PR review latency by team table' })).toBeInTheDocument();
+    expect(screen.getAllByRole('img', { name: /chart/i }).length).toBeGreaterThan(0);
+
+    const selectedWidget = container.querySelector('.metraly-widget-shell.is-selected');
+    const draggingWidget = container.querySelector('.metraly-widget-shell.is-dragging');
+    expect(selectedWidget).toBeInTheDocument();
+    expect(draggingWidget).toBeInTheDocument();
+    expect(container.querySelectorAll('.metraly-dashboard-resize-handle').length).toBeGreaterThanOrEqual(3);
+  });
+
+  it('does not render pulse-wave before drag labels or inside default drop zones', () => {
+    const { container } = render(<EngineeringDashboardEditorPreview />);
+    const dragHandles = screen.getAllByRole('button', { name: 'Drag to move' });
+    const dropZone = screen.getByText('Release to add widget').closest('.metraly-dashboard-drop-zone');
+
+    dragHandles.forEach((handle) => {
+      expect(within(handle).queryByText(/pulse/i)).not.toBeInTheDocument();
+      expect(handle.querySelector('.metraly-widget-shell-grip-dots')).toBeInTheDocument();
+    });
+    expect(dropZone?.querySelector('.metraly-dashboard-drop-zone-line')).not.toBeInTheDocument();
+    expect(container.querySelector('.metraly-dashboard-drop-zone .metraly-pulse-marker')).not.toBeInTheDocument();
+  });
+});

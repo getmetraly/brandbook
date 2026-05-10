@@ -2,6 +2,12 @@
 
 Status: current design direction aligned with the grouped docs portal and grouped preview hardening workspace.
 
+## Claude Design reference boundary
+
+`brandbook-metraly(2).zip` is a visual reference, not production code. Its selected ideas are translated into the real preview hardening route at `/components/previews` and into existing `@metraly/ui` primitives.
+
+Do not copy the prototype architecture: React CDN, Babel-in-browser, global `window` components, inline-style-heavy components or generic infrastructure-observability examples.
+
 ## Component philosophy
 
 Metraly components must feel like engineering tools: calm, precise, dense and readable. They should not feel like generic admin templates or decorative Dribbble UI.
@@ -31,6 +37,16 @@ The reusable base lives in `@metraly/ui`. The current canonical primitive set is
 - `DashboardEmptyState`
 - `DashboardDropZone`
 - `DashboardResizeHandle`
+
+Chart wrappers are now exposed from `@metraly/ui/charts` for preview hardening:
+
+- `MetralyChartCard`
+- `MetralyLineChart`
+- `MetralyAreaChart`
+- `MetralyBarChart`
+- `MetralyComposedChart`
+- `MetralySparkline`
+- `MetralyChartTooltip`
 
 Rules:
 
@@ -97,6 +113,8 @@ Widget cards should use:
 - no nested collision;
 - resize handles outside text rhythm.
 
+Drag handles must use neutral grip dots and the accessible label `Drag to move`. Pulse-wave must not appear before drag labels.
+
 ### Tables
 
 `MetralyTable` is a display-first primitive for dense engineering data.
@@ -148,6 +166,19 @@ Each component should define these states where relevant:
 | Loading | skeleton/pulse without layout shift |
 | Unread/new | stronger title and marker |
 | Error/disconnected | red semantic border/text, not only color |
+
+## Readiness labels
+
+Use these labels consistently across preview and grouped pages:
+
+| Label | Meaning |
+|---|---|
+| Ready | Production-ready enough for current brandbook usage |
+| Visual-ready | Visual direction is accepted, implementation still needs hardening |
+| Hardening | Needs API, accessibility, state or test work |
+| Preview-only | Scenario/reference only, not a reusable component contract |
+
+Do not label Select, Tabs, Table wrappers, DashboardToolbar, DashboardDropZone, DashboardResizeHandle, full dashboard editor composition, native/prototype DnD flows or chart wrappers as Ready unless implementation, tests and accessibility coverage support promotion.
 
 ## Cursor rules
 

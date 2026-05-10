@@ -34,6 +34,7 @@ Avoid:
 
 - pulse before drag handles;
 - pulse before `Drag to move` text;
+- pulse in default drop zones;
 - repeated pulse spam in every row;
 - random rotation;
 - aggressive animation;

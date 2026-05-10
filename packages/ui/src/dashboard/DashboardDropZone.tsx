@@ -1,24 +1,50 @@
 import * as React from "react";
 
+export type DashboardDropZoneState = "idle" | "hover" | "active" | "rejected" | "empty";
+
 export interface DashboardDropZoneProps {
+  state?: DashboardDropZoneState;
   active?: boolean;
   label?: React.ReactNode;
+  description?: React.ReactNode;
   className?: string;
 }
 
+function defaultDropZoneLabel(state: DashboardDropZoneState): string {
+  if (state === "active") return "Release to add widget";
+  if (state === "hover") return "Widget can land here";
+  if (state === "rejected") return "Cannot drop here";
+  if (state === "empty") return "Add the first widget";
+  return "Drop widget here";
+}
+
 export function DashboardDropZone({
+  state,
   active = false,
-  label = "Drop widget here",
+  label,
+  description,
   className,
 }: DashboardDropZoneProps) {
-  const classes = ["metraly-dashboard-drop-zone", active && "is-active", className]
+  const resolvedState = state ?? (active ? "active" : "idle");
+  const resolvedLabel = label ?? defaultDropZoneLabel(resolvedState);
+  const classes = [
+    "metraly-dashboard-drop-zone",
+    `is-${resolvedState}`,
+    (active || resolvedState === "active") && "is-active",
+    className,
+  ]
     .filter(Boolean)
     .join(" ");
 
   return (
-    <div className={classes} role="status" aria-live="polite">
-      <span className="metraly-dashboard-drop-zone-line" aria-hidden="true" />
-      <span>{label}</span>
+    <div className={classes} role="status" aria-live="polite" data-drop-zone-state={resolvedState}>
+      <span className="metraly-dashboard-drop-zone-icon" aria-hidden="true">
+        {resolvedState === "rejected" ? "!" : "+"}
+      </span>
+      <span className="metraly-dashboard-drop-zone-copy">
+        <strong>{resolvedLabel}</strong>
+        {description ? <small>{description}</small> : null}
+      </span>
     </div>
   );
 }

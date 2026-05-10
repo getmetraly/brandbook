@@ -9,6 +9,7 @@ This document freezes the current Metraly brandbook design so future agents and 
 - `/components` is the protected baseline reference page.
 - The preview hardening surface is represented by the grouped docs pages under `site/app/components`, `site/app/patterns`, `site/app/examples`, `site/app/foundations` and `site/app/editor`.
 - The preview component set remains represented by `site/app/components/previews/` plus `site/app/components/previews/previews.css`.
+- `/components/previews` now contains the Claude Design reference integration state board and static Engineering Dashboard Editor scenario.
 - `AGENTS.md` defines repository operating rules for future AI/code agents.
 
 ## Visual identity
@@ -167,6 +168,8 @@ It includes:
 - role icon examples from Developer to CEO;
 - board edit mode and drag-and-drop states.
 
+The final Claude Design zip is treated as a visual reference only. Production-aligned translation lives in `site/app/components/previews/claude-design-handoff.md`, `/components/previews`, `/patterns/widget-editor` and `@metraly/ui/charts`.
+
 ## Core primitive set
 
 The canonical reusable base currently lives in `@metraly/ui`. These components are the stable starting point for both the brandbook site and downstream migrations:
@@ -192,6 +195,16 @@ The canonical reusable base currently lives in `@metraly/ui`. These components a
 - `DashboardEmptyState`
 - `DashboardDropZone`
 - `DashboardResizeHandle`
+
+Chart wrappers are exposed from `@metraly/ui/charts` for preview hardening:
+
+- `MetralyChartCard`
+- `MetralyLineChart`
+- `MetralyAreaChart`
+- `MetralyBarChart`
+- `MetralyComposedChart`
+- `MetralySparkline`
+- `MetralyChartTooltip`
 
 Usage rules:
 
@@ -245,8 +258,12 @@ The real dashboard scenario should show how primitives work together:
 - metric cards;
 - chart panel;
 - repository health table.
+- widget picker panel;
+- selected, dragging, drop-target, resize, empty and disconnected states.
 
 The toolbar must not collide. Use responsive wrapping or grid fallback.
+
+Default drop zones must use dashed cyan borders and subtle tint without pulse-wave. Drag handles must remain neutral grip dots.
 
 ## Interaction states
 

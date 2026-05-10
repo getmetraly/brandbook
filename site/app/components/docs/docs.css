@@ -151,6 +151,9 @@
   letter-spacing: 0.05em;
 }
 .docs-status-ready { color: var(--green); background: rgba(34,197,94,0.12); border-color: rgba(34,197,94,0.24); }
+.docs-status-visual-ready { color: var(--cyan); background: rgba(0,229,204,0.1); border-color: rgba(0,229,204,0.22); }
+.docs-status-hardening { color: var(--orange); background: rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.24); }
+.docs-status-preview-only { color: var(--purple); background: rgba(168,85,247,0.12); border-color: rgba(168,85,247,0.24); }
 .docs-status-draft { color: var(--orange); background: rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.24); }
 .docs-status-planned { color: var(--purple); background: rgba(168,85,247,0.12); border-color: rgba(168,85,247,0.24); }
 .docs-status-legacy { color: var(--red); background: rgba(239,68,68,0.12); border-color: rgba(239,68,68,0.24); }

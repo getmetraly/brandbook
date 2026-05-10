@@ -1,5 +1,6 @@
 import * as React from "react";
 import StateBadge, { type StateBadgeState } from "../components/StateBadge";
+import { DashboardResizeHandle } from "./DashboardResizeHandle";
 
 export interface DashboardWidgetProps {
   id?: string;
@@ -113,12 +114,26 @@ export function DashboardWidget({
             className="metraly-widget-shell-drag-handle metraly-focus-ring"
             role="button"
             tabIndex={0}
-            aria-label="Drag widget"
+            aria-label="Drag to move"
           >
-            <span aria-hidden="true">⋮⋮</span>
+            <span className="metraly-widget-shell-grip-dots" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+            </span>
           </span>
         </footer>
-        {resizable && <div className="metraly-widget-shell-resize-handle" aria-hidden="true" />}
+        {resizable && (
+          <DashboardResizeHandle
+            className="metraly-widget-shell-resize-handle"
+            label="Resize widget"
+            direction="southeast"
+            active={selected}
+          />
+        )}
       </div>
     </div>
   );

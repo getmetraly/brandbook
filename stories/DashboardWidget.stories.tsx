@@ -38,3 +38,19 @@ export const Resizable: Story = {
     resizable: true,
   },
 };
+
+export const FullWidth: Story = {
+  args: {
+    fullWidth: true,
+    state: 'delayed',
+    stateLabel: 'Full width',
+  },
+};
+
+export const Disconnected: Story = {
+  args: {
+    state: 'disconnected',
+    stateLabel: 'Disconnected',
+    children: <p>Reconnect CI to restore failure-rate telemetry.</p>,
+  },
+};

@@ -37,3 +37,17 @@ export const Empty: Story = {
     emptyText: 'No entries',
   },
 };
+
+export const Loading: Story = {
+  args: {
+    data: [],
+    loading: true,
+  },
+};
+
+export const SelectedRow: Story = {
+  args: {
+    rowKey: (row) => row.name,
+    selectedRowKeys: ['Beta'],
+  },
+};

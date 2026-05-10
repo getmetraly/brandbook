@@ -2,6 +2,7 @@ import TelemetryDrawer from "../../components/previews/TelemetryDrawer";
 import TelemetryDragOverlay from "../../components/previews/TelemetryDragOverlay";
 import TelemetryGridItem from "../../components/previews/TelemetryGridItem";
 import TelemetryDashboardWidget from "../../components/previews/TelemetryDashboardWidget";
+import { EngineeringDashboardEditorPreview } from "../../components/previews/ClaudeDesignStateBoard";
 import DocsShell from "../../components/docs/DocsShell";
 import { CodeBlock, ComponentPreview, ComponentStateGrid, DocsCardGrid, DocsRouteCard, DocsSection, LegacyNotice } from "../../components/docs/DocsBlocks";
 import { getRelatedLinks } from "../../lib/docs/navigation";
@@ -14,6 +15,11 @@ export default function WidgetEditorPatternPage() {
         <LegacyNotice>The editor is intentionally Client-only. Avoid moving localStorage, react-grid-layout or event-heavy widgets into Server Components.</LegacyNotice>
       </DocsSection>
       <DocsSection id="board-edit" title="Board edit mode" description="The editor should show the selected widget, dragging state, drop target and resize affordances in one flow.">
+        <ComponentPreview title="Engineering Dashboard Editor preview" description="Static state preview integrated from the Claude Design reference using Metraly primitives." states={["edit mode", "selected", "dragging", "drop target", "resize", "empty", "disconnected"]}>
+          <div className="component-preview-stage is-wide">
+            <EngineeringDashboardEditorPreview />
+          </div>
+        </ComponentPreview>
         <ComponentPreview title="DashboardWidget / GridItem / Drawer / DragOverlay" description="Board edit state surfaces used by the editor and dashboard workflows." states={["selected", "dragging", "drop target", "resizable"]}>
           <ComponentStateGrid>
             <TelemetryDashboardWidget />

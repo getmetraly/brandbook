@@ -1,6 +1,8 @@
 import {
   DashboardEmptyState,
   DashboardGrid,
+  DashboardDropZone,
+  DashboardResizeHandle,
   DashboardToolbar,
   DashboardWidget,
   WidgetPickerCard,
@@ -21,11 +23,21 @@ const widgets: DashboardWidgetInstance[] = [
 
 export default function DashboardComponentsPage() {
   return (
-      <DocsShell currentPath="/components/dashboard" title="Dashboard" description="Dashboard-specific components for board layout, widget selection and editor surfaces." status="ready" related={getRelatedLinks(["/patterns/widget-editor", "/editor", "/examples/engineering-dashboard"])} toc={[{ title: "Widget surfaces", href: "#widgets" }, { title: "Grid", href: "#grid" }, { title: "Picker", href: "#picker" }, { title: "Frames", href: "#frames" }]}> 
+    <DocsShell currentPath="/components/dashboard" title="Dashboard" description="Dashboard-specific components for board layout, widget selection and editor surfaces." status="hardening" related={getRelatedLinks(["/patterns/widget-editor", "/editor", "/examples/engineering-dashboard", "/components/previews"])} toc={[{ title: "Widget surfaces", href: "#widgets" }, { title: "Grid", href: "#grid" }, { title: "Picker", href: "#picker" }, { title: "Frames", href: "#frames" }]}> 
       <DocsSection id="widgets" title="Widget surfaces">
         <ComponentPreview title="DashboardToolbar / DashboardWidget" description="Toolbar and widget wrapper for dashboard editor pages." states={["selected", "resizable", "live", "delayed"]} code={'import { DashboardWidget } from "@metraly/ui";'}>
           <div className="docs-dashboard-preview">
-            <DashboardToolbar title="Engineering board" description="Last updated 2m ago" meta="2 widgets · saved" actions={<span className="brand-badge brand-badge-primary">Editor</span>} />
+            <DashboardToolbar
+              title="Engineering board"
+              description="Last updated 2m ago"
+              meta="2 widgets · saved"
+              tabs={[{ value: "delivery", label: "Delivery" }, { value: "dora", label: "DORA" }, { value: "flow", label: "Flow" }]}
+              activeTab="delivery"
+              searchValue=""
+              syncState="live"
+              editMode
+              actions={<span className="brand-badge brand-badge-primary">Editor</span>}
+            />
             <ComponentStateGrid>
               <DashboardWidget id="flow" title="Flow efficiency" subtitle="Current sprint" state="live" selected><strong className="metric-value">81%</strong></DashboardWidget>
               <DashboardWidget id="deploy" title="Deployment health" subtitle="7 days" state="delayed"><strong className="metric-value">99.2%</strong></DashboardWidget>
@@ -41,6 +53,18 @@ export default function DashboardComponentsPage() {
         </ComponentPreview>
         <ComponentPreview title="DashboardEmptyState" description="First-run surface for new boards." states={["no widgets", "call to action"]}>
           <DashboardEmptyState action={<span className="btn btn-primary">Add widget</span>} />
+        </ComponentPreview>
+        <ComponentPreview title="DashboardDropZone / DashboardResizeHandle" description="Board edit affordances: dashed cyan drop targets and resize handles outside content rhythm." states={["idle", "drop-target", "rejected", "horizontal resize", "vertical resize"]}>
+          <ComponentStateGrid>
+            <DashboardDropZone state="idle" description="Default drop zones do not render pulse-wave." />
+            <DashboardDropZone state="active" description="Release to add a delivery widget." />
+            <DashboardDropZone state="rejected" label="Cannot drop here" description="Invalid placement." />
+            <div className="claude-resize-demo">
+              <DashboardResizeHandle direction="east" label="Resize width" />
+              <DashboardResizeHandle direction="south" label="Resize height" active />
+              <DashboardResizeHandle direction="southeast" label="Resize corner" active />
+            </div>
+          </ComponentStateGrid>
         </ComponentPreview>
         <ComponentPreview title="TelemetryEmptyState" description="Legacy empty state preview used while the canonical board empty state is hardened." states={["empty", "call to action"]}>
           <TelemetryEmptyState />

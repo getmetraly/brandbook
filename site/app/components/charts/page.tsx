@@ -5,10 +5,10 @@ import { getRelatedLinks } from "../../lib/docs/navigation";
 
 export default function ChartsPage() {
   return (
-    <DocsShell currentPath="/components/charts" title="Charts" description="Chart examples backed by Recharts. This page remains a draft layer until chart wrappers are promoted into @metraly/ui." status="draft" related={getRelatedLinks(["/components/data-display", "/examples/engineering-dashboard", "/patterns/dashboard-layout"])}>
+    <DocsShell currentPath="/components/charts" title="Charts" description="Chart examples backed by Metraly Recharts wrappers for engineering intelligence signals." status="hardening" related={getRelatedLinks(["/components/data-display", "/examples/engineering-dashboard", "/patterns/dashboard-layout", "/components/previews"])}>
       <DocsSection id="recharts" title="Recharts previews">
-        <LegacyNotice>Charts are still a draft layer. Keep raw Recharts usage contained while wrappers are designed.</LegacyNotice>
-        <ComponentPreview title="RechartsShowcase" description="Current chart gallery used as a temporary bridge while wrapper components are designed." states={["line", "bar", "area", "donut"]}>
+        <LegacyNotice>Raw Recharts usage is contained inside `@metraly/ui/charts` wrappers for preview hardening.</LegacyNotice>
+        <ComponentPreview title="Metraly chart wrappers" description="Current chart gallery uses wrapper components with dark panels, accessible summaries and static animation settings." states={["line", "bar", "area", "composed", "loading", "error", "no-data"]}>
           <RechartsShowcase />
         </ComponentPreview>
       </DocsSection>

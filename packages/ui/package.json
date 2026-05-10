@@ -8,13 +8,15 @@
   ],
   "peerDependencies": {
     "react": ">=18",
-    "react-dom": ">=18"
+    "react-dom": ">=18",
+    "recharts": ">=3"
   },
   "exports": {
     ".": "./src/index.ts",
     "./components/*": "./src/components/*.tsx",
     "./styles/*": "./src/styles/*",
     "./assets/*": "./assets/*",
+    "./charts": "./src/charts/index.ts",
     "./dashboard": "./src/dashboard/WidgetRegistry.ts",
     "./dashboard/types": "./src/dashboard/types.ts",
     "./dashboard/DashboardGrid": "./src/dashboard/DashboardGrid.tsx",
