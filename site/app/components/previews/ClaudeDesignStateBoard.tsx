@@ -178,12 +178,12 @@ export function ComponentStateBoard() {
           </DashboardWidget>
         </StateCell>
         <StateCell label="selected">
-          <DashboardWidget title="Lead time for changes" subtitle="PR open to production" state="live" selected>
+          <DashboardWidget title="Lead time for changes" subtitle="PR open to production" state="live" selected id="ltc" onDragStart={() => undefined}>
             <MetricBody value="41h" delta="-6h vs previous window" values={[62, 58, 55, 50, 46, 43, 41]} />
           </DashboardWidget>
         </StateCell>
         <StateCell label="dragging">
-          <DashboardWidget title="Blocked work" subtitle="Stalled > 3 days" state="delayed" dragging>
+          <DashboardWidget title="Blocked work" subtitle="Stalled > 3 days" state="delayed" dragging id="blocked" onDragStart={() => undefined}>
             <MetricBody value="9" delta="+3 blocked items" values={[3, 4, 4, 6, 7, 8, 9]} />
           </DashboardWidget>
         </StateCell>
@@ -227,7 +227,7 @@ function DashboardSidebar() {
       </div>
       <nav>
         {items.map((item) => (
-          <button key={item} type="button" className={item === "Delivery" ? "is-active" : undefined}>
+          <button key={item} type="button" className={item === "Delivery" ? "is-active" : undefined} aria-current={item === "Delivery" ? "page" : undefined}>
             <span>{item.slice(0, 2).toUpperCase()}</span>
             {item}
           </button>
@@ -285,25 +285,24 @@ export function EngineeringDashboardEditorPreview() {
           />
 
           <div className="claude-editor-note" role="note">
-            <span className="metraly-pulse-marker" aria-hidden="true" />
             <strong>Edit mode</strong>
             <span>Drag handle uses neutral grip dots. Drop zones use dashed cyan borders without pulse markers.</span>
           </div>
 
           <div className="claude-dashboard-grid-preview">
-            <DashboardWidget title="Deployment frequency" subtitle="DORA / deploys" state="live">
+            <DashboardWidget title="Deployment frequency" subtitle="DORA / deploys" state="live" id="deploy" onDragStart={() => undefined}>
               <MetricBody value="24/day" delta="+18% vs previous window" values={[4, 6, 7, 8, 10, 12, 14, 15]} />
             </DashboardWidget>
-            <DashboardWidget title="Lead time for changes" subtitle="PR open to production" state="live" selected>
+            <DashboardWidget title="Lead time for changes" subtitle="PR open to production" state="live" selected id="ltc" onDragStart={() => undefined}>
               <MetricBody value="41h" delta="-6h vs previous window" values={[62, 60, 55, 52, 48, 44, 41]} />
             </DashboardWidget>
-            <DashboardWidget title="CI failure rate" subtitle="Source disconnected" state="disconnected">
+            <DashboardWidget title="CI failure rate" subtitle="Source disconnected" state="disconnected" id="ci" onDragStart={() => undefined}>
               <div className="claude-widget-error" role="alert">
                 <strong>Pipeline source disconnected</strong>
                 <span>Reconnect CI to restore failure-rate telemetry.</span>
               </div>
             </DashboardWidget>
-            <DashboardWidget title="Blocked work" subtitle="Flow / WIP" state="delayed" dragging>
+            <DashboardWidget title="Blocked work" subtitle="Flow / WIP" state="delayed" dragging id="blocked" onDragStart={() => undefined}>
               <MetricBody value="9" delta="+3 blocked items" values={[3, 4, 5, 6, 6, 8, 9]} />
             </DashboardWidget>
 

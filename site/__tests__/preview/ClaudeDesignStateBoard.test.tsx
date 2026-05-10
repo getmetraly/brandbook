@@ -5,6 +5,7 @@ import {
   EngineeringDashboardEditorPreview,
 } from '../../app/components/previews/ClaudeDesignStateBoard';
 import { MetralyTable, type MetralyTableColumn } from '@metraly/ui';
+import { MetralyChartCard } from '@metraly/ui/charts';
 
 jest.mock('recharts', () => {
   const React = require('react');
@@ -107,5 +108,41 @@ describe('Claude Design preview hardening surface', () => {
     });
     expect(dropZone?.querySelector('.metraly-dashboard-drop-zone-line')).not.toBeInTheDocument();
     expect(container.querySelector('.metraly-dashboard-drop-zone .metraly-pulse-marker')).not.toBeInTheDocument();
+  });
+
+  it('editor note does not contain a pulse marker', () => {
+    const { container } = render(<EngineeringDashboardEditorPreview />);
+    const note = container.querySelector('[role="note"]');
+    expect(note).toBeInTheDocument();
+    expect(note?.querySelector('.metraly-pulse-marker')).not.toBeInTheDocument();
+  });
+
+  it('active sidebar nav item has aria-current="page"', () => {
+    render(<EngineeringDashboardEditorPreview />);
+    const nav = screen.getByRole('navigation');
+    const active = within(nav).getByRole('button', { name: /delivery/i });
+    expect(active).toHaveAttribute('aria-current', 'page');
+  });
+});
+
+describe('MetralyChartCard state coverage', () => {
+  it('renders error state with role=alert', () => {
+    render(<MetralyChartCard title="Test" summary="summary text" state="error" />);
+    expect(screen.getByRole('alert')).toHaveTextContent('Chart disconnected');
+  });
+
+  it('renders loading state with role=status', () => {
+    render(<MetralyChartCard title="Test" summary="summary text" state="loading" />);
+    expect(screen.getByRole('status')).toHaveTextContent('Loading chart');
+  });
+
+  it('renders noData state with role=status', () => {
+    render(<MetralyChartCard title="Test" summary="summary text" state="noData" />);
+    expect(screen.getByRole('status')).toHaveTextContent('No chart data');
+  });
+
+  it('renders text summary alternative', () => {
+    render(<MetralyChartCard title="Cycle time" summary="Cycle time improved this sprint." />);
+    expect(screen.getByText('Cycle time improved this sprint.')).toBeInTheDocument();
   });
 });

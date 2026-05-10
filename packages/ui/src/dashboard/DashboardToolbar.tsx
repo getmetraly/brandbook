@@ -71,7 +71,7 @@ export function DashboardToolbar({
                 value={searchValue ?? ""}
                 readOnly={!onSearchChange}
                 placeholder={searchPlaceholder}
-                onChange={(event) => onSearchChange?.(event.target.value)}
+                onChange={onSearchChange ? (event) => onSearchChange(event.target.value) : undefined}
               />
             </label>
           ) : null}

@@ -26,7 +26,7 @@ export function DashboardResizeHandle({
     .join(" ");
 
   return (
-    <span className={classes} role="separator" aria-label={label} tabIndex={0}>
+    <span className={classes} role="separator" aria-label={label} tabIndex={active ? 0 : undefined}>
       <span aria-hidden="true" />
     </span>
   );

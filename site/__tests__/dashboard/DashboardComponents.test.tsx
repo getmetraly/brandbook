@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { DashboardEmptyState, DashboardGrid, DashboardToolbar, DashboardWidget } from '@metraly/ui';
+import { DashboardEmptyState, DashboardGrid, DashboardResizeHandle, DashboardToolbar, DashboardWidget } from '@metraly/ui';
 
 describe('dashboard components', () => {
   it('renders toolbar metadata and actions', () => {
@@ -30,11 +30,41 @@ describe('dashboard components', () => {
   });
 
   it('renders the canonical widget chrome', () => {
-    const { container } = render(<DashboardWidget id="w1" title="Flow efficiency">81%</DashboardWidget>);
+    const { container } = render(
+      <DashboardWidget id="w1" title="Flow efficiency" onDragStart={() => undefined}>81%</DashboardWidget>
+    );
 
-    expect(screen.getByLabelText('Drag to move')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Drag to move' })).toBeInTheDocument();
+    expect(container.querySelector('.metraly-widget-shell-grip-dots')).toBeInTheDocument();
     expect(container.querySelector('.metraly-widget-shell-resize-handle')).toBeInTheDocument();
     expect(container.querySelector('.metraly-widget-shell')).toBeInTheDocument();
+  });
+
+  it('search input is readOnly and has no onChange when onSearchChange is not provided', () => {
+    render(<DashboardToolbar title="Board" searchValue="" />);
+    const input = screen.getByRole('searchbox');
+    expect(input).toHaveAttribute('readonly');
+    // onChange must not be wired — simulating change must not throw
+    expect(() => fireEvent.change(input, { target: { value: 'x' } })).not.toThrow();
+  });
+
+  it('search input fires onSearchChange when handler is provided', () => {
+    const onSearch = jest.fn();
+    render(<DashboardToolbar title="Board" searchValue="q" onSearchChange={onSearch} />);
+    fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'new' } });
+    expect(onSearch).toHaveBeenCalledWith('new');
+  });
+
+  it('inactive resize handle is not focusable', () => {
+    const { container } = render(<DashboardResizeHandle direction="east" label="Resize width" />);
+    const handle = container.querySelector('.metraly-dashboard-resize-handle');
+    expect(handle).not.toHaveAttribute('tabindex', '0');
+  });
+
+  it('active resize handle is focusable with correct label', () => {
+    render(<DashboardResizeHandle direction="east" label="Resize width" active />);
+    const handle = screen.getByRole('separator', { name: 'Resize width' });
+    expect(handle).toHaveAttribute('tabindex', '0');
   });
 
   it('supports selection and removal actions', () => {

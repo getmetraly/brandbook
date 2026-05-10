@@ -69,7 +69,9 @@ describe('dashboard edit mode primitives', () => {
   });
 
   it('renders dashboard widget drag handles as neutral grip dots', () => {
-    const { container } = render(<DashboardWidget title="Review latency" state="live">4h</DashboardWidget>);
+    const { container } = render(
+      <DashboardWidget id="review" title="Review latency" state="live" onDragStart={() => undefined}>4h</DashboardWidget>
+    );
 
     const handle = screen.getByRole('button', { name: 'Drag to move' });
     expect(handle.querySelector('.metraly-widget-shell-grip-dots')).toBeInTheDocument();

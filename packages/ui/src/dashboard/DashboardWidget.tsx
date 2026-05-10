@@ -17,6 +17,7 @@ export interface DashboardWidgetProps {
   className?: string;
   onSelect?: (id: string) => void;
   onRemove?: (id: string) => void;
+  onDragStart?: (id: string) => void;
 }
 
 function defaultStateLabel(state: StateBadgeState): string {
@@ -39,9 +40,11 @@ export function DashboardWidget({
   className,
   onSelect,
   onRemove,
+  onDragStart,
 }: DashboardWidgetProps) {
   const canSelect = Boolean(id && onSelect);
   const canRemove = Boolean(id && onRemove);
+  const canDrag = Boolean(id && onDragStart);
   const rootProps = canSelect
     ? {
         role: "button" as const,
@@ -112,9 +115,22 @@ export function DashboardWidget({
         <footer className="metraly-widget-shell-foot">
           <span
             className="metraly-widget-shell-drag-handle metraly-focus-ring"
-            role="button"
-            tabIndex={0}
-            aria-label="Drag to move"
+            {...(canDrag
+              ? {
+                  role: "button" as const,
+                  tabIndex: 0,
+                  "aria-label": "Drag to move",
+                  onKeyDown: (e: React.KeyboardEvent) => {
+                    if (e.key === " " || e.key === "Enter") {
+                      e.preventDefault();
+                      onDragStart!(id!);
+                    }
+                  },
+                }
+              : {
+                  role: "presentation" as const,
+                  "aria-hidden": true,
+                })}
           >
             <span className="metraly-widget-shell-grip-dots" aria-hidden="true">
               <span />
