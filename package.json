@@ -11,6 +11,8 @@
     "site:dev": "npm --prefix site run dev",
     "ui:check": "npm --prefix packages/ui run typecheck",
     "check": "npm run ui:check && npm run site:typecheck && npm run site:test",
+    "e2e:install": "playwright install chromium",
+    "test:e2e": "playwright test",
     "storybook": "npm --prefix site run storybook",
     "build-storybook": "npm --prefix site run build-storybook",
     "clean:legacy": "bash scripts/clean-legacy.sh"
