@@ -31,6 +31,14 @@ describe('StateBadge', () => {
     expect(badge).toHaveAttribute('data-size', 'sm');
   });
 
+  it('supports solid tone for higher emphasis contexts', () => {
+    const { container } = render(<StateBadge state="warning" tone="solid" />);
+    const badge = container.querySelector('.metraly-state-badge');
+    expect(screen.getByText('Warning')).toBeInTheDocument();
+    expect(badge).toHaveClass('metraly-state-badge--tone-solid');
+    expect(badge).toHaveAttribute('data-tone', 'solid');
+  });
+
   it('can hide the visual indicator without changing the label', () => {
     const { container } = render(<StateBadge state="stale" showIndicator={false} />);
     expect(screen.getByText('Stale')).toBeInTheDocument();
@@ -49,6 +57,10 @@ describe('StateBadge', () => {
     ['delayed', 'Delayed'],
     ['disconnected', 'Disconnected'],
     ['noData', 'No data'],
+    ['error', 'Error'],
+    ['warning', 'Warning'],
+    ['success', 'Success'],
+    ['info', 'Info'],
   ] as const)('renders state %s with default label %s', (state, expectedLabel) => {
     const { unmount } = render(<StateBadge state={state} />);
     expect(screen.getByText(expectedLabel)).toBeInTheDocument();
