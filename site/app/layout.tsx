@@ -10,6 +10,7 @@ import "./components/docs/docs.css";
 import { ThemeProvider } from "@metraly/ui";
 import "@metraly/ui/styles/metraly-theme.css";
 import "@metraly/ui/styles/metraly-card.css";
+import "@metraly/ui/styles/metraly-metric-card.css";
 import "@metraly/ui/styles/metraly-state-badge.css";
 import "@metraly/ui/styles/metraly-table.css";
 import "@metraly/ui/styles/metraly-forms.css";
