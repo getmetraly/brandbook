@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { MetralyMetricCard } from '@metraly/ui';
+import { MetralyMetricCard, StateBadge } from '@metraly/ui';
 
 describe('MetralyMetricCard', () => {
   it('renders title and value', () => {
@@ -19,16 +19,21 @@ describe('MetralyMetricCard', () => {
     expect(screen.getByText('Last 30 days')).toBeInTheDocument();
   });
 
+  it('renders optional badge', () => {
+    render(<MetralyMetricCard title="Sync" value="Live" badge={<StateBadge state="live" size="sm" />} />);
+    expect(screen.getByRole('status', { name: 'Live' })).toBeInTheDocument();
+  });
+
   it('omits footer when not provided', () => {
     const { container } = render(<MetralyMetricCard title="Latency" value="120ms" />);
-    expect(container.querySelector('.pt-2')).not.toBeInTheDocument();
+    expect(container.querySelector('.metraly-metric-card-footer')).not.toBeInTheDocument();
   });
 
   it.each([
     'primary', 'secondary', 'success', 'warning', 'error', 'info',
-  ] as const)('renders variant %s without error', (variant) => {
-    const { unmount } = render(<MetralyMetricCard title="Metric" value="0" variant={variant} />);
-    expect(screen.getByText('Metric')).toBeInTheDocument();
+  ] as const)('renders variant %s with a semantic class', (variant) => {
+    const { container, unmount } = render(<MetralyMetricCard title="Metric" value="0" variant={variant} />);
+    expect(container.querySelector(`.metraly-metric-card.is-${variant}`)).toBeInTheDocument();
     unmount();
   });
 });
