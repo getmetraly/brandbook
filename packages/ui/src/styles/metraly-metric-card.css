@@ -1,0 +1,75 @@
+.metraly-panel--padding-sm { padding: 0.75rem; }
+.metraly-panel--padding-md { padding: 1rem; }
+.metraly-panel--padding-lg { padding: 1.25rem; }
+
+.metraly-metric-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  transition: background var(--metraly-motion-base) var(--metraly-ease-out), border-color var(--metraly-motion-base) var(--metraly-ease-out), box-shadow var(--metraly-motion-base) var(--metraly-ease-out);
+}
+
+.metraly-metric-card:hover {
+  background: var(--metraly-bg-card-hover);
+}
+
+.metraly-metric-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.metraly-metric-card-icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.125rem;
+  color: var(--metraly-primary);
+}
+
+.metraly-metric-card-copy {
+  min-width: 0;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.metraly-metric-card-title {
+  font-family: var(--metraly-font-ui);
+  font-size: 0.8125rem;
+  font-weight: 650;
+  color: var(--metraly-text-secondary);
+}
+
+.metraly-metric-card-value {
+  font-family: var(--metraly-font-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  color: var(--metraly-metric-accent, var(--metraly-primary));
+  line-height: 1;
+}
+
+.metraly-metric-card-badge {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+.metraly-metric-card-footer {
+  border-top: 1px solid var(--metraly-border);
+  padding-top: 0.75rem;
+  font-family: var(--metraly-font-ui);
+  font-size: 0.75rem;
+  color: var(--metraly-text-muted);
+}
+
+.metraly-metric-card.is-primary { --metraly-metric-accent: var(--metraly-primary); }
+.metraly-metric-card.is-secondary { --metraly-metric-accent: var(--metraly-secondary); }
+.metraly-metric-card.is-success { --metraly-metric-accent: var(--metraly-success); }
+.metraly-metric-card.is-warning { --metraly-metric-accent: var(--metraly-warning); }
+.metraly-metric-card.is-error { --metraly-metric-accent: var(--metraly-error); }
+.metraly-metric-card.is-info { --metraly-metric-accent: var(--metraly-info); }
