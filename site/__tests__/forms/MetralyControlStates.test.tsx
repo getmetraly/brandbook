@@ -105,4 +105,73 @@ describe('Metraly control state coverage', () => {
     fireEvent.click(screen.getByRole('tab', { name: 'Overview' }));
     expect(onValueChange).toHaveBeenCalledWith('overview');
   });
+
+  it('navigates tabs with ArrowRight and ArrowLeft keys', () => {
+    const onValueChange = jest.fn();
+
+    render(
+      <MetralyTabs
+        ariaLabel="Dashboard sections"
+        defaultValue="overview"
+        onValueChange={onValueChange}
+        items={[
+          { value: 'overview', label: 'Overview' },
+          { value: 'boards', label: 'Boards' },
+          { value: 'alerts', label: 'Alerts' },
+        ]}
+      />
+    );
+
+    const overviewTab = screen.getByRole('tab', { name: 'Overview' });
+    fireEvent.keyDown(overviewTab, { key: 'ArrowRight' });
+    expect(onValueChange).toHaveBeenCalledWith('boards');
+
+    onValueChange.mockClear();
+    const boardsTab = screen.getByRole('tab', { name: 'Boards' });
+    fireEvent.keyDown(boardsTab, { key: 'ArrowLeft' });
+    expect(onValueChange).toHaveBeenCalledWith('overview');
+  });
+
+  it('skips disabled tabs during keyboard navigation', () => {
+    const onValueChange = jest.fn();
+
+    render(
+      <MetralyTabs
+        ariaLabel="Nav"
+        defaultValue="a"
+        onValueChange={onValueChange}
+        items={[
+          { value: 'a', label: 'A' },
+          { value: 'b', label: 'B', disabled: true },
+          { value: 'c', label: 'C' },
+        ]}
+      />
+    );
+
+    fireEvent.keyDown(screen.getByRole('tab', { name: 'A' }), { key: 'ArrowRight' });
+    expect(onValueChange).toHaveBeenCalledWith('c');
+  });
+
+  it('renders switch in disabled state', () => {
+    render(<MetralySwitch label="Offline mode" disabled />);
+    const toggle = screen.getByRole('switch', { name: 'Offline mode' });
+    expect(toggle).toBeDisabled();
+    expect(toggle).toHaveAttribute('aria-checked', 'false');
+  });
+
+  it('active tab has tabIndex 0 and inactive tabs have tabIndex -1', () => {
+    render(
+      <MetralyTabs
+        ariaLabel="Nav"
+        defaultValue="first"
+        items={[
+          { value: 'first', label: 'First' },
+          { value: 'second', label: 'Second' },
+        ]}
+      />
+    );
+
+    expect(screen.getByRole('tab', { name: 'First' })).toHaveAttribute('tabindex', '0');
+    expect(screen.getByRole('tab', { name: 'Second' })).toHaveAttribute('tabindex', '-1');
+  });
 });
