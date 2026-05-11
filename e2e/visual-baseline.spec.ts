@@ -65,7 +65,7 @@ test.describe('visual baseline route smoke checks', () => {
 
       await expect(page.getByRole('heading', { name: /Preview Hardening/i })).toBeVisible();
       await expect(page.getByRole('heading', { name: /Engineering Dashboard Editor/i })).toBeVisible();
-      await expect(page.getByText(/Release to add widget/i)).toBeVisible();
+      await expect(page.getByText(/Release to add widget/i).first()).toBeVisible();
 
       const bodyBox = await page.locator('body').boundingBox();
       expect(bodyBox?.width).toBeLessThanOrEqual(viewport.width + 1);
@@ -77,7 +77,7 @@ test.describe('visual baseline route smoke checks', () => {
 
     await expect(page.getByText(/neutral grip dots/i)).toBeVisible();
     await expect(page.getByText(/No pulse-wave in default drop zones/i)).toBeVisible();
-    await expect(page.getByText(/Dashed cyan border/i)).toBeVisible();
+    await expect(page.getByText(/Dashed cyan border/i).first()).toBeVisible();
     await expect(page.getByText(/draft/i)).toHaveCount(0);
   });
 });

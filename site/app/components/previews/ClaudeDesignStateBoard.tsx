@@ -379,7 +379,7 @@ export default function ClaudeDesignStateBoard() {
     <div className="claude-design-preview">
       <section className="claude-design-hero">
         <span className="draft-kicker">Claude Design visual reference integration</span>
-        <h1>Metraly preview hardening surface</h1>
+        <p className="claude-preview-section-title">Metraly component hardening surface</p>
         <p>
           Static production-aligned implementation of the final visual reference. The zip remains a reference artifact;
           the real work lives in `@metraly/ui` primitives and preview routes.
