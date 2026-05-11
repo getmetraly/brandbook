@@ -12,7 +12,7 @@ export type MetralyMetricCardVariant =
   | "error"
   | "info";
 
-export interface MetralyMetricCardProps {
+export interface MetralyMetricCardProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Title describing the metric, e.g. "Active users". */
   title: React.ReactNode;
   /** The metric value; can include units or secondary text. */
@@ -23,18 +23,11 @@ export interface MetralyMetricCardProps {
   variant?: MetralyMetricCardVariant;
   /** Optional footer content such as percentage changes or links. */
   footer?: React.ReactNode;
+  /** Optional badge or state element displayed in the header. */
+  badge?: React.ReactNode;
   /** Additional classes to apply to the outer container. */
   className?: string;
 }
-
-const variantColours: Record<MetralyMetricCardVariant, string> = {
-  primary: "var(--metraly-primary)",
-  secondary: "var(--metraly-secondary)",
-  success: "var(--metraly-success)",
-  warning: "var(--metraly-warning)",
-  error: "var(--metraly-error)",
-  info: "var(--metraly-info)",
-};
 
 export function MetralyMetricCard({
   title,
@@ -42,22 +35,24 @@ export function MetralyMetricCard({
   icon,
   variant = "primary",
   footer,
+  badge,
   className,
+  ...rest
 }: MetralyMetricCardProps) {
-  const accent = variantColours[variant];
-
   return (
-    <MetralyPanel className={["p-4 flex flex-col gap-2", className].filter(Boolean).join(" ")}> 
-      <div className="flex items-start gap-3">
-        {icon && <span className="mt-0.5">{icon}</span>}
-        <div className="flex flex-col gap-1">
-          <div className="text-sm font-medium text-[color:var(--metraly-text-secondary)]">{title}</div>
-          <div className="text-2xl font-display font-semibold" style={{ color: accent }}>
-            {value}
-          </div>
+    <MetralyPanel
+      {...rest}
+      className={["metraly-metric-card", `is-${variant}`, className].filter(Boolean).join(" ")}
+    >
+      <div className="metraly-metric-card-header">
+        {icon ? <span className="metraly-metric-card-icon" aria-hidden="true">{icon}</span> : null}
+        <div className="metraly-metric-card-copy">
+          <div className="metraly-metric-card-title">{title}</div>
+          <div className="metraly-metric-card-value">{value}</div>
         </div>
+        {badge ? <div className="metraly-metric-card-badge">{badge}</div> : null}
       </div>
-      {footer && <div className="pt-2 text-xs text-[color:var(--metraly-text-muted)]">{footer}</div>}
+      {footer ? <div className="metraly-metric-card-footer">{footer}</div> : null}
     </MetralyPanel>
   );
 }
