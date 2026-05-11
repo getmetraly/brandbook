@@ -10,7 +10,7 @@ export { MetralyMetricCard } from "./components/MetralyMetricCard";
 export type { MetralyMetricCardProps, MetralyMetricCardVariant } from "./components/MetralyMetricCard";
 
 export { MetralyPanel } from "./components/MetralyPanel";
-export type { MetralyPanelProps } from "./components/MetralyPanel";
+export type { MetralyPanelPadding, MetralyPanelProps } from "./components/MetralyPanel";
 
 export { MetralyTable } from "./components/MetralyTable";
 export type { MetralyTableColumn, MetralyTableProps } from "./components/MetralyTable";
@@ -22,7 +22,7 @@ export { ThemeProvider, MetralyThemeProvider } from "./components/ThemeProvider"
 export type { ThemeMode, ThemeProviderProps } from "./components/ThemeProvider";
 
 export { StateBadge } from "./components/StateBadge";
-export type { StateBadgeProps, StateBadgeState } from "./components/StateBadge";
+export type { StateBadgeProps, StateBadgeSize, StateBadgeState } from "./components/StateBadge";
 
 export { MetralyCheckbox } from "./components/MetralyCheckbox";
 export type { MetralyCheckboxProps } from "./components/MetralyCheckbox";
