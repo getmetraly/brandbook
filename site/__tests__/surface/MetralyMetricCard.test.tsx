@@ -9,6 +9,11 @@ describe('MetralyMetricCard', () => {
     expect(screen.getByText('1,234')).toBeInTheDocument();
   });
 
+  it('renders optional description for engineering context', () => {
+    render(<MetralyMetricCard title="Lead time" value="2.4d" description="Median across merged pull requests" />);
+    expect(screen.getByText('Median across merged pull requests')).toBeInTheDocument();
+  });
+
   it('renders optional icon', () => {
     render(<MetralyMetricCard title="Builds" value="42" icon={<span data-testid="icon" />} />);
     expect(screen.getByTestId('icon')).toBeInTheDocument();
@@ -29,11 +34,20 @@ describe('MetralyMetricCard', () => {
     expect(container.querySelector('.metraly-metric-card-footer')).not.toBeInTheDocument();
   });
 
+  it('supports compact density for dense metric grids', () => {
+    const { container } = render(<MetralyMetricCard title="Deploys" value="18" density="compact" />);
+    const card = container.querySelector('.metraly-metric-card');
+    expect(card).toHaveClass('metraly-metric-card--compact');
+    expect(card).toHaveAttribute('data-density', 'compact');
+  });
+
   it.each([
     'primary', 'secondary', 'success', 'warning', 'error', 'info',
-  ] as const)('renders variant %s with a semantic class', (variant) => {
+  ] as const)('renders variant %s with a semantic class and metadata', (variant) => {
     const { container, unmount } = render(<MetralyMetricCard title="Metric" value="0" variant={variant} />);
-    expect(container.querySelector(`.metraly-metric-card.is-${variant}`)).toBeInTheDocument();
+    const card = container.querySelector(`.metraly-metric-card.is-${variant}`);
+    expect(card).toBeInTheDocument();
+    expect(card).toHaveAttribute('data-variant', variant);
     unmount();
   });
 });
