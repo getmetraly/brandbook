@@ -18,4 +18,16 @@ describe('MetralyPanel', () => {
     const panel = container.querySelector('.metraly-panel');
     expect(panel).toHaveClass('custom-panel');
   });
+
+  it('supports padding presets', () => {
+    const { container } = render(<MetralyPanel padding="md">Content</MetralyPanel>);
+    expect(container.querySelector('.metraly-panel')).toHaveClass('metraly-panel--padding-md');
+  });
+
+  it('can be focusable for interactive panel compositions', () => {
+    const { container } = render(<MetralyPanel focusable>Content</MetralyPanel>);
+    const panel = container.querySelector('.metraly-panel');
+    expect(panel).toHaveClass('metraly-focus-ring');
+    expect(panel).toHaveAttribute('tabindex', '0');
+  });
 });
