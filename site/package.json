@@ -8,7 +8,7 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "test": "jest --runInBand",
-    "test:e2e": "playwright test",
+    "test:e2e": "cd .. && playwright test",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
