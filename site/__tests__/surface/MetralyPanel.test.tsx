@@ -19,9 +19,11 @@ describe('MetralyPanel', () => {
     expect(panel).toHaveClass('custom-panel');
   });
 
-  it('supports padding presets', () => {
+  it('supports padding presets with class and metadata', () => {
     const { container } = render(<MetralyPanel padding="md">Content</MetralyPanel>);
-    expect(container.querySelector('.metraly-panel')).toHaveClass('metraly-panel--padding-md');
+    const panel = container.querySelector('.metraly-panel');
+    expect(panel).toHaveClass('metraly-panel--padding-md');
+    expect(panel).toHaveAttribute('data-padding', 'md');
   });
 
   it('can be focusable for interactive panel compositions', () => {
@@ -29,5 +31,13 @@ describe('MetralyPanel', () => {
     const panel = container.querySelector('.metraly-panel');
     expect(panel).toHaveClass('metraly-focus-ring');
     expect(panel).toHaveAttribute('tabindex', '0');
+    expect(panel).toHaveAttribute('data-focusable', 'true');
+  });
+
+  it('marks non-focusable panels in metadata without adding tabindex', () => {
+    const { container } = render(<MetralyPanel>Content</MetralyPanel>);
+    const panel = container.querySelector('.metraly-panel');
+    expect(panel).toHaveAttribute('data-focusable', 'false');
+    expect(panel).not.toHaveAttribute('tabindex');
   });
 });
