@@ -19,6 +19,24 @@ describe('StateBadge', () => {
     expect(badge).toHaveAttribute('aria-label', 'Live');
   });
 
+  it('supports custom aria label', () => {
+    render(<StateBadge state="delayed" label="Delayed" ariaLabel="Delayed telemetry" />);
+    expect(screen.getByRole('status')).toHaveAttribute('aria-label', 'Delayed telemetry');
+  });
+
+  it('supports compact size for dense dashboard rows', () => {
+    const { container } = render(<StateBadge state="live" size="sm" />);
+    const badge = container.querySelector('.metraly-state-badge');
+    expect(badge).toHaveClass('metraly-state-badge--sm');
+    expect(badge).toHaveAttribute('data-size', 'sm');
+  });
+
+  it('can hide the visual indicator without changing the label', () => {
+    const { container } = render(<StateBadge state="stale" showIndicator={false} />);
+    expect(screen.getByText('Stale')).toBeInTheDocument();
+    expect(container.querySelector('.metraly-state-pulse')).not.toBeInTheDocument();
+  });
+
   it('derives aria-label from state when label is omitted', () => {
     render(<StateBadge state="delayed" />);
     const badge = screen.getByRole('status');
