@@ -2,7 +2,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.25rem 0.625rem; /* 4px 10px */
+  padding: 0.25rem 0.625rem;
   font-size: 0.75rem;
   font-weight: 600;
   border-radius: var(--metraly-radius-pill);
@@ -13,6 +13,12 @@
   line-height: 1;
 }
 
+.metraly-state-badge--sm {
+  gap: 0.375rem;
+  padding: 0.1875rem 0.5rem;
+  font-size: 0.6875rem;
+}
+
 .metraly-state-badge .metraly-state-pulse {
   width: 6px;
   height: 6px;
@@ -20,37 +26,72 @@
   background: currentColor;
 }
 
-/* Live: healthy data (success) */
-.metraly-state-badge.is-live {
-  color: var(--metraly-success);
-  border-color: rgba(34, 197, 94, 0.24); /* success green with transparency */
-  background: var(--metraly-green-dim);
+.metraly-state-badge--sm .metraly-state-pulse {
+  width: 5px;
+  height: 5px;
 }
 
-/* Stale: neutral (secondary) */
+.metraly-state-badge--tone-solid {
+  color: var(--metraly-bg-base);
+  border-color: transparent;
+  background: var(--metraly-state-solid-bg, var(--metraly-primary));
+}
+
+.metraly-state-badge.is-live,
+.metraly-state-badge.is-success {
+  color: var(--metraly-success);
+  border-color: rgba(34, 197, 94, 0.24);
+  background: var(--metraly-green-dim);
+  --metraly-state-solid-bg: var(--metraly-success);
+}
+
 .metraly-state-badge.is-stale {
   color: var(--metraly-text-secondary);
   border-color: rgba(139, 155, 180, 0.2);
   background: rgba(139, 155, 180, 0.05);
+  --metraly-state-solid-bg: var(--metraly-text-secondary);
 }
 
-/* Delayed: warning (orange) */
-.metraly-state-badge.is-delayed {
+.metraly-state-badge.is-delayed,
+.metraly-state-badge.is-warning {
   color: var(--metraly-warning);
   border-color: rgba(245, 158, 11, 0.28);
   background: var(--metraly-warning-dim);
+  --metraly-state-solid-bg: var(--metraly-warning);
 }
 
-/* Disconnected: error (red) */
-.metraly-state-badge.is-disconnected {
+.metraly-state-badge.is-disconnected,
+.metraly-state-badge.is-error {
   color: var(--metraly-error);
   border-color: rgba(239, 68, 68, 0.28);
   background: var(--metraly-error-dim);
+  --metraly-state-solid-bg: var(--metraly-error);
 }
 
-/* No data: muted */
 .metraly-state-badge.is-noData {
   color: var(--metraly-text-muted);
   border-color: rgba(139, 155, 180, 0.18);
   background: rgba(139, 155, 180, 0.04);
+  --metraly-state-solid-bg: var(--metraly-text-muted);
+}
+
+.metraly-state-badge.is-info {
+  color: var(--metraly-info);
+  border-color: rgba(99, 102, 241, 0.28);
+  background: var(--metraly-info-dim);
+  --metraly-state-solid-bg: var(--metraly-info);
+}
+
+.metraly-state-badge--tone-solid.is-live,
+.metraly-state-badge--tone-solid.is-success,
+.metraly-state-badge--tone-solid.is-stale,
+.metraly-state-badge--tone-solid.is-delayed,
+.metraly-state-badge--tone-solid.is-warning,
+.metraly-state-badge--tone-solid.is-disconnected,
+.metraly-state-badge--tone-solid.is-error,
+.metraly-state-badge--tone-solid.is-noData,
+.metraly-state-badge--tone-solid.is-info {
+  color: var(--metraly-bg-base);
+  border-color: transparent;
+  background: var(--metraly-state-solid-bg);
 }
