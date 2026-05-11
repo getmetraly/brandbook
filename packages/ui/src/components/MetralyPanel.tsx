@@ -36,7 +36,13 @@ export function MetralyPanel({
     .join(" ");
 
   return (
-    <div {...rest} className={classes} tabIndex={focusable ? tabIndex ?? 0 : tabIndex}>
+    <div
+      {...rest}
+      className={classes}
+      data-padding={padding}
+      data-focusable={focusable ? "true" : "false"}
+      tabIndex={focusable ? tabIndex ?? 0 : tabIndex}
+    >
       {children}
     </div>
   );
