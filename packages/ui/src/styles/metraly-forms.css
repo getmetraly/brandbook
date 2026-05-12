@@ -55,9 +55,15 @@
 .metraly-checkbox-box { border-radius: var(--metraly-radius-md); }
 .metraly-radio-dot { border-radius: var(--metraly-radius-pill); }
 
-.metraly-checkbox-box::after {
+.metraly-checkbox-box::after,
+.metraly-checkbox-box::before {
   content: "";
   position: absolute;
+  opacity: 0;
+  transition: opacity 140ms var(--metraly-ease-out);
+}
+
+.metraly-checkbox-box::after {
   inset-inline-start: 50%;
   inset-block-start: 50%;
   width: 6px;
@@ -66,8 +72,16 @@
   border-block-end: 2.5px solid transparent;
   transform: translate(-50%, -58%) rotate(45deg);
   transform-origin: center;
-  opacity: 0;
-  transition: opacity 140ms var(--metraly-ease-out);
+}
+
+.metraly-checkbox-box::before {
+  inset-inline-start: 50%;
+  inset-block-start: 50%;
+  width: 10px;
+  height: 2.5px;
+  border-radius: var(--metraly-radius-pill);
+  background: transparent;
+  transform: translate(-50%, -50%);
 }
 
 .metraly-radio-dot::after {
@@ -89,6 +103,7 @@
 }
 
 .metraly-control-input:checked + .metraly-checkbox-box,
+.metraly-checkbox.is-indeterminate .metraly-checkbox-box,
 .metraly-control-input:checked + .metraly-radio-dot {
   border-color: oklch(0.78 0.13 200 / 0.82);
   background: oklch(0.78 0.13 200 / 0.10);
@@ -97,6 +112,15 @@
 
 .metraly-control-input:checked + .metraly-checkbox-box::after {
   border-color: oklch(0.78 0.13 200);
+  opacity: 1;
+}
+
+.metraly-checkbox.is-indeterminate .metraly-checkbox-box::after {
+  opacity: 0;
+}
+
+.metraly-checkbox.is-indeterminate .metraly-checkbox-box::before {
+  background: oklch(0.78 0.13 200);
   opacity: 1;
 }
 
@@ -140,6 +164,10 @@
 
 .metraly-checkbox.is-error .metraly-control-input:checked + .metraly-checkbox-box::after {
   border-color: oklch(0.72 0.18 25);
+}
+
+.metraly-checkbox.is-error.is-indeterminate .metraly-checkbox-box::before {
+  background: oklch(0.72 0.18 25);
 }
 
 .metraly-switch-row {
@@ -350,6 +378,7 @@
   .metraly-tab,
   .metraly-tab::after,
   .metraly-checkbox-box::after,
+  .metraly-checkbox-box::before,
   .metraly-radio-dot::after {
     transition: none;
   }
