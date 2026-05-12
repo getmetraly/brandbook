@@ -39,11 +39,11 @@ export function MetralyChartCard({
   return (
     <figure className={classes} aria-label={typeof title === "string" ? title : undefined} data-chart-state={state}>
       <figcaption className="metraly-chart-card-head">
-        <span>
+        <span className="metraly-chart-card-title-block">
           <strong>{title}</strong>
           {description ? <small>{description}</small> : null}
         </span>
-        {badge}
+        {badge ? <span className="metraly-chart-card-badge">{badge}</span> : null}
       </figcaption>
       <div className="metraly-chart-card-body">
         {status ? (
