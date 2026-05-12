@@ -145,11 +145,14 @@ export function ComponentStateBoard() {
         <StateCell label="hover"><MetralyCheckbox className="is-preview-hover" label="Watch blocked work" /></StateCell>
         <StateCell label="focus-visible"><MetralyCheckbox className="is-preview-focus" label="Keyboard focus" /></StateCell>
         <StateCell label="checked"><MetralyCheckbox label="Flow efficiency" checked /></StateCell>
+        <StateCell label="indeterminate"><MetralyCheckbox label="Some sources" indeterminate /></StateCell>
+        <StateCell label="indeterminate focus"><MetralyCheckbox className="is-preview-focus" label="Partial selection" indeterminate /></StateCell>
         <StateCell label="checked focus"><MetralyCheckbox className="is-preview-focus" label="Focused selected" checked /></StateCell>
         <StateCell label="checked disabled"><MetralyCheckbox label="Locked policy" checked disabled /></StateCell>
         <StateCell label="unchecked disabled"><MetralyCheckbox label="Unavailable signal" disabled /></StateCell>
         <StateCell label="error"><MetralyCheckbox label="Source disconnected" error /></StateCell>
         <StateCell label="error checked"><MetralyCheckbox label="Broken required signal" checked error /></StateCell>
+        <StateCell label="error mixed"><MetralyCheckbox label="Some sources failed" indeterminate error /></StateCell>
       </BoardGroup>
 
       <BoardGroup title="MetralyRadio" readiness="Ready">
