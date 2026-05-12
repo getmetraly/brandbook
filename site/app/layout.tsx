@@ -9,6 +9,7 @@ import "./components/docs/docs.css";
 // the brandbook and draft dashboards.
 import { ThemeProvider } from "@metraly/ui";
 import "@metraly/ui/styles/metraly-theme.css";
+import "@metraly/ui/styles/metraly-badge.css";
 import "@metraly/ui/styles/metraly-card.css";
 import "@metraly/ui/styles/metraly-metric-card.css";
 import "@metraly/ui/styles/metraly-state-badge.css";
