@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { StateBadge } from '@metraly/ui';
+import { MetralyBadge, StateBadge } from '@metraly/ui';
 
 describe('StateBadge', () => {
   it('renders label and state', () => {
@@ -70,5 +70,21 @@ describe('StateBadge', () => {
   it('applies state-specific CSS class', () => {
     const { container } = render(<StateBadge state="stale" />);
     expect(container.querySelector('.metraly-state-badge.is-stale')).toBeInTheDocument();
+  });
+
+  it('keeps the indicator and label in separate constrained elements', () => {
+    const { container } = render(<StateBadge state="disconnected" label="Pipeline source disconnected" />);
+    expect(container.querySelector('.metraly-state-dot')).toBeInTheDocument();
+    expect(container.querySelector('.metraly-state-badge-label')).toHaveTextContent('Pipeline source disconnected');
+  });
+});
+
+describe('MetralyBadge', () => {
+  it('uses the Claude Design badge class contract', () => {
+    const { container } = render(<MetralyBadge variant="warning">Chart wrapper</MetralyBadge>);
+    const badge = container.querySelector('.metraly-badge');
+    expect(badge).toHaveClass('metraly-badge--warning');
+    expect(badge).toHaveAttribute('data-variant', 'warning');
+    expect(badge).toHaveTextContent('Chart wrapper');
   });
 });
