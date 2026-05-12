@@ -9,6 +9,14 @@ const sourceOptions = [
   { value: "incidents", label: "Incidents" },
 ];
 
+const dashboardTabs = [
+  { value: "delivery", label: "Delivery", count: 11 },
+  { value: "dora", label: "DORA", count: 4 },
+  { value: "flow", label: "Flow", count: 6 },
+  { value: "reviews", label: "Reviews", count: 5 },
+  { value: "ci", label: "CI", count: 3 },
+];
+
 export default function FormsPage() {
   return (
     <DocsShell currentPath="/components/forms" title="Forms" description="Inputs and controls for dashboard settings, filters, widget configuration and row selection." status="ready" related={getRelatedLinks(["/patterns/filters", "/components/dashboard", "/components/data-display"])} toc={[{ title: "Selection", href: "#selection" }, { title: "Choice", href: "#choice" }]}> 
@@ -28,15 +36,15 @@ export default function FormsPage() {
           </ComponentStateGrid>
         </ComponentPreview>
       </DocsSection>
-      <DocsSection id="choice" title="Choice controls" description="Select and tabs should stay calm: no chevrons-heavy styling, no pulse marker before drag handles.">
+      <DocsSection id="choice" title="Choice controls" description="Select and tabs should stay calm: compact, flat and pulse-free.">
         <ComponentPreview title="MetralySelect" description="Native select wrapper for source and filter settings." states={["default", "error", "disabled"]}>
           <ComponentStateGrid>
             <MetralySelect label="Metric source" defaultValue="github" options={sourceOptions} />
             <MetralySelect label="Disabled source" defaultValue="ci" options={sourceOptions} disabled />
           </ComponentStateGrid>
         </ComponentPreview>
-        <ComponentPreview title="MetralyTabs" description="Segmented navigation for page-level or panel-level state." states={["active", "disabled", "keyboard focus"]}>
-          <MetralyTabs ariaLabel="Component preview tabs" defaultValue="overview" items={[{ value: "overview", label: "Overview" }, { value: "signals", label: "Signals" }, { value: "settings", label: "Settings", disabled: true }]} />
+        <ComponentPreview title="MetralyTabs" description="Flat dashboard navigation with count badges and an active cyan underline." states={["active", "counts", "keyboard focus"]}>
+          <MetralyTabs ariaLabel="Dashboard signal tabs" defaultValue="ci" items={dashboardTabs} />
         </ComponentPreview>
       </DocsSection>
     </DocsShell>

@@ -1,12 +1,17 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { MetralyMetricCard } from '@metraly/ui';
+import { MetralyMetricCard, StateBadge } from '@metraly/ui';
 
 describe('MetralyMetricCard', () => {
   it('renders title and value', () => {
     render(<MetralyMetricCard title="Active users" value="1,234" />);
     expect(screen.getByText('Active users')).toBeInTheDocument();
     expect(screen.getByText('1,234')).toBeInTheDocument();
+  });
+
+  it('renders optional description for engineering context', () => {
+    render(<MetralyMetricCard title="Lead time" value="2.4d" description="Median across merged pull requests" />);
+    expect(screen.getByText('Median across merged pull requests')).toBeInTheDocument();
   });
 
   it('renders optional icon', () => {
@@ -19,16 +24,30 @@ describe('MetralyMetricCard', () => {
     expect(screen.getByText('Last 30 days')).toBeInTheDocument();
   });
 
+  it('renders optional badge', () => {
+    render(<MetralyMetricCard title="Sync" value="Live" badge={<StateBadge state="live" size="sm" />} />);
+    expect(screen.getByRole('status', { name: 'Live' })).toBeInTheDocument();
+  });
+
   it('omits footer when not provided', () => {
     const { container } = render(<MetralyMetricCard title="Latency" value="120ms" />);
-    expect(container.querySelector('.pt-2')).not.toBeInTheDocument();
+    expect(container.querySelector('.metraly-metric-card-footer')).not.toBeInTheDocument();
+  });
+
+  it('supports compact density for dense metric grids', () => {
+    const { container } = render(<MetralyMetricCard title="Deploys" value="18" density="compact" />);
+    const card = container.querySelector('.metraly-metric-card');
+    expect(card).toHaveClass('metraly-metric-card--compact');
+    expect(card).toHaveAttribute('data-density', 'compact');
   });
 
   it.each([
     'primary', 'secondary', 'success', 'warning', 'error', 'info',
-  ] as const)('renders variant %s without error', (variant) => {
-    const { unmount } = render(<MetralyMetricCard title="Metric" value="0" variant={variant} />);
-    expect(screen.getByText('Metric')).toBeInTheDocument();
+  ] as const)('renders variant %s with a semantic class and metadata', (variant) => {
+    const { container, unmount } = render(<MetralyMetricCard title="Metric" value="0" variant={variant} />);
+    const card = container.querySelector(`.metraly-metric-card.is-${variant}`);
+    expect(card).toBeInTheDocument();
+    expect(card).toHaveAttribute('data-variant', variant);
     unmount();
   });
 });

@@ -17,10 +17,10 @@ This table records the current maturity of Metraly Brandbook components. It shou
 
 | Component | Current status | Visual route | Storybook | Tests | Website pilot | Metraly pilot | Notes |
 |---|---|---|---|---|---|---|---|
-| `StateBadge` | Hardening | `/components/previews`, `/components/feedback` | Yes | Yes | Candidate | Candidate | First RC candidate. Validate compact use in cards, tables and status rows. |
-| `MetralyCard` | Hardening | `/components/previews`, `/components/primitives` | Yes | Basic | Candidate | Candidate | Needs component passport and visual baseline before RC. |
-| `MetralyPanel` | Hardening | `/components/previews`, `/components/primitives` | Partial | Basic | Candidate | Candidate | Should stay small and tokenized. |
-| `MetralyMetricCard` | Hardening | `/components/previews`, `/examples/engineering-dashboard` | Partial | Basic | Candidate | Candidate | Validate dashboard and marketing variants without adding separate components. |
+| `StateBadge` | Hardening → RC candidate | `/components/previews`, `/components/feedback` | Yes | Yes | Candidate | Candidate | Semantic aliases, tone metadata and compact usage are now covered. Keep in RC candidate until visual review passes. |
+| `MetralyCard` | Hardening → RC candidate | `/components/previews`, `/components/primitives` | Yes | Yes | Candidate | Candidate | Density, loading metadata and custom empty copy are covered. Compact CSS still needs final visual review. |
+| `MetralyPanel` | Hardening → RC candidate | `/components/previews`, `/components/primitives` | Partial | Yes | Candidate | Candidate | Padding/focus metadata covered; keep small and tokenized. |
+| `MetralyMetricCard` | Hardening → RC candidate | `/components/previews`, `/examples/engineering-dashboard` | Partial | Yes | Candidate | Candidate | Description, density and variant metadata covered. Validate dense dashboard and marketing usage before RC. |
 | `MetralyTelemetryLine` | Visual-ready | `/components/previews` | Partial | Basic | Candidate | Candidate | Keep pulse usage restrained and semantic. |
 | `MetralyCheckbox` | Hardening | `/components/previews`, `/components/forms` | Yes | Yes | Later | Later | Candidate for forms batch after visual/focus review. |
 | `MetralyRadio` | Hardening | `/components/previews`, `/components/forms` | Yes | Yes | Later | Later | Needs group behavior and keyboard review before RC. |
@@ -47,11 +47,10 @@ This table records the current maturity of Metraly Brandbook components. It shou
 
 ## Next promotion targets
 
-1. `StateBadge` to Release Candidate.
-2. `MetralyCard` / `MetralyPanel` to Release Candidate.
-3. `MetralyTable` as display-only Release Candidate.
-4. `MetralyChartCard` + `MetralySparkline` to chart hardening review.
-5. `DashboardWidget` shell to metraly pilot candidate.
+1. Finish visual review for `StateBadge` + `MetralyCard` / `MetralyPanel` / `MetralyMetricCard` RC candidates.
+2. `MetralyTable` as display-only Release Candidate.
+3. `MetralyChartCard` + `MetralySparkline` to chart hardening review.
+4. `DashboardWidget` shell to metraly pilot candidate.
 
 ## Update policy
 
