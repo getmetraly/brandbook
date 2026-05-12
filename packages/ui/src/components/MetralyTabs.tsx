@@ -59,8 +59,10 @@ export function MetralyTabs({
             onClick={onValueChange && !item.disabled ? () => onValueChange(item.value) : undefined}
             onKeyDown={(e) => handleKeyDown(e, index)}
           >
-            <span className="metraly-tab-label">{item.label}</span>
-            {item.count !== undefined ? <span className="metraly-tab-count">{item.count}</span> : null}
+            <span className="metraly-tab-content">
+              <span className="metraly-tab-label">{item.label}</span>
+              {item.count !== undefined ? <span className="metraly-tab-count">{item.count}</span> : null}
+            </span>
           </button>
         );
       })}
