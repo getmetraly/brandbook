@@ -54,9 +54,7 @@ export function MetralyCheckbox({
         onChange={onChange}
         readOnly={checked !== undefined && !onChange ? true : undefined}
       />
-      <span className="metraly-checkbox-box" aria-hidden="true">
-        <span className="metraly-checkbox-pulse" />
-      </span>
+      <span className="metraly-checkbox-box" aria-hidden="true" />
       <span className="metraly-control-copy">
         <span className="metraly-control-label">{label}</span>
         {description ? (
