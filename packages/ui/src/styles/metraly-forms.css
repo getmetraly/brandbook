@@ -277,7 +277,7 @@
   min-width: 0;
   display: flex;
   align-items: stretch;
-  gap: 0;
+  gap: 18px;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -298,14 +298,13 @@
 .metraly-tab {
   position: relative;
   min-height: 38px;
-  padding: 0 14px;
+  padding: 0;
   border: 0;
   border-radius: 0;
   background: transparent;
   color: var(--metraly-text-secondary, #8b9bb4);
   display: inline-flex;
   align-items: center;
-  gap: 6px;
   font: inherit;
   font-size: 12px;
   font-weight: 650;
@@ -329,6 +328,26 @@
   transform: translateY(50%);
   transition: height 140ms var(--metraly-ease-out), background 140ms var(--metraly-ease-out);
   z-index: 2;
+}
+
+.metraly-tab-content {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 38px;
+  padding-inline: 0;
+}
+
+.metraly-tab-content::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  height: 0;
+  background: transparent;
+  transform: translateY(50%);
+  transition: height 140ms var(--metraly-ease-out), background 140ms var(--metraly-ease-out);
 }
 
 .metraly-tab-label { display: inline-flex; align-items: center; }
@@ -355,6 +374,10 @@
 }
 
 .metraly-tab.is-active::after {
+  height: 0;
+}
+
+.metraly-tab.is-active .metraly-tab-content::after {
   height: 3px;
   background: oklch(0.78 0.13 200);
 }
@@ -377,6 +400,7 @@
   .metraly-select-control select,
   .metraly-tab,
   .metraly-tab::after,
+  .metraly-tab-content::after,
   .metraly-checkbox-box::after,
   .metraly-checkbox-box::before,
   .metraly-radio-dot::after {
