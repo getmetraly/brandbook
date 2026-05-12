@@ -26,7 +26,13 @@ export default function PrimitivesPage() {
         <ComponentPreview title="MetralyPanel / Badge / MetricCard" description="Composable primitives for small surfaces, status labels and metric summaries." states={["surface", "semantic", "metric"]}>
           <ComponentStateGrid>
             <MetralyPanel className="component-card"><h3>Panel</h3><p>Neutral surface for custom layouts.</p></MetralyPanel>
-            <div className="component-card"><div className="component-row"><MetralyBadge>Telemetry</MetralyBadge><MetralyBadge variant="success">Healthy</MetralyBadge><MetralyBadge variant="warning">Review</MetralyBadge></div></div>
+            <MetralyPanel padding="md" className="primitive-badge-surface" aria-label="Semantic badge examples">
+              <div className="component-row">
+                <MetralyBadge>Telemetry</MetralyBadge>
+                <MetralyBadge variant="success">Healthy</MetralyBadge>
+                <MetralyBadge variant="warning">Review</MetralyBadge>
+              </div>
+            </MetralyPanel>
             <MetralyMetricCard title="Review latency" value="4h" variant="primary" footer="within target" />
           </ComponentStateGrid>
         </ComponentPreview>
