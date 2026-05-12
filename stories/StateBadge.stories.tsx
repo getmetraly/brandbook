@@ -22,8 +22,48 @@ export const Delayed: Story = {
   },
 };
 
+export const Stale: Story = {
+  args: {
+    state: 'stale',
+  },
+};
+
+export const Disconnected: Story = {
+  args: {
+    state: 'disconnected',
+  },
+};
+
 export const NoData: Story = {
   args: {
     state: 'noData',
   },
 };
+
+export const Compact: Story = {
+  args: {
+    state: 'live',
+    label: 'Live',
+    size: 'sm',
+  },
+};
+
+export const WithoutIndicator: Story = {
+  args: {
+    state: 'stale',
+    label: 'Stale',
+    showIndicator: false,
+  },
+};
+
+export const StateMatrix = () => (
+  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center' }}>
+    <StateBadge state="live" />
+    <StateBadge state="delayed" />
+    <StateBadge state="stale" />
+    <StateBadge state="disconnected" />
+    <StateBadge state="noData" />
+    <StateBadge state="live" size="sm" />
+    <StateBadge state="stale" showIndicator={false} />
+  </div>
+);

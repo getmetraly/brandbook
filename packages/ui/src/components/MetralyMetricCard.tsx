@@ -11,53 +11,67 @@ export type MetralyMetricCardVariant =
   | "warning"
   | "error"
   | "info";
+export type MetralyMetricCardDensity = "comfortable" | "compact";
 
-export interface MetralyMetricCardProps {
+export interface MetralyMetricCardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
   /** Title describing the metric, e.g. "Active users". */
   title: React.ReactNode;
   /** The metric value; can include units or secondary text. */
   value: React.ReactNode;
+  /** Optional description displayed under the value for engineering context. */
+  description?: React.ReactNode;
   /** Optional icon or graphic displayed on the left of the content. */
   icon?: React.ReactNode;
   /** Semantic colour variant used for the value. */
   variant?: MetralyMetricCardVariant;
+  /** Spacing density for regular cards or dense dashboard rows. */
+  density?: MetralyMetricCardDensity;
   /** Optional footer content such as percentage changes or links. */
   footer?: React.ReactNode;
+  /** Optional badge or state element displayed in the header. */
+  badge?: React.ReactNode;
   /** Additional classes to apply to the outer container. */
   className?: string;
 }
 
-const variantColours: Record<MetralyMetricCardVariant, string> = {
-  primary: "var(--metraly-primary)",
-  secondary: "var(--metraly-secondary)",
-  success: "var(--metraly-success)",
-  warning: "var(--metraly-warning)",
-  error: "var(--metraly-error)",
-  info: "var(--metraly-info)",
-};
-
 export function MetralyMetricCard({
   title,
   value,
+  description,
   icon,
   variant = "primary",
+  density = "comfortable",
   footer,
+  badge,
   className,
+  ...rest
 }: MetralyMetricCardProps) {
-  const accent = variantColours[variant];
+  const classes = [
+    "metraly-metric-card",
+    `is-${variant}`,
+    density !== "comfortable" ? `metraly-metric-card--${density}` : null,
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
-    <MetralyPanel className={["p-4 flex flex-col gap-2", className].filter(Boolean).join(" ")}> 
-      <div className="flex items-start gap-3">
-        {icon && <span className="mt-0.5">{icon}</span>}
-        <div className="flex flex-col gap-1">
-          <div className="text-sm font-medium text-[color:var(--metraly-text-secondary)]">{title}</div>
-          <div className="text-2xl font-display font-semibold" style={{ color: accent }}>
-            {value}
-          </div>
+    <MetralyPanel
+      {...rest}
+      className={classes}
+      data-variant={variant}
+      data-density={density}
+    >
+      <div className="metraly-metric-card-header">
+        {icon ? <span className="metraly-metric-card-icon" aria-hidden="true">{icon}</span> : null}
+        <div className="metraly-metric-card-copy">
+          <div className="metraly-metric-card-title">{title}</div>
+          <div className="metraly-metric-card-value">{value}</div>
+          {description ? <div className="metraly-metric-card-description">{description}</div> : null}
         </div>
+        {badge ? <div className="metraly-metric-card-badge">{badge}</div> : null}
       </div>
-      {footer && <div className="pt-2 text-xs text-[color:var(--metraly-text-muted)]">{footer}</div>}
+      {footer ? <div className="metraly-metric-card-footer">{footer}</div> : null}
     </MetralyPanel>
   );
 }

@@ -46,4 +46,24 @@ describe('Metraly form primitives', () => {
     );
     expect(screen.getByRole('tab', { name: 'Boards' })).toHaveAttribute('aria-selected', 'true');
   });
+
+  it('renders Claude Design style tab counts without changing accessible tab names', () => {
+    render(
+      <MetralyTabs
+        ariaLabel="Engineering dashboard sections"
+        defaultValue="ci"
+        items={[
+          { value: 'delivery', label: 'Delivery', count: 11 },
+          { value: 'dora', label: 'DORA', count: 4 },
+          { value: 'flow', label: 'Flow', count: 6 },
+          { value: 'ci', label: 'CI', count: 3 },
+        ]}
+      />
+    );
+
+    const activeTab = screen.getByRole('tab', { name: /CI\s*3/ });
+    expect(activeTab).toHaveAttribute('aria-selected', 'true');
+    expect(activeTab.querySelector('.metraly-tab-count')).toHaveTextContent('3');
+    expect(screen.getByRole('tab', { name: /Delivery\s*11/ })).toBeInTheDocument();
+  });
 });

@@ -1,33 +1,48 @@
 .metraly-card {
-  /* Extend panel styling; MetralyPanel already adds background, border and radius. */
   display: flex;
   flex-direction: column;
-  gap: 0.75rem; /* 12px consistent with spacing scale */
-  padding: 1rem; /* 16px base padding */
+  gap: 0.75rem;
+  padding: 1rem;
   border-radius: var(--metraly-radius-xl);
+  background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.012));
   transition: background var(--metraly-motion-base) var(--metraly-ease-out),
     box-shadow var(--metraly-motion-base) var(--metraly-ease-out),
     border-color var(--metraly-motion-base) var(--metraly-ease-out);
 }
 
+.metraly-card--compact {
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: var(--metraly-radius-lg);
+}
+
 .metraly-card:hover {
-  background: var(--metraly-bg-card-hover);
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.018));
 }
 
 .metraly-card.is-selected {
-  border-color: var(--metraly-primary);
-  box-shadow: var(--metraly-glow-cyan), var(--metraly-shadow-panel);
+  border-color: rgba(0,229,204,0.42);
+  box-shadow: inset 0 0 0 1px rgba(0,229,204,0.14), var(--metraly-shadow-panel);
 }
 
 .metraly-card.is-error {
-  border-color: var(--metraly-error);
+  border-color: rgba(239,68,68,0.38);
+  box-shadow: inset 0 0 0 1px rgba(239,68,68,0.08), var(--metraly-shadow-panel);
 }
 
-/* Header */
+.metraly-card.is-loading {
+  cursor: progress;
+}
+
 .metraly-card-header {
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
+  min-width: 0;
+}
+
+.metraly-card--compact .metraly-card-header {
+  gap: 0.5rem;
 }
 
 .metraly-card-icon {
@@ -37,6 +52,7 @@
 }
 
 .metraly-card-heading {
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
@@ -45,14 +61,23 @@
 .metraly-card-title {
   font-family: var(--metraly-font-display);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 650;
   color: var(--metraly-text-primary);
+  letter-spacing: -0.02em;
+}
+
+.metraly-card--compact .metraly-card-title {
+  font-size: 0.9375rem;
 }
 
 .metraly-card-subtitle {
   font-family: var(--metraly-font-ui);
   font-size: 0.875rem;
   color: var(--metraly-text-secondary);
+}
+
+.metraly-card--compact .metraly-card-subtitle {
+  font-size: 0.8125rem;
 }
 
 .metraly-card-body {
@@ -70,7 +95,11 @@
   margin-top: 0.75rem;
 }
 
-/* Skeleton styles */
+.metraly-card--compact .metraly-card-footer {
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+}
+
 .metraly-card-skeleton {
   display: flex;
   flex-direction: column;
@@ -84,26 +113,14 @@
   animation: skeleton-pulse 1.2s ease-in-out infinite;
 }
 
-.skeleton-bar--short {
-  width: 40%;
-}
-.skeleton-bar--medium {
-  width: 60%;
-}
-.skeleton-bar--long {
-  width: 80%;
-}
+.skeleton-bar--short { width: 40%; }
+.skeleton-bar--medium { width: 60%; }
+.skeleton-bar--long { width: 80%; }
 
 @keyframes skeleton-pulse {
-  0% {
-    opacity: 0.5;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.5;
-  }
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -112,7 +129,6 @@
   }
 }
 
-/* Empty state */
 .metraly-card-empty {
   display: flex;
   align-items: center;
@@ -120,4 +136,5 @@
   min-height: 3rem;
   color: var(--metraly-text-muted);
   font-style: italic;
+  text-align: center;
 }
