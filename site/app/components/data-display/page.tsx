@@ -4,16 +4,24 @@ import DocsShell from "../../components/docs/DocsShell";
 import { ComponentPreview, ComponentStateGrid, DocsSection } from "../../components/docs/DocsBlocks";
 import { getRelatedLinks } from "../../lib/docs/navigation";
 
-type RepoRow = { repo: string; cycle: string; status: ReactNode };
-const columns: MetralyTableColumn<RepoRow>[] = [
-  { key: "repo", header: "Repository" },
-  { key: "cycle", header: "Cycle time" },
-  { key: "status", header: "Status", align: "right" },
+type ReviewRow = {
+  team: string;
+  open: string;
+  response: string;
+  health: ReactNode;
+};
+
+const columns: MetralyTableColumn<ReviewRow>[] = [
+  { key: "team", header: "Team", width: "34%" },
+  { key: "open", header: "Open PRs", align: "right", width: "18%" },
+  { key: "response", header: "First response", align: "right", width: "24%" },
+  { key: "health", header: "Status", align: "right", width: "24%" },
 ];
-const data: RepoRow[] = [
-  { repo: "getmetraly/metraly", cycle: "2.4d", status: <StateBadge state="live" label="Live" /> },
-  { repo: "getmetraly/website", cycle: "3.1d", status: <StateBadge state="delayed" label="Delayed" /> },
-  { repo: "getmetraly/docs", cycle: "—", status: <StateBadge state="noData" label="No data" /> },
+
+const data: ReviewRow[] = [
+  { team: "Platform", open: "8", response: "2.4h", health: <StateBadge state="live" label="Live" /> },
+  { team: "Growth", open: "14", response: "9.1h", health: <StateBadge state="delayed" label="Delayed" /> },
+  { team: "Data", open: "12", response: "14.6h", health: <StateBadge state="stale" label="Stale" /> },
 ];
 
 export default function DataDisplayPage() {
@@ -25,14 +33,14 @@ export default function DataDisplayPage() {
         </ComponentPreview>
       </DocsSection>
       <DocsSection id="tables" title="Tables and metrics">
-        <ComponentPreview title="MetralyTable" description="Display-only table primitive. Interactive tables should be wrapped in Client Components." states={["display-only", "empty", "loading"]} code={'import { MetralyTable } from "@metraly/ui";'}>
-          <div className="component-preview-stage is-wide"><MetralyTable columns={columns} data={data} rowKey={(row) => row.repo} /></div>
+        <ComponentPreview title="MetralyTable" description="Display-only review queue table for dense engineering dashboards." states={["display-only", "selected", "empty", "loading"]} code={'import { MetralyTable } from "@metraly/ui";'}>
+          <div className="component-preview-stage is-wide"><MetralyTable columns={columns} data={data} rowKey={(row) => row.team} selectedRowKeys={["Growth"]} ariaLabel="Review queue by team" /></div>
         </ComponentPreview>
         <ComponentPreview title="MetralyMetricCard" description="Compact KPI surface for dashboard overviews." states={["primary", "success", "warning"]}>
           <ComponentStateGrid>
-            <MetralyMetricCard title="Flow efficiency" value="81%" footer="+8% vs last sprint" />
-            <MetralyMetricCard title="Deploy success" value="99.2%" variant="success" footer="healthy" />
-            <MetralyMetricCard title="Review latency" value="4h" variant="warning" footer="watch trend" />
+            <MetralyMetricCard title="Flow efficiency" value="81%" description="Across merged work" footer="+8% vs last sprint" />
+            <MetralyMetricCard title="Deploy success" value="99.2%" description="Production deploys" variant="success" footer="healthy" />
+            <MetralyMetricCard title="Review latency" value="4h" description="Median first response" variant="warning" footer="watch trend" />
           </ComponentStateGrid>
         </ComponentPreview>
       </DocsSection>
