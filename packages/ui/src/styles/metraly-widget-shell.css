@@ -40,11 +40,10 @@
 }
 
 .metraly-widget-shell-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, max-content);
-  align-items: start;
-  gap: 0.5rem;
+  position: relative;
+  display: block;
   min-width: 0;
+  padding-right: min(6.5rem, 42%);
 }
 
 .metraly-widget-shell-heading {
@@ -62,7 +61,9 @@
   color: var(--metraly-text-primary);
   line-height: 1.18;
   letter-spacing: -0.025em;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .metraly-widget-shell-subtitle {
@@ -75,9 +76,11 @@
 }
 
 .metraly-widget-shell-badge {
-  justify-self: end;
-  align-self: start;
-  max-width: min(100%, 8.75rem);
+  position: absolute;
+  top: 0;
+  right: 0;
+  max-width: min(6rem, 42%);
+  z-index: 1;
 }
 
 .metraly-widget-shell-body {
@@ -144,11 +147,13 @@
 
 @media (max-width: 520px) {
   .metraly-widget-shell-head {
-    grid-template-columns: minmax(0, 1fr);
+    padding-right: 0;
+    padding-top: 1.5rem;
   }
 
   .metraly-widget-shell-badge {
-    justify-self: start;
+    left: 0;
+    right: auto;
     max-width: 100%;
   }
 }
