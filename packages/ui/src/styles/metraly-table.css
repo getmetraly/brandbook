@@ -1,32 +1,44 @@
 .metraly-table {
   width: 100%;
+  max-width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   border: 1px solid var(--metraly-border);
   background: var(--metraly-bg-card);
   border-radius: var(--metraly-radius-xl);
   overflow: hidden;
   font-family: var(--metraly-font-ui);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   color: var(--metraly-text-secondary);
 }
 
 .metraly-table thead {
-  background: var(--metraly-bg-card-hover);
+  background: rgba(255,255,255,0.035);
 }
 
 .metraly-table th,
 .metraly-table td {
-  padding: 0.75rem 1rem;
+  min-width: 0;
+  padding: 0.625rem 0.75rem;
   border-bottom: 1px solid var(--metraly-border);
   text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .metraly-table th {
-  font-weight: 600;
-  font-size: 0.75rem;
-  letter-spacing: 0.02em;
+  font-family: var(--metraly-font-mono);
+  font-weight: 650;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--metraly-text-secondary);
+}
+
+.metraly-table td > .metraly-state-badge,
+.metraly-table td > .metraly-badge {
+  max-width: 100%;
 }
 
 .metraly-table tbody tr:last-child td {
@@ -34,16 +46,20 @@
 }
 
 .metraly-table-row:hover {
-  background: var(--metraly-bg-card-hover);
+  background: rgba(255,255,255,0.035);
   cursor: pointer;
 }
 
-/* Skeleton bars within loading rows */
+.metraly-table-row.is-selected {
+  background: oklch(0.78 0.13 200 / 0.055);
+  box-shadow: inset 2px 0 0 oklch(0.78 0.13 200 / 0.72);
+}
+
 .metraly-table-skeleton-bar {
-  height: 0.75rem;
+  height: 0.625rem;
   width: 80%;
-  border-radius: var(--metraly-radius-sm);
-  background: var(--metraly-bg-card-hover);
+  border-radius: var(--metraly-radius-pill);
+  background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0.1), rgba(255,255,255,0.05));
   animation: skeleton-pulse 1.2s ease-in-out infinite;
 }
 
@@ -59,10 +75,10 @@
   }
 }
 
-/* Empty state */
 .metraly-table-empty td {
   padding: 2rem 1rem;
   text-align: center;
   color: var(--metraly-text-muted);
   font-style: italic;
+  white-space: normal;
 }
