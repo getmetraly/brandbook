@@ -17,16 +17,17 @@ This table records the current maturity of Metraly Brandbook components. It shou
 
 | Component | Current status | Visual route | Storybook | Tests | Website pilot | Metraly pilot | Notes |
 |---|---|---|---|---|---|---|---|
-| `StateBadge` | Hardening → RC candidate | `/components/previews`, `/components/feedback` | Yes | Yes | Candidate | Candidate | Semantic aliases, tone metadata and compact usage are now covered. Keep in RC candidate until visual review passes. |
+| `StateBadge` | Hardening → RC candidate | `/components/previews`, `/components/feedback` | Yes | Yes | Candidate | Candidate | Semantic aliases, tone metadata, compact usage, non-wrapping label structure and chart badge slots are covered. Keep in RC candidate until visual review passes. |
+| `MetralyBadge` | Hardening → RC candidate | `/components/primitives`, `/components/charts` | Partial | Yes | Candidate | Candidate | Claude Design mono/uppercase/pill contract is covered. Use for static semantic chips without telemetry dot. |
 | `MetralyCard` | Hardening → RC candidate | `/components/previews`, `/components/primitives` | Yes | Yes | Candidate | Candidate | Density, loading metadata and custom empty copy are covered. Compact CSS still needs final visual review. |
 | `MetralyPanel` | Hardening → RC candidate | `/components/previews`, `/components/primitives` | Partial | Yes | Candidate | Candidate | Padding/focus metadata covered; keep small and tokenized. |
 | `MetralyMetricCard` | Hardening → RC candidate | `/components/previews`, `/examples/engineering-dashboard` | Partial | Yes | Candidate | Candidate | Description, density and variant metadata covered. Validate dense dashboard and marketing usage before RC. |
 | `MetralyTelemetryLine` | Visual-ready | `/components/previews` | Partial | Basic | Candidate | Candidate | Keep pulse usage restrained and semantic. |
-| `MetralyCheckbox` | Hardening | `/components/previews`, `/components/forms` | Yes | Yes | Later | Later | Candidate for forms batch after visual/focus review. |
-| `MetralyRadio` | Hardening | `/components/previews`, `/components/forms` | Yes | Yes | Later | Later | Needs group behavior and keyboard review before RC. |
-| `MetralySwitch` | Hardening | `/components/previews`, `/components/forms` | Yes | Yes | Later | Later | Needs keyboard and disabled-state review before RC. |
+| `MetralyCheckbox` | Hardening | `/components/previews`, `/components/forms` | Yes | Yes | Later | Later | Pulse marker removed from DOM. Candidate for forms batch after final visual/focus review. |
+| `MetralyRadio` | Hardening | `/components/previews`, `/components/forms` | Yes | Yes | Later | Later | Pulse marker removed from DOM. Needs group behavior and keyboard review before RC. |
+| `MetralySwitch` | Hardening | `/components/previews`, `/components/forms` | Yes | Yes | Later | Later | Pulse marker removed from DOM. Needs keyboard and disabled-state review before RC. |
 | `MetralySelect` | Hardening | `/components/previews`, `/components/forms` | Partial | Basic | No | No | Keep native/simple until custom behavior has full keyboard/a11y model. |
-| `MetralyTabs` | Hardening | `/components/previews`, `/components/forms` | Partial | Basic | No | No | Needs roving/tab keyboard model before RC. |
+| `MetralyTabs` | Hardening | `/components/previews`, `/components/forms` | Partial | Yes | No | No | Count slot and keyboard navigation are covered. Needs final visual review against Claude Design top navigation before RC. |
 | `MetralyTable` | Hardening | `/components/previews`, `/components/data-display` | Yes | Yes | Candidate | Candidate | Promote only as display-first primitive; sorting/filtering wrappers come later. |
 | `WidgetPickerCard` | Hardening | `/components/previews`, `/components/dashboard` | Yes | Yes | No | Candidate | Useful for product app editor; not first website candidate. |
 | `DashboardWidget` | Hardening | `/components/previews`, `/components/dashboard` | Yes | Yes | No | Candidate | First dashboard primitive candidate for metraly pilot. |
@@ -35,7 +36,7 @@ This table records the current maturity of Metraly Brandbook components. It shou
 | `DashboardResizeHandle` | Hardening | `/components/previews`, `/components/dashboard` | Partial | Yes | No | Later | Needs full keyboard resize contract before RC. |
 | `DashboardGrid` | Hardening | `/components/dashboard`, `/patterns/widget-editor` | Partial | Basic | No | Later | Keep compatible with `react-grid-layout`. Do not rewrite product grid yet. |
 | `DashboardEmptyState` | Hardening | `/components/previews`, `/components/dashboard` | Partial | Basic | Candidate | Candidate | Good low-risk primitive after card/badge batch. |
-| `MetralyChartCard` | Hardening | `/components/charts`, `/components/previews` | Yes | Yes | Later | Candidate | First chart wrapper candidate; validate SSR and downstream usage. |
+| `MetralyChartCard` | Hardening | `/components/charts`, `/components/previews` | Yes | Yes | Later | Candidate | First chart wrapper candidate; badge slot is covered; validate SSR and downstream usage. |
 | `MetralySparkline` | Hardening | `/components/charts`, `/components/previews` | Yes | Basic | Later | Candidate | Useful in metric cards and dashboard widgets. |
 | `MetralyLineChart` | Hardening | `/components/charts` | Yes | Basic | No | Later | Keep wrapper minimal; do not scatter raw Recharts. |
 | `MetralyAreaChart` | Hardening | `/components/charts` | Yes | Basic | No | Later | Validate tooltip and axis readability. |
@@ -48,9 +49,10 @@ This table records the current maturity of Metraly Brandbook components. It shou
 ## Next promotion targets
 
 1. Finish visual review for `StateBadge` + `MetralyCard` / `MetralyPanel` / `MetralyMetricCard` RC candidates.
-2. `MetralyTable` as display-only Release Candidate.
-3. `MetralyChartCard` + `MetralySparkline` to chart hardening review.
-4. `DashboardWidget` shell to metraly pilot candidate.
+2. Complete forms-control visual review for `MetralyCheckbox`, `MetralyRadio`, `MetralySwitch`, `MetralySelect`, and `MetralyTabs`.
+3. `MetralyTable` as display-only Release Candidate.
+4. `MetralyChartCard` + `MetralySparkline` to chart hardening review.
+5. `DashboardWidget` shell to metraly pilot candidate.
 
 ## Update policy
 
