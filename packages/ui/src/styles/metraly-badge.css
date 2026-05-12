@@ -3,8 +3,9 @@
   align-items: center;
   justify-content: center;
   width: fit-content;
-  max-width: max-content;
-  flex: 0 0 auto;
+  max-width: 100%;
+  min-width: 0;
+  flex: 0 1 auto;
   gap: 6px;
   padding: 2px 8px;
   font-family: var(--metraly-font-mono);
@@ -17,6 +18,8 @@
   border-radius: var(--metraly-radius-pill);
   border: 1px solid transparent;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .metraly-badge.is-primary {
