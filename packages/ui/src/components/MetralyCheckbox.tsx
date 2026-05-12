@@ -29,7 +29,6 @@ export function MetralyCheckbox({
   className,
   onChange,
 }: MetralyCheckboxProps) {
-  const inputRef = React.useRef<HTMLInputElement>(null);
   const describedBy = description && id ? `${id}-description` : undefined;
   const classes = [
     "metraly-control-row",
@@ -42,14 +41,9 @@ export function MetralyCheckbox({
     .filter(Boolean)
     .join(" ");
 
-  React.useEffect(() => {
-    if (inputRef.current) inputRef.current.indeterminate = indeterminate;
-  }, [indeterminate]);
-
   return (
     <label className={classes}>
       <input
-        ref={inputRef}
         id={id}
         name={name}
         value={value}
