@@ -52,22 +52,8 @@
   transition: border-color 140ms var(--metraly-ease-out), background 140ms var(--metraly-ease-out), box-shadow 140ms var(--metraly-ease-out);
 }
 
-.metraly-checkbox-box {
-  border-radius: var(--metraly-radius-md);
-}
-
-.metraly-radio-dot {
-  border-radius: var(--metraly-radius-pill);
-}
-
-.metraly-checkbox-pulse,
-.metraly-radio-pulse,
-.metraly-switch-pulse,
-.metraly-tab-pulse,
-.metraly-select-indicator {
-  clip-path: none;
-  box-shadow: none;
-}
+.metraly-checkbox-box { border-radius: var(--metraly-radius-md); }
+.metraly-radio-dot { border-radius: var(--metraly-radius-pill); }
 
 .metraly-checkbox-pulse,
 .metraly-radio-pulse,
@@ -137,9 +123,7 @@
   border-color: oklch(0.72 0.18 25 / 0.72);
 }
 
-.metraly-switch-row {
-  width: fit-content;
-}
+.metraly-switch-row { width: fit-content; }
 
 .metraly-switch {
   position: relative;
@@ -154,14 +138,8 @@
   transition: border-color 140ms var(--metraly-ease-out), background 140ms var(--metraly-ease-out), opacity 140ms var(--metraly-ease-out);
 }
 
-.metraly-switch:disabled {
-  cursor: not-allowed;
-}
-
-.metraly-switch-track {
-  position: absolute;
-  inset: 0;
-}
+.metraly-switch:disabled { cursor: not-allowed; }
+.metraly-switch-track { position: absolute; inset: 0; }
 
 .metraly-switch-knob {
   position: absolute;
@@ -189,10 +167,7 @@
   transform: translateX(-18px);
 }
 
-.metraly-select-control {
-  position: relative;
-  width: 100%;
-}
+.metraly-select-control { position: relative; width: 100%; }
 
 .metraly-select-control select {
   width: 100%;
@@ -209,9 +184,7 @@
   outline: none;
 }
 
-[dir="rtl"] .metraly-select-control select {
-  padding-inline: 34px 12px;
-}
+[dir="rtl"] .metraly-select-control select { padding-inline: 34px 12px; }
 
 .metraly-select-control option {
   background: rgb(10,14,20);
@@ -233,33 +206,72 @@
 }
 
 .metraly-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
   min-width: 0;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  border-bottom: 1px solid oklch(1 0 0 / 0.085);
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 
+.metraly-tabs::-webkit-scrollbar { display: none; }
+
 .metraly-tab {
-  min-height: 32px;
-  padding-block: 0;
-  padding-inline: 10px;
-  border-radius: var(--metraly-radius-md);
-  border: 1px solid oklch(1 0 0 / 0.10);
-  background: oklch(1 0 0 / 0.035);
+  position: relative;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   color: var(--metraly-text-secondary, #8b9bb4);
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font: inherit;
-  font-size: 0.75rem;
+  font-size: 12px;
+  font-weight: 650;
+  white-space: nowrap;
+  transition: color 140ms var(--metraly-ease-out), background 140ms var(--metraly-ease-out);
+}
+
+.metraly-tab::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: -1px;
+  height: 2px;
+  background: transparent;
+}
+
+.metraly-tab-label { display: inline-flex; align-items: center; }
+
+.metraly-tab-count {
+  min-width: 17px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+  border-radius: var(--metraly-radius-pill);
+  background: oklch(1 0 0 / 0.06);
+  color: var(--metraly-text-muted);
+  font-family: var(--metraly-font-mono);
+  font-size: 10px;
   font-weight: 700;
-  transition: border-color 140ms var(--metraly-ease-out), color 140ms var(--metraly-ease-out), background 140ms var(--metraly-ease-out);
+  line-height: 1;
 }
 
 .metraly-tab.is-active {
-  border-color: oklch(0.78 0.13 200 / 0.34);
   color: var(--metraly-text-primary, #f8fafc);
-  background: oklch(0.78 0.13 200 / 0.08);
+  background: oklch(0.78 0.13 200 / 0.035);
+}
+
+.metraly-tab.is-active::after { background: oklch(0.78 0.13 200); }
+
+.metraly-tab.is-active .metraly-tab-count {
+  background: oklch(0.78 0.13 200 / 0.12);
+  color: oklch(0.78 0.13 200);
 }
 
 .metraly-tab:disabled {
