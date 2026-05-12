@@ -26,6 +26,14 @@ describe('Metraly control state coverage', () => {
     expect(screen.getByText('Collect anonymous usage metrics.')).toBeInTheDocument();
   });
 
+  it('renders checkbox mixed state for partial selections', () => {
+    const { container } = render(<MetralyCheckbox indeterminate label="Some sources" />);
+    const checkbox = screen.getByRole('checkbox', { name: 'Some sources' });
+
+    expect(checkbox).toHaveAttribute('aria-checked', 'mixed');
+    expect(container.querySelector('.metraly-checkbox.is-indeterminate')).toBeInTheDocument();
+  });
+
   it('renders radio labels, descriptions and disabled state', () => {
     render(
       <MetralyRadio
