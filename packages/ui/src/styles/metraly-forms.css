@@ -55,13 +55,6 @@
 .metraly-checkbox-box { border-radius: var(--metraly-radius-md); }
 .metraly-radio-dot { border-radius: var(--metraly-radius-pill); }
 
-.metraly-checkbox-pulse,
-.metraly-radio-pulse,
-.metraly-switch-pulse,
-.metraly-tab-pulse {
-  display: none;
-}
-
 .metraly-checkbox-box::after {
   content: "";
   width: 10px;
