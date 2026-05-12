@@ -116,13 +116,20 @@
   border-color: oklch(0.72 0.18 25 / 0.72);
 }
 
-.metraly-switch-row { width: fit-content; }
+.metraly-switch-row {
+  align-items: center;
+  width: fit-content;
+}
+
+.metraly-switch-row .metraly-control-copy {
+  transform: translateY(0);
+}
 
 .metraly-switch {
   position: relative;
   flex: 0 0 auto;
   width: 42px;
-  height: 24px;
+  height: 22px;
   border-radius: var(--metraly-radius-pill);
   border: 1px solid oklch(1 0 0 / 0.14);
   background: oklch(0.155 0.010 250 / 0.72);
@@ -136,8 +143,8 @@
 
 .metraly-switch-knob {
   position: absolute;
-  inset-block-start: 3px;
-  inset-inline-start: 3px;
+  inset-block-start: 2px;
+  inset-inline-start: 2px;
   width: 18px;
   height: 18px;
   border-radius: var(--metraly-radius-pill);
@@ -152,12 +159,12 @@
 }
 
 .metraly-switch-row.is-checked .metraly-switch-knob {
-  transform: translateX(18px);
+  transform: translateX(20px);
   background: oklch(0.78 0.13 200);
 }
 
 [dir="rtl"] .metraly-switch-row.is-checked .metraly-switch-knob {
-  transform: translateX(-18px);
+  transform: translateX(-20px);
 }
 
 .metraly-select-control { position: relative; width: 100%; }
@@ -199,13 +206,23 @@
 }
 
 .metraly-tabs {
+  position: relative;
   min-width: 0;
   display: flex;
   align-items: stretch;
   gap: 0;
-  border-bottom: 1px solid oklch(1 0 0 / 0.085);
   overflow-x: auto;
   scrollbar-width: none;
+}
+
+.metraly-tabs::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  height: 1px;
+  background: oklch(1 0 0 / 0.085);
+  transform: translateY(50%);
 }
 
 .metraly-tabs::-webkit-scrollbar { display: none; }
@@ -226,15 +243,18 @@
   font-weight: 650;
   white-space: nowrap;
   transition: color 140ms var(--metraly-ease-out), background 140ms var(--metraly-ease-out);
+  z-index: 1;
 }
 
 .metraly-tab::after {
   content: "";
   position: absolute;
   inset-inline: 0;
-  inset-block-end: -1px;
-  height: 2px;
+  inset-block-end: 0;
+  height: 0;
   background: transparent;
+  transform: translateY(50%);
+  transition: height 140ms var(--metraly-ease-out), background 140ms var(--metraly-ease-out);
 }
 
 .metraly-tab-label { display: inline-flex; align-items: center; }
@@ -260,7 +280,10 @@
   background: oklch(0.78 0.13 200 / 0.035);
 }
 
-.metraly-tab.is-active::after { background: oklch(0.78 0.13 200); }
+.metraly-tab.is-active::after {
+  height: 3px;
+  background: oklch(0.78 0.13 200);
+}
 
 .metraly-tab.is-active .metraly-tab-count {
   background: oklch(0.78 0.13 200 / 0.12);
@@ -278,6 +301,7 @@
   .metraly-switch,
   .metraly-switch-knob,
   .metraly-tab,
+  .metraly-tab::after,
   .metraly-checkbox-box::after,
   .metraly-radio-dot::after {
     transition: none;
