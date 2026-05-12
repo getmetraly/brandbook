@@ -5,81 +5,92 @@
 
 .claude-state-board .claude-state-cell:has(.metraly-tabs) {
   grid-column: 1 / -1;
-  min-height: 112px;
+  min-height: 96px;
   overflow: hidden;
 }
 
 .claude-state-board .claude-state-cell:has(.metraly-tabs) > div {
   width: 100%;
   min-width: 0;
-  overflow: visible;
+  overflow: hidden;
 }
 
-.claude-state-board .metraly-tabs {
+.claude-state-board .metraly-tabs,
+.claude-dashboard-editor-preview .metraly-tabs {
   width: 100%;
   min-height: 40px;
-  overflow: visible;
-  padding-block-end: 8px;
-  margin-block-end: -2px;
+  overflow: hidden;
+  padding-block-end: 6px;
+  margin-block-end: 0;
 }
 
-.claude-state-board .metraly-tabs::after {
-  inset-block-end: 8px;
-  transform: translateY(50%);
+.claude-state-board .metraly-tabs::after,
+.claude-dashboard-editor-preview .metraly-tabs::after {
+  inset-block-end: 6px;
+  transform: none;
 }
 
-.claude-state-board .metraly-tab::after {
+.claude-state-board .metraly-tab::after,
+.claude-dashboard-editor-preview .metraly-tab::after {
   height: 0;
+  transform: none;
 }
 
-.claude-state-board .metraly-tab-content::after {
-  inset-block-end: 8px;
-  transform: translateY(50%);
+.claude-state-board .metraly-tab-content::after,
+.claude-dashboard-editor-preview .metraly-tab-content::after {
+  inset-block-end: 6px;
+  transform: none;
 }
 
 /* Keep the full dashboard editor scenario inside the docs content column.
- * The preview intentionally remains a dense three-panel product surface,
- * but it must not create a page-level horizontal scrollbar.
+ * The preview is intentionally dense, but the docs page must never get a
+ * horizontal scrollbar. Use a stable two-column preview and let the widget
+ * library occupy a full-width row below the editor workspace.
  */
 .claude-dashboard-editor-preview {
+  width: 100%;
   max-width: 100%;
   min-width: 0;
   overflow-x: hidden;
+  grid-template-columns: minmax(160px, 230px) minmax(0, 1fr) !important;
 }
 
 .claude-dashboard-editor-preview,
 .claude-dashboard-workspace,
 .claude-dashboard-main,
+.claude-dashboard-topbar,
 .claude-dashboard-grid-preview,
 .claude-widget-picker-panel,
 .claude-dashboard-sidebar {
   box-sizing: border-box;
+  min-width: 0;
 }
 
 .claude-dashboard-workspace,
 .claude-dashboard-main,
 .claude-dashboard-grid-preview {
-  min-width: 0;
-}
-
-.claude-widget-picker-panel,
-.claude-dashboard-sidebar {
-  min-width: 0;
   max-width: 100%;
+  overflow-x: hidden;
 }
 
-@media (max-width: 1320px) {
-  .claude-dashboard-editor-preview {
-    grid-template-columns: minmax(160px, 220px) minmax(0, 1fr);
-  }
+.claude-dashboard-topbar {
+  flex-wrap: wrap;
+}
 
-  .claude-dashboard-editor-preview > .claude-widget-picker-panel {
-    grid-column: 1 / -1;
-  }
+.claude-dashboard-editor-preview > .claude-widget-picker-panel {
+  grid-column: 1 / -1 !important;
+  width: 100%;
+  max-width: 100%;
 }
 
 @media (max-width: 980px) {
   .claude-dashboard-editor-preview {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .claude-dashboard-editor-preview > .claude-widget-picker-panel,
+  .claude-dashboard-editor-preview > .claude-dashboard-sidebar,
+  .claude-dashboard-editor-preview > .claude-dashboard-workspace {
+    grid-column: 1 / -1 !important;
   }
 }
