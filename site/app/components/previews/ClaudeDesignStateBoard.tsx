@@ -39,6 +39,14 @@ const tabs = [
   { value: "ci", label: "CI", disabled: true },
 ];
 
+const tabCounts = [
+  { value: "delivery", label: "Delivery", count: 11 },
+  { value: "dora", label: "DORA", count: 4 },
+  { value: "flow", label: "Flow", count: 6 },
+  { value: "reviews", label: "Reviews", count: 5 },
+  { value: "ci", label: "CI", count: 3 },
+];
+
 const chartData = [
   { name: "Mon", review: 8.4, deploys: 14, flow: 72, failure: 4.6 },
   { name: "Tue", review: 7.8, deploys: 17, flow: 74, failure: 4.1 },
@@ -136,26 +144,46 @@ export function ComponentStateBoard() {
         <StateCell label="default"><MetralyCheckbox label="Include review queue" /></StateCell>
         <StateCell label="hover"><MetralyCheckbox className="is-preview-hover" label="Watch blocked work" /></StateCell>
         <StateCell label="focus-visible"><MetralyCheckbox className="is-preview-focus" label="Keyboard focus" /></StateCell>
-        <StateCell label="selected"><MetralyCheckbox label="Flow efficiency" checked /></StateCell>
-        <StateCell label="disabled"><MetralyCheckbox label="Locked policy" checked disabled /></StateCell>
+        <StateCell label="checked"><MetralyCheckbox label="Flow efficiency" checked /></StateCell>
+        <StateCell label="checked focus"><MetralyCheckbox className="is-preview-focus" label="Focused selected" checked /></StateCell>
+        <StateCell label="checked disabled"><MetralyCheckbox label="Locked policy" checked disabled /></StateCell>
+        <StateCell label="unchecked disabled"><MetralyCheckbox label="Unavailable signal" disabled /></StateCell>
         <StateCell label="error"><MetralyCheckbox label="Source disconnected" error /></StateCell>
+        <StateCell label="error checked"><MetralyCheckbox label="Broken required signal" checked error /></StateCell>
       </BoardGroup>
 
-      <BoardGroup title="MetralyRadio / MetralySwitch" readiness="Ready">
-        <StateCell label="radio default"><MetralyRadio name="range-preview" label="Current sprint" /></StateCell>
-        <StateCell label="radio selected"><MetralyRadio name="range-preview" label="Last 14 days" checked /></StateCell>
-        <StateCell label="radio disabled"><MetralyRadio name="range-preview" label="Locked range" disabled /></StateCell>
-        <StateCell label="switch off"><MetralySwitch label="Live sync" /></StateCell>
-        <StateCell label="switch on"><MetralySwitch label="Live sync" checked /></StateCell>
-        <StateCell label="switch disabled"><MetralySwitch label="Read-only board" checked disabled /></StateCell>
+      <BoardGroup title="MetralyRadio" readiness="Ready">
+        <StateCell label="default"><MetralyRadio name="range-preview-a" label="Current sprint" /></StateCell>
+        <StateCell label="hover"><MetralyRadio className="is-preview-hover" name="range-preview-b" label="Last 30 days" /></StateCell>
+        <StateCell label="focus-visible"><MetralyRadio className="is-preview-focus" name="range-preview-c" label="Keyboard focus" /></StateCell>
+        <StateCell label="selected"><MetralyRadio name="range-preview-d" label="Last 14 days" checked /></StateCell>
+        <StateCell label="selected disabled"><MetralyRadio name="range-preview-e" label="Locked range" checked disabled /></StateCell>
+        <StateCell label="error"><MetralyRadio name="range-preview-f" label="Invalid range" error /></StateCell>
       </BoardGroup>
 
-      <BoardGroup title="MetralySelect / MetralyTabs" readiness="Hardening">
-        <StateCell label="select default"><MetralySelect label="Signal source" defaultValue="github" options={sourceOptions} /></StateCell>
-        <StateCell label="select error"><MetralySelect label="Signal source" defaultValue="github" options={sourceOptions} error /></StateCell>
-        <StateCell label="select disabled"><MetralySelect label="Signal source" defaultValue="ci" options={sourceOptions} disabled /></StateCell>
-        <StateCell label="tabs selected"><MetralyTabs ariaLabel="State board tabs" defaultValue="dora" items={tabs} /></StateCell>
-        <StateCell label="tabs disabled"><MetralyTabs ariaLabel="Disabled tab state" defaultValue="delivery" items={tabs} /></StateCell>
+      <BoardGroup title="MetralySwitch" readiness="Ready">
+        <StateCell label="off"><MetralySwitch label="Live sync" /></StateCell>
+        <StateCell label="hover"><MetralySwitch className="is-preview-hover" label="Live sync" /></StateCell>
+        <StateCell label="focus-visible"><MetralySwitch className="is-preview-focus" label="Keyboard focus" /></StateCell>
+        <StateCell label="on"><MetralySwitch label="Live sync" checked /></StateCell>
+        <StateCell label="on hover"><MetralySwitch className="is-preview-hover" label="Auto refresh" checked /></StateCell>
+        <StateCell label="off disabled"><MetralySwitch label="Offline mode" disabled /></StateCell>
+        <StateCell label="on disabled"><MetralySwitch label="Read-only board" checked disabled /></StateCell>
+      </BoardGroup>
+
+      <BoardGroup title="MetralySelect" readiness="Hardening">
+        <StateCell label="default"><MetralySelect label="Signal source" defaultValue="github" options={sourceOptions} /></StateCell>
+        <StateCell label="hover"><MetralySelect className="is-preview-hover" label="Signal source" defaultValue="deployments" options={sourceOptions} /></StateCell>
+        <StateCell label="focus-visible"><MetralySelect className="is-preview-focus" label="Signal source" defaultValue="github" options={sourceOptions} /></StateCell>
+        <StateCell label="error"><MetralySelect label="Signal source" defaultValue="github" options={sourceOptions} error /></StateCell>
+        <StateCell label="disabled"><MetralySelect label="Signal source" defaultValue="ci" options={sourceOptions} disabled /></StateCell>
+        <StateCell label="option disabled"><MetralySelect label="Signal source" defaultValue="blocked" options={sourceOptions} /></StateCell>
+      </BoardGroup>
+
+      <BoardGroup title="MetralyTabs" readiness="Hardening">
+        <StateCell label="selected"><MetralyTabs ariaLabel="State board tabs" defaultValue="dora" items={tabs} /></StateCell>
+        <StateCell label="with counts"><MetralyTabs ariaLabel="Count tabs" defaultValue="ci" items={tabCounts} /></StateCell>
+        <StateCell label="disabled tab"><MetralyTabs ariaLabel="Disabled tab state" defaultValue="delivery" items={tabs} /></StateCell>
         <StateCell label="loading"><LoadingBars /></StateCell>
       </BoardGroup>
 
