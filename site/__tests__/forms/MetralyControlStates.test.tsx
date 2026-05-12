@@ -60,6 +60,20 @@ describe('Metraly control state coverage', () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
+  it('does not render legacy pulse markers in choice controls', () => {
+    const { container } = render(
+      <>
+        <MetralyCheckbox checked label="Telemetry" />
+        <MetralyRadio checked label="Primary source" name="source" value="primary" />
+        <MetralySwitch checked label="Live sync" />
+      </>
+    );
+
+    expect(container.querySelector('.metraly-checkbox-pulse')).not.toBeInTheDocument();
+    expect(container.querySelector('.metraly-radio-pulse')).not.toBeInTheDocument();
+    expect(container.querySelector('.metraly-switch-pulse')).not.toBeInTheDocument();
+  });
+
   it('renders select error and disabled states', () => {
     render(
       <MetralySelect
