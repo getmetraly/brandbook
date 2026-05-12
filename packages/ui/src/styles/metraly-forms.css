@@ -57,11 +57,15 @@
 
 .metraly-checkbox-box::after {
   content: "";
-  width: 10px;
-  height: 6px;
-  border-inline-start: 2px solid transparent;
-  border-block-end: 2px solid transparent;
-  transform: rotate(-45deg) translateY(-1px);
+  position: absolute;
+  inset-inline-start: 50%;
+  inset-block-start: 50%;
+  width: 6px;
+  height: 10px;
+  border-inline-end: 2.5px solid transparent;
+  border-block-end: 2.5px solid transparent;
+  transform: translate(-50%, -58%) rotate(45deg);
+  transform-origin: center;
   opacity: 0;
   transition: opacity 140ms var(--metraly-ease-out);
 }
@@ -76,11 +80,19 @@
   transition: opacity 140ms var(--metraly-ease-out), background 140ms var(--metraly-ease-out);
 }
 
+.metraly-checkbox:hover:not(.is-disabled) .metraly-checkbox-box,
+.metraly-checkbox.is-preview-hover:not(.is-disabled) .metraly-checkbox-box,
+.metraly-radio:hover:not(.is-disabled) .metraly-radio-dot,
+.metraly-radio.is-preview-hover:not(.is-disabled) .metraly-radio-dot {
+  border-color: oklch(0.78 0.13 200 / 0.48);
+  background: oklch(0.78 0.13 200 / 0.06);
+}
+
 .metraly-control-input:checked + .metraly-checkbox-box,
 .metraly-control-input:checked + .metraly-radio-dot {
-  border-color: oklch(0.78 0.13 200 / 0.72);
+  border-color: oklch(0.78 0.13 200 / 0.82);
   background: oklch(0.78 0.13 200 / 0.10);
-  box-shadow: inset 0 0 0 1px oklch(0.78 0.13 200 / 0.16);
+  box-shadow: inset 0 0 0 1px oklch(0.78 0.13 200 / 0.22);
 }
 
 .metraly-control-input:checked + .metraly-checkbox-box::after {
@@ -94,12 +106,22 @@
 }
 
 .metraly-control-input:focus-visible + .metraly-checkbox-box,
+.metraly-checkbox.is-preview-focus .metraly-checkbox-box,
 .metraly-control-input:focus-visible + .metraly-radio-dot,
+.metraly-radio.is-preview-focus .metraly-radio-dot,
 .metraly-switch:focus-visible,
+.metraly-switch-row.is-preview-focus .metraly-switch,
 .metraly-select-control select:focus-visible,
+.metraly-select-field.is-preview-focus .metraly-select-control select,
 .metraly-tab:focus-visible {
   outline: 2px solid oklch(0.78 0.13 200);
   outline-offset: 3px;
+}
+
+.metraly-checkbox.is-preview-focus .metraly-checkbox-box,
+.metraly-radio.is-preview-focus .metraly-radio-dot {
+  border-color: oklch(0.78 0.13 200 / 0.82);
+  background: oklch(0.78 0.13 200 / 0.08);
 }
 
 .metraly-checkbox.is-disabled,
@@ -114,6 +136,10 @@
 .metraly-radio.is-error .metraly-radio-dot,
 .metraly-select-field.is-error .metraly-select-control select {
   border-color: oklch(0.72 0.18 25 / 0.72);
+}
+
+.metraly-checkbox.is-error .metraly-control-input:checked + .metraly-checkbox-box::after {
+  border-color: oklch(0.72 0.18 25);
 }
 
 .metraly-switch-row {
@@ -136,6 +162,12 @@
   padding: 0;
   cursor: pointer;
   transition: border-color 140ms var(--metraly-ease-out), background 140ms var(--metraly-ease-out), opacity 140ms var(--metraly-ease-out);
+}
+
+.metraly-switch:hover:not(:disabled),
+.metraly-switch-row.is-preview-hover .metraly-switch:not(:disabled) {
+  border-color: oklch(0.78 0.13 200 / 0.44);
+  background: oklch(0.78 0.13 200 / 0.06);
 }
 
 .metraly-switch:disabled { cursor: not-allowed; }
@@ -182,6 +214,13 @@
   font: inherit;
   font-size: 0.8125rem;
   outline: none;
+  transition: border-color 140ms var(--metraly-ease-out), background 140ms var(--metraly-ease-out), box-shadow 140ms var(--metraly-ease-out);
+}
+
+.metraly-select-field:hover:not(.is-disabled) .metraly-select-control select,
+.metraly-select-field.is-preview-hover:not(.is-disabled) .metraly-select-control select {
+  border-color: oklch(0.78 0.13 200 / 0.42);
+  background: oklch(0.155 0.010 250 / 0.94);
 }
 
 [dir="rtl"] .metraly-select-control select { padding-inline: 34px 12px; }
@@ -247,6 +286,11 @@
   z-index: 1;
 }
 
+.metraly-tab:hover:not(:disabled),
+.metraly-tab.is-preview-hover:not(:disabled) {
+  color: var(--metraly-text-primary, #f8fafc);
+}
+
 .metraly-tab::after {
   content: "";
   position: absolute;
@@ -302,6 +346,7 @@
   .metraly-radio-dot,
   .metraly-switch,
   .metraly-switch-knob,
+  .metraly-select-control select,
   .metraly-tab,
   .metraly-tab::after,
   .metraly-checkbox-box::after,
