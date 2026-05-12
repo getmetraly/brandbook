@@ -279,6 +279,8 @@
   align-items: stretch;
   gap: 18px;
   overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior: contain;
   scrollbar-width: none;
 }
 
@@ -289,7 +291,7 @@
   inset-block-end: 0;
   height: 1px;
   background: oklch(1 0 0 / 0.085);
-  transform: translateY(50%);
+  transform: none;
   z-index: 0;
 }
 
@@ -325,7 +327,7 @@
   inset-block-end: 0;
   height: 0;
   background: transparent;
-  transform: translateY(50%);
+  transform: none;
   transition: height 140ms var(--metraly-ease-out), background 140ms var(--metraly-ease-out);
   z-index: 2;
 }
@@ -346,7 +348,7 @@
   inset-block-end: 0;
   height: 0;
   background: transparent;
-  transform: translateY(50%);
+  transform: none;
   transition: height 140ms var(--metraly-ease-out), background 140ms var(--metraly-ease-out);
 }
 
