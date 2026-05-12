@@ -6,23 +6,24 @@
   padding: 1rem;
   border: 1px solid var(--metraly-border);
   border-radius: var(--metraly-radius-xl);
-  background: var(--metraly-bg-card);
-  box-shadow: var(--metraly-shadow-panel);
+  background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.014));
+  box-shadow: none;
+  overflow: hidden;
 }
 
 .metraly-chart-card.is-selected {
-  border-color: var(--metraly-primary);
-  box-shadow: var(--metraly-glow-cyan), var(--metraly-shadow-panel);
+  border-color: oklch(0.78 0.13 200 / 0.72);
+  box-shadow: inset 0 0 0 1px oklch(0.78 0.13 200 / 0.18);
 }
 
 .metraly-chart-card.is-dragging {
   border-color: rgba(168,85,247,0.42);
-  box-shadow: var(--metraly-glow-purple), var(--metraly-shadow-panel);
+  box-shadow: inset 0 0 0 1px rgba(168,85,247,0.16), 0 18px 42px rgba(0,0,0,0.28);
 }
 
 .metraly-chart-card.is-resizing {
   outline: 1px dashed rgba(0,229,204,0.46);
-  outline-offset: 4px;
+  outline-offset: 3px;
 }
 
 .metraly-chart-card.is-fullWidth {
@@ -34,25 +35,48 @@
 }
 
 .metraly-chart-card-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, max-content);
+  align-items: start;
   gap: 0.75rem;
+  min-width: 0;
 }
 
-.metraly-chart-card-head > span {
+.metraly-chart-card-title-block {
   min-width: 0;
   display: grid;
   gap: 0.25rem;
 }
 
+.metraly-chart-card-badge {
+  min-width: 0;
+  max-width: min(100%, 7rem);
+  display: inline-flex;
+  justify-self: end;
+  align-self: start;
+}
+
+.metraly-chart-card-badge > .metraly-badge,
+.metraly-chart-card-badge > .metraly-state-badge {
+  max-width: 100%;
+}
+
 .metraly-chart-card-head strong {
+  min-width: 0;
   color: var(--metraly-text-primary);
   font-family: var(--metraly-font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .metraly-chart-card-head small,
 .metraly-chart-summary {
+  min-width: 0;
   color: var(--metraly-text-secondary);
   line-height: 1.45;
 }
@@ -153,6 +177,17 @@
   height: auto;
   overflow: visible;
   filter: drop-shadow(0 0 10px rgba(0,229,204,0.18));
+}
+
+@media (max-width: 520px) {
+  .metraly-chart-card-head {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .metraly-chart-card-badge {
+    justify-self: start;
+    max-width: 100%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
