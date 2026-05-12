@@ -1,9 +1,9 @@
 /*
- * Styles for the Metraly widget shell.  The widget shell extends the
- * panel/card visual language with specific affordances for drag and
- * resize operations.  Classes mirror editing states (`is-selected`,
- * `is-dragging`, etc.) and ensure the surface remains calm and
- * readable under all conditions.
+ * Metraly widget shell.
+ *
+ * This shell follows the Claude Design dashboard-card language: strict dark
+ * surfaces, compact spacing, restrained selected states, neutral grip dots and
+ * no decorative pulse-wave markers.
  */
 
 .metraly-widget-shell {
@@ -11,103 +11,118 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  min-width: 0;
+  height: 100%;
   padding: 1rem;
   border-radius: var(--metraly-radius-xl);
-  background: var(--metraly-bg-card);
+  background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.014));
   border: 1px solid var(--metraly-border);
-  box-shadow: var(--metraly-shadow-panel);
+  box-shadow: none;
+  overflow: hidden;
   transition: background var(--metraly-motion-base) var(--metraly-ease-out),
     border-color var(--metraly-motion-base) var(--metraly-ease-out),
     box-shadow var(--metraly-motion-base) var(--metraly-ease-out);
 }
 
 .metraly-widget-shell:hover {
-  background: var(--metraly-bg-card-hover);
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.018));
 }
 
-/* Selected widgets use an accent border and subtle glow */
 .metraly-widget-shell.is-selected {
-  border-color: var(--metraly-primary);
-  box-shadow: var(--metraly-glow-cyan), var(--metraly-shadow-panel);
+  border-color: oklch(0.78 0.13 200 / 0.72);
+  box-shadow: inset 0 0 0 1px oklch(0.78 0.13 200 / 0.18);
 }
 
-/* Dragging widgets appear elevated and slightly transparent */
 .metraly-widget-shell.is-dragging {
-  opacity: 0.85;
-  box-shadow: var(--metraly-glow-purple), var(--metraly-shadow-panel);
+  opacity: 0.88;
+  border-color: oklch(0.66 0.14 295 / 0.46);
+  box-shadow: inset 0 0 0 1px oklch(0.66 0.14 295 / 0.14), 0 18px 42px rgba(0,0,0,0.28);
 }
 
-/* Header */
 .metraly-widget-shell-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.75rem;
-}
-
-.metraly-widget-shell-heading {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, max-content);
+  align-items: start;
+  gap: 0.5rem;
   min-width: 0;
 }
 
+.metraly-widget-shell-heading {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
 .metraly-widget-shell-title {
+  min-width: 0;
   font-family: var(--metraly-font-display);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--metraly-text-primary);
-  line-height: 1.2;
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+  overflow-wrap: anywhere;
 }
 
 .metraly-widget-shell-subtitle {
+  min-width: 0;
   font-family: var(--metraly-font-ui);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   color: var(--metraly-text-secondary);
-  line-height: 1.3;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
 }
 
 .metraly-widget-shell-badge {
-  margin-left: auto;
+  justify-self: end;
+  align-self: start;
+  max-width: min(100%, 8.75rem);
 }
 
-/* Body */
 .metraly-widget-shell-body {
+  min-width: 0;
+  flex: 1 1 auto;
   font-family: var(--metraly-font-ui);
   font-size: 0.875rem;
   color: var(--metraly-text-secondary);
 }
 
-/* Footer with drag handle */
+.metraly-widget-shell-body * {
+  min-width: 0;
+}
+
 .metraly-widget-shell-foot {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--metraly-border);
+  min-height: 1.35rem;
+  margin-top: auto;
+  padding-top: 0.625rem;
+  border-top: 1px solid oklch(1 0 0 / 0.055);
 }
 
 .metraly-widget-shell-drag-handle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--metraly-text-muted);
+  color: oklch(0.50 0.012 250);
   cursor: grab;
   user-select: none;
-  font-size: 1.25rem;
+  font-size: 1rem;
   line-height: 1;
 }
 
 .metraly-widget-shell-grip-dots {
   display: grid;
-  grid-template-columns: repeat(2, 4px);
-  gap: 3px;
-  padding: 0.25rem;
+  grid-template-columns: repeat(2, 3px);
+  gap: 4px;
+  padding: 0.125rem;
 }
 
 .metraly-widget-shell-grip-dots span {
-  width: 4px;
-  height: 4px;
+  width: 3px;
+  height: 3px;
   border-radius: var(--metraly-radius-pill);
   background: currentColor;
 }
@@ -116,26 +131,30 @@
   cursor: grabbing;
 }
 
-/* Simple resize handle positioned bottom right */
 .metraly-widget-shell-resize-handle {
   position: absolute;
-  right: -0.45rem;
-  bottom: -0.45rem;
+  right: -1px;
+  bottom: -1px;
   z-index: 2;
 }
 
-/* Full‑width variation (spans entire row) */
 .metraly-widget-shell.is-fullwidth {
   grid-column: 1 / -1;
 }
 
-/* Reduce motion respect: do not animate box shadows if user prefers reduced motion */
+@media (max-width: 520px) {
+  .metraly-widget-shell-head {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .metraly-widget-shell-badge {
+    justify-self: start;
+    max-width: 100%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .metraly-widget-shell {
     transition: none;
-  }
-  .metraly-widget-shell-resize-handle::before,
-  .metraly-widget-shell-resize-handle::after {
-    box-shadow: none;
   }
 }
