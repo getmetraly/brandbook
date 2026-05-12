@@ -1,5 +1,6 @@
 "use client";
 
+import { MetralyBadge } from "@metraly/ui";
 import {
   MetralyAreaChart,
   MetralyBarChart,
@@ -23,7 +24,7 @@ export function RechartsShowcase() {
         title="Review latency trend"
         description="Median first-review response by day."
         summary="Review latency improved from 52 hours to 38 hours across the week."
-        badge={<span className="brand-badge brand-badge-primary">Line</span>}
+        badge={<MetralyBadge>Line</MetralyBadge>}
       >
         <MetralyLineChart
           data={deliveryTrend}
@@ -38,7 +39,7 @@ export function RechartsShowcase() {
         title="Deployment frequency"
         description="Deployments per day across teams."
         summary="Deployment frequency increased from 6 to 12 deploys per day."
-        badge={<span className="brand-badge brand-badge-primary">Bar</span>}
+        badge={<MetralyBadge>Bar</MetralyBadge>}
       >
         <MetralyBarChart
           data={deliveryTrend}
@@ -53,7 +54,7 @@ export function RechartsShowcase() {
         title="Flow efficiency area"
         description="Completed work versus waiting time pressure."
         summary="Flow efficiency rose from 68 percent to 81 percent."
-        badge={<span className="brand-badge brand-badge-success">Area</span>}
+        badge={<MetralyBadge variant="success">Area</MetralyBadge>}
         className="chart-wide"
       >
         <MetralyAreaChart
@@ -69,7 +70,7 @@ export function RechartsShowcase() {
         title="Delivery health composed chart"
         description="Deploys, reviews and change failure rate together."
         summary="Deployments and reviews increased while change failure rate stayed under five percent."
-        badge={<span className="brand-badge brand-badge-success">Wrapper</span>}
+        badge={<MetralyBadge variant="success">Wrapper</MetralyBadge>}
         className="chart-wide"
       >
         <MetralyComposedChart
