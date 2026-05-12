@@ -1,11 +1,11 @@
 import * as React from "react";
 
 /**
- * A small status badge that conveys semantic meaning through colour.
+ * A small semantic badge for compact product surfaces.
  *
- * Badges are used to mark live streams, beta features, sync states and
- * other contextual information. They use Metraly design tokens so colours
- * adapt to dark and light themes.
+ * Badges follow the Claude Design reference style: mono, uppercase, compact
+ * and pill-shaped. Use StateBadge when the badge represents live telemetry
+ * freshness/health with a visual indicator dot.
  */
 export type MetralyBadgeVariant =
   | "primary"
@@ -15,42 +15,26 @@ export type MetralyBadgeVariant =
   | "error"
   | "info";
 
-export interface MetralyBadgeProps {
+export interface MetralyBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   /** The semantic variant of the badge. Defaults to `primary`. */
   variant?: MetralyBadgeVariant;
-  /** Additional CSS classes to apply. */
-  className?: string;
   /** The contents of the badge, typically a short label. */
   children: React.ReactNode;
 }
-
-const stylesForVariant: Record<MetralyBadgeVariant, { bg: string; color: string }> = {
-  primary: { bg: "var(--metraly-cyan-dim)", color: "var(--metraly-primary)" },
-  secondary: { bg: "var(--metraly-purple-dim)", color: "var(--metraly-secondary)" },
-  success: { bg: "var(--metraly-green-dim)", color: "var(--metraly-success)" },
-  warning: { bg: "var(--metraly-warning-dim)", color: "var(--metraly-warning)" },
-  error: { bg: "var(--metraly-error-dim)", color: "var(--metraly-error)" },
-  info: { bg: "var(--metraly-info-dim)", color: "var(--metraly-info)" },
-};
 
 export function MetralyBadge({
   variant = "primary",
   className,
   children,
+  ...rest
 }: MetralyBadgeProps) {
-  const { bg, color } = stylesForVariant[variant];
-
   return (
     <span
-      className={[
-        "inline-flex items-center justify-center",
-        "font-medium text-[0.75rem] leading-tight",
-        "px-2 py-[0.125rem] rounded-full",
-        className,
-      ]
+      {...rest}
+      className={["metraly-badge", `is-${variant}`, className]
         .filter(Boolean)
         .join(" ")}
-      style={{ backgroundColor: bg, color }}
+      data-variant={variant}
     >
       {children}
     </span>
