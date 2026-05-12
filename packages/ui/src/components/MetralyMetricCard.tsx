@@ -13,7 +13,7 @@ export type MetralyMetricCardVariant =
   | "info";
 export type MetralyMetricCardDensity = "comfortable" | "compact";
 
-export interface MetralyMetricCardProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface MetralyMetricCardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
   /** Title describing the metric, e.g. "Active users". */
   title: React.ReactNode;
   /** The metric value; can include units or secondary text. */
