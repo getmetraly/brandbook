@@ -5,6 +5,7 @@ export interface MetralyTabItem {
   value: string;
   label: React.ReactNode;
   disabled?: boolean;
+  count?: React.ReactNode;
 }
 
 export interface MetralyTabsProps {
@@ -58,8 +59,8 @@ export function MetralyTabs({
             onClick={onValueChange && !item.disabled ? () => onValueChange(item.value) : undefined}
             onKeyDown={(e) => handleKeyDown(e, index)}
           >
-            <span>{item.label}</span>
-            {selected ? <span className="metraly-tab-pulse" aria-hidden="true" /> : null}
+            <span className="metraly-tab-label">{item.label}</span>
+            {item.count !== undefined ? <span className="metraly-tab-count">{item.count}</span> : null}
           </button>
         );
       })}
