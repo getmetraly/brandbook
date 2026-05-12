@@ -4,8 +4,9 @@
   justify-self: start;
   align-self: flex-start;
   width: fit-content;
-  max-width: max-content;
-  flex: 0 0 auto;
+  max-width: 100%;
+  min-width: 0;
+  flex: 0 1 auto;
   gap: 6px;
   padding: 2px 8px 2px 6px;
   font-family: var(--metraly-font-mono);
@@ -20,6 +21,14 @@
   background: rgba(255,255,255,0.04);
   color: var(--metraly-text-secondary);
   white-space: nowrap;
+  overflow: hidden;
+}
+
+.metraly-state-badge > span:last-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .metraly-state-badge--sm {
@@ -31,6 +40,7 @@
 }
 
 .metraly-state-badge .metraly-state-pulse {
+  flex: 0 0 auto;
   width: 5px;
   height: 5px;
   border-radius: var(--metraly-radius-pill);
