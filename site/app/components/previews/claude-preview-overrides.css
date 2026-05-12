@@ -3,12 +3,20 @@
  * show each state without internal scrollbars or clipped active indicators.
  */
 
-.claude-state-board .claude-state-cell:has(.metraly-tabs),
+.claude-state-board .claude-state-cell:has(.metraly-tabs) {
+  grid-column: 1 / -1;
+  min-height: 132px;
+  overflow: visible;
+}
+
 .claude-state-board .claude-state-cell:has(.metraly-tabs) > div {
+  width: 100%;
+  min-width: 0;
   overflow: visible;
 }
 
 .claude-state-board .metraly-tabs {
+  width: 100%;
   min-height: 42px;
   overflow: visible;
   padding-block-end: 4px;
