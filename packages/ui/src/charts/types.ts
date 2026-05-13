@@ -29,7 +29,13 @@ export interface MetralyChartBaseProps<TDatum extends MetralyChartDatum = Metral
   height?: number;
   ariaLabel: string;
   summary: React.ReactNode;
+  state?: MetralyChartState;
   className?: string;
+}
+
+export function chartStateFromData(state: MetralyChartState = "default", pointCount = 0): MetralyChartState {
+  if (state !== "default") return state;
+  return pointCount === 0 ? "empty" : "default";
 }
 
 export function resolveChartTone(tone: MetralyChartTone = "primary"): string {

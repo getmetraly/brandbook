@@ -14,6 +14,8 @@ export interface MetralyTabsProps {
   defaultValue?: string;
   ariaLabel?: string;
   className?: string;
+  /** Prototype-compatible selected-tab telemetry marker. */
+  livePulse?: boolean;
   onValueChange?: (value: string) => void;
 }
 
@@ -23,10 +25,11 @@ export function MetralyTabs({
   defaultValue,
   ariaLabel = "Tabs",
   className,
+  livePulse = false,
   onValueChange,
 }: MetralyTabsProps) {
   const activeValue = value ?? defaultValue ?? items[0]?.value;
-  const classes = ["metraly-tabs", className].filter(Boolean).join(" ");
+  const classes = ["metraly-tabs", livePulse && "has-live-pulse", className].filter(Boolean).join(" ");
   const refs = React.useRef<(HTMLButtonElement | null)[]>([]);
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLButtonElement>, index: number) {
@@ -43,7 +46,7 @@ export function MetralyTabs({
   }
 
   return (
-    <div className={classes} role="tablist" aria-label={ariaLabel}>
+    <div className={classes} role="tablist" aria-label={ariaLabel} data-live-pulse={livePulse ? "on" : "off"}>
       {items.map((item, index) => {
         const selected = item.value === activeValue;
         return (
@@ -54,6 +57,8 @@ export function MetralyTabs({
             role="tab"
             className={selected ? "metraly-tab is-active" : "metraly-tab"}
             aria-selected={selected}
+            data-state={item.disabled ? "disabled" : selected ? "selected" : "default"}
+            data-live-pulse={selected && livePulse ? "on" : "off"}
             tabIndex={selected ? 0 : -1}
             disabled={item.disabled}
             onClick={onValueChange && !item.disabled ? () => onValueChange(item.value) : undefined}
@@ -62,6 +67,7 @@ export function MetralyTabs({
             <span className="metraly-tab-content">
               <span className="metraly-tab-label">{item.label}</span>
               {item.count !== undefined ? <span className="metraly-tab-count">{item.count}</span> : null}
+              {selected && livePulse ? <span className="metraly-tab-live-pulse" aria-hidden="true" /> : null}
             </span>
           </button>
         );

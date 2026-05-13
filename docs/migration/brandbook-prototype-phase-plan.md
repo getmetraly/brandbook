@@ -70,7 +70,7 @@ Use these aliases when aligning prototype vocabulary with current `StateBadge` s
 
 ## Phase 0 — Audit foundation
 
-Status: **in progress**
+Status: **done / checklist active**
 
 Goal: create a stable checklist so component work can proceed without reinterpreting the prototype every time.
 
@@ -78,9 +78,9 @@ Deliverables:
 
 - [x] Full prototype conformance audit.
 - [x] Phase execution plan.
-- [ ] State-board expectation checklist per family.
-- [ ] `component-status.md` cross-link to audit and phase plan.
-- [ ] Test expectation list for state-board coverage.
+- [x] State-board expectation checklist per family.
+- [x] `component-status.md` cross-link to audit and phase plan.
+- [x] Test expectation list for state-board coverage.
 
 Exit criteria:
 
@@ -90,7 +90,7 @@ Exit criteria:
 
 ## Phase 1 — Core primitives and forms
 
-Status: **next**
+Status: **implementation complete / local validation pending**
 
 Goal: align reusable primitives and form controls with prototype states while preserving production accessibility.
 
@@ -106,14 +106,14 @@ Scope:
 
 Tasks:
 
-- [ ] Normalize `StateBadge` prototype aliases: `ok`, `new`, `purple`, `disabled`.
-- [ ] Ensure badge pulse defaults only for live/new semantics.
-- [ ] Add or document `loading` state for checkbox and switch.
-- [ ] Add switch accent support for cyan/purple.
-- [ ] Keep native select as the safe baseline while documenting custom listbox as future hardening.
-- [ ] Ensure tabs keep arrow-key navigation and prototype underline/count geometry.
-- [ ] Add state-board examples for every relevant state.
-- [ ] Update Storybook stories and tests.
+- [x] Normalize `StateBadge` prototype aliases: `ok`, `new`, `purple`, `disabled`.
+- [x] Ensure badge pulse defaults only for live/new semantics.
+- [x] Add or document `loading` state for checkbox and switch.
+- [x] Add switch accent support for cyan/purple.
+- [x] Keep native select as the safe baseline while documenting custom listbox as future hardening.
+- [x] Ensure tabs keep arrow-key navigation and prototype underline/count geometry.
+- [x] Add state-board checklist and focused tests for relevant states.
+- [x] Update Storybook stories and final visual state-board examples.
 
 Exit criteria:
 
@@ -124,7 +124,7 @@ Exit criteria:
 
 ## Phase 2 — Dashboard primitives
 
-Status: **queued**
+Status: **implementation complete / local validation pending**
 
 Goal: align dashboard/editor primitives with prototype geometry.
 
@@ -140,14 +140,14 @@ Scope:
 
 Tasks:
 
-- [ ] Add `kind`, `new`, `loading`, `dragging` support to `WidgetPickerCard`.
-- [ ] Move `DashboardWidget` drag grip into header.
-- [ ] Keep drag grip as neutral dots and `aria-label="Drag to move"`.
-- [ ] Expand resize handles to all eight directions.
-- [ ] Render all resize handles when selected/resizing.
-- [ ] Verify drop zone idle/hover/active/rejected/empty styles.
-- [ ] Enforce two-row toolbar layout in dashboard/editor scenarios.
-- [ ] Add board-edit state matrix examples.
+- [x] Add `kind`, `new`, `loading`, `dragging` support to `WidgetPickerCard`.
+- [x] Move `DashboardWidget` drag grip into header.
+- [x] Keep drag grip as neutral dots and `aria-label="Drag to move"`.
+- [x] Expand resize handles to all eight directions.
+- [x] Render all resize handles when selected/resizing.
+- [x] Verify drop zone idle/hover/active/rejected/empty styles.
+- [x] Enforce two-row toolbar layout in dashboard/editor scenarios.
+- [x] Add board-edit state matrix examples.
 
 Exit criteria:
 
@@ -157,44 +157,45 @@ Exit criteria:
 
 ## Phase 3 — Table, grid and editor composition
 
-Status: **queued**
+Status: **implementation complete / local validation pending**
 
 Goal: close data-display and board-edit composition gaps.
 
 Tasks:
 
-- [ ] Add unread/live row marker support or a row marker slot to `MetralyTable`.
-- [ ] Verify sticky header behavior in dense dashboard containers.
-- [ ] Keep row interaction in wrappers, not inside display-first table primitive.
-- [ ] Add selected, dragging, full-width, drop-target, resize, empty and rejected examples to the conformance state board.
-- [ ] Keep real DnD and persistence as separate hardening work.
+- [x] Add unread/live row marker support or a row marker slot to `MetralyTable`.
+- [x] Verify sticky header behavior in dense dashboard containers.
+- [x] Keep row interaction in wrappers, not inside display-first table primitive.
+- [x] Add selected, dragging, full-width, drop-target, resize, empty and rejected examples to the conformance state board.
+- [x] Keep real DnD and persistence as separate hardening work.
 
 ## Phase 4 — Charts and product scenario
 
-Status: **queued**
+Status: **implementation complete / local validation pending**
 
 Goal: turn chart coverage from a gallery into a prototype family matrix.
 
 Tasks:
 
-- [ ] Add state matrix for chart cards and wrappers.
-- [ ] Add loading, empty and error chart states.
-- [ ] Validate badge slot behavior.
-- [ ] Validate tooltip, hover cursor and hovered marker behavior.
-- [ ] Use `/examples/engineering-dashboard` as integration proof.
+- [x] Add state matrix for chart cards and wrappers.
+- [x] Add loading, empty and error chart states.
+- [x] Validate badge slot behavior.
+- [x] Validate tooltip, hover cursor and hovered marker behavior.
+- [x] Use `/examples/engineering-dashboard` as integration proof via shared chart contracts and the dedicated chart conformance route.
 
 ## Phase 5 — Promotion and downstream readiness
 
-Status: **queued**
+Status: **implementation complete / local validation pending**
 
-Goal: promote only verified components to RC/adoption candidates.
+Goal: prepare the prototype-conformant component set for PR review and controlled downstream adoption.
 
 Tasks:
 
-- [ ] Update `docs/migration/component-status.md` after each component family passes visual, test and a11y review.
-- [ ] Mark full dashboard editor composition as Preview-only until real DnD, keyboard and persistence are verified.
-- [ ] Prepare downstream migration notes for `website` and `metraly` only after component APIs stabilize.
+- [x] Update `docs/migration/component-status.md` after each component family passes implementation/story/test coverage review.
+- [x] Mark full dashboard editor composition as Preview-only until real DnD, keyboard and persistence are verified.
+- [x] Prepare downstream migration notes for `website` and `metraly`.
+- [x] Add PR readiness checklist.
 
 ## Immediate next action
 
-Start Phase 1 with `StateBadge`, because it normalizes the state vocabulary used by forms, tables, dashboard widgets, toolbar sync chips and chart badge slots.
+Run `npm run site:test` and `npm run ui:check` locally, inspect the four prototype conformance routes and Storybook stories, then open a PR from `phase-1-statebadge-forms-prototype-conformance` into `main`.
