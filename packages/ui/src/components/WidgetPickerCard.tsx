@@ -152,7 +152,7 @@ export function WidgetPickerCard({
 
         {/* Badge inline in head: only for "new". Exceptional operational states (disabled/loading) appear in meta below. */}
         {effectiveVisualState === "new" && (
-          <StateBadge state="new" label="New" size="sm" pulse />
+          <StateBadge state="new" label="New" size="sm" />
         )}
       </div>
 
