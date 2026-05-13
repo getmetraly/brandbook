@@ -79,7 +79,7 @@ Deliverables:
 - [x] Full prototype conformance audit.
 - [x] Phase execution plan.
 - [ ] State-board expectation checklist per family.
-- [ ] `component-status.md` cross-link to audit and phase plan.
+- [x] `component-status.md` cross-link to audit and phase plan.
 - [ ] Test expectation list for state-board coverage.
 
 Exit criteria:
@@ -90,7 +90,7 @@ Exit criteria:
 
 ## Phase 1 — Core primitives and forms
 
-Status: **next**
+Status: **in progress**
 
 Goal: align reusable primitives and form controls with prototype states while preserving production accessibility.
 
@@ -106,11 +106,11 @@ Scope:
 
 Tasks:
 
-- [ ] Normalize `StateBadge` prototype aliases: `ok`, `new`, `purple`, `disabled`.
-- [ ] Ensure badge pulse defaults only for live/new semantics.
-- [ ] Add or document `loading` state for checkbox and switch.
-- [ ] Add switch accent support for cyan/purple.
-- [ ] Keep native select as the safe baseline while documenting custom listbox as future hardening.
+- [x] Normalize `StateBadge` prototype aliases: `ok`, `new`, `purple`, `disabled`.
+- [x] Ensure badge pulse defaults only for live/new semantics.
+- [x] Add or document `loading` state for checkbox and switch.
+- [x] Add switch accent support for cyan/purple.
+- [x] Keep native select as the safe baseline while documenting custom listbox as future hardening.
 - [ ] Ensure tabs keep arrow-key navigation and prototype underline/count geometry.
 - [ ] Add state-board examples for every relevant state.
 - [ ] Update Storybook stories and tests.
@@ -197,4 +197,4 @@ Tasks:
 
 ## Immediate next action
 
-Start Phase 1 with `StateBadge`, because it normalizes the state vocabulary used by forms, tables, dashboard widgets, toolbar sync chips and chart badge slots.
+Continue Phase 1 by adding state-board examples and tests for `StateBadge`, `MetralyCheckbox`, `MetralyRadio`, `MetralySwitch`, `MetralySelect`, and `MetralyTabs`.
