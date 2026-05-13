@@ -56,10 +56,13 @@ Make the dashboard and board component contract stable enough that the product a
 
 ### 4.2 Stabilize Widget Registry And Picker
 
-- Confirm the default widget registry entries and their default layouts.
-- Verify widget picker selection, tags, state badges and disabled behavior.
-- Document how widget definitions map to editor instances.
-- Make sure registry lookup and widget instance creation produce deterministic results.
+- Confirm the canonical widget catalog entries and their default layouts:
+  - `stat-card` to `Stat Card`, live, `4x2` default layout
+  - `metric-chart` to `Metric Chart`, live, `5x3` default layout
+  - `data-table` to `Data Table`, delayed, `6x3` default layout
+- Verify widget picker selection, tags, state badges and disabled behavior in the editor picker surface.
+- Document how widget definitions map to editor instances and how `DashboardWidgetPicker` forwards registry entries to `WidgetPickerCard`.
+- Make sure registry lookup and widget instance creation remain deterministic for title, description, state, stateLabel, layout and settings overrides.
 
 ### 4.3 Harden Dashboard Canvas Editing
 
