@@ -563,33 +563,60 @@ export function ComponentStateBoard() {
         <StateCell label="loading"><LoadingBars /></StateCell>
       </BoardGroup>
 
-      <BoardGroup title="StateBadge / WidgetPickerCard" readiness="Visual-ready">
-        <StateCell label="live"><StateBadge state="live" label="Live" /></StateCell>
-        <StateCell label="stale"><StateBadge state="stale" label="Stale 4m" /></StateCell>
-        <StateCell label="delayed"><StateBadge state="delayed" label="Delayed" /></StateCell>
-        <StateCell label="disconnected"><StateBadge state="disconnected" label="Disconnected" /></StateCell>
-        <StateCell label="no-data"><StateBadge state="noData" label="No data" /></StateCell>
-        <StateCell label="new"><StateBadge state="new" label="New review" /></StateCell>
-        <StateCell label="picker default"><WidgetPickerCard title="Cycle time breakdown" description="Coding, review, merge and deploy stages." iconLabel="cycle" tags={["flow", "cycle"]} /></StateCell>
-        <StateCell label="picker selected"><WidgetPickerCard title="DORA overview" description="Deployment frequency, lead time, failure rate and MTTR." iconLabel="dora" tags={["dora", "exec"]} selected /></StateCell>
-        <StateCell label="picker disabled"><WidgetPickerCard title="WIP per engineer" description="Source is not connected yet." iconLabel="wip" tags={["flow"]} disabled /></StateCell>
+      <BoardGroup title="Widget library" readiness="Visual-ready">
+        <StateCell label="default"><WidgetPickerCard title="Metric card" kind="metric/scalar" iconLabel="metric" description="Single KPI with delta and sparkline." /></StateCell>
+        <StateCell label="selected"><WidgetPickerCard title="Time-series chart" kind="chart/line" iconLabel="chart" description="Multi-series line, p50/p99 overlay." selected /></StateCell>
+        <StateCell label="new"><WidgetPickerCard title="Flaky builds · 7d" kind="ci/flaky" iconLabel="lightning" description="Tests retried-then-passed." visualState="new" state="new" /></StateCell>
+        <StateCell label="disabled"><WidgetPickerCard title="WIP per engineer" kind="flow/wip" iconLabel="user" description="Source not connected." disabled /></StateCell>
+        <StateCell label="loading"><WidgetPickerCard title="Server pool" kind="metric/cluster" iconLabel="server" loading /></StateCell>
+        <StateCell label="dragging"><WidgetPickerCard title="Time-series chart" kind="chart/line" iconLabel="chart" description="Multi-series line, p50/p99 overlay." dragging /></StateCell>
       </BoardGroup>
 
-      <BoardGroup title="DashboardWidget / MetralyTable" readiness="Hardening">
-        <StateCell label="widget default">
-          <DashboardWidget title="Deployment frequency" subtitle="Last 14 days" state="live">
-            <MetricBody value="24/day" delta="+18% vs previous window" values={[4, 6, 7, 8, 10, 12, 14]} />
+      <BoardGroup title="Widget surface" readiness="Hardening">
+        <StateCell label="default · live">
+          <DashboardWidget title="Deployment frequency" subtitle="DORA / deploys" state="live" id="deploy" onDragStart={() => undefined}>
+            <MetricBody value="24/day" delta="+18% vs previous window" values={[4, 6, 7, 8, 10, 12, 14, 15]} />
           </DashboardWidget>
         </StateCell>
         <StateCell label="selected">
           <DashboardWidget title="Lead time for changes" subtitle="PR open to production" state="live" selected id="ltc" onDragStart={() => undefined}>
-            <MetricBody value="41h" delta="-6h vs previous window" values={[62, 58, 55, 50, 46, 43, 41]} />
+            <MetricBody value="41h" delta="▼ 6h vs −14d" values={[62, 60, 55, 52, 48, 44, 41]} />
           </DashboardWidget>
         </StateCell>
         <StateCell label="dragging">
-          <DashboardWidget title="Blocked work" subtitle="Stalled > 3 days" state="delayed" dragging id="blocked" onDragStart={() => undefined}>
-            <MetricBody value="9" delta="+3 blocked items" values={[3, 4, 4, 6, 7, 8, 9]} />
+          <DashboardWidget title="Lead time for changes" subtitle="PR open to production" state="live" dragging id="ltc-drag" onDragStart={() => undefined}>
+            <MetricBody value="41h" delta="▼ 6h vs −14d" values={[41, 44, 46, 48, 50, 55, 60]} />
           </DashboardWidget>
+        </StateCell>
+        <StateCell label="resizing">
+          <DashboardWidget title="Change failure rate" subtitle="DORA / incidents" state="stale" selected resizable id="cfr" onDragStart={() => undefined}>
+            <MetricBody value="4.2%" delta="▲ 0.8% vs −14d" values={[3.0, 3.1, 3.0, 2.9, 3.2, 3.4, 3.3]} />
+          </DashboardWidget>
+        </StateCell>
+        <StateCell label="loading">
+          <DashboardWidget title="MTTR" subtitle="Recovery time" state="info" stateLabel="Loading" id="mttr" onDragStart={() => undefined} />
+        </StateCell>
+        <StateCell label="empty">
+          <DashboardWidget title="CI failure rate" subtitle="No telemetry source" state="noData" stateLabel="Empty" id="ci-empty" onDragStart={() => undefined} />
+        </StateCell>
+        <StateCell label="stale">
+          <DashboardWidget title="Change failure rate" subtitle="Stale 4m" state="stale" id="cfr-stale" onDragStart={() => undefined}>
+            <MetricBody value="4.2%" delta="last 4m ago" values={[3.0, 3.1, 3.0, 2.9, 3.2, 3.4, 3.3]} />
+          </DashboardWidget>
+        </StateCell>
+        <StateCell label="error · disconnected">
+          <DashboardWidget title="Flaky builds" subtitle="Source disconnected" state="error" id="flaky" onDragStart={() => undefined} />
+        </StateCell>
+        <StateCell label="unread / new">
+          <div style={{ gridColumn: "span 2" }}>
+            <DashboardWidget title="Blocked work" subtitle="Issues stalled > 3 days" state="new" stateLabel="New" id="blocked" onDragStart={() => undefined}>
+              <div style={{ padding: 14, display: "flex", flexDirection: "column", gap: 8 }}>
+                <div style={{ fontFamily: "var(--m-font-mono)", fontSize: 11 }}>3 new blocked issues</div>
+                <div style={{ fontFamily: "var(--m-font-mono)", fontSize: 10, color: "var(--m-fg-3)" }}>↳ feat/cohorts-v2 · review 5d</div>
+                <div style={{ fontFamily: "var(--m-font-mono)", fontSize: 10, color: "var(--m-fg-3)" }}>↳ refactor/auth-tokens · blocked</div>
+              </div>
+            </DashboardWidget>
+          </div>
         </StateCell>
         <StateCell label="table selected"><MetralyTable columns={reviewColumns} data={reviewRows} rowKey={(row) => row.team} selectedRowKeys={["Growth"]} ariaLabel="Review queue table" /></StateCell>
         <StateCell label="table loading"><MetralyTable columns={reviewColumns} data={[]} loading ariaLabel="Loading review table" /></StateCell>
@@ -643,18 +670,18 @@ function DashboardSidebar() {
 
 function WidgetPickerPanel() {
   return (
-    <aside className="claude-widget-picker-panel" aria-label="Widget picker">
+    <aside className="claude-widget-picker-panel" aria-label="Widget library">
       <header>
-        <strong>Engineering Intelligence library</strong>
-        <span>Reference-only static picker states.</span>
+        <strong>Widget library</strong>
+        <span>Reference-only widget picker states.</span>
       </header>
       <TelemetrySearch />
-      <WidgetPickerCard title="Deployment frequency" description="Deploys per day, by team." iconLabel="deploy" tags={["dora", "delivery"]} selected />
-      <WidgetPickerCard title="Lead time for changes" description="PR opened → prod, p50 / p90." iconLabel="metric" tags={["dora", "flow"]} loading />
-      <WidgetPickerCard title="Change failure rate" description="% of deploys that triggered a rollback or incident." iconLabel="chart" tags={["dora", "ops"]} />
-      <WidgetPickerCard title="Flaky builds" description="Tests retried then passed." iconLabel="lightning" tags={["ci"]} state="new" visualState="new" />
-      <WidgetPickerCard title="Blocked work" description="Issues stalled > 3 days, by stage." iconLabel="bell" tags={["flow"]} state="delayed" />
-      <WidgetPickerCard title="WIP per engineer" description="Source not connected." iconLabel="table" tags={["flow"]} disabled />
+      <WidgetPickerCard title="Deployment frequency" description="Deploys per day, by service & team." iconLabel="lightning" kind="dora/deploy-freq" tags={["dora", "delivery"]} selected />
+      <WidgetPickerCard title="Lead time for changes" description="PR opened → prod, p50 / p90." iconLabel="metric" kind="dora/lead-time" tags={["dora", "flow"]} loading />
+      <WidgetPickerCard title="Change failure rate" description="% of deploys that triggered a rollback or incident." iconLabel="chart" kind="dora/cfr" tags={["dora", "ops"]} />
+      <WidgetPickerCard title="Flaky builds · 7d" description="Tests retried-then-passed." iconLabel="lightning" kind="ci/flaky" tags={["ci"]} state="new" visualState="new" />
+      <WidgetPickerCard title="Blocked work" description="Issues stalled > 3 days, by stage." iconLabel="bell" kind="flow/blocked" tags={["flow"]} state="delayed" />
+      <WidgetPickerCard title="WIP per engineer" description="Source not connected." iconLabel="table" kind="flow/wip" tags={["flow"]} disabled />
     </aside>
   );
 }

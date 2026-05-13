@@ -48,8 +48,8 @@ describe('Claude Design preview hardening surface', () => {
       'MetralySwitch',
       'MetralySelect',
       'MetralyTabs',
-      'StateBadge / WidgetPickerCard',
-      'DashboardWidget / MetralyTable',
+      'Widget library',
+      'Widget surface',
       'DashboardToolbar / DropZone / ResizeHandle',
     ].forEach((group) => {
       expect(screen.getByRole('region', { name: group })).toBeInTheDocument();
@@ -85,7 +85,7 @@ describe('Claude Design preview hardening surface', () => {
 
     expect(screen.getByRole('complementary', { name: 'Dashboard navigation' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Engineering Dashboard Editor' })).toBeInTheDocument();
-    expect(screen.getByRole('complementary', { name: 'Widget picker' })).toBeInTheDocument();
+    expect(screen.getByRole('complementary', { name: 'Widget library' })).toBeInTheDocument();
     expect(screen.getAllByRole('status', { name: 'Live sync' }).length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText('Release to add widget')).toBeInTheDocument();
     expect(screen.getByRole('alert')).toHaveTextContent('Pipeline source disconnected');

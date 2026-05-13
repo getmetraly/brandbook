@@ -78,11 +78,15 @@ export function MetralyTable<T extends Record<string, any>>({
     return rowMarker?.(row, rowIndex) ?? (liveRowKeys.includes(key) ? "live" : unreadRowKeys.includes(key) ? "unread" : undefined);
   }
 
+  const tableStyle = {
+    ["--metraly-table-row-height" as const]: dense ? "28px" : "34px",
+  } as React.CSSProperties;
+
   const renderSkeletonRows = () => {
     return Array.from({ length: 3 }).map((_, i) => (
       <tr key={`skeleton-${i}`} className="metraly-table-row is-loading" data-state="loading">
         {columns.map((col, j) => (
-          <td key={`skeleton-cell-${j}`} style={{ width: col.width, textAlign: col.align || 'left' }}>
+          <td key={`skeleton-cell-${j}`} style={{ width: col.width, textAlign: col.align || "left" }}>
             <div className="metraly-table-skeleton-bar" />
           </td>
         ))}
@@ -91,75 +95,78 @@ export function MetralyTable<T extends Record<string, any>>({
   };
 
   return (
-    <table
-      className={classes}
-      role="table"
-      aria-label={ariaLabel}
-      aria-busy={isBusy}
-      data-sticky-header={stickyHeader ? "on" : "off"}
-      data-density={dense ? "dense" : "default"}
-    >
-      <thead>
-        <tr role="row">
-          {columns.map((col) => (
-            <th
-              key={String(col.key)}
-              style={{ width: col.width, textAlign: col.align || 'left' }}
-              scope="col"
-            >
-              {col.header}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {loading && renderSkeletonRows()}
-        {!loading && data.length === 0 && (
-          <tr className="metraly-table-empty" role="row" data-state="empty">
-            <td colSpan={columns.length}>{emptyText}</td>
-          </tr>
-        )}
-        {!loading &&
-          data.map((row, rowIndex) => {
-            const key = getRowKey(row, rowIndex);
-            const isSelected = selectedRowKeys.includes(key);
-            const marker = resolveMarker(row, rowIndex, key);
-            const isUnread = marker === "unread" || marker === "new";
-            return (
-              <tr
-                key={key}
-                role="row"
-                aria-selected={isSelected || undefined}
-                aria-label={marker ? `${key} row ${marker}` : undefined}
-                className={[
-                  "metraly-table-row",
-                  isSelected && "is-selected",
-                  isUnread && "is-unread",
-                  marker && `has-marker-${marker}`,
-                ]
-                  .filter(Boolean)
-                  .join(" ")}
-                data-row-key={key}
-                data-row-marker={marker ?? "none"}
-                data-state={isSelected ? "selected" : marker ?? "default"}
+    <div className="metraly-table-frame">
+      <table
+        className={classes}
+        role="table"
+        aria-label={ariaLabel}
+        aria-busy={isBusy}
+        data-sticky-header={stickyHeader ? "on" : "off"}
+        data-density={dense ? "dense" : "default"}
+        style={tableStyle}
+      >
+        <thead>
+          <tr role="row">
+            {columns.map((col) => (
+              <th
+                key={String(col.key)}
+                style={{ width: col.width, textAlign: col.align || "left" }}
+                scope="col"
               >
-                {columns.map((col, colIndex) => (
-                  <td
-                    key={String(col.key)}
-                    style={{ width: col.width, textAlign: col.align || 'left' }}
-                    role="cell"
-                  >
-                    {colIndex === 0 && marker ? (
-                      <span className="metraly-table-row-marker" data-marker={marker} aria-hidden="true" />
-                    ) : null}
-                    {row[col.key] as React.ReactNode}
-                  </td>
-                ))}
-              </tr>
-            );
-          })}
-      </tbody>
-    </table>
+                {col.header}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {loading && renderSkeletonRows()}
+          {!loading && data.length === 0 && (
+            <tr className="metraly-table-empty" role="row" data-state="empty">
+              <td colSpan={columns.length}>{emptyText}</td>
+            </tr>
+          )}
+          {!loading &&
+            data.map((row, rowIndex) => {
+              const key = getRowKey(row, rowIndex);
+              const isSelected = selectedRowKeys.includes(key);
+              const marker = resolveMarker(row, rowIndex, key);
+              const isUnread = marker === "unread" || marker === "new";
+              return (
+                <tr
+                  key={key}
+                  role="row"
+                  aria-selected={isSelected || undefined}
+                  aria-label={marker ? `${key} row ${marker}` : undefined}
+                  className={[
+                    "metraly-table-row",
+                    isSelected && "is-selected",
+                    isUnread && "is-unread",
+                    marker && `has-marker-${marker}`,
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                  data-row-key={key}
+                  data-row-marker={marker ?? "none"}
+                  data-state={isSelected ? "selected" : marker ?? "default"}
+                >
+                  {columns.map((col, colIndex) => (
+                    <td
+                      key={String(col.key)}
+                      style={{ width: col.width, textAlign: col.align || "left" }}
+                      role="cell"
+                    >
+                      {colIndex === 0 && marker ? (
+                        <span className="metraly-table-row-marker" data-marker={marker} aria-hidden="true" />
+                      ) : null}
+                      {row[col.key] as React.ReactNode}
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
+        </tbody>
+      </table>
+    </div>
   );
 }
 

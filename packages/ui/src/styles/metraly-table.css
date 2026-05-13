@@ -1,26 +1,72 @@
+.metraly-table-frame {
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  flex: 1 1 auto;
+  border: 1px solid oklch(1 0 0 / 0.085);
+  border-radius: var(--metraly-radius-md);
+  background: oklch(0.225 0.014 250);
+  scrollbar-width: thin;
+  scrollbar-color: oklch(0.305 0.015 250) transparent;
+}
+
+.metraly-table-frame::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.metraly-table-frame::-webkit-scrollbar-thumb {
+  background: oklch(0.305 0.015 250);
+  border-radius: 4px;
+}
+
+.metraly-table-frame::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 .metraly-table {
   width: 100%;
   max-width: 100%;
   table-layout: fixed;
   border-collapse: collapse;
-  border: 1px solid var(--metraly-border);
-  background: var(--metraly-bg-card);
-  border-radius: var(--metraly-radius-xl);
-  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
   font-family: var(--metraly-font-ui);
-  font-size: 0.75rem;
-  color: var(--metraly-text-secondary);
+  font-size: 0.6875rem;
+  color: oklch(0.84 0.008 250);
 }
 
-.metraly-table thead {
-  background: rgba(255,255,255,0.035);
+.metraly-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: oklch(0.195 0.012 250);
+  font-family: var(--metraly-font-mono);
+  font-weight: 500;
+  font-size: 0.625rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: oklch(0.50 0.012 250);
+  border-bottom: 1px solid oklch(1 0 0 / 0.085);
+}
+
+.metraly-table thead th:first-child {
+  border-top-left-radius: var(--metraly-radius-md);
+}
+
+.metraly-table thead th:last-child {
+  border-top-right-radius: var(--metraly-radius-md);
 }
 
 .metraly-table th,
 .metraly-table td {
   min-width: 0;
-  padding: 0.625rem 0.75rem;
-  border-bottom: 1px solid var(--metraly-border);
+  height: var(--metraly-table-row-height, 34px);
+  padding: 0 10px;
+  border-bottom: 1px solid oklch(1 0 0 / 0.045);
   text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -28,24 +74,12 @@
   vertical-align: middle;
 }
 
-.metraly-table th {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  background: rgba(255,255,255,0.035);
-  font-family: var(--metraly-font-mono);
-  font-weight: 650;
-  font-size: 0.6875rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--metraly-text-secondary);
+.metraly-table[data-density="dense"] {
+  --metraly-table-row-height: 28px;
 }
 
-.metraly-table.is-dense th,
-.metraly-table.is-dense td,
-.metraly-table[data-density="dense"] th,
-.metraly-table[data-density="dense"] td {
-  padding: 0.5rem 0.625rem;
+.metraly-table[data-density="default"] {
+  --metraly-table-row-height: 34px;
 }
 
 .metraly-table td > .metraly-state-badge,
@@ -57,63 +91,116 @@
   border-bottom: none;
 }
 
+.metraly-table-row {
+  transition: background var(--metraly-motion-fast) var(--metraly-ease-out);
+}
+
 .metraly-table-row:hover {
-  background: rgba(255,255,255,0.035);
+  background: oklch(0.260 0.014 250);
   cursor: pointer;
 }
 
-.metraly-table-row.is-selected {
-  background: rgba(0,229,204,0.055);
-  box-shadow: inset 2px 0 0 rgba(0,229,204,0.72);
+.metraly-table-row.is-loading:hover,
+.metraly-table-empty:hover {
+  background: transparent;
+  cursor: default;
 }
 
-.metraly-table-row.is-unread td:first-child {
-  color: var(--metraly-text-primary);
+.metraly-table-row.is-selected {
+  background: oklch(0.78 0.13 200 / 0.10);
+}
+
+.metraly-table-row.is-selected > *:first-child {
+  box-shadow: inset 2px 0 0 oklch(0.78 0.13 200);
+}
+
+.metraly-table-row.is-unread > *:first-child {
+  color: oklch(0.84 0.008 250);
 }
 
 .metraly-table-row-marker {
   display: inline-block;
-  width: 18px;
-  height: 8px;
-  margin-right: 8px;
+  width: 6px;
+  height: 6px;
+  margin-right: 6px;
   vertical-align: middle;
-  background: var(--metraly-cyan, #00e5cc);
-  clip-path: var(--metraly-pulse-marker-path, polygon(0 52%, 20% 52%, 26% 25%, 36% 82%, 47% 8%, 58% 52%, 100% 52%, 100% 66%, 52% 66%, 47% 48%, 37% 100%, 27% 55%, 23% 66%, 0 66%));
-  box-shadow: 0 0 14px rgba(0,229,204,0.34);
+  border-radius: 999px;
+  background: #00e5cc;
+  box-shadow:
+    0 0 0 1px oklch(0.155 0.010 250),
+    0 0 12px rgba(0,229,204,0.34);
 }
 
 .metraly-table-row-marker[data-marker='live'],
 .metraly-table-row-marker[data-marker='unread'],
 .metraly-table-row-marker[data-marker='new'] {
-  background: var(--metraly-cyan, #00e5cc);
+  animation: table-marker-pulse 1.6s ease-in-out infinite;
 }
 
 .metraly-table-row-marker[data-marker='stale'] {
-  background: var(--metraly-warning, #f59e0b);
-  box-shadow: 0 0 14px rgba(245,158,11,0.24);
+  background: #f59e0b;
+  box-shadow:
+    0 0 0 1px oklch(0.155 0.010 250),
+    0 0 12px rgba(245,158,11,0.24);
 }
 
 .metraly-table-row-marker[data-marker='error'] {
-  background: var(--metraly-error, #ef4444);
-  box-shadow: 0 0 14px rgba(239,68,68,0.24);
+  background: #ef4444;
+  box-shadow:
+    0 0 0 1px oklch(0.155 0.010 250),
+    0 0 12px rgba(239,68,68,0.24);
 }
 
 .metraly-table-skeleton-bar {
-  height: 0.625rem;
+  height: 10px;
   width: 80%;
   border-radius: var(--metraly-radius-pill);
   background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0.1), rgba(255,255,255,0.05));
   animation: skeleton-pulse 1.2s ease-in-out infinite;
 }
 
+@keyframes table-marker-pulse {
+  0% {
+    transform: scale(0.92);
+    box-shadow:
+      0 0 0 1px oklch(0.155 0.010 250),
+      0 0 10px rgba(0,229,204,0.24);
+  }
+
+  50% {
+    transform: scale(1);
+    box-shadow:
+      0 0 0 1px oklch(0.155 0.010 250),
+      0 0 14px rgba(0,229,204,0.34);
+  }
+
+  100% {
+    transform: scale(0.92);
+    box-shadow:
+      0 0 0 1px oklch(0.155 0.010 250),
+      0 0 10px rgba(0,229,204,0.24);
+  }
+}
+
 @keyframes skeleton-pulse {
-  0% { opacity: 0.5; }
-  50% { opacity: 1; }
-  100% { opacity: 0.5; }
+  0% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.5;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .metraly-table-skeleton-bar {
+  .metraly-table-skeleton-bar,
+  .metraly-table-row-marker[data-marker='live'],
+  .metraly-table-row-marker[data-marker='unread'],
+  .metraly-table-row-marker[data-marker='new'] {
     animation: none;
   }
 }
@@ -121,7 +208,7 @@
 .metraly-table-empty td {
   padding: 2rem 1rem;
   text-align: center;
-  color: var(--metraly-text-muted);
+  color: oklch(0.50 0.012 250);
   font-style: italic;
   white-space: normal;
 }
