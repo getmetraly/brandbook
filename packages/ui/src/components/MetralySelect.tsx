@@ -13,8 +13,14 @@ export interface MetralySelectProps {
   value?: string;
   defaultValue?: string;
   options: MetralySelectOption[];
+  placeholder?: string;
   disabled?: boolean;
+  /** Visual loading state. Keeps the native select non-interactive without changing layout. */
+  loading?: boolean;
   error?: boolean;
+  description?: React.ReactNode;
+  /** Prototype-compatible alias for description. */
+  hint?: React.ReactNode;
   className?: string;
   onChange?: React.ChangeEventHandler<HTMLSelectElement>;
 }
@@ -26,14 +32,24 @@ export function MetralySelect({
   value,
   defaultValue,
   options,
+  placeholder,
   disabled = false,
+  loading = false,
   error = false,
+  description,
+  hint,
   className,
   onChange,
 }: MetralySelectProps) {
+  const helperText = description ?? hint;
+  const describedBy = helperText && id ? `${id}-description` : undefined;
+  const isDisabled = disabled || loading;
+  const isEmpty = options.length === 0;
   const classes = [
     "metraly-select-field",
-    disabled && "is-disabled",
+    isDisabled && "is-disabled",
+    loading && "is-loading",
+    isEmpty && "is-empty",
     error && "is-error",
     className,
   ]
@@ -41,26 +57,42 @@ export function MetralySelect({
     .join(" ");
 
   return (
-    <label className={classes}>
+    <label className={classes} data-state={loading ? "loading" : error ? "error" : isDisabled ? "disabled" : isEmpty ? "empty" : value || defaultValue ? "selected" : "default"}>
       <span className="metraly-control-label">{label}</span>
       <span className="metraly-select-control">
         <select
           id={id}
           name={name}
           value={value}
-          defaultValue={defaultValue}
-          disabled={disabled}
+          defaultValue={defaultValue ?? (placeholder ? "" : undefined)}
+          disabled={isDisabled || isEmpty}
           aria-invalid={error || undefined}
-          onChange={onChange}
+          aria-describedby={describedBy}
+          aria-busy={loading || undefined}
+          onChange={loading ? undefined : onChange}
         >
-          {options.map((option) => (
+          {placeholder ? (
+            <option value="" disabled>
+              {placeholder}
+            </option>
+          ) : null}
+          {isEmpty ? (
+            <option value="">No options</option>
+          ) : options.map((option) => (
             <option key={option.value} value={option.value} disabled={option.disabled}>
               {option.label}
             </option>
           ))}
         </select>
-        <span className="metraly-select-indicator" aria-hidden="true" />
+        <span className="metraly-select-indicator" aria-hidden="true">
+          {loading ? <span className="metraly-control-spinner" /> : null}
+        </span>
       </span>
+      {helperText ? (
+        <span id={describedBy} className="metraly-control-description">
+          {helperText}
+        </span>
+      ) : null}
     </label>
   );
 }
