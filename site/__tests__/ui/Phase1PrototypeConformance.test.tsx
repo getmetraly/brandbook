@@ -1,10 +1,11 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import {
   MetralyCheckbox,
   MetralyRadio,
   MetralySelect,
   MetralySwitch,
+  MetralyTabs,
   StateBadge,
 } from '@metraly/ui';
 
@@ -133,5 +134,35 @@ describe('Phase 1 prototype conformance states', () => {
     expect(emptyField).toHaveAttribute('data-state', 'empty');
     expect(emptyField).toHaveClass('is-empty');
     expect(screen.getByRole('option', { name: 'No options' })).toBeInTheDocument();
+  });
+
+  it('renders tabs live pulse state and skips disabled tabs during keyboard navigation', () => {
+    const onValueChange = jest.fn();
+    render(
+      <MetralyTabs
+        ariaLabel="Phase tabs"
+        value="dora"
+        livePulse
+        onValueChange={onValueChange}
+        items={[
+          { value: 'dora', label: 'DORA', count: 4 },
+          { value: 'ci', label: 'CI', disabled: true },
+          { value: 'flow', label: 'Flow', count: 6 },
+        ]}
+      />,
+    );
+
+    const tablist = screen.getByRole('tablist', { name: 'Phase tabs' });
+    const dora = within(tablist).getByRole('tab', { name: /DORA/i });
+    const ci = within(tablist).getByRole('tab', { name: /CI/i });
+
+    expect(tablist).toHaveAttribute('data-live-pulse', 'on');
+    expect(dora).toHaveAttribute('data-state', 'selected');
+    expect(dora).toHaveAttribute('data-live-pulse', 'on');
+    expect(ci).toBeDisabled();
+    expect(ci).toHaveAttribute('data-state', 'disabled');
+
+    fireEvent.keyDown(dora, { key: 'ArrowRight' });
+    expect(onValueChange).toHaveBeenCalledWith('flow');
   });
 });
