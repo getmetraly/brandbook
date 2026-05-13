@@ -33,6 +33,7 @@ export function DashboardDropZone({
 }: DashboardDropZoneProps) {
   const resolvedState = state ?? (active ? "active" : "idle");
   const resolvedLabel = label ?? defaultDropZoneLabel(resolvedState);
+  const ariaLabel = typeof resolvedLabel === "string" ? resolvedLabel : defaultDropZoneLabel(resolvedState);
   const tone = dropZoneTone(resolvedState);
   const classes = [
     "metraly-dashboard-drop-zone",
@@ -49,6 +50,7 @@ export function DashboardDropZone({
       className={classes}
       role="status"
       aria-live="polite"
+      aria-label={ariaLabel}
       data-drop-zone-state={resolvedState}
       data-tone={tone}
       data-pulse="off"

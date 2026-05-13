@@ -106,9 +106,10 @@ describe('Claude Design preview hardening surface', () => {
 
     expect(container.querySelector('.metraly-widget-shell.is-fullwidth')).toBeInTheDocument();
     expect(dropZone).toHaveAttribute('data-drop-zone-state', 'active');
-    expect(screen.getByRole('separator', { name: 'Resize width' })).toBeInTheDocument();
-    expect(screen.getByRole('separator', { name: 'Resize height' })).toHaveClass('is-active');
-    expect(screen.getByRole('separator', { name: 'Resize width and height' })).toHaveClass('is-active');
+    const resizeWidthHandles = screen.getAllByRole('separator', { name: 'Resize width' });
+    expect(resizeWidthHandles[0]).toBeInTheDocument();
+    expect(screen.getAllByRole('separator', { name: 'Resize height' })[0]).toHaveClass('is-active');
+    expect(screen.getAllByRole('separator', { name: 'Resize width and height' })[0]).toHaveClass('is-active');
   });
   it('shows dragging widgets and the empty dashboard state in the editor scenario', () => {
     const { container } = render(<EngineeringDashboardEditorPreview />);
