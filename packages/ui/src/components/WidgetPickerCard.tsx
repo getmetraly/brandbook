@@ -87,7 +87,12 @@ export function WidgetPickerCard({
       </div>
 
       <div className="metraly-widget-picker-meta">
-        <StateBadge state={effectiveState} label={effectiveStateLabel} pulse={effectiveVisualState === "new" ? true : undefined} />
+        <StateBadge
+          state={effectiveState}
+          label={effectiveStateLabel}
+          size="sm"
+          pulse={effectiveVisualState === "new" ? true : false}
+        />
       </div>
 
       <p>{description}</p>

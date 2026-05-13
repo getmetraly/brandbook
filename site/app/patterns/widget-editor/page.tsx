@@ -8,6 +8,7 @@ import {
 import DocsShell from "../../components/docs/DocsShell";
 import { CodeBlock, ComponentPreview, DocsCardGrid, DocsRouteCard, DocsSection } from "../../components/docs/DocsBlocks";
 import { getRelatedLinks } from "../../lib/docs/navigation";
+import "../../components/dashboard/dashboard.css";
 
 export const dynamic = "force-dynamic";
 
@@ -39,14 +40,13 @@ export default function WidgetEditorPatternPage() {
           <div className="component-preview-stage is-wide">
             <div className="docs-dashboard-preview" style={{ width: "100%" }}>
               <DashboardToolbar
-                title="Engineering board"
-                description="Last updated 2m ago"
-                meta="2 widgets · saved"
                 tabs={[{ value: "delivery", label: "Delivery" }, { value: "dora", label: "DORA" }, { value: "flow", label: "Flow" }]}
                 activeTab="delivery"
                 searchValue=""
                 syncState="live"
                 editMode
+                onToggleEdit={() => undefined}
+                onAddWidget={() => undefined}
               />
               <div className="docs-dashboard-preview-grid">
                 <WidgetPickerCard title="Flow efficiency" description="Track delivery throughput and flow." selected />

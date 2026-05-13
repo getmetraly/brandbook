@@ -1,10 +1,10 @@
 .metraly-widget-picker-card {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
   min-width: 0;
-  padding: 10px 12px;
-  border-radius: var(--m-r-3);
+  padding: 9px 10px;
+  border-radius: var(--m-r-2);
   border: 1px solid var(--m-line);
   background: var(--m-bg-2);
   text-align: left;
@@ -34,15 +34,15 @@
 
 .metraly-widget-picker-head {
   display: grid;
-  grid-template-columns: 24px minmax(0, 1fr) 18px;
+  grid-template-columns: 22px minmax(0, 1fr) 14px;
   gap: 8px;
   align-items: center;
 }
 
 .metraly-widget-picker-icon {
-  width: 24px;
-  height: 24px;
-  border-radius: var(--m-r-2);
+  width: 22px;
+  height: 22px;
+  border-radius: var(--m-r-1);
   display: inline-grid;
   place-items: center;
   background: var(--m-bg-3);
@@ -52,9 +52,9 @@
 
 .metraly-widget-picker-icon small {
   font-family: var(--m-font-mono);
-  font-size: 9px;
-  letter-spacing: 0.08em;
-  font-weight: 700;
+  font-size: 8px;
+  letter-spacing: 0.04em;
+  font-weight: 600;
 }
 
 .metraly-widget-picker-icon[data-loading="true"] {
@@ -72,7 +72,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   color: var(--m-fg-0);
-  font-size: var(--m-fs-12);
+  font-size: var(--m-fs-11);
   font-weight: 500;
 }
 
@@ -83,13 +83,13 @@
   color: var(--m-fg-3);
   font-family: var(--m-font-mono);
   font-size: var(--m-fs-9);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
 }
 
 .metraly-widget-picker-select-control {
-  width: 18px;
-  height: 18px;
+  width: 14px;
+  height: 14px;
   border-radius: 999px;
   border: 1px solid var(--m-line-strong);
   background: transparent;
@@ -104,15 +104,15 @@
 .metraly-widget-picker-meta {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
 .metraly-widget-picker-card p {
   margin: 0;
   color: var(--m-fg-2);
-  line-height: 1.45;
-  font-size: var(--m-fs-11);
+  line-height: 1.35;
+  font-size: var(--m-fs-10);
 }
 
 button.metraly-widget-picker-card {
@@ -129,4 +129,3 @@ button.metraly-widget-picker-card:focus-visible {
   outline: none;
   box-shadow: var(--m-glow-focus);
 }
-

@@ -25,6 +25,10 @@ export function DashboardEditor() {
   const [selectedWidgetId, setSelectedWidgetId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [editMode, setEditMode] = useState(true);
+  const [pickerOpen, setPickerOpen] = useState(true);
+  const [searchValue, setSearchValue] = useState("");
+  const [activeTab, setActiveTab] = useState("delivery");
   const [status, setStatus] = useState("Not saved yet");
   const [error, setError] = useState<string | null>(null);
 
@@ -112,32 +116,62 @@ export function DashboardEditor() {
 
   return (
     <div className="dashboard-editor-panel panel">
+      <div className="dashboard-editor-topbar">
+        <div className="dashboard-editor-topbar-copy">
+          <strong>Dashboard editor</strong>
+          <span>Create, arrange, resize and persist telemetry widgets.</span>
+          <span className="dashboard-editor-topbar-status">
+            {dashboard ? `Dashboard ${dashboard.id} · ${dashboard.widgets.length} widgets · ${status}` : status}
+          </span>
+        </div>
+        <div className="dashboard-editor-topbar-actions">
+          <button className="metraly-dashboard-toolbar-button" type="button" onClick={handleReset} disabled={loading || saving}>
+            Reset
+          </button>
+          <button className="metraly-dashboard-toolbar-button is-primary" type="button" onClick={handleSave} disabled={loading || saving || !dashboard}>
+            {saving ? "Saving…" : "Save"}
+          </button>
+        </div>
+      </div>
+
       <DashboardToolbar
-        title="Dashboard Editor"
-        description="Create, arrange, resize and persist telemetry widgets. Reload the page to validate persistence."
-        meta={dashboard ? `Dashboard ${dashboard.id} · ${dashboard.widgets.length} widgets · ${status}` : status}
-        actions={(
-          <>
-            <button className="metraly-dashboard-toolbar-button" type="button" onClick={handleReset} disabled={loading || saving}>
-              Reset
-            </button>
-            <button className="metraly-dashboard-toolbar-button is-primary" type="button" onClick={handleSave} disabled={loading || saving || !dashboard}>
-              {saving ? "Saving…" : "Save"}
-            </button>
-          </>
-        )}
+        tabs={[
+          { value: "delivery", label: "Delivery", count: 11 },
+          { value: "dora", label: "DORA", count: 4 },
+          { value: "flow", label: "Flow", count: 6 },
+          { value: "reviews", label: "Reviews", count: 5 },
+          { value: "ci", label: "CI", count: 3 },
+        ]}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        searchValue={searchValue}
+        onSearchChange={setSearchValue}
+        syncState={error ? "disconnected" : saving ? "stale" : "live"}
+        syncLabel={error ? "Disconnected" : saving ? "Saving" : "Live sync"}
+        editMode={editMode}
+        onToggleEdit={() => setEditMode((current) => !current)}
+        onAddWidget={() => setPickerOpen((current) => !current)}
+        addWidgetLabel={pickerOpen ? "Hide library" : "Add widget"}
       />
+
+      <div className="dashboard-editor-banner" data-state={editMode ? "edit" : "view"}>
+        <span className="dashboard-editor-banner-marker" aria-hidden="true" />
+        <span>Edit mode</span>
+        <span>Drag widgets with grip dots, resize from the corner handles and persist changes with Save.</span>
+      </div>
 
       {loading ? <p className="dashboard-editor-status">Loading dashboard…</p> : null}
       {error ? <p className="dashboard-editor-error">{error}</p> : null}
 
       {dashboard ? (
-        <div className="dashboard-editor-layout">
-          <DashboardWidgetPicker
-            selectedType={selectedType}
-            disabled={loading || saving}
-            onAdd={handleAddWidget}
-          />
+        <div className={pickerOpen ? "dashboard-editor-layout" : "dashboard-editor-layout dashboard-editor-layout--board-only"}>
+          {pickerOpen ? (
+            <DashboardWidgetPicker
+              selectedType={selectedType}
+              disabled={loading || saving}
+              onAdd={handleAddWidget}
+            />
+          ) : null}
           <DashboardCanvas
             widgets={dashboard.widgets}
             selectedWidgetId={selectedWidgetId}

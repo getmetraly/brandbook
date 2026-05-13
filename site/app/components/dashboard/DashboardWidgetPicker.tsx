@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import { WidgetPickerCard, defaultDashboardWidgetRegistry, type DashboardWidgetDefinition } from "@metraly/ui";
 
 export interface DashboardWidgetPickerProps {
@@ -15,14 +16,42 @@ export function DashboardWidgetPicker({
   disabled = false,
   onAdd,
 }: DashboardWidgetPickerProps) {
+  const [search, setSearch] = useState("");
+  const filtered = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    if (!query) return registry;
+    return registry.filter((definition) => {
+      const haystack = [
+        definition.title,
+        definition.description,
+        definition.iconLabel,
+        definition.stateLabel,
+        definition.type,
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+      return haystack.includes(query);
+    });
+  }, [registry, search]);
+
   return (
     <section className="dashboard-widget-picker" aria-label="Widget picker">
       <div className="dashboard-widget-picker-head">
-        <strong>Add widget</strong>
+        <strong>Widget library</strong>
         <span>Pick a reusable telemetry surface.</span>
       </div>
+      <label className="dashboard-widget-picker-search" aria-label="Filter widgets">
+        <span aria-hidden="true">Search</span>
+        <input
+          type="search"
+          value={search}
+          placeholder="Filter widgets…"
+          onChange={(event) => setSearch(event.target.value)}
+        />
+      </label>
       <div className="dashboard-widget-picker-list" role="listbox" aria-label="Available widgets">
-        {registry.map((definition) => (
+        {filtered.map((definition) => (
           <WidgetPickerCard
             key={definition.type}
             title={definition.title}
