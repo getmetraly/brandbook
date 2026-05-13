@@ -147,16 +147,15 @@ docs/migration/component-status.md
 
 ## Current known issue to continue from
 
-The remaining visual issue is with `MetralyTabs`.
+The remaining visual issue has been narrowed to final preview verification for `MetralyTabs`.
 
 Observed behavior:
 
 - tabs are no longer as broken as before;
 - scroll behavior has been reduced/disabled in brandbook preview overrides;
-- however, the selected cyan underline still looks visually off in some places;
-- the thick selected underline should be centered on the thin rail line or visually sit as the intended active rail marker;
-- current alignment may still look slightly lower/uneven depending on where tabs are rendered;
-- dashboard editor still needs one final pass for horizontal/inner scroll after tabs are fixed.
+- the selected cyan underline geometry now lives in `packages/ui/src/styles/metraly-forms.css`;
+- the underline is intended to sit centered on the thin rail line, matching the prototype source of truth;
+- dashboard editor still needs one final pass for horizontal/inner scroll after tabs are verified in preview.
 
 Most recent attempt:
 
@@ -184,7 +183,7 @@ Recommended next step:
 
 1. Open `packages/ui/src/styles/metraly-forms.css`.
 2. Treat `MetralyTabs` geometry as the single source of truth.
-3. Make the rail and active line explicit and simple.
+3. Keep the rail and active line explicit and simple.
 
 Suggested direction:
 

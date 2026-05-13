@@ -22,6 +22,7 @@ export function MetralyLineChart<TDatum extends MetralyChartDatum = MetralyChart
   data,
   xKey = "name",
   series,
+  width,
   height = 260,
   ariaLabel,
   summary,
@@ -29,7 +30,28 @@ export function MetralyLineChart<TDatum extends MetralyChartDatum = MetralyChart
 }: MetralyChartBaseProps<TDatum>) {
   return (
     <div className={["metraly-chart", className].filter(Boolean).join(" ")} role="img" aria-label={ariaLabel}>
-      <ResponsiveContainer width="100%" height={height}>
+      {width ? (
+        <LineChart width={width} height={height} data={data} margin={metralyChartMargin} title={ariaLabel}>
+          <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
+          <XAxis dataKey={xKey} {...metralyAxisProps} />
+          <YAxis {...metralyAxisProps} />
+          <MetralyChartTooltip />
+          {series.map((item) => (
+            <Line
+              key={item.dataKey}
+              type="monotone"
+              dataKey={item.dataKey}
+              name={item.name}
+              stroke={resolveChartTone(item.tone)}
+              strokeWidth={3}
+              dot={false}
+              activeDot={{ r: 5 }}
+              isAnimationActive={false}
+            />
+          ))}
+        </LineChart>
+      ) : (
+        <ResponsiveContainer width="100%" height={height}>
         <LineChart data={data} margin={metralyChartMargin} title={ariaLabel}>
           <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
           <XAxis dataKey={xKey} {...metralyAxisProps} />
@@ -49,7 +71,8 @@ export function MetralyLineChart<TDatum extends MetralyChartDatum = MetralyChart
             />
           ))}
         </LineChart>
-      </ResponsiveContainer>
+        </ResponsiveContainer>
+      )}
       <span className="metraly-chart-sr">{summary}</span>
     </div>
   );
