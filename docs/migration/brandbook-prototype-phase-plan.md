@@ -70,7 +70,7 @@ Use these aliases when aligning prototype vocabulary with current `StateBadge` s
 
 ## Phase 0 — Audit foundation
 
-Status: **in progress**
+Status: **done / checklist active**
 
 Goal: create a stable checklist so component work can proceed without reinterpreting the prototype every time.
 
@@ -78,9 +78,9 @@ Deliverables:
 
 - [x] Full prototype conformance audit.
 - [x] Phase execution plan.
-- [ ] State-board expectation checklist per family.
+- [x] State-board expectation checklist per family.
 - [x] `component-status.md` cross-link to audit and phase plan.
-- [ ] Test expectation list for state-board coverage.
+- [x] Test expectation list for state-board coverage.
 
 Exit criteria:
 
@@ -111,9 +111,9 @@ Tasks:
 - [x] Add or document `loading` state for checkbox and switch.
 - [x] Add switch accent support for cyan/purple.
 - [x] Keep native select as the safe baseline while documenting custom listbox as future hardening.
-- [ ] Ensure tabs keep arrow-key navigation and prototype underline/count geometry.
-- [ ] Add state-board examples for every relevant state.
-- [ ] Update Storybook stories and tests.
+- [x] Ensure tabs keep arrow-key navigation and prototype underline/count geometry.
+- [x] Add state-board checklist and focused tests for relevant states.
+- [ ] Update Storybook stories and final visual state-board examples.
 
 Exit criteria:
 
@@ -197,4 +197,4 @@ Tasks:
 
 ## Immediate next action
 
-Continue Phase 1 by adding state-board examples and tests for `StateBadge`, `MetralyCheckbox`, `MetralyRadio`, `MetralySwitch`, `MetralySelect`, and `MetralyTabs`.
+Run `npm run site:test` and `npm run ui:check` locally, then continue Phase 1 with Storybook/final visual state-board examples or move to Phase 2 dashboard primitives if tests pass.
