@@ -21,14 +21,15 @@
 }
 
 .metraly-widget-picker-card.is-selected {
-  border-color: rgba(0,229,204,0.34);
-  background: rgba(17,23,34,0.96);
-  box-shadow: 0 0 0 1px rgba(0,229,204,0.14), 0 10px 24px rgba(0,0,0,0.18);
+  border-color: oklch(0.78 0.13 200);
+  background: oklch(0.78 0.13 200 / 0.10);
+  box-shadow: 0 0 0 1px oklch(0.78 0.13 200), 0 0 12px -2px oklch(0.78 0.13 200 / 0.22);
 }
 
 .metraly-widget-picker-card.is-dragging {
   opacity: 0.6;
-  transform: scale(0.99) rotate(-0.4deg);
+  transform: scale(0.97) rotate(-1deg);
+  outline: 1px dashed oklch(0.78 0.13 200);
   box-shadow: 0 14px 30px rgba(0,0,0,0.28);
 }
 

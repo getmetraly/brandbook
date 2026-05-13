@@ -36,7 +36,8 @@ export function MetralyCheckbox({
   onChange,
 }: MetralyCheckboxProps) {
   const helperText = description ?? hint;
-  const describedBy = helperText && id ? `${id}-description` : undefined;
+  const generatedId = React.useId();
+  const descriptionId = helperText ? `${id ?? generatedId}-description` : undefined;
   const isDisabled = disabled || loading;
   const classes = [
     "metraly-control-row",
@@ -63,7 +64,7 @@ export function MetralyCheckbox({
         disabled={isDisabled}
         aria-checked={indeterminate ? "mixed" : undefined}
         aria-invalid={error || undefined}
-        aria-describedby={describedBy}
+        aria-describedby={descriptionId}
         aria-busy={loading || undefined}
         onChange={loading ? undefined : onChange}
         readOnly={(checked !== undefined || indeterminate || loading) && !onChange ? true : undefined}
@@ -74,7 +75,7 @@ export function MetralyCheckbox({
       <span className="metraly-control-copy">
         <span className="metraly-control-label">{label}</span>
         {helperText ? (
-          <span id={describedBy} className="metraly-control-description">
+          <span id={descriptionId} className="metraly-control-description">
             {helperText}
           </span>
         ) : null}

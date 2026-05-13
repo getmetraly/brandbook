@@ -42,7 +42,8 @@ export function MetralySelect({
   onChange,
 }: MetralySelectProps) {
   const helperText = description ?? hint;
-  const describedBy = helperText && id ? `${id}-description` : undefined;
+  const generatedId = React.useId();
+  const descriptionId = helperText ? `${id ?? generatedId}-description` : undefined;
   const isDisabled = disabled || loading;
   const isEmpty = options.length === 0;
   const classes = [
@@ -67,7 +68,7 @@ export function MetralySelect({
           defaultValue={defaultValue ?? (placeholder ? "" : undefined)}
           disabled={isDisabled || isEmpty}
           aria-invalid={error || undefined}
-          aria-describedby={describedBy}
+          aria-describedby={descriptionId}
           aria-busy={loading || undefined}
           onChange={loading ? undefined : onChange}
         >
@@ -78,18 +79,20 @@ export function MetralySelect({
           ) : null}
           {isEmpty ? (
             <option value="">No options</option>
-          ) : options.map((option) => (
-            <option key={option.value} value={option.value} disabled={option.disabled}>
-              {option.label}
-            </option>
-          ))}
+          ) : (
+            options.map((option) => (
+              <option key={option.value} value={option.value} disabled={option.disabled}>
+                {option.label}
+              </option>
+            ))
+          )}
         </select>
         <span className="metraly-select-indicator" aria-hidden="true">
           {loading ? <span className="metraly-control-spinner" /> : null}
         </span>
       </span>
       {helperText ? (
-        <span id={describedBy} className="metraly-control-description">
+        <span id={descriptionId} className="metraly-control-description">
           {helperText}
         </span>
       ) : null}

@@ -92,6 +92,8 @@ export function MetralyComposedChart<TDatum extends MetralyChartDatum = MetralyC
           stroke={color}
           fill={`url(#${gradientId}-${item.dataKey})`}
           strokeWidth={2}
+          dot={false}
+          activeDot={{ r: 5 }}
           isAnimationActive={false}
         />
       );
@@ -104,6 +106,7 @@ export function MetralyComposedChart<TDatum extends MetralyChartDatum = MetralyC
           name={item.name}
           fill={color}
           radius={[8, 8, 0, 0]}
+          activeBar={{ stroke: "rgba(0,229,204,0.42)", strokeWidth: 1, fillOpacity: 0.88 }}
           isAnimationActive={false}
         />
       );
@@ -117,6 +120,7 @@ export function MetralyComposedChart<TDatum extends MetralyChartDatum = MetralyC
         stroke={color}
         strokeWidth={3}
         dot={false}
+        activeDot={{ r: 5 }}
         isAnimationActive={false}
       />
     );

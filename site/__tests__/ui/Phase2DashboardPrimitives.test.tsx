@@ -115,26 +115,30 @@ describe('Phase 2 dashboard primitive conformance', () => {
     expect(zone).toHaveAttribute('data-tone', 'neutral');
     expect(zone).toHaveAttribute('data-pulse', 'off');
     expect(zone.querySelector('.metraly-pulse-marker')).not.toBeInTheDocument();
+    expect(container.querySelector('.metraly-dashboard-drop-zone-line')).not.toBeInTheDocument();
 
     rerender(<DashboardDropZone state="hover" />);
     zone = screen.getByRole('status', { name: /Widget can land here/i });
     expect(zone).toHaveAttribute('data-drop-zone-state', 'hover');
     expect(zone).toHaveAttribute('data-tone', 'cyan');
+    expect(zone.querySelector('.metraly-dashboard-drop-zone-line')).toBeInTheDocument();
 
     rerender(<DashboardDropZone state="active" />);
     zone = screen.getByRole('status', { name: /Release to add widget/i });
     expect(zone).toHaveClass('is-active');
     expect(zone).toHaveAttribute('data-tone', 'cyan');
+    expect(zone.querySelector('.metraly-dashboard-drop-zone-line')).toBeInTheDocument();
 
     rerender(<DashboardDropZone state="rejected" />);
     zone = screen.getByRole('status', { name: /Cannot drop here/i });
     expect(zone).toHaveAttribute('data-tone', 'danger');
     expect(within(zone).getByText('!')).toBeInTheDocument();
+    expect(zone.querySelector('.metraly-dashboard-drop-zone-line')).not.toBeInTheDocument();
 
     rerender(<DashboardDropZone state="empty" />);
     zone = screen.getByRole('status', { name: /Add the first widget/i });
     expect(zone).toHaveAttribute('data-tone', 'cyan');
-    expect(container.querySelector('.metraly-dashboard-drop-zone-line')).not.toBeInTheDocument();
+    expect(zone.querySelector('.metraly-dashboard-drop-zone-line')).toBeInTheDocument();
   });
 
   it('renders DashboardToolbar as a two-row editor surface', () => {

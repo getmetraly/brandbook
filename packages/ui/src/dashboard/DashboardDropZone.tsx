@@ -44,6 +44,7 @@ export function DashboardDropZone({
   ]
     .filter(Boolean)
     .join(" ");
+  const showLine = resolvedState === "hover" || resolvedState === "active" || resolvedState === "empty";
 
   return (
     <div
@@ -58,6 +59,7 @@ export function DashboardDropZone({
       <span className="metraly-dashboard-drop-zone-icon" aria-hidden="true">
         {resolvedState === "rejected" ? "!" : "+"}
       </span>
+      {showLine ? <span className="metraly-dashboard-drop-zone-line" aria-hidden="true" /> : null}
       <span className="metraly-dashboard-drop-zone-copy">
         <strong>{resolvedLabel}</strong>
         {description ? <small>{description}</small> : null}
