@@ -168,7 +168,7 @@ It includes:
 - role icon examples from Developer to CEO;
 - board edit mode and drag-and-drop states.
 
-The final Claude Design zip is treated as a visual reference only. Production-aligned translation lives in `site/app/components/previews/claude-design-handoff.md`, `/components/previews`, `/patterns/widget-editor` and `@metraly/ui/charts`.
+The final Claude Design zip is treated as a visual reference only. Production-aligned translation lives in `site/app/components/previews/claude-design-handoff.md`, `/components/previews`, `/components/dashboard`, `/patterns/dashboard-layout`, `/patterns/widget-editor`, `/examples/engineering-dashboard` and `@metraly/ui/charts`.
 
 ## Core primitive set
 
@@ -216,18 +216,21 @@ Usage rules:
 - Chart preview surfaces should show a point marker at the hovered value for line and area charts where that improves readability, and a hover background band for column charts.
 - If a new primitive is needed, document the need in migration notes before expanding the export surface.
 
-Board flow contract:
+## Board flow contract:
 
-- `DashboardGrid` is display-first and renders widgets against upstream layout data.
-- `DashboardWidget` owns the shell chrome, state badge and drag/select/remove affordances.
-- `DashboardToolbar` owns dashboard-level controls such as tabs, search, sync state and editor actions.
-- `DashboardEmptyState` owns first-run board messaging and call to action placement.
-- `DashboardDropZone` owns DnD feedback only and should stay pulse-free by default.
-- `DashboardResizeHandle` owns resize affordance geometry and accessibility labeling.
-- `WidgetRegistry` owns widget catalog metadata, default layouts and instance creation helpers.
-- `dashboardRepository.createWidget` is the canonical widget constructor for the editor flow.
-- It resolves registry-backed defaults for known widget types and accepts partial layout overrides.
-- The editor should remain orchestration-only: select a widget type, create the instance through the repository, persist, reload and re-enter edit mode with the same instance.
+|- `DashboardGrid` is display-first and renders widgets against upstream layout data.
+|- `DashboardWidget` owns the shell chrome, state badge, drag/select/remove affordances and full-width framing.
+|- `DashboardToolbar` owns dashboard-level controls such as tabs, search, sync state and editor actions.
+|- `DashboardEmptyState` owns first-run board messaging and call to action placement.
+|- `DashboardDropZone` owns DnD feedback only and should stay pulse-free by default.
+|- `DashboardResizeHandle` owns resize affordance geometry and accessibility labeling.
+|- `WidgetRegistry` owns widget catalog metadata, default layouts and instance creation helpers.
+|- `dashboardRepository.createWidget` is the canonical widget constructor for the editor flow.
+|- It resolves registry-backed defaults for known widget types and accepts partial layout overrides.
+|- The editor should remain orchestration-only: select a widget type, create the instance through the repository, persist, reload and re-enter edit mode with the same instance.
+|- `dashboardRepository.create`, `fetch`, `save`, `delete` and `updateLayout` keep the editor orchestration separate from presentation and round-trip through the local persistence key shape.
+|- Reload should preserve dashboard id, name, widget identity and layout snapshots.
+|- The current board-edit preview fixture keeps selected, dragging, full-width, drop-target, resize and empty-dashboard states anchored in `site/__tests__/preview/ClaudeDesignStateBoard.test.tsx` while the interactive flow remains orchestration-only.
 
 ## Table surfaces
 
@@ -267,9 +270,9 @@ The real dashboard scenario should show how primitives work together:
 - toolbar with search, tabs, live sync and add-widget button;
 - metric cards;
 - chart panel;
-- repository health table.
+- repository health table;
 - widget picker panel;
-- selected, dragging, drop-target, resize, empty and disconnected states.
+- selected, dragging, full-width, drop-target, resize, empty and disconnected states.
 
 The toolbar must not collide. Use responsive wrapping or grid fallback.
 

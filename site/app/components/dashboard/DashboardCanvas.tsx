@@ -15,6 +15,11 @@ import { createElement, useEffect, useRef, useState, type ReactElement, type Rea
 type ResponsiveDashboardResizeHandle = "s" | "w" | "e" | "n" | "sw" | "nw" | "se" | "ne";
 type ResponsiveDashboardCompactType = "vertical" | "horizontal" | null;
 type ResponsiveDashboardBreakpoint = "lg" | "md" | "sm" | "xs" | "xxs";
+const FULL_WIDTH_GRID_COLUMNS = 12;
+
+export function isDashboardWidgetFullWidth(widget: DashboardWidgetInstance): boolean {
+  return widget.position.x === 0 && widget.position.w >= FULL_WIDTH_GRID_COLUMNS;
+}
 
 type ResponsiveDashboardGridProps = {
   children: ReactNode;
@@ -148,6 +153,7 @@ export function DashboardCanvas({
     >
       {widgets.map((widget) => {
         const definition = findDashboardWidgetDefinition(defaultDashboardWidgetRegistry, widget.type);
+        const fullWidth = isDashboardWidgetFullWidth(widget);
 
         return (
           <div key={widget.id} className="metraly-dashboard-grid-shell">
@@ -158,6 +164,7 @@ export function DashboardCanvas({
               state={widget.state ?? "live"}
               stateLabel={widget.stateLabel}
               selected={selectedWidgetId === widget.id}
+              fullWidth={fullWidth}
               resizable
               onSelect={onSelectWidget}
               onRemove={onRemoveWidget}

@@ -15,12 +15,12 @@ export default function WidgetEditorPatternPage() {
         <LegacyNotice>The editor is intentionally Client-only. Avoid moving localStorage, react-grid-layout or event-heavy widgets into Server Components.</LegacyNotice>
       </DocsSection>
       <DocsSection id="board-edit" title="Board edit mode" description="The editor should show the selected widget, dragging state, drop target and resize affordances in one flow.">
-        <ComponentPreview title="Engineering Dashboard Editor preview" description="Static state preview integrated from the Claude Design reference using Metraly primitives." states={["edit mode", "selected", "dragging", "drop target", "resize", "empty", "disconnected"]}>
+        <ComponentPreview title="Engineering Dashboard Editor" description="Static board-edit matrix using Metraly primitives and the Claude Design reference as a visual check." states={["edit mode", "selected", "dragging", "drop target", "resize", "empty", "disconnected"]}>
           <div className="component-preview-stage is-wide">
             <EngineeringDashboardEditorPreview />
           </div>
         </ComponentPreview>
-        <ComponentPreview title="DashboardWidget / GridItem / Drawer / DragOverlay" description="Board edit state surfaces used by the editor and dashboard workflows." states={["selected", "dragging", "drop target", "resizable"]}>
+        <ComponentPreview title="Board edit state surfaces" description="Selected, dragging, drop-target and resize surfaces used by the editor and dashboard workflows." states={["selected", "dragging", "drop target", "resizable"]}>
           <ComponentStateGrid>
             <TelemetryDashboardWidget />
             <TelemetryGridItem />
