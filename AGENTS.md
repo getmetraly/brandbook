@@ -25,13 +25,13 @@ Do not treat the old preview-hardening layer, historical phase notes, or legacy 
 <claude-mem-context>
 # Memory Context
 
-# [brandbook] recent context, 2026-05-13 11:14pm GMT+3
+# [brandbook] recent context, 2026-05-13 11:32pm GMT+3
 
 Legend: 🎯session 🔴bugfix 🟣feature 🔄refactor ✅change 🔵discovery ⚖️decision 🚨security_alert 🔐security_note
 Format: ID TIME TYPE TITLE
 Fetch details: get_observations([IDs]) | Search: mem-search skill
 
-Stats: 13 obs (6,284t read) | 233,392t work | 97% savings
+Stats: 23 obs (11,751t read) | 837,246t work | 99% savings
 
 ### May 13, 2026
 68 10:47p ✅ Dashboard Editor Visual Conformance Pass Initiated
@@ -50,21 +50,16 @@ S20 Dashboard Editor story — add row 2+ widgets, fix right-rail search icon, k
 79 " 🟣 All 4 Validation Commands Pass After Story Expansion
 80 11:09p 🔵 Story Passes PulseWave & CSS Boundary Hygiene Check
 S21 Dashboard Editor story — add row 2+ widgets, fix right-rail search icon, keep layout/validation green — COMPLETED (May 13, 11:09 PM)
-**Investigated**: Grepped `stories/Dashboard.stories.tsx` to locate search icon bug (line 414: `name="metric"` instead of `name="search"`). Confirmed `PICKER_ICONS` already had "search" key. Verified baseline validation was still green before making changes. Post-change grep confirmed zero pulse-wave, site CSS, or preview-pattern matches in the story.
+81 11:15p ⚖️ Brandbook Prototype Source Rebuild — Codex Architecture Cleanup Pass
+82 " 🔵 Branch Audit: prototype-source-rebuild Has 187 Files Changed vs main
+83 " 🔵 WidgetPickerCard Confirmed Pulse-Free with Inline SVG Operational Icons
+84 " 🔵 Storybook Global CSS Stack Confirmed Complete; Pulse Usage Semantically Correct Across Codebase
+85 " 🔵 Dashboard.stories.tsx Already Contains Extracted Scenario Body Components
+86 " 🔵 site/app/components/dashboard/dashboard.css Contains Site-Scoped Layout Classes, Not a Second Design System
+87 " 🔵 Test Suite Confirms Badge Suppression Contract for WidgetPickerCard
+88 11:18p 🔵 Critical: E2E Tests Reference Deleted /components/previews Route
+89 " 🔵 Dashboard Editor Scenario Fully Implements 3-Column Shell with 11-Widget Canvas
+90 " 🔵 Component Stories Audit: All Stories Are Prototype-First, No Old Preview Imports
 
-**Learned**: The local `Icon` component in the story did not include a "search" path entry — it needed to be added alongside the fix. SVG bar charts in story-only widgets should use `preserveAspectRatio="none"` to scale fluidly to grid column width. A `widgetBody()` dispatch function with a `body: string` discriminant on `WidgetDef` cleanly handles multiple widget body types without prop drilling or union type explosion.
-
-**Completed**: `stories/Dashboard.stories.tsx` fully rewritten and passing all 4 validation commands:
-    - Added "search" SVG glyph to local `Icon` paths map; fixed search row from `name="metric"` to `name="search"`
-    - Added 5 inline widget body components: `DeployFreqBody` (SVG bar chart with rollback dots), `DoraOverviewBody` (2×2 DORA quadrant), `CycleTimeBarsBody` (proportional horizontal bar + legend), `BlockedWorkBody` (severity-colored list), `PRReviewTableBody` (team latency table with outlier coloring)
-    - Expanded canvas from 4 widgets (row 1 only) to 11 widgets across 7 rows matching prototype grid positions
-    - Introduced `WidgetDef` TypeScript type and `widgetBody()` selector
-    - 3-column layout preserved: sidebar 196px | flex canvas | right rail 320px
-    - Zero pulse-wave, site CSS imports, or preview patterns (confirmed by grep)
-    - `ui:check` ✅ · `site:typecheck` ✅ · `site:test` ✅ 155/155 · `build-storybook` ✅
-
-**Next Steps**: All acceptance criteria met. Task is complete. No further work planned unless user requests additional changes.
-
-
-Access 233k tokens of past work via get_observations([IDs]) or mem-search skill.
+Access 837k tokens of past work via get_observations([IDs]) or mem-search skill.
 </claude-mem-context>

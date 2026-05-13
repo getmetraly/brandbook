@@ -3,7 +3,6 @@ import {
   DashboardGrid,
   DashboardDropZone,
   DashboardResizeHandle,
-  DashboardToolbar,
   DashboardWidget,
   WidgetPickerCard,
   type DashboardWidgetInstance,
@@ -12,6 +11,7 @@ import DocsShell from "../../components/docs/DocsShell";
 import { ComponentPreview, ComponentStateGrid, DocsSection } from "../../components/docs/DocsBlocks";
 import { getRelatedLinks } from "../../lib/docs/navigation";
 import "./dashboard.css";
+import DashboardToolbarPreview from "./DashboardToolbarPreview";
 
 export const dynamic = "force-dynamic";
 
@@ -33,16 +33,7 @@ export default function DashboardComponentsPage() {
       <DocsSection id="widgets" title="Widget surfaces">
         <ComponentPreview title="DashboardToolbar / DashboardWidget" description="Toolbar and widget chrome for canonical dashboard pages and editor flows." states={["selected", "resizable", "live", "delayed"]} code={'import { DashboardWidget } from "@metraly/ui";'}>
           <div className="docs-dashboard-preview">
-            <DashboardToolbar
-              tabs={[{ value: "delivery", label: "Delivery" }, { value: "dora", label: "DORA" }, { value: "flow", label: "Flow" }]}
-              activeTab="delivery"
-              searchValue=""
-              syncState="live"
-              editMode
-              onToggleEdit={() => undefined}
-              onAddWidget={() => undefined}
-              actions={<button className="metraly-dashboard-toolbar-button is-primary" type="button">Save</button>}
-            />
+            <DashboardToolbarPreview />
             <ComponentStateGrid>
               <DashboardWidget id="flow" title="Flow efficiency" subtitle="Current sprint" state="live" selected>
                 <strong className="metric-value">81%</strong>
