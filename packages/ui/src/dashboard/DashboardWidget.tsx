@@ -1,6 +1,6 @@
 import * as React from "react";
 import StateBadge, { type StateBadgeState } from "../components/StateBadge";
-import { DashboardResizeHandle } from "./DashboardResizeHandle";
+import { DashboardResizeHandle, dashboardResizeHandleDirections } from "./DashboardResizeHandle";
 
 export interface DashboardWidgetProps {
   id?: string;
@@ -23,6 +23,40 @@ export interface DashboardWidgetProps {
 function defaultStateLabel(state: StateBadgeState): string {
   const spaced = state.replace(/([A-Z])/g, " $1");
   return spaced.charAt(0).toUpperCase() + spaced.slice(1);
+}
+
+function DragHandle({ canDrag, id, onDragStart }: { canDrag: boolean; id?: string; onDragStart?: (id: string) => void }) {
+  return (
+    <span
+      className="metraly-widget-shell-drag-handle metraly-focus-ring"
+      data-drag-handle="grip-dots"
+      {...(canDrag
+        ? {
+            role: "button" as const,
+            tabIndex: 0,
+            "aria-label": "Drag to move",
+            onKeyDown: (e: React.KeyboardEvent) => {
+              if ((e.key === " " || e.key === "Enter") && id) {
+                e.preventDefault();
+                onDragStart?.(id);
+              }
+            },
+          }
+        : {
+            role: "presentation" as const,
+            "aria-hidden": true,
+          })}
+    >
+      <span className="metraly-widget-shell-grip-dots" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+      </span>
+    </span>
+  );
 }
 
 export function DashboardWidget({
@@ -80,6 +114,7 @@ export function DashboardWidget({
         data-testid="widget-shell"
       >
         <header className="metraly-widget-shell-head">
+          <DragHandle canDrag={canDrag} id={id} onDragStart={onDragStart} />
           <div className="metraly-widget-shell-heading">
             <div className="metraly-widget-shell-title">{title}</div>
             {subtitle && <div className="metraly-widget-shell-subtitle">{subtitle}</div>}
@@ -112,44 +147,18 @@ export function DashboardWidget({
             </div>
           ) : null}
         </div>
-        <footer className="metraly-widget-shell-foot">
-          <span
-            className="metraly-widget-shell-drag-handle metraly-focus-ring"
-            {...(canDrag
-              ? {
-                  role: "button" as const,
-                  tabIndex: 0,
-                  "aria-label": "Drag to move",
-                  onKeyDown: (e: React.KeyboardEvent) => {
-                    if (e.key === " " || e.key === "Enter") {
-                      e.preventDefault();
-                      onDragStart!(id!);
-                    }
-                  },
-                }
-              : {
-                  role: "presentation" as const,
-                  "aria-hidden": true,
-                })}
-          >
-            <span className="metraly-widget-shell-grip-dots" aria-hidden="true">
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-            </span>
-          </span>
-        </footer>
-        {resizable && (
-          <DashboardResizeHandle
-            className="metraly-widget-shell-resize-handle"
-            label="Resize widget"
-            direction="southeast"
-            active={selected}
-          />
-        )}
+        {resizable && selected ? (
+          <div className="metraly-widget-shell-resize-handles" aria-hidden={false}>
+            {dashboardResizeHandleDirections.map((direction) => (
+              <DashboardResizeHandle
+                key={direction}
+                className="metraly-widget-shell-resize-handle"
+                direction={direction}
+                active={selected}
+              />
+            ))}
+          </div>
+        ) : null}
       </div>
     </div>
   );
