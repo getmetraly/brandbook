@@ -60,7 +60,7 @@ function Icon({ name, size = 13 }: { name: string; size?: number }) {
 const shellStyle: React.CSSProperties = {
   display: "flex",
   width: "100%",
-  height: 900,
+  height: 840,
   background: "var(--m-bg-0)",
   color: "var(--m-fg-1)",
   overflow: "hidden",
@@ -144,15 +144,15 @@ const widgets: WidgetDef[] = [
 
 function MetricBody({ value, delta, deltaTone = "ok", spark }: { value: string; delta: string; deltaTone?: "ok" | "warn" | "err"; spark?: number[] }) {
   return (
-    <div style={{ flex: 1, padding: 12, display: "flex", flexDirection: "column", justifyContent: "space-between", minHeight: 0 }}>
+    <div style={{ flex: 1, padding: 10, display: "flex", flexDirection: "column", justifyContent: "space-between", minHeight: 0 }}>
       <div>
-        <div style={{ fontFamily: "var(--m-font-mono)", fontSize: 24, color: "var(--m-fg-0)", lineHeight: 1, fontWeight: 500 }}>{value}</div>
-        <div style={{ fontSize: 11, color: deltaTone === "warn" ? "var(--m-warn)" : deltaTone === "err" ? "var(--m-err)" : "var(--m-ok)", fontFamily: "var(--m-font-mono)", marginTop: 4 }}>{delta}</div>
+        <div style={{ fontFamily: "var(--m-font-mono)", fontSize: 22, color: "var(--m-fg-0)", lineHeight: 1, fontWeight: 500 }}>{value}</div>
+        <div style={{ fontSize: 10, color: deltaTone === "warn" ? "var(--m-warn)" : deltaTone === "err" ? "var(--m-err)" : "var(--m-ok)", fontFamily: "var(--m-font-mono)", marginTop: 3 }}>{delta}</div>
       </div>
       {spark ? (
-        <div style={{ display: "flex", alignItems: "end", gap: 3, height: 36 }}>
+        <div style={{ display: "flex", alignItems: "end", gap: 2, height: 32 }}>
           {spark.slice(-12).map((point, index) => (
-            <span key={index} style={{ width: 6, height: `${Math.max(8, Math.min(34, point / 1.1))}px`, background: index > 7 ? "var(--m-purple-500)" : "var(--m-cyan-500)", borderRadius: 999, opacity: 0.78 }} />
+            <span key={index} style={{ width: 5, height: `${Math.max(7, Math.min(30, point / 1.2))}px`, background: index > 7 ? "var(--m-purple-500)" : "var(--m-cyan-500)", borderRadius: 999, opacity: 0.78 }} />
           ))}
         </div>
       ) : null}
@@ -167,10 +167,10 @@ function DeployFreqBody() {
   const height = 100;
 
   return (
-    <div style={{ flex: 1, padding: "8px 12px 8px", display: "flex", flexDirection: "column", gap: 8, minHeight: 0 }}>
-      <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-        <span style={{ fontFamily: "var(--m-font-mono)", fontSize: 22, color: "var(--m-fg-0)", lineHeight: 1 }}>24/day</span>
-        <span style={{ fontFamily: "var(--m-font-mono)", fontSize: 11, color: "var(--m-ok)" }}>▲ 18% vs −14d</span>
+    <div style={{ flex: 1, padding: "8px 10px 8px", display: "flex", flexDirection: "column", gap: 7, minHeight: 0 }}>
+      <div style={{ display: "flex", alignItems: "baseline", gap: 7 }}>
+        <span style={{ fontFamily: "var(--m-font-mono)", fontSize: 20, color: "var(--m-fg-0)", lineHeight: 1 }}>24/day</span>
+        <span style={{ fontFamily: "var(--m-font-mono)", fontSize: 10, color: "var(--m-ok)" }}>▲ 18% vs −14d</span>
       </div>
       <svg viewBox={`0 0 ${width} ${height}`} width="100%" style={{ flex: 1, minHeight: 0 }} preserveAspectRatio="none" aria-hidden="true">
         {bars.map((value, index) => {
@@ -179,7 +179,7 @@ function DeployFreqBody() {
         })}
         {rollbacks.map((value, index) => value ? <circle key={index} cx={index * 14 + 7} cy={height - (bars[index] / 24) * (height - 4) - 5} r={3} fill="var(--m-purple-500)" opacity={0.9} /> : null)}
       </svg>
-      <div style={{ display: "flex", gap: 14, fontFamily: "var(--m-font-mono)", fontSize: 10, color: "var(--m-fg-3)", flexShrink: 0 }}>
+      <div style={{ display: "flex", gap: 12, fontFamily: "var(--m-font-mono)", fontSize: 9, color: "var(--m-fg-3)", flexShrink: 0 }}>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><span style={{ width: 10, height: 8, background: "var(--m-cyan-500)", borderRadius: 2, opacity: 0.65 }} />deploys</span>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><span style={{ width: 8, height: 8, borderRadius: 999, background: "var(--m-purple-500)", opacity: 0.9 }} />rollbacks</span>
       </div>
@@ -196,12 +196,12 @@ function DoraOverviewBody() {
   ];
 
   return (
-    <div style={{ flex: 1, padding: 10, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, minHeight: 0 }}>
+    <div style={{ flex: 1, padding: 8, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6, minHeight: 0 }}>
       {cells.map((cell) => (
-        <div key={cell.label} style={{ background: "var(--m-bg-1)", border: "1px solid var(--m-line-faint)", borderRadius: 6, padding: "8px 10px", display: "flex", flexDirection: "column", gap: 2 }}>
+        <div key={cell.label} style={{ background: "var(--m-bg-1)", border: "1px solid var(--m-line-faint)", borderRadius: 6, padding: "7px 8px", display: "flex", flexDirection: "column", gap: 2 }}>
           <div style={{ fontFamily: "var(--m-font-mono)", fontSize: 9, color: "var(--m-fg-3)", letterSpacing: "0.04em", textTransform: "uppercase" }}>{cell.label}</div>
           <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
-            <span style={{ fontFamily: "var(--m-font-mono)", fontSize: 17, color: "var(--m-fg-0)" }}>{cell.value}</span>
+            <span style={{ fontFamily: "var(--m-font-mono)", fontSize: 16, color: "var(--m-fg-0)" }}>{cell.value}</span>
             <span style={{ fontFamily: "var(--m-font-mono)", fontSize: 10, color: cell.tone === "warn" ? "var(--m-warn)" : "var(--m-ok)" }}>{cell.trend}</span>
           </div>
           <div style={{ fontFamily: "var(--m-font-mono)", fontSize: 9, color: "var(--m-cyan-500)" }}>· {cell.tier}</div>
@@ -221,17 +221,17 @@ function CycleTimeBarsBody() {
   const total = segments.reduce((sum, segment) => sum + segment.hours, 0);
 
   return (
-    <div style={{ flex: 1, padding: 14, display: "flex", flexDirection: "column", gap: 12, minHeight: 0 }}>
+    <div style={{ flex: 1, padding: 10, display: "flex", flexDirection: "column", gap: 10, minHeight: 0 }}>
       <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-        <span style={{ fontFamily: "var(--m-font-mono)", fontSize: 24, color: "var(--m-fg-0)" }}>{total.toFixed(1)}h</span>
-        <span style={{ fontSize: 11, color: "var(--m-warn)", fontFamily: "var(--m-font-mono)" }}>▲ 3.2h vs −14d</span>
+        <span style={{ fontFamily: "var(--m-font-mono)", fontSize: 21, color: "var(--m-fg-0)" }}>{total.toFixed(1)}h</span>
+        <span style={{ fontSize: 10, color: "var(--m-warn)", fontFamily: "var(--m-font-mono)" }}>▲ 3.2h vs −14d</span>
       </div>
-      <div style={{ display: "flex", height: 14, borderRadius: 4, overflow: "hidden", border: "1px solid var(--m-line-faint)" }}>
+      <div style={{ display: "flex", height: 12, borderRadius: 4, overflow: "hidden", border: "1px solid var(--m-line-faint)" }}>
         {segments.map((segment) => <div key={segment.name} style={{ flex: segment.hours, background: segment.color, opacity: 0.7 }} />)}
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 5 }}>
         {segments.map((segment) => (
-          <div key={segment.name} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 10, fontFamily: "var(--m-font-mono)", color: "var(--m-fg-2)" }}>
+          <div key={segment.name} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 9, fontFamily: "var(--m-font-mono)", color: "var(--m-fg-2)" }}>
             <span style={{ width: 8, height: 8, background: segment.color, borderRadius: 2, opacity: 0.7, flexShrink: 0 }} />
             <span style={{ flex: 1 }}>{segment.name}</span>
             <span style={{ color: "var(--m-fg-1)" }}>{segment.hours.toFixed(1)}h</span>
@@ -253,12 +253,12 @@ function BlockedWorkBody() {
   const severityColor = (severity: string) => severity === "error" ? "var(--m-err)" : severity === "warn" ? "var(--m-warn)" : "var(--m-line)";
 
   return (
-    <div style={{ flex: 1, overflow: "auto", padding: 8, display: "flex", flexDirection: "column", gap: 4 }}>
+    <div style={{ flex: 1, overflow: "auto", padding: 6, display: "flex", flexDirection: "column", gap: 3 }}>
       {items.map((item, index) => (
-        <div key={item.title} style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 8px", background: index === 0 ? "var(--m-bg-3)" : "transparent", borderRadius: 4, borderLeft: `2px solid ${severityColor(item.severity)}` }}>
+        <div key={item.title} style={{ display: "flex", alignItems: "center", gap: 8, padding: "5px 8px", background: index === 0 ? "var(--m-bg-3)" : "transparent", borderRadius: 4, borderLeft: `2px solid ${severityColor(item.severity)}` }}>
           <span style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column" }}>
             <span style={{ fontSize: 11, color: "var(--m-fg-1)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.stage} · {item.title}</span>
-            <span style={{ fontSize: 10, color: "var(--m-fg-3)", fontFamily: "var(--m-font-mono)" }}>{item.owner}</span>
+            <span style={{ fontSize: 9, color: "var(--m-fg-3)", fontFamily: "var(--m-font-mono)" }}>{item.owner}</span>
           </span>
         </div>
       ))}
@@ -275,8 +275,8 @@ function PRReviewTableBody() {
     { team: "data-pipelines", open: 12, first: 14.6, merge: "44h", stale: 5 },
     { team: "mobile", open: 4, first: 3, merge: "14h", stale: 0 },
   ];
-  const th: React.CSSProperties = { padding: "6px 10px", textAlign: "left", fontSize: 10, fontFamily: "var(--m-font-mono)", color: "var(--m-fg-3)", fontWeight: 600, letterSpacing: "0.03em", textTransform: "uppercase", borderBottom: "1px solid var(--m-line-faint)", background: "var(--m-bg-3)" };
-  const td: React.CSSProperties = { padding: "6px 10px", textAlign: "left", fontSize: 11, fontFamily: "var(--m-font-mono)", color: "var(--m-fg-1)", borderBottom: "1px solid var(--m-line-faint)" };
+  const th: React.CSSProperties = { padding: "5px 8px", textAlign: "left", fontSize: 9, fontFamily: "var(--m-font-mono)", color: "var(--m-fg-3)", fontWeight: 600, letterSpacing: "0.04em", textTransform: "uppercase", borderBottom: "1px solid var(--m-line)", background: "var(--m-bg-1)" };
+  const td: React.CSSProperties = { padding: "5px 8px", textAlign: "left", fontSize: 10, fontFamily: "var(--m-font-mono)", color: "var(--m-fg-1)", borderBottom: "1px solid var(--m-line-faint)" };
 
   return (
     <div style={{ flex: 1, overflow: "auto", minHeight: 0 }}>
@@ -309,9 +309,9 @@ function PRReviewTableBody() {
 function ScenarioSidebar() {
   return (
     <aside style={{ width: 196, flexShrink: 0, background: "var(--m-bg-1)", borderRight: "1px solid var(--m-line)", display: "flex", flexDirection: "column", padding: "16px 8px" }}>
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4, padding: "8px 0 16px", borderBottom: "1px solid var(--m-line-faint)", marginBottom: 12 }}>
-        <div style={{ width: 36, height: 36, borderRadius: 8, background: "var(--m-bg-2)", border: "1px solid var(--m-cyan-500)", display: "grid", placeItems: "center", fontFamily: "var(--m-font-mono)", fontSize: 16, fontWeight: 600, color: "var(--m-cyan-500)" }}>M</div>
-        <div style={{ fontSize: 11, color: "var(--m-fg-1)", fontWeight: 500, letterSpacing: "0.04em" }}>METRALY</div>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3, padding: "6px 0 12px", borderBottom: "1px solid var(--m-line-faint)", marginBottom: 10 }}>
+        <div style={{ width: 32, height: 32, borderRadius: 8, background: "var(--m-bg-2)", border: "1px solid var(--m-cyan-500)", display: "grid", placeItems: "center", fontFamily: "var(--m-font-mono)", fontSize: 14, fontWeight: 600, color: "var(--m-cyan-500)" }}>M</div>
+        <div style={{ fontSize: 10, color: "var(--m-fg-1)", fontWeight: 500, letterSpacing: "0.04em" }}>METRALY</div>
         <div style={{ fontSize: 9, color: "var(--m-fg-3)", fontFamily: "var(--m-font-mono)" }}>engineering intelligence</div>
       </div>
       <nav style={{ display: "flex", flexDirection: "column", gap: 1 }}>
@@ -320,7 +320,7 @@ function ScenarioSidebar() {
             {item.active ? <span style={{ position: "absolute", left: 0, top: 6, bottom: 6, width: 2, background: "var(--m-cyan-500)", borderRadius: 2 }} /> : null}
             <Icon name={item.icon} size={13} />
             <span style={{ flex: 1 }}>{item.label}</span>
-            {item.badge != null ? <span style={{ fontFamily: "var(--m-font-mono)", fontSize: 9, color: "var(--m-cyan-500)", background: "var(--m-cyan-bg)", padding: "1px 5px", borderRadius: 999, border: "1px solid var(--m-cyan-500)" }}>{item.badge}</span> : null}
+            {item.badge != null ? <span style={{ fontFamily: "var(--m-font-mono)", fontSize: 8, color: "var(--m-cyan-500)", background: "var(--m-cyan-bg)", padding: "1px 4px", borderRadius: 999, border: "1px solid var(--m-cyan-500)" }}>{item.badge}</span> : null}
           </div>
         ))}
       </nav>
@@ -340,14 +340,14 @@ function ScenarioSidebar() {
 function ScenarioTopbar() {
   return (
     <header style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 18px", borderBottom: "1px solid var(--m-line)", background: "var(--m-bg-1)", flexShrink: 0 }}>
-      <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 2 }}>
+      <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 1 }}>
         <div style={{ fontSize: 10, color: "var(--m-fg-3)", fontFamily: "var(--m-font-mono)", letterSpacing: "0.04em", textTransform: "uppercase" }}>Workspace / Acme / Dashboards / Delivery</div>
         <div style={{ fontSize: "var(--m-fs-16)", color: "var(--m-fg-0)", fontWeight: 500, display: "flex", alignItems: "center", gap: 10 }}>
           Delivery · all teams
           <span style={{ fontFamily: "var(--m-font-mono)", fontSize: 10, color: "var(--m-fg-3)", letterSpacing: "0.04em" }}>· 14d window · 6 teams</span>
         </div>
       </div>
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
         <select style={{ height: 30, padding: "0 8px", border: "1px solid var(--m-line)", borderRadius: "var(--m-r-2)", background: "var(--m-bg-2)", color: "var(--m-fg-1)", fontFamily: "var(--m-font-ui)", fontSize: 11 }}>
           <option>Last 14 days</option>
         </select>
@@ -360,11 +360,11 @@ function ScenarioTopbar() {
 
 function ScenarioEditBanner() {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "var(--m-cyan-bg)", border: "1px dashed var(--m-cyan-500)", borderRadius: "var(--m-r-3)", fontFamily: "var(--m-font-mono)", fontSize: 11, color: "var(--m-cyan-500)", letterSpacing: "0.04em" }}>
+    <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 10px", background: "var(--m-cyan-bg)", border: "1px dashed var(--m-cyan-500)", borderRadius: "var(--m-r-2)", fontFamily: "var(--m-font-mono)", fontSize: 10, color: "var(--m-cyan-500)", letterSpacing: "0.04em" }}>
       <span style={{ textTransform: "uppercase" }}>Edit mode</span>
       <span style={{ color: "var(--m-fg-2)", textTransform: "none", letterSpacing: 0 }}>· Drag widgets with grip dots · Resize from corner handles · Drag from library to add</span>
       <span style={{ flex: 1 }} />
-      <button style={{ ...ghostButtonStyle, height: 24, padding: "0 8px", fontSize: 11, color: "var(--m-cyan-500)", borderColor: "var(--m-cyan-500)", background: "transparent" }}><Icon name="check" size={11} /> Done</button>
+      <button style={{ ...ghostButtonStyle, height: 24, padding: "0 8px", fontSize: 10, color: "var(--m-cyan-500)", borderColor: "var(--m-cyan-500)", background: "transparent" }}><Icon name="check" size={11} /> Done</button>
     </div>
   );
 }
@@ -392,7 +392,7 @@ function renderWidgetBody(widget: WidgetDef) {
 
 function ScenarioDashboardGrid() {
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gridAutoRows: "minmax(150px, auto)", gap: 12 }}>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gridAutoRows: "minmax(138px, auto)", gap: 10 }}>
       {widgets.map((widget) => (
         <div key={widget.id} style={{ gridColumn: `${widget.position.col} / span ${widget.position.w}`, gridRow: `${widget.position.row} / span ${widget.position.h}` }}>
           <DashboardWidget id={widget.id} title={widget.title} subtitle={widget.kind} state={widget.state ?? "live"} selected={widget.selected} dragging={widget.dragging} resizable={widget.id !== "ci-status"}>
@@ -414,18 +414,18 @@ function ScenarioDashboardGrid() {
 function ScenarioWidgetLibrary() {
   return (
     <aside style={{ width: 320, flexShrink: 0, background: "var(--m-bg-1)", borderLeft: "1px solid var(--m-line)", display: "flex", flexDirection: "column" }}>
-      <div style={{ padding: "12px 14px 8px", display: "flex", alignItems: "center", gap: 8, borderBottom: "1px solid var(--m-line-faint)", flexShrink: 0 }}>
+      <div style={{ padding: "10px 12px 8px", display: "flex", alignItems: "center", gap: 8, borderBottom: "1px solid var(--m-line-faint)", flexShrink: 0 }}>
         <Icon name="grid" size={13} />
         <span style={{ flex: 1, fontSize: "var(--m-fs-12)", color: "var(--m-fg-0)", fontWeight: 500 }}>Widget library</span>
         <button style={{ background: "transparent", border: "none", color: "var(--m-fg-3)", cursor: "pointer", padding: 4, borderRadius: 4, lineHeight: 1 }}>✕</button>
       </div>
-      <div style={{ padding: "10px 14px", borderBottom: "1px solid var(--m-line-faint)", flexShrink: 0 }}>
+      <div style={{ padding: "8px 12px", borderBottom: "1px solid var(--m-line-faint)", flexShrink: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, background: "var(--m-bg-2)", border: "1px solid var(--m-line)", borderRadius: "var(--m-r-2)", padding: "0 10px", height: "var(--m-control-h)" }}>
           <Icon name="search" size={12} />
           <input placeholder="Filter widgets…" readOnly style={{ flex: 1, background: "transparent", border: "none", outline: "none", color: "var(--m-fg-1)", fontFamily: "var(--m-font-ui)", fontSize: "var(--m-fs-12)" }} />
         </div>
       </div>
-      <div style={{ flex: 1, overflow: "auto", padding: 12, display: "flex", flexDirection: "column", gap: 8 }}>
+      <div style={{ flex: 1, overflow: "auto", padding: 10, display: "flex", flexDirection: "column", gap: 8 }}>
         {pickerItems.map((item) => (
           <WidgetPickerCard key={item.id} title={item.title} description={item.description} kind={item.kind} iconLabel={item.iconLabel} selected={item.selected} disabled={item.disabled} visualState={item.visualState} />
         ))}
@@ -440,7 +440,7 @@ export function DashboardEditorScenario() {
       <ScenarioSidebar />
       <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0 }}>
         <ScenarioTopbar />
-        <main style={{ flex: 1, overflow: "auto", padding: 16, display: "flex", flexDirection: "column", gap: 12, minWidth: 0 }}>
+        <main style={{ flex: 1, overflow: "auto", padding: 14, display: "flex", flexDirection: "column", gap: 10, minWidth: 0 }}>
           <DashboardToolbar
             tabs={[
               { value: "delivery", label: "Delivery", count: 11 },
