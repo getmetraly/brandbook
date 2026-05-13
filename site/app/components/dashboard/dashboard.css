@@ -67,15 +67,6 @@
   text-transform: none;
 }
 
-.dashboard-editor-banner-marker {
-  width: 14px;
-  height: 8px;
-  display: inline-block;
-  background: currentColor;
-  border-radius: 999px;
-  opacity: 0.9;
-}
-
 .dashboard-editor-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 320px;

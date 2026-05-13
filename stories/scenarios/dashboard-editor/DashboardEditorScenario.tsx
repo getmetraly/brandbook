@@ -4,6 +4,7 @@ import {
   DashboardResizeHandle,
   DashboardToolbar,
   DashboardWidget,
+  MetralyTable,
   StateBadge,
   WidgetPickerCard,
 } from "@metraly/ui";
@@ -127,6 +128,14 @@ type WidgetDef = {
   position: { col: number; row: number; w: number; h: number };
 };
 
+type PRReviewRow = {
+  team: React.ReactNode;
+  open: React.ReactNode;
+  first: React.ReactNode;
+  merge: React.ReactNode;
+  stale: React.ReactNode;
+};
+
 const widgets: WidgetDef[] = [
   { id: "deploy-freq", title: "Deployment frequency", kind: "dora/deploy-freq", body: "metric", value: "24 / day", delta: "▲ 18% vs −14d", deltaTone: "ok", spark: [4, 6, 5, 7, 8, 6, 9, 11, 10, 12, 14, 13, 15, 14, 12, 16, 18, 17, 15, 19, 21, 18, 22, 24], position: { col: 1, row: 1, w: 3, h: 1 } },
   { id: "lead-time", title: "Lead time for changes", kind: "dora/lead-time", body: "metric", value: "41h", delta: "▼ 6h vs −14d", deltaTone: "ok", spark: [62, 60, 58, 56, 55, 54, 52, 50, 49, 48, 47, 46, 45, 44, 44, 43, 43, 42, 42, 42, 41, 41, 41, 41], selected: true, position: { col: 4, row: 1, w: 3, h: 1 } },
@@ -140,6 +149,23 @@ const widgets: WidgetDef[] = [
   { id: "blocked", title: "Blocked work", kind: "flow/blocked", body: "blocked", position: { col: 5, row: 5, w: 4, h: 1 } },
   { id: "team-health", title: "Team delivery health", kind: "team/health", body: "metric", value: "78 / 100", delta: "▲ 4 vs −14d", deltaTone: "ok", spark: [70, 71, 71, 72, 72, 73, 73, 74, 74, 74, 75, 75, 76, 76, 76, 77, 77, 77, 77, 78, 78, 78, 78, 78], position: { col: 9, row: 5, w: 4, h: 1 } },
   { id: "review-table", title: "PR review latency by team", kind: "review/by-team", body: "prTable", position: { col: 1, row: 6, w: 12, h: 2 } },
+];
+
+const prReviewRows: PRReviewRow[] = [
+  { team: "platform", open: 8, first: "2.4h", merge: "11h", stale: <span style={{ color: "var(--m-fg-2)" }}>0</span> },
+  { team: "growth", open: 14, first: <span style={{ color: "var(--m-warn)" }}>9.1h</span>, merge: "31h", stale: <span style={{ color: "var(--m-warn)" }}>3</span> },
+  { team: "billing", open: 6, first: "4.2h", merge: "18h", stale: <span style={{ color: "var(--m-warn)" }}>1</span> },
+  { team: "search", open: 9, first: "1.8h", merge: "9h", stale: <span style={{ color: "var(--m-fg-2)" }}>0</span> },
+  { team: "data-pipelines", open: 12, first: <span style={{ color: "var(--m-warn)" }}>14.6h</span>, merge: "44h", stale: <span style={{ color: "var(--m-warn)" }}>5</span> },
+  { team: "mobile", open: 4, first: "3h", merge: "14h", stale: <span style={{ color: "var(--m-fg-2)" }}>0</span> },
+];
+
+const prReviewColumns = [
+  { key: "team" as const, header: "Team", width: "34%" },
+  { key: "open" as const, header: "Open PRs", align: "right" as const, width: "16%" },
+  { key: "first" as const, header: "1st response", align: "right" as const, width: "18%" },
+  { key: "merge" as const, header: "Time to merge", align: "right" as const, width: "18%" },
+  { key: "stale" as const, header: "Stale > 3d", align: "right" as const, width: "14%" },
 ];
 
 function MetricBody({ value, delta, deltaTone = "ok", spark }: { value: string; delta: string; deltaTone?: "ok" | "warn" | "err"; spark?: number[] }) {
@@ -267,41 +293,16 @@ function BlockedWorkBody() {
 }
 
 function PRReviewTableBody() {
-  const rows = [
-    { team: "platform", open: 8, first: 2.4, merge: "11h", stale: 0 },
-    { team: "growth", open: 14, first: 9.1, merge: "31h", stale: 3 },
-    { team: "billing", open: 6, first: 4.2, merge: "18h", stale: 1 },
-    { team: "search", open: 9, first: 1.8, merge: "9h", stale: 0 },
-    { team: "data-pipelines", open: 12, first: 14.6, merge: "44h", stale: 5 },
-    { team: "mobile", open: 4, first: 3, merge: "14h", stale: 0 },
-  ];
-  const th: React.CSSProperties = { padding: "5px 8px", textAlign: "left", fontSize: 9, fontFamily: "var(--m-font-mono)", color: "var(--m-fg-3)", fontWeight: 600, letterSpacing: "0.04em", textTransform: "uppercase", borderBottom: "1px solid var(--m-line)", background: "var(--m-bg-1)" };
-  const td: React.CSSProperties = { padding: "5px 8px", textAlign: "left", fontSize: 10, fontFamily: "var(--m-font-mono)", color: "var(--m-fg-1)", borderBottom: "1px solid var(--m-line-faint)" };
-
   return (
     <div style={{ flex: 1, overflow: "auto", minHeight: 0 }}>
-      <table style={{ width: "100%", borderCollapse: "collapse" }}>
-        <thead>
-          <tr>
-            <th style={th}>Team</th>
-            <th style={{ ...th, textAlign: "right" }}>Open PRs</th>
-            <th style={{ ...th, textAlign: "right" }}>1st response</th>
-            <th style={{ ...th, textAlign: "right" }}>Time to merge</th>
-            <th style={{ ...th, textAlign: "right" }}>Stale &gt; 3d</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row) => (
-            <tr key={row.team}>
-              <td style={td}>{row.team}</td>
-              <td style={{ ...td, textAlign: "right" }}>{row.open}</td>
-              <td style={{ ...td, textAlign: "right", color: row.first > 8 ? "var(--m-warn)" : "var(--m-fg-1)" }}>{row.first}h</td>
-              <td style={{ ...td, textAlign: "right" }}>{row.merge}</td>
-              <td style={{ ...td, textAlign: "right", color: row.stale > 0 ? "var(--m-warn)" : "var(--m-fg-2)" }}>{row.stale}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <MetralyTable
+        columns={prReviewColumns}
+        data={prReviewRows}
+        rowKey={(row) => String(row.team)}
+        ariaLabel="PR review latency by team"
+        stickyHeader
+        dense
+      />
     </div>
   );
 }
