@@ -165,13 +165,6 @@ export function DashboardEditor() {
 
       {dashboard ? (
         <div className={pickerOpen ? "dashboard-editor-layout" : "dashboard-editor-layout dashboard-editor-layout--board-only"}>
-          {pickerOpen ? (
-            <DashboardWidgetPicker
-              selectedType={selectedType}
-              disabled={loading || saving}
-              onAdd={handleAddWidget}
-            />
-          ) : null}
           <DashboardCanvas
             widgets={dashboard.widgets}
             selectedWidgetId={selectedWidgetId}
@@ -179,6 +172,13 @@ export function DashboardEditor() {
             onRemoveWidget={handleRemoveWidget}
             onLayoutChange={handleLayoutChange}
           />
+          {pickerOpen ? (
+            <DashboardWidgetPicker
+              selectedType={selectedType}
+              disabled={loading || saving}
+              onAdd={handleAddWidget}
+            />
+          ) : null}
         </div>
       ) : null}
     </div>

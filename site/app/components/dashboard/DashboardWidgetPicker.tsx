@@ -10,6 +10,15 @@ export interface DashboardWidgetPickerProps {
   onAdd: (type: string) => void;
 }
 
+function SearchIcon() {
+  return (
+    <svg viewBox="0 0 14 14" width="12" height="12" fill="none" stroke="currentColor" aria-hidden="true">
+      <circle cx="6" cy="6" r="3.5" strokeWidth="1.35" />
+      <path d="M9 9 12 12" strokeWidth="1.35" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export function DashboardWidgetPicker({
   registry = defaultDashboardWidgetRegistry,
   selectedType,
@@ -43,12 +52,15 @@ export function DashboardWidgetPicker({
       </div>
       <label className="dashboard-widget-picker-search" aria-label="Filter widgets">
         <span aria-hidden="true">Search</span>
-        <input
-          type="search"
-          value={search}
-          placeholder="Filter widgets…"
-          onChange={(event) => setSearch(event.target.value)}
-        />
+        <span className="dashboard-widget-picker-search-field">
+          <SearchIcon />
+          <input
+            type="search"
+            value={search}
+            placeholder="Filter widgets…"
+            onChange={(event) => setSearch(event.target.value)}
+          />
+        </span>
       </label>
       <div className="dashboard-widget-picker-list" role="listbox" aria-label="Available widgets">
         {filtered.map((definition) => (

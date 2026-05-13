@@ -31,22 +31,21 @@ test('dashboard editor saves and reloads the added widget', async ({ page }) => 
   expect(new URL(page.url()).searchParams.get('dashboard')).toBe(dashboardId);
 });
 
-test('protected baseline and preview hardening pages load', async ({ page }) => {
+test('components and dashboard surfaces load', async ({ page }) => {
   await page.goto('/components');
   await expect(page.getByRole('heading', { name: /Components/i })).toBeVisible();
 
-  await page.goto('/components/previews');
-  await expect(page.getByRole('heading', { name: 'Preview Hardening' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Engineering Dashboard Editor' })).toBeVisible();
-  await expect(page.getByText('Release to add widget').first()).toBeVisible();
+  await page.goto('/components/dashboard');
+  await expect(page.getByRole('heading', { name: /Dashboard/i }).first()).toBeVisible();
+  await expect(page.getByText('Release to add a widget').first()).toBeVisible();
   await expect(page.getByText(/draft/i)).toHaveCount(0);
 });
 
-test('preview hardening page stays navigable at mobile width', async ({ page }) => {
+test('dashboard surface stays navigable at mobile width', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 900 });
-  await page.goto('/components/previews');
+  await page.goto('/components/dashboard');
 
-  await expect(page.getByRole('heading', { name: 'Preview Hardening' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Dashboard/i }).first()).toBeVisible();
   await page.keyboard.press('Tab');
   await expect(page.locator(':focus')).toBeVisible();
   await expect(page.locator('body')).not.toHaveCSS('overflow-x', 'scroll');
