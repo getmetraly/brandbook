@@ -1,12 +1,20 @@
 import DocsShell from "../../components/docs/DocsShell";
-import { DocsCardGrid, DocsRouteCard, DocsSection, LegacyNotice } from "../../components/docs/DocsBlocks";
+import { DocsCardGrid, DocsRouteCard, DocsSection } from "../../components/docs/DocsBlocks";
 import { getRelatedLinks } from "../../lib/docs/navigation";
+
+export const dynamic = "force-dynamic";
 
 export default function SpacingPage() {
   return (
-    <DocsShell currentPath="/foundations/spacing" title="Spacing" description="Spacing rules for dense dashboard surfaces, component padding and board rhythm." status="draft" related={getRelatedLinks(["/foundations/colors", "/components/primitives", "/components/dashboard"])}>
+    <DocsShell
+      currentPath="/foundations/spacing"
+      title="Spacing"
+      description="Spacing rules for dense dashboard surfaces, component padding and board rhythm."
+      status="draft"
+      related={getRelatedLinks(["/foundations/colors", "/components/primitives", "/components/dashboard"])}
+    >
       <DocsSection id="guidance" title="Guidance">
-        <LegacyNotice>The route is ready, but the detailed spacing scale still needs to be extracted from the brandbook source of truth.</LegacyNotice>
+        <p>The spacing scale is extracted from the prototype source of truth and should stay dense, calm and stable across dashboard surfaces.</p>
       </DocsSection>
       <DocsSection id="related" title="Where this fits" description="Spacing decisions feed surface, card and dashboard layout pages.">
         <DocsCardGrid>

@@ -37,7 +37,7 @@ function DashboardPreview() {
         title="Dashboard Editor"
         description="Create, arrange and persist telemetry widgets."
         meta={`${defaultDashboardWidgetRegistry.length} widget types available`}
-        actions={<button className="btn btn-primary" type="button">Save</button>}
+        actions={<button className="metraly-dashboard-toolbar-button is-primary" type="button">Save</button>}
       />
       <DashboardGrid
         widgets={sampleWidgets}
@@ -53,7 +53,7 @@ function DashboardPreview() {
 }
 
 const meta: Meta<typeof DashboardPreview> = {
-  title: 'Metraly/Dashboard',
+  title: 'Scenarios/Dashboard Editor',
   component: DashboardPreview,
 };
 

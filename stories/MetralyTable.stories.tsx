@@ -25,7 +25,7 @@ const frameStyle = {
 };
 
 const meta: Meta<typeof MetralyTable<Row>> = {
-  title: 'Metraly/MetralyTable',
+  title: 'Components/MetralyTable',
   component: MetralyTable<Row>,
   args: {
     columns,

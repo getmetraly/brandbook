@@ -50,7 +50,7 @@ function ChartWrapperShowcase() {
 }
 
 const meta: Meta<typeof ChartWrapperShowcase> = {
-  title: 'Metraly/Chart Wrappers',
+  title: 'Components/Charts',
   component: ChartWrapperShowcase,
 };
 

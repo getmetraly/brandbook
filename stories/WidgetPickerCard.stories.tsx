@@ -18,7 +18,7 @@ const cardStyle = {
 };
 
 const meta: Meta<typeof WidgetPickerCard> = {
-  title: 'Metraly/WidgetPickerCard',
+  title: 'Components/WidgetPickerCard',
   component: WidgetPickerCard,
   args: {
     title: 'Deployment frequency',

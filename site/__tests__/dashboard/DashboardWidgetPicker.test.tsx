@@ -42,7 +42,7 @@ describe('dashboard widget registry and picker (4.2)', () => {
     });
   });
 
-  it('renders registry entries with state badges, tags and selection', () => {
+  it('renders registry entries with state badges and selection', () => {
     const onAdd = jest.fn();
 
     render(<DashboardWidgetPicker selectedType="metric-chart" onAdd={onAdd} />);
@@ -53,7 +53,7 @@ describe('dashboard widget registry and picker (4.2)', () => {
     expect(options).toHaveLength(3);
     expect(within(options[0]).getByText('Stat Card')).toBeInTheDocument();
     expect(within(options[1]).getByText('Metric Chart')).toBeInTheDocument();
-    expect(within(options[1]).getByText('trend')).toBeInTheDocument();
+    expect(within(options[1]).getByText('chart')).toBeInTheDocument();
     expect(within(options[1]).getByText('Live')).toBeInTheDocument();
     expect(options[1]).toHaveAttribute('aria-selected', 'true');
 

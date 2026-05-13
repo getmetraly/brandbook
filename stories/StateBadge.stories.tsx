@@ -3,7 +3,7 @@ import { StateBadge } from '@metraly/ui';
 import '@metraly/ui/styles/metraly-state-badge.css';
 
 const meta: Meta<typeof StateBadge> = {
-  title: 'Metraly/StateBadge',
+  title: 'Components/StateBadge',
   component: StateBadge,
   args: {
     state: 'live',

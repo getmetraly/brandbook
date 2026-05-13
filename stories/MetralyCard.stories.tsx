@@ -3,7 +3,7 @@ import { MetralyCard } from '@metraly/ui';
 import '@metraly/ui/styles/metraly-card.css';
 
 const meta: Meta<typeof MetralyCard> = {
-  title: 'Metraly/MetralyCard',
+  title: 'Components/Cards',
   component: MetralyCard,
   args: {
     title: 'Flow efficiency',

@@ -1,12 +1,20 @@
 import DocsShell from "../../components/docs/DocsShell";
-import { DocsCardGrid, DocsRouteCard, DocsSection, LegacyNotice } from "../../components/docs/DocsBlocks";
+import { DocsCardGrid, DocsRouteCard, DocsSection } from "../../components/docs/DocsBlocks";
 import { getRelatedLinks } from "../../lib/docs/navigation";
+
+export const dynamic = "force-dynamic";
 
 export default function FiltersPage() {
   return (
-    <DocsShell currentPath="/patterns/filters" title="Filters" description="Filter composition for dashboard views, scoped search and segmented selection." status="draft" related={getRelatedLinks(["/components/forms", "/components/dashboard", "/examples/engineering-dashboard"])}>
-      <DocsSection id="legacy" title="Preview pattern">
-        <LegacyNotice>Extract the strongest filter examples from the preview component set, rewrite them against @metraly/ui, then delete the duplicate legacy blocks.</LegacyNotice>
+    <DocsShell
+      currentPath="/patterns/filters"
+      title="Filters"
+      description="Filter composition for dashboard views, scoped search and segmented selection."
+      status="draft"
+      related={getRelatedLinks(["/components/forms", "/components/dashboard", "/examples/engineering-dashboard"])}
+    >
+      <DocsSection id="pattern" title="Current pattern">
+        <p>Filters should stay compact and belong in the surrounding dashboard chrome rather than introducing a separate visual language.</p>
       </DocsSection>
       <DocsSection id="related" title="Where this fits" description="Filter patterns should sit between forms and dashboard views.">
         <DocsCardGrid>

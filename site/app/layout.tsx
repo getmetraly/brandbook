@@ -1,12 +1,7 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import "./globals.css";
-import "./component-overrides.css";
-import "./components/previews/previews.css";
 import "./components/docs/docs.css";
-// Import Metraly theme and component styles from @metraly/ui.  These
-// styles define the design tokens and the base UI primitives used across
-// the brandbook and draft dashboards.
 import { ThemeProvider } from "@metraly/ui";
 import "@metraly/ui/styles/metraly-theme.css";
 import "@metraly/ui/styles/metraly-badge.css";
@@ -21,9 +16,6 @@ import "@metraly/ui/styles/metraly-widget-shell.css";
 import "@metraly/ui/styles/metraly-widget-picker.css";
 import "@metraly/ui/styles/metraly-dashboard.css";
 import "@metraly/ui/styles/metraly-charts.css";
-import "./components/previews/claude-preview-overrides.css";
-// Global styles for react-grid-layout must be imported from the root layout,
-// not from a nested Client Component.
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 

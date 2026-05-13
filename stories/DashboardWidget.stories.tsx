@@ -4,7 +4,7 @@ import '@metraly/ui/styles/metraly-state-badge.css';
 import '@metraly/ui/styles/metraly-widget-shell.css';
 
 const meta: Meta<typeof DashboardWidget> = {
-  title: 'Metraly/DashboardWidget',
+  title: 'Components/DashboardWidget',
   component: DashboardWidget,
   args: {
     id: 'story-widget',

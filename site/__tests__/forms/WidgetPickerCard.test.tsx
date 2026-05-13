@@ -1,16 +1,15 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { WidgetPickerCard } from '@metraly/ui';
 
 describe('WidgetPickerCard', () => {
-  it('renders title, description, selected state and tags', () => {
+  it('renders title, description, selected state and metadata', () => {
     render(
       <WidgetPickerCard
         title="Flow efficiency"
         description="Track delivery throughput."
         selected
         iconLabel="pulse"
-        tags={['github', 'telemetry']}
         state="live"
       />
     );
@@ -20,9 +19,8 @@ describe('WidgetPickerCard', () => {
     expect(screen.getByText('Flow efficiency')).toBeInTheDocument();
     expect(screen.getByText('Track delivery throughput.')).toBeInTheDocument();
     expect(screen.getByText('Live')).toBeInTheDocument();
-    expect(screen.getByText('github')).toBeInTheDocument();
-    expect(screen.getByText('telemetry')).toBeInTheDocument();
     expect(screen.getByText('PU')).toBeInTheDocument();
+    expect(screen.getByText('pulse')).toBeInTheDocument();
   });
 
   it('supports selection callbacks and disabled state', () => {
@@ -34,7 +32,6 @@ describe('WidgetPickerCard', () => {
         description="Track PR waiting time."
         selected={false}
         iconLabel="review"
-        tags={[]}
         state="delayed"
         onSelect={onSelect}
       />

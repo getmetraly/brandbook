@@ -65,12 +65,3 @@ export function ComponentStateGrid({ children }: { children: ReactNode }) {
 export function CodeBlock({ code }: { code: string }) {
   return <pre className="code docs-code"><code>{code}</code></pre>;
 }
-
-export function LegacyNotice({ children }: { children: ReactNode }) {
-  return (
-    <aside className="docs-legacy-notice" role="note">
-      <strong>Legacy cleanup note</strong>
-      <p>{children}</p>
-    </aside>
-  );
-}
