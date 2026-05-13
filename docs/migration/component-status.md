@@ -27,7 +27,7 @@ When changing any component below, update this tracker and keep the phase plan i
 
 | Component | Current status | Visual route | Storybook | Tests | Website pilot | Metraly pilot | Notes |
 |---|---|---|---|---|---|---|---|
-| `StateBadge` | Hardening → RC candidate | `/components/previews`, `/components/feedback` | Yes | Yes | Candidate | Candidate | Phase 1 baseline component. Semantic aliases, tone metadata, compact usage, non-wrapping label structure and chart badge slots are covered, but prototype aliases `ok`, `new`, `purple`, and `disabled` still need explicit normalization before RC. |
+| `StateBadge` | Hardening → RC candidate | `/components/previews`, `/components/feedback` | Yes | Yes | Candidate | Candidate | Phase 1 baseline component. Prototype aliases `ok`, `new`, `purple`, and `disabled` are normalized in `@metraly/ui`; badge pulse now defaults only for `live` and `new`. Keep final visual and story/state-board review before RC. |
 | `MetralyBadge` | Hardening → RC candidate | `/components/primitives`, `/components/charts` | Partial | Yes | Candidate | Candidate | Claude Design mono/uppercase/pill contract is covered. Use for static semantic chips without telemetry dot. |
 | `MetralyCard` | Hardening → RC candidate | `/components/previews`, `/components/primitives` | Yes | Yes | Candidate | Candidate | Density, loading metadata and custom empty copy are covered. Compact CSS still needs final visual review. |
 | `MetralyPanel` | Hardening → RC candidate | `/components/previews`, `/components/primitives` | Partial | Yes | Candidate | Candidate | Padding/focus metadata covered; keep small and tokenized. |
