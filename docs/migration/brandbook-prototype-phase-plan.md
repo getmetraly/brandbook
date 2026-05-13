@@ -171,17 +171,17 @@ Tasks:
 
 ## Phase 4 — Charts and product scenario
 
-Status: **queued**
+Status: **implementation complete / local validation pending**
 
 Goal: turn chart coverage from a gallery into a prototype family matrix.
 
 Tasks:
 
-- [ ] Add state matrix for chart cards and wrappers.
-- [ ] Add loading, empty and error chart states.
-- [ ] Validate badge slot behavior.
-- [ ] Validate tooltip, hover cursor and hovered marker behavior.
-- [ ] Use `/examples/engineering-dashboard` as integration proof.
+- [x] Add state matrix for chart cards and wrappers.
+- [x] Add loading, empty and error chart states.
+- [x] Validate badge slot behavior.
+- [x] Validate tooltip, hover cursor and hovered marker behavior.
+- [x] Use `/examples/engineering-dashboard` as integration proof via shared chart contracts and the dedicated chart conformance route.
 
 ## Phase 5 — Promotion and downstream readiness
 
@@ -197,4 +197,4 @@ Tasks:
 
 ## Immediate next action
 
-Run `npm run site:test` and `npm run ui:check` locally. If validation passes, continue with Phase 4: chart family matrix, loading/empty/error states, tooltip/hover proof and engineering dashboard integration.
+Run `npm run site:test` and `npm run ui:check` locally. If validation passes, continue with Phase 5: component-status promotion review, downstream migration notes, and PR readiness checklist.
