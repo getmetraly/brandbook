@@ -90,7 +90,7 @@ Exit criteria:
 
 ## Phase 1 — Core primitives and forms
 
-Status: **in progress**
+Status: **implementation complete / local validation pending**
 
 Goal: align reusable primitives and form controls with prototype states while preserving production accessibility.
 
@@ -113,7 +113,7 @@ Tasks:
 - [x] Keep native select as the safe baseline while documenting custom listbox as future hardening.
 - [x] Ensure tabs keep arrow-key navigation and prototype underline/count geometry.
 - [x] Add state-board checklist and focused tests for relevant states.
-- [ ] Update Storybook stories and final visual state-board examples.
+- [x] Update Storybook stories and final visual state-board examples.
 
 Exit criteria:
 
@@ -124,7 +124,7 @@ Exit criteria:
 
 ## Phase 2 — Dashboard primitives
 
-Status: **queued**
+Status: **in progress**
 
 Goal: align dashboard/editor primitives with prototype geometry.
 
@@ -140,11 +140,11 @@ Scope:
 
 Tasks:
 
-- [ ] Add `kind`, `new`, `loading`, `dragging` support to `WidgetPickerCard`.
-- [ ] Move `DashboardWidget` drag grip into header.
-- [ ] Keep drag grip as neutral dots and `aria-label="Drag to move"`.
-- [ ] Expand resize handles to all eight directions.
-- [ ] Render all resize handles when selected/resizing.
+- [x] Add `kind`, `new`, `loading`, `dragging` support to `WidgetPickerCard`.
+- [x] Move `DashboardWidget` drag grip into header.
+- [x] Keep drag grip as neutral dots and `aria-label="Drag to move"`.
+- [x] Expand resize handles to all eight directions.
+- [x] Render all resize handles when selected/resizing.
 - [ ] Verify drop zone idle/hover/active/rejected/empty styles.
 - [ ] Enforce two-row toolbar layout in dashboard/editor scenarios.
 - [ ] Add board-edit state matrix examples.
@@ -197,4 +197,4 @@ Tasks:
 
 ## Immediate next action
 
-Run `npm run site:test` and `npm run ui:check` locally, then continue Phase 1 with Storybook/final visual state-board examples or move to Phase 2 dashboard primitives if tests pass.
+Run `npm run site:test` and `npm run ui:check` locally, then continue Phase 2 with `DashboardDropZone`, `DashboardToolbar`, and board-edit state matrix examples.
