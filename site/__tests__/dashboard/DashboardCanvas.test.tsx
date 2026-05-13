@@ -8,6 +8,7 @@ import {
   findDashboardWidgetDefinition,
 } from '@metraly/ui';
 import type { DashboardWidgetInstance } from '@metraly/ui';
+import { isDashboardWidgetFullWidth } from '../../app/components/dashboard/DashboardCanvas';
 
 const makeWidget = (overrides: Partial<DashboardWidgetInstance> = {}): DashboardWidgetInstance => ({
   id: 'w1',
@@ -168,5 +169,13 @@ describe('DashboardDropZone all states (4.3)', () => {
   it('custom label overrides default', () => {
     render(<DashboardDropZone state="idle" label="Custom label" />);
     expect(screen.getByRole('status')).toHaveTextContent('Custom label');
+  });
+});
+
+describe('DashboardCanvas full-width adapter', () => {
+  it('treats only widgets that span the full desktop grid as full width', () => {
+    expect(isDashboardWidgetFullWidth(makeWidget({ position: { x: 0, y: 0, w: 12, h: 2 } }))).toBe(true);
+    expect(isDashboardWidgetFullWidth(makeWidget({ position: { x: 1, y: 0, w: 12, h: 2 } }))).toBe(false);
+    expect(isDashboardWidgetFullWidth(makeWidget({ position: { x: 0, y: 0, w: 11, h: 2 } }))).toBe(false);
   });
 });

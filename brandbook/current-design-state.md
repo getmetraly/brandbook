@@ -148,6 +148,137 @@ The current site structure uses grouped docs pages instead of one oversized show
 - `/examples/engineering-dashboard`
 - `/editor`
 
+## Docs shell migration boundary
+
+The website docs surface should keep route-aware composition inside the website repo while reusing shared primitives where they already fit.
+
+Current docs layout candidates are:
+
+- `Page`
+- `Section`
+- `SectionHeader`
+- `Grid`
+- `Card`
+- `CardLink`
+- `CardHeader`
+- `CardText`
+- `Stack`
+- `ContentPage`
+- `Prose`
+- `StatusPill`
+- `ButtonLink`
+- `Icon`
+
+Website-specific docs composition remains responsible for `SiteShell`, docs layout wrappers, article shell wrappers, reading progress, article TOC and route-specific hero panels.
+
+The docs shell should stay readable and route-stable rather than turning into a generic brandbook showcase.
+## Website cross-repo primitive split
+
+The website can reuse shared layout and content primitives without moving its route wrappers into the canonical primitive layer.
+
+Shared cross-repo candidates:
+
+- `ButtonLink`
+- `Card`, `CardLink`, `CardHeader`, `CardText`
+- `Grid`
+- `Page`
+- `Section`
+- `SectionHeader`
+- `Stack`
+- `StatusPill`
+- `Prose`
+- `Note`
+- `Highlight`
+- `Icon`
+
+Website-local wrappers that should remain in `../website`:
+
+- `SiteShell`
+- `SiteNav`
+- `SiteFooter`
+- `ThemeToggle`
+- `ContentPage`
+- `ReadingProgress`
+- `ArticleToc`
+
+This preserves editorial routing and claim-safe composition while still converging on the shared presentation primitives.
+## Website route stability and claim safety
+
+Public website routes should remain stable while primitives are migrated:
+
+- `/`
+- `/ai`
+- `/pricing`
+- `/docs`
+- `/demo`
+- `/trust`
+- `/blog`
+- `/privacy`
+- `/terms`
+
+Public wording should stay aligned with the docs/status system:
+
+- real UI and synthetic data are safe;
+- dashboard editing is in progress;
+- connectors are next;
+- AI direction is designed / evolving;
+- pricing pages stay preview anchors until license activation exists.
+
+Route and wording changes should not outpace the public status docs.
+## Website coverage baseline
+
+The website already has a route smoke baseline, but it is not yet a full visual/regression matrix for shared surfaces.
+
+Current coverage points:
+
+- `website/tests/e2e/routes.spec.ts` covers route render smoke for the public surface set.
+- `website/scripts/smoke-routes.mjs` covers the same route set at the HTTP layer.
+
+Next checks to add or formalize are page-level visual checks for homepage, pricing, demo and docs, plus responsive checks for desktop and mobile widths.
+## Website migration boundary matrix
+
+Safe first-phase candidates:
+
+- `ButtonLink`
+- `Card`, `CardLink`, `CardHeader`, `CardText`
+- `Grid`
+- `Page`
+- `Section`
+- `SectionHeader`
+- `Stack`
+- `StatusPill`
+- `Prose`
+- `Note`
+- `Highlight`
+- `Icon`
+
+Already-adjacent website surfaces that can adopt those primitives first:
+
+- homepage hero, feature grid, role cards, AI block and roadmap cards;
+- pricing cards and CTA rows;
+- docs landing cards, callouts and hero CTA pairs;
+- trust page cards, notes and centered prose;
+- blog archive cards and article metadata blocks.
+
+Wait-until-stable wrappers:
+
+- `SiteShell`
+- `SiteNav`
+- `SiteFooter`
+- `ThemeToggle`
+- `ContentPage`
+- `ReadingProgress`
+- `ArticleToc`
+
+Route-level hero and shell composition for `/`, `/docs`, `/blog`, `/privacy`, and `/terms` should stay website-owned until the shared primitives are fully settled.
+
+
+Claim-safe wording should continue to be validated against the public docs/status system before route copy changes land.
+
+
+
+
+
 ## Preview hardening structure
 
 The preview component set complements the grouped docs pages and still covers the product-scenario review surfaces:
@@ -168,7 +299,32 @@ It includes:
 - role icon examples from Developer to CEO;
 - board edit mode and drag-and-drop states.
 
-The final Claude Design zip is treated as a visual reference only. Production-aligned translation lives in `site/app/components/previews/claude-design-handoff.md`, `/components/previews`, `/patterns/widget-editor` and `@metraly/ui/charts`.
+The final Claude Design zip is treated as a visual reference only. Production-aligned translation lives in `site/app/components/previews/claude-design-handoff.md`, `/components/previews`, `/components/dashboard`, `/patterns/dashboard-layout`, `/patterns/widget-editor`, `/examples/engineering-dashboard` and `@metraly/ui/charts`.
+## Website shell migration boundary
+
+The website migration phase treats shell composition as a boundary, not a new brandbook primitive layer.
+
+Current safe-first migration candidates from the website repo are:
+
+- `ButtonLink`
+- `Card`, `CardLink`, `CardHeader`, `CardText`
+- `Grid`
+- `Page`
+- `Section`
+- `SectionHeader`
+- `Stack`
+- `StatusPill`
+- `Prose`
+- `Note`
+- `Highlight`
+- `Icon`
+
+The website-specific composition layers that should stay editorial-aware are `SiteShell`, `SiteNav`, `SiteFooter`, `ThemeToggle`, `ArticleShell`, `ArticleToc` and `ReadingProgress`.
+
+Route-aware navigation, footer link groups, legal copy and client theme persistence remain website responsibilities.
+
+This phase should document boundaries before any direct route migration.
+
 
 ## Core primitive set
 
@@ -216,11 +372,21 @@ Usage rules:
 - Chart preview surfaces should show a point marker at the hovered value for line and area charts where that improves readability, and a hover background band for column charts.
 - If a new primitive is needed, document the need in migration notes before expanding the export surface.
 
-Board flow contract:
+## Board flow contract:
 
-- `dashboardRepository.createWidget` is the canonical widget constructor for the editor flow.
-- It resolves registry-backed defaults for known widget types and accepts partial layout overrides.
-- The editor should remain orchestration-only: select a widget type, create the instance through the repository, persist, reload and re-enter edit mode with the same instance.
+|- `DashboardGrid` is display-first and renders widgets against upstream layout data.
+|- `DashboardWidget` owns the shell chrome, state badge, drag/select/remove affordances and full-width framing.
+|- `DashboardToolbar` owns dashboard-level controls such as tabs, search, sync state and editor actions.
+|- `DashboardEmptyState` owns first-run board messaging and call to action placement.
+|- `DashboardDropZone` owns DnD feedback only and should stay pulse-free by default.
+|- `DashboardResizeHandle` owns resize affordance geometry and accessibility labeling.
+|- `WidgetRegistry` owns widget catalog metadata, default layouts and instance creation helpers.
+|- `dashboardRepository.createWidget` is the canonical widget constructor for the editor flow.
+|- It resolves registry-backed defaults for known widget types and accepts partial layout overrides.
+|- The editor should remain orchestration-only: select a widget type, create the instance through the repository, persist, reload and re-enter edit mode with the same instance.
+|- `dashboardRepository.create`, `fetch`, `save`, `delete` and `updateLayout` keep the editor orchestration separate from presentation and round-trip through the local persistence key shape.
+|- Reload should preserve dashboard id, name, widget identity and layout snapshots.
+|- The current board-edit preview fixture keeps selected, dragging, full-width, drop-target, resize and empty-dashboard states anchored in `site/__tests__/preview/ClaudeDesignStateBoard.test.tsx` while the interactive flow remains orchestration-only.
 
 ## Table surfaces
 
@@ -260,9 +426,9 @@ The real dashboard scenario should show how primitives work together:
 - toolbar with search, tabs, live sync and add-widget button;
 - metric cards;
 - chart panel;
-- repository health table.
+- repository health table;
 - widget picker panel;
-- selected, dragging, drop-target, resize, empty and disconnected states.
+- selected, dragging, full-width, drop-target, resize, empty and disconnected states.
 
 The toolbar must not collide. Use responsive wrapping or grid fallback.
 
