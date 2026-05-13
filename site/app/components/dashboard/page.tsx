@@ -11,6 +11,7 @@ import {
 import DocsShell from "../../components/docs/DocsShell";
 import { ComponentPreview, ComponentStateGrid, DocsSection } from "../../components/docs/DocsBlocks";
 import { getRelatedLinks } from "../../lib/docs/navigation";
+import "./dashboard.css";
 
 export const dynamic = "force-dynamic";
 
@@ -33,15 +34,14 @@ export default function DashboardComponentsPage() {
         <ComponentPreview title="DashboardToolbar / DashboardWidget" description="Toolbar and widget chrome for canonical dashboard pages and editor flows." states={["selected", "resizable", "live", "delayed"]} code={'import { DashboardWidget } from "@metraly/ui";'}>
           <div className="docs-dashboard-preview">
             <DashboardToolbar
-              title="Engineering board"
-              description="Last updated 2m ago"
-              meta="2 widgets · saved"
               tabs={[{ value: "delivery", label: "Delivery" }, { value: "dora", label: "DORA" }, { value: "flow", label: "Flow" }]}
               activeTab="delivery"
               searchValue=""
               syncState="live"
               editMode
-              actions={<span className="docs-status docs-status-ready">Editor</span>}
+              onToggleEdit={() => undefined}
+              onAddWidget={() => undefined}
+              actions={<button className="metraly-dashboard-toolbar-button is-primary" type="button">Save</button>}
             />
             <ComponentStateGrid>
               <DashboardWidget id="flow" title="Flow efficiency" subtitle="Current sprint" state="live" selected>

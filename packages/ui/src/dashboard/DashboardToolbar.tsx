@@ -23,8 +23,8 @@ export interface DashboardToolbarProps {
 }
 
 export function DashboardToolbar({
-  title = "Dashboard editor",
-  description = "Create, arrange and persist telemetry widgets.",
+  title,
+  description,
   actions,
   meta,
   tabs,
@@ -46,26 +46,31 @@ export function DashboardToolbar({
   const hasSearch = Boolean(searchValue !== undefined || onSearchChange);
   const hasSync = Boolean(syncState);
   const hasActions = Boolean(actions || onToggleEdit || onAddWidget);
+  const hasCopy = title !== undefined || description !== undefined || meta !== undefined;
   const hasSecondRow = hasSearch || hasSync || hasActions;
 
   return (
     <header className={classes} data-layout="two-row" data-edit-mode={editMode ? "on" : "off"}>
-      <div className="metraly-dashboard-toolbar-copy">
-        <strong>{title}</strong>
-        <span>{description}</span>
-        {meta ? <div className="metraly-dashboard-toolbar-meta">{meta}</div> : null}
+      <div className="metraly-dashboard-toolbar-head">
+        {hasCopy ? (
+          <div className="metraly-dashboard-toolbar-copy">
+            <strong>{title}</strong>
+            <span>{description}</span>
+            {meta ? <div className="metraly-dashboard-toolbar-meta">{meta}</div> : null}
+          </div>
+        ) : null}
+        {hasTabs ? (
+          <div className="metraly-dashboard-toolbar-tabs-row" data-row="tabs">
+            <MetralyTabs
+              className="metraly-dashboard-toolbar-tabs"
+              ariaLabel="Dashboard sections"
+              items={tabs!}
+              value={activeTab}
+              onValueChange={onTabChange}
+            />
+          </div>
+        ) : null}
       </div>
-      {hasTabs ? (
-        <div className="metraly-dashboard-toolbar-row metraly-dashboard-toolbar-row-tabs" data-row="tabs">
-          <MetralyTabs
-            className="metraly-dashboard-toolbar-tabs"
-            ariaLabel="Dashboard sections"
-            items={tabs!}
-            value={activeTab}
-            onValueChange={onTabChange}
-          />
-        </div>
-      ) : null}
       {hasSecondRow ? (
         <div className="metraly-dashboard-toolbar-row metraly-dashboard-toolbar-row-controls" data-row="controls">
           <div className="metraly-dashboard-toolbar-controls">

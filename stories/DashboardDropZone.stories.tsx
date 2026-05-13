@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { DashboardDropZone } from "@metraly/ui";
-import "@metraly/ui/styles/metraly-dashboard.css";
 
 const meta: Meta<typeof DashboardDropZone> = {
   title: "Components/DashboardDropZone",

@@ -3,18 +3,26 @@ import '@testing-library/jest-dom';
 import { DashboardEmptyState, DashboardGrid, DashboardResizeHandle, DashboardToolbar, DashboardWidget } from '@metraly/ui';
 
 describe('dashboard components', () => {
-  it('renders toolbar metadata and actions', () => {
+  it('renders the compact two-row toolbar contract', () => {
     render(
       <DashboardToolbar
-        title="Dashboard Editor"
-        description="Arrange widgets"
-        meta="Saved"
+        tabs={[
+          { value: 'delivery', label: 'Delivery' },
+          { value: 'dora', label: 'DORA' },
+          { value: 'flow', label: 'Flow' },
+        ]}
+        activeTab="delivery"
+        searchValue=""
+        syncState="live"
+        editMode
+        onToggleEdit={() => undefined}
+        onAddWidget={() => undefined}
         actions={<button type="button">Save</button>}
       />
     );
 
-    expect(screen.getByText('Dashboard Editor')).toBeInTheDocument();
-    expect(screen.getByText('Saved')).toBeInTheDocument();
+    expect(screen.getByRole('tablist', { name: 'Dashboard sections' })).toBeInTheDocument();
+    expect(screen.getByRole('searchbox')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Save' })).toBeInTheDocument();
   });
 
@@ -41,7 +49,7 @@ describe('dashboard components', () => {
   });
 
   it('search input is readOnly and has no onChange when onSearchChange is not provided', () => {
-    render(<DashboardToolbar title="Board" searchValue="" />);
+    render(<DashboardToolbar searchValue="" />);
     const input = screen.getByRole('searchbox');
     expect(input).toHaveAttribute('readonly');
     // onChange must not be wired — simulating change must not throw
@@ -50,7 +58,7 @@ describe('dashboard components', () => {
 
   it('search input fires onSearchChange when handler is provided', () => {
     const onSearch = jest.fn();
-    render(<DashboardToolbar title="Board" searchValue="q" onSearchChange={onSearch} />);
+    render(<DashboardToolbar searchValue="q" onSearchChange={onSearch} />);
     fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'new' } });
     expect(onSearch).toHaveBeenCalledWith('new');
   });
