@@ -42,70 +42,77 @@ export function DashboardToolbar({
   className,
 }: DashboardToolbarProps) {
   const classes = ["metraly-dashboard-toolbar", className].filter(Boolean).join(" ");
-  const hasControls = Boolean(tabs?.length || searchValue !== undefined || onSearchChange || syncState);
+  const hasTabs = Boolean(tabs?.length);
+  const hasSearch = Boolean(searchValue !== undefined || onSearchChange);
+  const hasSync = Boolean(syncState);
   const hasActions = Boolean(actions || onToggleEdit || onAddWidget);
+  const hasSecondRow = hasSearch || hasSync || hasActions;
 
   return (
-    <header className={classes}>
+    <header className={classes} data-layout="two-row" data-edit-mode={editMode ? "on" : "off"}>
       <div className="metraly-dashboard-toolbar-copy">
         <strong>{title}</strong>
         <span>{description}</span>
         {meta ? <div className="metraly-dashboard-toolbar-meta">{meta}</div> : null}
       </div>
-      {hasControls ? (
-        <div className="metraly-dashboard-toolbar-controls">
-          {tabs?.length ? (
-            <MetralyTabs
-              className="metraly-dashboard-toolbar-tabs"
-              ariaLabel="Dashboard sections"
-              items={tabs}
-              value={activeTab}
-              onValueChange={onTabChange}
-            />
-          ) : null}
-          {searchValue !== undefined || onSearchChange ? (
-            <label className="metraly-dashboard-toolbar-search">
-              <span>Search dashboard widgets</span>
-              <input
-                type="search"
-                value={searchValue ?? ""}
-                readOnly={!onSearchChange}
-                placeholder={searchPlaceholder}
-                onChange={onSearchChange ? (event) => onSearchChange(event.target.value) : undefined}
-              />
-            </label>
-          ) : null}
-          {syncState ? (
-            <StateBadge
-              state={syncState}
-              label={syncLabel ?? (syncState === "live" ? "Live sync" : undefined)}
-              className="metraly-dashboard-toolbar-sync"
-            />
-          ) : null}
+      {hasTabs ? (
+        <div className="metraly-dashboard-toolbar-row metraly-dashboard-toolbar-row-tabs" data-row="tabs">
+          <MetralyTabs
+            className="metraly-dashboard-toolbar-tabs"
+            ariaLabel="Dashboard sections"
+            items={tabs!}
+            value={activeTab}
+            onValueChange={onTabChange}
+          />
         </div>
       ) : null}
-      {hasActions ? (
-        <div className="metraly-dashboard-toolbar-actions">
-          {onToggleEdit ? (
-            <button
-              type="button"
-              className={editMode ? "metraly-dashboard-toolbar-button is-active metraly-focus-ring" : "metraly-dashboard-toolbar-button metraly-focus-ring"}
-              aria-pressed={editMode}
-              onClick={onToggleEdit}
-            >
-              {editMode ? "Edit mode on" : "Edit mode"}
-            </button>
+      {hasSecondRow ? (
+        <div className="metraly-dashboard-toolbar-row metraly-dashboard-toolbar-row-controls" data-row="controls">
+          <div className="metraly-dashboard-toolbar-controls">
+            {hasSearch ? (
+              <label className="metraly-dashboard-toolbar-search">
+                <span>Search dashboard widgets</span>
+                <input
+                  type="search"
+                  value={searchValue ?? ""}
+                  readOnly={!onSearchChange}
+                  placeholder={searchPlaceholder}
+                  onChange={onSearchChange ? (event) => onSearchChange(event.target.value) : undefined}
+                />
+              </label>
+            ) : null}
+            {syncState ? (
+              <StateBadge
+                state={syncState}
+                label={syncLabel ?? (syncState === "live" ? "Live sync" : undefined)}
+                className="metraly-dashboard-toolbar-sync"
+              />
+            ) : null}
+          </div>
+          {hasActions ? (
+            <div className="metraly-dashboard-toolbar-actions">
+              {onToggleEdit ? (
+                <button
+                  type="button"
+                  className={editMode ? "metraly-dashboard-toolbar-button is-active metraly-focus-ring" : "metraly-dashboard-toolbar-button metraly-focus-ring"}
+                  aria-pressed={editMode}
+                  onClick={onToggleEdit}
+                >
+                  {editMode ? "Edit mode on" : "Edit mode"}
+                </button>
+              ) : null}
+              {onAddWidget ? (
+                <button
+                  type="button"
+                  className="metraly-dashboard-toolbar-button is-primary metraly-focus-ring"
+                  onClick={onAddWidget}
+                >
+                  {addWidgetLabel}
+                </button>
+              ) : null}
+              {actions}
+            </div>
           ) : null}
-          {onAddWidget ? (
-            <button
-              type="button"
-              className="metraly-dashboard-toolbar-button is-primary metraly-focus-ring"
-              onClick={onAddWidget}
-            >
-              {addWidgetLabel}
-            </button>
-          ) : null}
-          {actions}
         </div>
       ) : null}
     </header>

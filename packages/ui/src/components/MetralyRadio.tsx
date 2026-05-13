@@ -6,6 +6,8 @@ export interface MetralyRadioProps {
   value?: string;
   label?: React.ReactNode;
   description?: React.ReactNode;
+  /** Prototype-compatible alias for description. */
+  hint?: React.ReactNode;
   checked?: boolean;
   defaultChecked?: boolean;
   disabled?: boolean;
@@ -20,6 +22,7 @@ export function MetralyRadio({
   value,
   label = "Radio",
   description,
+  hint,
   checked,
   defaultChecked,
   disabled = false,
@@ -27,7 +30,8 @@ export function MetralyRadio({
   className,
   onChange,
 }: MetralyRadioProps) {
-  const describedBy = description && id ? `${id}-description` : undefined;
+  const helperText = description ?? hint;
+  const describedBy = helperText && id ? `${id}-description` : undefined;
   const classes = [
     "metraly-control-row",
     "metraly-radio",
@@ -39,7 +43,7 @@ export function MetralyRadio({
     .join(" ");
 
   return (
-    <label className={classes}>
+    <label className={classes} data-state={error ? "error" : disabled ? "disabled" : checked ? "checked" : "default"}>
       <input
         id={id}
         name={name}
@@ -57,9 +61,9 @@ export function MetralyRadio({
       <span className="metraly-radio-dot" aria-hidden="true" />
       <span className="metraly-control-copy">
         <span className="metraly-control-label">{label}</span>
-        {description ? (
+        {helperText ? (
           <span id={describedBy} className="metraly-control-description">
-            {description}
+            {helperText}
           </span>
         ) : null}
       </span>

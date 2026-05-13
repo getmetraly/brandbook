@@ -1,10 +1,17 @@
 import * as React from "react";
 
+export type MetralySwitchAccent = "cyan" | "purple";
+
 export interface MetralySwitchProps {
   label?: React.ReactNode;
   description?: React.ReactNode;
+  /** Prototype-compatible alias for description. */
+  hint?: React.ReactNode;
   checked?: boolean;
   disabled?: boolean;
+  /** Visual loading state. Keeps the control non-interactive without losing layout. */
+  loading?: boolean;
+  accent?: MetralySwitchAccent;
   className?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
@@ -12,38 +19,48 @@ export interface MetralySwitchProps {
 export function MetralySwitch({
   label = "Switch",
   description,
+  hint,
   checked = false,
   disabled = false,
+  loading = false,
+  accent = "cyan",
   className,
   onClick,
 }: MetralySwitchProps) {
+  const helperText = description ?? hint;
+  const isDisabled = disabled || loading;
   const classes = [
     "metraly-control-row",
     "metraly-switch-row",
     checked && "is-checked",
-    disabled && "is-disabled",
+    isDisabled && "is-disabled",
+    loading && "is-loading",
+    accent === "purple" && "is-purple",
     className,
   ]
     .filter(Boolean)
     .join(" ");
 
   return (
-    <span className={classes}>
+    <span className={classes} data-state={loading ? "loading" : isDisabled ? "disabled" : checked ? "checked" : "default"} data-accent={accent}>
       <button
         type="button"
         className="metraly-switch"
         role="switch"
         aria-checked={checked}
         aria-label={typeof label === "string" ? label : undefined}
-        disabled={disabled}
-        onClick={onClick}
+        aria-busy={loading || undefined}
+        disabled={isDisabled}
+        onClick={loading ? undefined : onClick}
       >
         <span className="metraly-switch-track" aria-hidden="true" />
-        <span className="metraly-switch-knob" aria-hidden="true" />
+        <span className="metraly-switch-knob" aria-hidden="true">
+          {loading ? <span className="metraly-control-spinner" /> : null}
+        </span>
       </button>
       <span className="metraly-control-copy">
         <span className="metraly-control-label">{label}</span>
-        {description ? <span className="metraly-control-description">{description}</span> : null}
+        {helperText ? <span className="metraly-control-description">{helperText}</span> : null}
       </span>
     </span>
   );

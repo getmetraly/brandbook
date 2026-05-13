@@ -18,6 +18,12 @@ function defaultDropZoneLabel(state: DashboardDropZoneState): string {
   return "Drop widget here";
 }
 
+function dropZoneTone(state: DashboardDropZoneState): "neutral" | "cyan" | "danger" {
+  if (state === "rejected") return "danger";
+  if (state === "hover" || state === "active" || state === "empty") return "cyan";
+  return "neutral";
+}
+
 export function DashboardDropZone({
   state,
   active = false,
@@ -27,9 +33,11 @@ export function DashboardDropZone({
 }: DashboardDropZoneProps) {
   const resolvedState = state ?? (active ? "active" : "idle");
   const resolvedLabel = label ?? defaultDropZoneLabel(resolvedState);
+  const tone = dropZoneTone(resolvedState);
   const classes = [
     "metraly-dashboard-drop-zone",
     `is-${resolvedState}`,
+    `is-${tone}`,
     (active || resolvedState === "active") && "is-active",
     className,
   ]
@@ -37,7 +45,14 @@ export function DashboardDropZone({
     .join(" ");
 
   return (
-    <div className={classes} role="status" aria-live="polite" data-drop-zone-state={resolvedState}>
+    <div
+      className={classes}
+      role="status"
+      aria-live="polite"
+      data-drop-zone-state={resolvedState}
+      data-tone={tone}
+      data-pulse="off"
+    >
       <span className="metraly-dashboard-drop-zone-icon" aria-hidden="true">
         {resolvedState === "rejected" ? "!" : "+"}
       </span>
