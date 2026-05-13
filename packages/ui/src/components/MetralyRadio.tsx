@@ -54,9 +54,7 @@ export function MetralyRadio({
         onChange={onChange}
         readOnly={checked !== undefined && !onChange ? true : undefined}
       />
-      <span className="metraly-radio-dot" aria-hidden="true">
-        <span className="metraly-radio-pulse" />
-      </span>
+      <span className="metraly-radio-dot" aria-hidden="true" />
       <span className="metraly-control-copy">
         <span className="metraly-control-label">{label}</span>
         {description ? (

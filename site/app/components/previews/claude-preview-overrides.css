@@ -1,0 +1,96 @@
+/* Preview-only fixes for Claude Design state board containers.
+ * Keep component primitives reusable while making the visual review surface
+ * show each state without internal scrollbars or clipped active indicators.
+ */
+
+.claude-state-board .claude-state-cell:has(.metraly-tabs) {
+  grid-column: 1 / -1;
+  min-height: 100px;
+  overflow: visible;
+  padding-block-end: 4px;
+}
+
+.claude-state-board .claude-state-cell:has(.metraly-tabs) > div {
+  width: 100%;
+  min-width: 0;
+  overflow: visible;
+}
+
+.claude-state-board .metraly-tabs,
+.claude-dashboard-editor-preview .metraly-tabs {
+  width: 100%;
+  min-height: 40px;
+  margin-block-end: 0;
+  overflow: visible;
+}
+
+.claude-dashboard-chart-frame {
+  position: relative;
+  overflow: visible;
+}
+
+.claude-dashboard-chart-frame .metraly-chart-tooltip {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  min-width: 180px;
+  max-width: 240px;
+}
+
+/* Keep the full dashboard editor scenario inside the docs content column.
+ * The preview is intentionally dense, but the docs page must never get a
+ * horizontal scrollbar. Use a stable two-column preview and let the widget
+ * library occupy a full-width row below the editor workspace.
+ */
+.claude-dashboard-editor-preview {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+  grid-template-columns: minmax(160px, 230px) minmax(0, 1fr) !important;
+}
+
+.claude-dashboard-editor-preview,
+.claude-dashboard-workspace,
+.claude-dashboard-main,
+.claude-dashboard-topbar,
+.claude-dashboard-grid-preview,
+.claude-widget-picker-panel,
+.claude-dashboard-sidebar {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.claude-dashboard-workspace,
+.claude-dashboard-main,
+.claude-dashboard-grid-preview {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.claude-dashboard-main {
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+.claude-dashboard-topbar {
+  flex-wrap: wrap;
+}
+
+.claude-dashboard-editor-preview > .claude-widget-picker-panel {
+  grid-column: 1 / -1 !important;
+  width: 100%;
+  max-width: 100%;
+}
+
+@media (max-width: 980px) {
+  .claude-dashboard-editor-preview {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .claude-dashboard-editor-preview > .claude-widget-picker-panel,
+  .claude-dashboard-editor-preview > .claude-dashboard-sidebar,
+  .claude-dashboard-editor-preview > .claude-dashboard-workspace {
+    grid-column: 1 / -1 !important;
+  }
+}

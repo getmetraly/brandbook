@@ -25,6 +25,7 @@ export interface MetralyChartBaseProps<TDatum extends MetralyChartDatum = Metral
   data: TDatum[];
   xKey?: string;
   series: MetralyChartSeries[];
+  width?: number;
   height?: number;
   ariaLabel: string;
   summary: React.ReactNode;

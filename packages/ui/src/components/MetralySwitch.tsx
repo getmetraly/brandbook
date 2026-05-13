@@ -38,9 +38,7 @@ export function MetralySwitch({
         disabled={disabled}
         onClick={onClick}
       >
-        <span className="metraly-switch-track" aria-hidden="true">
-          <span className="metraly-switch-pulse" />
-        </span>
+        <span className="metraly-switch-track" aria-hidden="true" />
         <span className="metraly-switch-knob" aria-hidden="true" />
       </button>
       <span className="metraly-control-copy">
