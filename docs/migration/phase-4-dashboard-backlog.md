@@ -40,6 +40,19 @@ Make the dashboard and board component contract stable enough that the product a
   - `WidgetRegistry`
 - Document the intended role of each primitive and which one owns presentation versus state.
 - Define which properties are required for downstream migration and which remain internal.
+- Treat `WidgetRegistry` as the canonical source for widget catalog metadata and default layout, not as a presentation surface.
+- Treat dashboard persistence, URL synchronization and mutation sequencing as app-layer orchestration, not primitive responsibilities.
+
+### Canonical contract snapshot
+
+- `DashboardGrid` renders widgets against supplied layout data and remains display-first.
+- `DashboardWidget` owns widget shell chrome, state badge, select/remove/drag affordances and content framing.
+- `DashboardToolbar` owns dashboard-level controls such as tabs, search, sync state and editor actions.
+- `DashboardEmptyState` owns first-run board messaging and call to action placement.
+- `DashboardDropZone` owns DnD feedback only and should stay pulse-free by default.
+- `DashboardResizeHandle` owns resize affordance geometry and accessibility labeling.
+- `WidgetRegistry` owns widget catalog definitions, default layouts and instance creation helpers.
+- `dashboardRepository` and related app services own create, save, load, delete and snapshot behavior.
 
 ### 4.2 Stabilize Widget Registry And Picker
 
@@ -120,4 +133,3 @@ Make the dashboard and board component contract stable enough that the product a
 - State persistence bugs can silently corrupt board layouts.
 - Widget registry drift can make the picker and renderer disagree about the same widget type.
 - Over-coupling presentation to persistence makes later migration harder.
-

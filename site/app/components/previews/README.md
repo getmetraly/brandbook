@@ -18,6 +18,12 @@ The translated implementation now lives in:
 
 The reference ideas adopted from the zip are component state coverage, Engineering Intelligence dashboard editor layout, widget picker density, drop-zone treatment, resize affordance placement and implementation handoff notes.
 
+The dashboard contract is now split across grouped docs and the preview surface:
+
+- `/components/dashboard` for the canonical dashboard primitive contract;
+- `/patterns/widget-editor` for the lifecycle and editor composition reference;
+- `/components/previews` for the static state board and dashboard scenario used during hardening.
+
 Do not adopt React CDN loading, Babel-in-browser, global `window` component registration, inline-style-heavy architecture or generic infrastructure-observability examples from the zip.
 
 ## Relationship to `/components`
