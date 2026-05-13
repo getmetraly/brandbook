@@ -111,7 +111,7 @@ describe('Phase 3 table and board-edit composition conformance', () => {
         </DashboardWidget>
         <DashboardDropZone state="active" />
         <DashboardDropZone state="rejected" />
-        <DashboardEmptyState title="No widgets yet" description="Add the first delivery widget." actionLabel="Add delivery widget" />
+        <DashboardEmptyState title="No widgets yet" description="Add the first delivery widget." action={<button type="button">Add delivery widget</button>} />
       </div>,
     );
 
@@ -120,6 +120,6 @@ describe('Phase 3 table and board-edit composition conformance', () => {
     expect(container.querySelector('.metraly-widget-shell.is-fullwidth')).toBeInTheDocument();
     expect(screen.getByRole('status', { name: /Release to add widget/i })).toHaveAttribute('data-drop-zone-state', 'active');
     expect(screen.getByRole('status', { name: /Cannot drop here/i })).toHaveAttribute('data-drop-zone-state', 'rejected');
-    expect(screen.getByRole('region', { name: 'No widgets yet' })).toBeInTheDocument();
+    expect(screen.getByRole('region', { name: /Empty dashboard/ })).toBeInTheDocument();
   });
 });

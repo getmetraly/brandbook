@@ -22,6 +22,7 @@ import {
   MetralyChartCard,
   MetralySparkline,
 } from "@metraly/ui/charts";
+import TelemetrySearch from "./TelemetrySearch";
 
 const sourceOptions = [
   { value: "github", label: "GitHub pull requests" },
@@ -568,7 +569,7 @@ export function ComponentStateBoard() {
         <StateCell label="delayed"><StateBadge state="delayed" label="Delayed" /></StateCell>
         <StateCell label="disconnected"><StateBadge state="disconnected" label="Disconnected" /></StateCell>
         <StateCell label="no-data"><StateBadge state="noData" label="No data" /></StateCell>
-        <StateCell label="new"><StateBadge state="live" label="New review" /></StateCell>
+        <StateCell label="new"><StateBadge state="new" label="New review" /></StateCell>
         <StateCell label="picker default"><WidgetPickerCard title="Cycle time breakdown" description="Coding, review, merge and deploy stages." iconLabel="cycle" tags={["flow", "cycle"]} /></StateCell>
         <StateCell label="picker selected"><WidgetPickerCard title="DORA overview" description="Deployment frequency, lead time, failure rate and MTTR." iconLabel="dora" tags={["dora", "exec"]} selected /></StateCell>
         <StateCell label="picker disabled"><WidgetPickerCard title="WIP per engineer" description="Source is not connected yet." iconLabel="wip" tags={["flow"]} disabled /></StateCell>
@@ -644,13 +645,16 @@ function WidgetPickerPanel() {
   return (
     <aside className="claude-widget-picker-panel" aria-label="Widget picker">
       <header>
-        <strong>Widget library</strong>
+        <strong>Engineering Intelligence library</strong>
         <span>Reference-only static picker states.</span>
       </header>
+      <TelemetrySearch />
       <WidgetPickerCard title="Deployment frequency" description="Deploys per day, by team." iconLabel="deploy" tags={["dora", "delivery"]} selected />
-      <WidgetPickerCard title="PR review latency" description="First response and merge waiting time." iconLabel="review" tags={["review"]} state="delayed" />
-      <WidgetPickerCard title="Flaky builds" description="Tests retried then passed." iconLabel="flaky" tags={["ci"]} state="delayed" />
-      <WidgetPickerCard title="WIP per engineer" description="Source not connected." iconLabel="wip" tags={["flow"]} disabled />
+      <WidgetPickerCard title="Lead time for changes" description="PR opened → prod, p50 / p90." iconLabel="metric" tags={["dora", "flow"]} loading />
+      <WidgetPickerCard title="Change failure rate" description="% of deploys that triggered a rollback or incident." iconLabel="chart" tags={["dora", "ops"]} />
+      <WidgetPickerCard title="Flaky builds" description="Tests retried then passed." iconLabel="lightning" tags={["ci"]} state="new" visualState="new" />
+      <WidgetPickerCard title="Blocked work" description="Issues stalled > 3 days, by stage." iconLabel="bell" tags={["flow"]} state="delayed" />
+      <WidgetPickerCard title="WIP per engineer" description="Source not connected." iconLabel="table" tags={["flow"]} disabled />
     </aside>
   );
 }

@@ -17,7 +17,7 @@ export { MetralyPanel } from "./components/MetralyPanel";
 export type { MetralyPanelPadding, MetralyPanelProps } from "./components/MetralyPanel";
 
 export { MetralyTable } from "./components/MetralyTable";
-export type { MetralyTableColumn, MetralyTableProps } from "./components/MetralyTable";
+export type { MetralyTableColumn, MetralyTableProps, MetralyTableRowMarker } from "./components/MetralyTable";
 
 export { MetralyTelemetryLine } from "./components/MetralyTelemetryLine";
 export type { MetralyTelemetryLineProps } from "./components/MetralyTelemetryLine";

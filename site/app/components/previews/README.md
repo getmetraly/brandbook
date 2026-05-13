@@ -72,6 +72,7 @@ Core controls:
 Dashboard primitives:
 
 - `WidgetPickerCard`
+- `TelemetrySearch` search rail for the static picker panel
 - `DashboardWidget` preview
 - `TelemetryGridItem`
 - `TelemetryTableRow`
