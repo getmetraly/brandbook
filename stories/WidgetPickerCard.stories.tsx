@@ -57,8 +57,8 @@ export const New: Story = {
     title: 'Flaky builds',
     description: 'Tests retried-then-passed in the last 7 days.',
     kind: 'ci/flaky',
-    iconLabel: 'bell',
-    state: 'new',
+    iconLabel: 'lightning',
+    visualState: 'new',
   },
 };
 
@@ -70,6 +70,16 @@ export const Disabled: Story = {
     description: 'Source is not connected.',
     kind: 'flow/wip',
     iconLabel: 'table',
-    state: 'disabled',
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    selected: false,
+    title: 'PR review latency',
+    description: 'First review response, by team.',
+    kind: 'review/latency',
+    iconLabel: 'metric',
+    loading: true,
   },
 };

@@ -19,6 +19,8 @@ const meta: Meta<typeof DashboardToolbar> = {
         syncState="live"
         syncLabel="Live sync"
         editMode
+        onToggleEdit={() => undefined}
+        onAddWidget={() => undefined}
         actions={<button className="metraly-dashboard-toolbar-button is-primary" type="button">Save</button>}
       />
     </div>

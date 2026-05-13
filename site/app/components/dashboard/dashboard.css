@@ -78,7 +78,7 @@
 
 .dashboard-editor-layout {
   display: grid;
-  grid-template-columns: minmax(280px, 320px) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) 320px;
   gap: 12px;
   align-items: start;
 }
@@ -123,12 +123,25 @@
   letter-spacing: 0.04em;
 }
 
-.dashboard-widget-picker-search input {
+.dashboard-widget-picker-search-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   height: 30px;
   padding: 0 10px;
   border: 1px solid var(--m-line);
   border-radius: var(--m-r-2);
   background: var(--m-bg-2);
+  color: var(--m-fg-2);
+}
+
+.dashboard-widget-picker-search input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: var(--m-fg-0);
   font: inherit;
   outline: none;
@@ -179,4 +192,3 @@
 .metraly-dashboard-grid-shell {
   min-width: 0;
 }
-

@@ -24,8 +24,8 @@ const preview: Preview = {
     backgrounds: {
       default: "metraly-dark",
       values: [
-        { name: "metraly-dark", value: "#020617" },
-        { name: "slate", value: "#0f172a" },
+        { name: "metraly-dark", value: "var(--m-bg-0)" },
+        { name: "surface", value: "var(--m-bg-1)" },
       ],
     },
     layout: "padded",
