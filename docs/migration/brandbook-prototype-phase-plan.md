@@ -157,17 +157,17 @@ Exit criteria:
 
 ## Phase 3 — Table, grid and editor composition
 
-Status: **queued**
+Status: **implementation complete / local validation pending**
 
 Goal: close data-display and board-edit composition gaps.
 
 Tasks:
 
-- [ ] Add unread/live row marker support or a row marker slot to `MetralyTable`.
-- [ ] Verify sticky header behavior in dense dashboard containers.
-- [ ] Keep row interaction in wrappers, not inside display-first table primitive.
-- [ ] Add selected, dragging, full-width, drop-target, resize, empty and rejected examples to the conformance state board.
-- [ ] Keep real DnD and persistence as separate hardening work.
+- [x] Add unread/live row marker support or a row marker slot to `MetralyTable`.
+- [x] Verify sticky header behavior in dense dashboard containers.
+- [x] Keep row interaction in wrappers, not inside display-first table primitive.
+- [x] Add selected, dragging, full-width, drop-target, resize, empty and rejected examples to the conformance state board.
+- [x] Keep real DnD and persistence as separate hardening work.
 
 ## Phase 4 — Charts and product scenario
 
@@ -197,4 +197,4 @@ Tasks:
 
 ## Immediate next action
 
-Run `npm run site:test` and `npm run ui:check` locally. If validation passes, continue with Phase 3: `MetralyTable` unread/live row markers, sticky header proof, and board-edit composition alignment.
+Run `npm run site:test` and `npm run ui:check` locally. If validation passes, continue with Phase 4: chart family matrix, loading/empty/error states, tooltip/hover proof and engineering dashboard integration.
