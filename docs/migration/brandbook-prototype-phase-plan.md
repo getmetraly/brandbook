@@ -185,16 +185,17 @@ Tasks:
 
 ## Phase 5 — Promotion and downstream readiness
 
-Status: **queued**
+Status: **implementation complete / local validation pending**
 
-Goal: promote only verified components to RC/adoption candidates.
+Goal: prepare the prototype-conformant component set for PR review and controlled downstream adoption.
 
 Tasks:
 
-- [ ] Update `docs/migration/component-status.md` after each component family passes visual, test and a11y review.
-- [ ] Mark full dashboard editor composition as Preview-only until real DnD, keyboard and persistence are verified.
-- [ ] Prepare downstream migration notes for `website` and `metraly` only after component APIs stabilize.
+- [x] Update `docs/migration/component-status.md` after each component family passes implementation/story/test coverage review.
+- [x] Mark full dashboard editor composition as Preview-only until real DnD, keyboard and persistence are verified.
+- [x] Prepare downstream migration notes for `website` and `metraly`.
+- [x] Add PR readiness checklist.
 
 ## Immediate next action
 
-Run `npm run site:test` and `npm run ui:check` locally. If validation passes, continue with Phase 5: component-status promotion review, downstream migration notes, and PR readiness checklist.
+Run `npm run site:test` and `npm run ui:check` locally, inspect the four prototype conformance routes and Storybook stories, then open a PR from `phase-1-statebadge-forms-prototype-conformance` into `main`.
