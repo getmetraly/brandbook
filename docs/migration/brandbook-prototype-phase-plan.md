@@ -124,7 +124,7 @@ Exit criteria:
 
 ## Phase 2 — Dashboard primitives
 
-Status: **in progress**
+Status: **implementation complete / local validation pending**
 
 Goal: align dashboard/editor primitives with prototype geometry.
 
@@ -145,9 +145,9 @@ Tasks:
 - [x] Keep drag grip as neutral dots and `aria-label="Drag to move"`.
 - [x] Expand resize handles to all eight directions.
 - [x] Render all resize handles when selected/resizing.
-- [ ] Verify drop zone idle/hover/active/rejected/empty styles.
-- [ ] Enforce two-row toolbar layout in dashboard/editor scenarios.
-- [ ] Add board-edit state matrix examples.
+- [x] Verify drop zone idle/hover/active/rejected/empty styles.
+- [x] Enforce two-row toolbar layout in dashboard/editor scenarios.
+- [x] Add board-edit state matrix examples.
 
 Exit criteria:
 
@@ -197,4 +197,4 @@ Tasks:
 
 ## Immediate next action
 
-Run `npm run site:test` and `npm run ui:check` locally, then continue Phase 2 with `DashboardDropZone`, `DashboardToolbar`, and board-edit state matrix examples.
+Run `npm run site:test` and `npm run ui:check` locally. If validation passes, continue with Phase 3: `MetralyTable` unread/live row markers, sticky header proof, and board-edit composition alignment.
