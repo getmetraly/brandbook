@@ -1,24 +1,33 @@
 import * as React from "react";
+import { MetralyBadge } from "./MetralyBadge";
 import { StateBadge, type StateBadgeState } from "./StateBadge";
+
+export type WidgetPickerCardVisualState = "default" | "selected" | "new" | "loading" | "dragging" | "disabled";
 
 export interface WidgetPickerCardProps {
   title?: React.ReactNode;
   description?: React.ReactNode;
   selected?: boolean;
+  /** Prototype-compatible widget kind metadata, for example `dora/overview`. */
+  kind?: React.ReactNode;
   iconLabel?: string;
   tags?: string[];
   state?: StateBadgeState;
   stateLabel?: string;
+  /** Prototype visual state for widget picker cards. */
+  visualState?: WidgetPickerCardVisualState;
+  dragging?: boolean;
+  loading?: boolean;
   className?: string;
   disabled?: boolean;
   onSelect?: () => void;
 }
 
-function WidgetPickerIcon({ label }: { label: string }) {
+function WidgetPickerIcon({ label, loading = false }: { label: string; loading?: boolean }) {
   return (
-    <span className="metraly-widget-picker-icon" aria-hidden="true">
+    <span className="metraly-widget-picker-icon" aria-hidden="true" data-loading={loading ? "true" : "false"}>
       <span className="metraly-widget-picker-icon-pulse" />
-      <small>{label.slice(0, 2).toUpperCase()}</small>
+      <small>{loading ? "…" : label.slice(0, 2).toUpperCase()}</small>
     </span>
   );
 }
@@ -32,17 +41,37 @@ export function WidgetPickerCard({
   title = "Flow efficiency",
   description = "Track delivery throughput, review health and deployment flow.",
   selected = false,
+  kind,
   iconLabel = "pulse",
   tags = ["github", "telemetry"],
   state = "live",
   stateLabel,
+  visualState = "default",
+  dragging = false,
+  loading = false,
   className,
   disabled = false,
   onSelect,
 }: WidgetPickerCardProps) {
+  const effectiveVisualState: WidgetPickerCardVisualState = disabled
+    ? "disabled"
+    : loading
+      ? "loading"
+      : dragging
+        ? "dragging"
+        : selected
+          ? "selected"
+          : visualState;
+  const effectiveKind = kind ?? iconLabel;
+  const effectiveState: StateBadgeState = effectiveVisualState === "new" ? "new" : disabled ? "disabled" : state;
+  const effectiveStateLabel = stateLabel ?? (effectiveVisualState === "new" ? "New" : defaultStateLabel(effectiveState));
   const classes = [
     "metraly-widget-picker-card",
     selected && "is-selected",
+    disabled && "is-disabled",
+    loading && "is-loading",
+    dragging && "is-dragging",
+    effectiveVisualState !== "default" && `is-${effectiveVisualState}`,
     className,
   ]
     .filter(Boolean)
@@ -51,11 +80,11 @@ export function WidgetPickerCard({
   const content = (
     <>
       <div className="metraly-widget-picker-head">
-        <WidgetPickerIcon label={iconLabel} />
+        <WidgetPickerIcon label={iconLabel} loading={loading} />
 
         <div className="metraly-widget-picker-title-copy">
           <strong>{title}</strong>
-          <span>{iconLabel}</span>
+          <span>{effectiveKind}</span>
         </div>
 
         <span
@@ -67,7 +96,7 @@ export function WidgetPickerCard({
       </div>
 
       <div className="metraly-widget-picker-meta">
-        <StateBadge state={state} label={stateLabel ?? defaultStateLabel(state)} />
+        <StateBadge state={effectiveState} label={effectiveStateLabel} pulse={effectiveVisualState === "new" ? true : undefined} />
       </div>
 
       <p>{description}</p>
@@ -75,12 +104,9 @@ export function WidgetPickerCard({
       {tags.length > 0 ? (
         <div className="metraly-widget-picker-tags" aria-label="Widget tags">
           {tags.map((tag, index) => (
-            <span
-              key={tag}
-              className={index === 0 ? "brand-badge brand-badge-primary" : "brand-badge brand-badge-success"}
-            >
+            <MetralyBadge key={tag} variant={index === 0 ? "primary" : "success"}>
               {tag}
-            </span>
+            </MetralyBadge>
           ))}
         </div>
       ) : null}
@@ -94,8 +120,11 @@ export function WidgetPickerCard({
         className={classes}
         role="option"
         aria-selected={selected}
-        disabled={disabled}
-        onClick={onSelect}
+        aria-disabled={disabled || loading || undefined}
+        disabled={disabled || loading}
+        data-state={effectiveVisualState}
+        data-kind={typeof effectiveKind === "string" ? effectiveKind : undefined}
+        onClick={disabled || loading ? undefined : onSelect}
       >
         {content}
       </button>
@@ -103,7 +132,14 @@ export function WidgetPickerCard({
   }
 
   return (
-    <article className={classes} role="option" aria-selected={selected}>
+    <article
+      className={classes}
+      role="option"
+      aria-selected={selected}
+      aria-disabled={disabled || undefined}
+      data-state={effectiveVisualState}
+      data-kind={typeof effectiveKind === "string" ? effectiveKind : undefined}
+    >
       {content}
     </article>
   );
