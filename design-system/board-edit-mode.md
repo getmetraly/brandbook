@@ -20,6 +20,11 @@ The editor add flow should stay thin: choose a widget type, call `dashboardRepos
 - Pulse-wave can appear in state badges or drop-zone decoration, not as the handle.
 - Resize handles must sit outside content rhythm and must not overlap text.
 - Full-width widgets should visibly span the grid and show a state badge.
+## Grid shell and widget chrome
+
+- Grid shells stay display-first and only frame layout geometry; they do not own persistence or catalog state.
+- Widget chrome owns selection, dragging, remove and full-width treatment so board-level feedback stays consistent.
+- Empty dashboard state should remain first-run messaging with a clear call to action, not a generic placeholder.
 
 ## Required states
 
@@ -30,6 +35,7 @@ Board edit examples should show:
 - dragging widget;
 - dashed drop target;
 - full-width widget;
+- empty dashboard state;
 - horizontal resize;
 - vertical resize;
 - corner resize;
@@ -48,7 +54,7 @@ Design must remain compatible with:
 
 Do not design states that require layout jumps or fragile DOM overlays.
 
-The current hardening preview uses static states for selected, dragging, drop-target, rejected drop and resize handles. Native/prototype DnD flows are not Ready until API, keyboard, persistence and regression coverage are in place.
+The current hardening preview uses static states for selected, dragging, drop-target, rejected drop and resize handles. The `site/__tests__/preview/ClaudeDesignStateBoard.test.tsx` fixture keeps that state matrix anchored while the interactive DnD flow stays in hardening.
 
 ## Acceptance criteria
 
