@@ -57,6 +57,7 @@ Storybook should mirror the same hardening surface with companion stories for:
 - chart wrappers;
 - dashboard editor scenario states.
 
+Keep those stories on the compact prototype density used by the brandbook reference so dense tables, widget pickers and overlay shells still read like engineering tools.
 ## Current component set
 
 Core controls:
