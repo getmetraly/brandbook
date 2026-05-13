@@ -98,6 +98,25 @@ describe('Claude Design preview hardening surface', () => {
     expect(draggingWidget).toBeInTheDocument();
     expect(container.querySelectorAll('.metraly-dashboard-resize-handle').length).toBeGreaterThanOrEqual(3);
   });
+ 
+  it('covers full-width widgets, active drop target and resize handles', () => {
+    const { container } = render(<EngineeringDashboardEditorPreview />);
+
+    const dropZone = screen.getByText('Release to add widget').closest('.metraly-dashboard-drop-zone');
+
+    expect(container.querySelector('.metraly-widget-shell.is-fullwidth')).toBeInTheDocument();
+    expect(dropZone).toHaveAttribute('data-drop-zone-state', 'active');
+    expect(screen.getByRole('separator', { name: 'Resize width' })).toBeInTheDocument();
+    expect(screen.getByRole('separator', { name: 'Resize height' })).toHaveClass('is-active');
+    expect(screen.getByRole('separator', { name: 'Resize width and height' })).toHaveClass('is-active');
+  });
+  it('shows dragging widgets and the empty dashboard state in the editor scenario', () => {
+    const { container } = render(<EngineeringDashboardEditorPreview />);
+
+    expect(container.querySelector('.metraly-widget-shell.is-dragging')).toBeInTheDocument();
+    expect(screen.getByRole('region', { name: 'Empty dashboard' })).toBeInTheDocument();
+    expect(screen.getByText('Add delivery widget')).toBeInTheDocument();
+  });
 
   it('shows the area chart tooltip on hover over a plotted value', () => {
     const { container } = render(<EngineeringDashboardEditorPreview />);

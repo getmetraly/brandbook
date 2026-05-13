@@ -13,15 +13,19 @@ The translated implementation now lives in:
 
 - `/components/previews` for the real state board and static dashboard editor scenario;
 - `/components/dashboard` for canonical dashboard primitive hardening;
-- `/components/charts` for `@metraly/ui/charts` wrapper previews;
-- `/patterns/widget-editor` for the dashboard editor composition reference.
+- `/patterns/dashboard-layout` for the composed page layout reference;
+- `/patterns/widget-editor` for the dashboard editor composition reference;
+- `/examples/engineering-dashboard` for the realistic product-style dashboard example;
+- `/components/charts` for `@metraly/ui/charts` wrapper previews.
 
 The reference ideas adopted from the zip are component state coverage, Engineering Intelligence dashboard editor layout, widget picker density, drop-zone treatment, resize affordance placement and implementation handoff notes.
 
 The dashboard contract is now split across grouped docs and the preview surface:
 
 - `/components/dashboard` for the canonical dashboard primitive contract;
+- `/patterns/dashboard-layout` for the composed dashboard page contract;
 - `/patterns/widget-editor` for the lifecycle and editor composition reference;
+- `/examples/engineering-dashboard` for the canonical dashboard scenario;
 - `/components/previews` for the static state board and dashboard scenario used during hardening.
 
 Do not adopt React CDN loading, Babel-in-browser, global `window` component registration, inline-style-heavy architecture or generic infrastructure-observability examples from the zip.
@@ -127,7 +131,8 @@ Icon coverage:
 - Hardening: needs API, accessibility, state or test work.
 - Preview-only: scenario/reference only, not a reusable component contract.
 
-The Claude Design dashboard editor composition is Preview-only. Select, Tabs, Table wrappers, DashboardToolbar, DashboardDropZone, DashboardResizeHandle and chart wrappers remain Hardening unless tests, accessibility and API stability support promotion.
+
+The Claude Design dashboard editor composition is Preview-only. Select, Tabs, Table wrappers, DashboardToolbar, DashboardDropZone, DashboardResizeHandle, full-width widget shell states and chart wrappers remain Hardening unless tests, accessibility and API stability support promotion. The `ClaudeDesignStateBoard` fixture is the current static edit-mode matrix for selected, dragging, full-width, drop-target, resize and empty-dashboard states.
 
 ## Required state coverage
 
@@ -137,6 +142,7 @@ Each component candidate should be reviewed against:
 - hover;
 - focus-visible;
 - active/selected;
+- full-width;
 - disabled;
 - loading;
 - unread/new;

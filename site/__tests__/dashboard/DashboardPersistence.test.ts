@@ -64,6 +64,32 @@ describe('dashboard persistence layer (4.6)', () => {
     localStorage.setItem(dashboardStorageKey('bad-shape'), JSON.stringify({ wrong: true }));
     expect(readDashboardFromStorage('bad-shape')).toBeUndefined();
   });
+  it('storage key uses the persisted dashboard prefix', () => {
+    expect(dashboardStorageKey('board-123')).toBe('metraly-dashboard:board-123');
+  });
+
+  it('layout updates round-trip through save and fetch', async () => {
+    const dashboard = await dashboardRepository.create({ name: 'Layout board' });
+    const widget = dashboardRepository.createWidget('metric-chart', { id: 'chart', title: 'Chart' });
+
+    const { dashboard: withWidget } = await dashboardRepository.upsertWidget(dashboard, widget);
+    await dashboardRepository.updateLayout(withWidget, [
+      { i: widget.id, x: 2, y: 4, w: 8, h: 5, minW: 4, minH: 3, maxW: 10, maxH: 6, static: true },
+    ]);
+
+    const fetched = await dashboardRepository.fetch(dashboard.id);
+    expect(fetched?.widgets[0]?.position).toMatchObject({
+      x: 2,
+      y: 4,
+      w: 8,
+      h: 5,
+      minW: 4,
+      minH: 3,
+      maxW: 10,
+      maxH: 6,
+      static: true,
+    });
+  });
 
   it('widget id round-trips correctly through save and fetch', async () => {
     const dashboard = await dashboardRepository.create({ name: 'Round-trip' });
