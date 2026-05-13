@@ -103,7 +103,12 @@
 }
 
 .metraly-control-input:checked + .metraly-checkbox-box,
-.metraly-checkbox.is-indeterminate .metraly-checkbox-box,
+.metraly-checkbox.is-indeterminate .metraly-checkbox-box {
+  border-color: oklch(0.78 0.13 200);
+  background: oklch(0.78 0.13 200);
+  box-shadow: none;
+}
+
 .metraly-control-input:checked + .metraly-radio-dot {
   border-color: oklch(0.78 0.13 200 / 0.82);
   background: oklch(0.78 0.13 200 / 0.10);
@@ -111,7 +116,7 @@
 }
 
 .metraly-control-input:checked + .metraly-checkbox-box::after {
-  border-color: oklch(0.78 0.13 200);
+  border-color: oklch(0.155 0.010 250);
   opacity: 1;
 }
 
@@ -120,7 +125,7 @@
 }
 
 .metraly-checkbox.is-indeterminate .metraly-checkbox-box::before {
-  background: oklch(0.78 0.13 200);
+  background: oklch(0.155 0.010 250);
   opacity: 1;
 }
 
@@ -182,11 +187,11 @@
 .metraly-switch {
   position: relative;
   flex: 0 0 auto;
-  width: 42px;
-  height: 22px;
+  width: 30px;
+  height: 16px;
   border-radius: var(--metraly-radius-pill);
   border: 1px solid oklch(1 0 0 / 0.14);
-  background: oklch(0.155 0.010 250 / 0.72);
+  background: oklch(0.260 0.014 250);
   padding: 0;
   cursor: pointer;
   transition: border-color 140ms var(--metraly-ease-out), background 140ms var(--metraly-ease-out), opacity 140ms var(--metraly-ease-out);
@@ -205,26 +210,33 @@
   position: absolute;
   inset-block-start: 1px;
   inset-inline-start: 1px;
-  width: 18px;
-  height: 18px;
+  width: 12px;
+  height: 12px;
   border-radius: var(--metraly-radius-pill);
-  background: oklch(0.84 0.008 250);
+  background: oklch(0.66 0.012 250);
   box-shadow: 0 1px 4px rgba(0,0,0,0.24);
   transition: transform 140ms var(--metraly-ease-out), background 140ms var(--metraly-ease-out);
 }
 
 .metraly-switch-row.is-checked .metraly-switch {
-  border-color: oklch(0.78 0.13 200 / 0.54);
-  background: oklch(0.78 0.13 200 / 0.12);
+  border-color: oklch(0.78 0.13 200);
+  background: oklch(0.78 0.13 200);
+  box-shadow: 0 0 8px -2px oklch(0.78 0.13 200 / 0.40);
+}
+
+.metraly-switch-row.is-purple.is-checked .metraly-switch {
+  border-color: oklch(0.66 0.14 295);
+  background: oklch(0.66 0.14 295);
+  box-shadow: 0 0 8px -2px oklch(0.66 0.14 295 / 0.40);
 }
 
 .metraly-switch-row.is-checked .metraly-switch-knob {
-  transform: translateX(20px);
-  background: oklch(0.78 0.13 200);
+  transform: translateX(14px);
+  background: oklch(0.155 0.010 250);
 }
 
 [dir="rtl"] .metraly-switch-row.is-checked .metraly-switch-knob {
-  transform: translateX(-20px);
+  transform: translateX(-14px);
 }
 
 .metraly-select-control { position: relative; width: 100%; }

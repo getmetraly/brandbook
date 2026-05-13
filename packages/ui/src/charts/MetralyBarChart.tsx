@@ -59,6 +59,7 @@ export function MetralyBarChart<TDatum extends MetralyChartDatum = MetralyChartD
       name={item.name}
       fill={resolveChartTone(item.tone ?? (index === 0 ? "primary" : "secondary"))}
       radius={[8, 8, 0, 0]}
+      activeBar={{ stroke: "rgba(0,229,204,0.42)", strokeWidth: 1, fillOpacity: 0.88 }}
       isAnimationActive={false}
     />
   ));

@@ -34,6 +34,26 @@ describe('Metraly control state coverage', () => {
     expect(container.querySelector('.metraly-checkbox.is-indeterminate')).toBeInTheDocument();
   });
 
+  it('associates helper text without requiring explicit ids', () => {
+    render(
+      <>
+        <MetralyCheckbox label="Telemetry" description="Collect anonymous usage metrics." />
+        <MetralyRadio label="Primary source" description="Use the canonical source of truth." name="source" value="primary" />
+        <MetralySelect
+          label="Metric source"
+          description="Choose the ingestion pipeline."
+          options={[{ value: 'github', label: 'GitHub' }]}
+        />
+        <MetralySwitch label="Live sync" description="Follow the upstream feed." />
+      </>
+    );
+
+    expect(screen.getByRole('checkbox', { name: /Telemetry/ })).toHaveAttribute('aria-describedby');
+    expect(screen.getByRole('radio', { name: /Primary source/ })).toHaveAttribute('aria-describedby');
+    expect(screen.getByRole('combobox', { name: /Metric source/ })).toHaveAttribute('aria-describedby');
+    expect(screen.getByRole('switch', { name: 'Live sync' })).toHaveAttribute('aria-describedby');
+  });
+
   it('renders radio labels, descriptions and disabled state', () => {
     render(
       <MetralyRadio
@@ -63,6 +83,7 @@ describe('Metraly control state coverage', () => {
 
     expect(toggle).toHaveFocus();
     expect(toggle).toHaveAttribute('aria-checked', 'true');
+    expect(toggle).toHaveAttribute('aria-describedby');
 
     fireEvent.click(toggle);
     expect(onClick).toHaveBeenCalledTimes(1);

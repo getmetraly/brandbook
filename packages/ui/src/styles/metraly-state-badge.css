@@ -76,10 +76,10 @@
 }
 
 .metraly-state-badge.is-stale {
-  color: oklch(0.66 0.012 250);
-  border-color: oklch(1 0 0 / 0.085);
-  background: oklch(1 0 0 / 0.045);
-  --metraly-state-solid-bg: oklch(0.66 0.012 250);
+  color: oklch(0.82 0.14 80);
+  border-color: oklch(0.82 0.14 80 / 0.22);
+  background: oklch(0.82 0.14 80 / 0.12);
+  --metraly-state-solid-bg: oklch(0.82 0.14 80);
 }
 
 .metraly-state-badge.is-delayed,
@@ -105,11 +105,50 @@
   --metraly-state-solid-bg: oklch(0.50 0.012 250);
 }
 
-.metraly-state-badge.is-info {
+/* data-state overrides for design-correct colours (alias classes left intact for test compat) */
+.metraly-state-badge[data-state="new"] {
   color: oklch(0.78 0.13 200);
   border-color: oklch(0.78 0.13 200 / 0.2);
-  background: oklch(0.78 0.13 200 / 0.1);
+  background: oklch(0.78 0.13 200 / 0.10);
+}
+
+.metraly-state-badge[data-state="purple"] {
+  color: oklch(0.66 0.14 295);
+  border-color: oklch(0.66 0.14 295 / 0.22);
+  background: oklch(0.66 0.14 295 / 0.10);
+}
+
+.metraly-state-badge[data-state="disabled"] {
+  color: oklch(0.38 0.012 250);
+  border: 1px dashed oklch(1 0 0 / 0.085);
+  background: oklch(0.225 0.014 250 / 0.60);
+}
+
+.metraly-state-badge.is-new {
+  color: oklch(0.78 0.13 200);
+  border-color: oklch(0.78 0.13 200 / 0.2);
+  background: oklch(0.78 0.13 200 / 0.10);
   --metraly-state-solid-bg: oklch(0.78 0.13 200);
+}
+
+.metraly-state-badge.is-purple {
+  color: oklch(0.66 0.14 295);
+  border-color: oklch(0.66 0.14 295 / 0.22);
+  background: oklch(0.66 0.14 295 / 0.10);
+  --metraly-state-solid-bg: oklch(0.66 0.14 295);
+}
+
+.metraly-state-badge.is-disabled {
+  color: oklch(0.38 0.012 250);
+  border: 1px dashed oklch(1 0 0 / 0.085);
+  background: oklch(0.225 0.014 250 / 0.60);
+}
+
+.metraly-state-badge.is-info {
+  color: oklch(0.84 0.008 250);
+  border-color: oklch(1 0 0 / 0.085);
+  background: oklch(0.260 0.014 250);
+  --metraly-state-solid-bg: oklch(0.50 0.012 250);
 }
 
 .metraly-state-badge--tone-solid.is-live,
@@ -120,8 +159,10 @@
 .metraly-state-badge--tone-solid.is-disconnected,
 .metraly-state-badge--tone-solid.is-error,
 .metraly-state-badge--tone-solid.is-noData,
-.metraly-state-badge--tone-solid.is-info {
-  color: var(--metraly-bg-base);
+.metraly-state-badge--tone-solid.is-info,
+.metraly-state-badge--tone-solid.is-new,
+.metraly-state-badge--tone-solid.is-purple {
+  color: oklch(0.155 0.010 250);
   border-color: transparent;
   background: var(--metraly-state-solid-bg);
 }

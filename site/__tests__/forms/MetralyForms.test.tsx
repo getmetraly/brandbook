@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MetralyCheckbox, MetralyRadio, MetralySelect, MetralySwitch, MetralyTabs } from '@metraly/ui';
 
@@ -44,6 +44,22 @@ describe('Metraly form primitives', () => {
         ]}
       />
     );
+    expect(screen.getByRole('tab', { name: 'Boards' })).toHaveAttribute('aria-selected', 'true');
+  });
+
+  it('supports uncontrolled tab selection', () => {
+    render(
+      <MetralyTabs
+        ariaLabel="Dashboard sections"
+        defaultValue="overview"
+        items={[
+          { value: 'overview', label: 'Overview' },
+          { value: 'boards', label: 'Boards' },
+        ]}
+      />
+    );
+
+    fireEvent.click(screen.getByRole('tab', { name: 'Boards' }));
     expect(screen.getByRole('tab', { name: 'Boards' })).toHaveAttribute('aria-selected', 'true');
   });
 

@@ -77,6 +77,8 @@ export function MetralyAreaChart<TDatum extends MetralyChartDatum = MetralyChart
         stroke={color}
         fill={`url(#${gradientId}-${item.dataKey})`}
         strokeWidth={3}
+        dot={false}
+        activeDot={{ r: 5 }}
         isAnimationActive={false}
       />
     );

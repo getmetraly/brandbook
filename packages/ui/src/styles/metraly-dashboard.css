@@ -115,15 +115,22 @@
   background: rgba(0,229,204,0.08);
 }
 
-.metraly-dashboard-toolbar-button.is-active,
-.metraly-dashboard-toolbar-button.is-primary {
-  border-color: rgba(0,229,204,0.42);
-  background: rgba(0,229,204,0.12);
-  color: var(--metraly-primary);
+.metraly-dashboard-toolbar-button.is-active {
+  border-color: oklch(0.78 0.13 200 / 0.42);
+  background: oklch(0.78 0.13 200 / 0.12);
+  color: oklch(0.78 0.13 200);
 }
 
 .metraly-dashboard-toolbar-button.is-primary {
-  box-shadow: 0 0 24px rgba(0,229,204,0.12);
+  border-color: oklch(0.78 0.13 200);
+  background: oklch(0.78 0.13 200);
+  color: oklch(0.155 0.010 250);
+  box-shadow: 0 0 12px -3px oklch(0.78 0.13 200 / 0.40);
+}
+
+.metraly-dashboard-toolbar-button.is-primary:hover {
+  background: oklch(0.84 0.12 200);
+  border-color: oklch(0.84 0.12 200);
 }
 
 .metraly-dashboard-grid {
@@ -183,8 +190,7 @@
   background: var(--metraly-error-dim);
 }
 
-.metraly-dashboard-empty-state,
-.metraly-dashboard-drop-zone {
+.metraly-dashboard-empty-state {
   grid-column: 1 / -1;
   display: flex;
   align-items: center;
@@ -192,10 +198,28 @@
   gap: 0.875rem;
   min-height: 260px;
   padding: 2rem;
-  border: 1px dashed rgba(0,229,204,0.22);
+  border: 1px dashed oklch(0.78 0.13 200 / 0.22);
   border-radius: var(--metraly-radius-xl);
-  background: rgba(0,229,204,0.04);
+  background: oklch(0.78 0.13 200 / 0.04);
   text-align: center;
+}
+
+.metraly-dashboard-drop-zone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 96px;
+  padding: 0 16px;
+  border: 1.5px dashed oklch(1 0 0 / 0.085);
+  border-radius: var(--metraly-radius-xl);
+  background: transparent;
+  font-family: var(--metraly-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: oklch(0.50 0.012 250);
+  transition: border-color 140ms ease, background 140ms ease, color 140ms ease;
 }
 
 .metraly-dashboard-empty-state {
@@ -208,6 +232,7 @@
 .metraly-dashboard-drop-zone-line {
   display: none;
 }
+
 
 .metraly-dashboard-empty-copy {
   display: grid;
@@ -227,115 +252,95 @@
 }
 
 .metraly-dashboard-drop-zone.is-active {
-  border-color: var(--metraly-primary);
-  background: rgba(0,229,204,0.07);
-  box-shadow: inset 0 0 0 1px rgba(0,229,204,0.12);
+  border-color: oklch(0.78 0.13 200);
+  background: oklch(0.78 0.13 200 / 0.08);
+  color: oklch(0.78 0.13 200);
 }
 
-.metraly-dashboard-drop-zone.is-idle {
-  background: rgba(0,229,204,0.025);
+.metraly-dashboard-drop-zone.is-active .metraly-dashboard-drop-zone-line,
+.metraly-dashboard-drop-zone.is-hover .metraly-dashboard-drop-zone-line,
+.metraly-dashboard-drop-zone.is-empty .metraly-dashboard-drop-zone-line {
+  display: block;
+  flex: 1 1 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, currentColor, transparent);
+  opacity: 0.72;
 }
 
 .metraly-dashboard-drop-zone.is-hover {
-  border-color: rgba(0,229,204,0.42);
-  background: rgba(0,229,204,0.07);
+  border-color: oklch(1 0 0 / 0.16);
+  color: oklch(0.66 0.012 250);
 }
 
 .metraly-dashboard-drop-zone.is-rejected {
-  border-color: rgba(239,68,68,0.5);
-  background: rgba(239,68,68,0.08);
-  color: var(--metraly-error);
+  border-color: oklch(0.72 0.18 25 / 0.5);
+  background: oklch(0.72 0.18 25 / 0.08);
+  color: oklch(0.72 0.18 25);
 }
 
 .metraly-dashboard-drop-zone.is-empty {
-  min-height: 320px;
+  height: 160px;
+  border-color: oklch(0.78 0.13 200 / 0.22);
+  background: oklch(0.78 0.13 200 / 0.04);
 }
 
 .metraly-dashboard-drop-zone-icon {
   flex: 0 0 auto;
-  width: 2rem;
-  height: 2rem;
-  display: inline-grid;
-  place-items: center;
-  border: 1px solid currentColor;
-  border-radius: var(--metraly-radius-md);
-  color: var(--metraly-primary);
-  background: rgba(0,229,204,0.08);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
   font-family: var(--metraly-font-mono);
-  font-size: 1rem;
-  font-weight: 800;
-}
-
-.metraly-dashboard-drop-zone.is-rejected .metraly-dashboard-drop-zone-icon {
-  color: var(--metraly-error);
-  background: rgba(239,68,68,0.1);
+  font-size: 14px;
+  font-weight: 400;
+  color: currentColor;
+  background: none;
+  border: none;
 }
 
 .metraly-dashboard-drop-zone-copy {
-  min-width: 0;
-  display: grid;
-  gap: 0.25rem;
-  text-align: left;
+  font-family: var(--metraly-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: currentColor;
 }
 
 .metraly-dashboard-drop-zone-copy strong {
-  color: var(--metraly-text-primary);
-  font-family: var(--metraly-font-display);
+  font-weight: 400;
+  color: currentColor;
+  font-family: inherit;
 }
 
-.metraly-dashboard-drop-zone-copy small {
-  color: var(--metraly-text-secondary);
-  line-height: 1.45;
-}
+.metraly-dashboard-drop-zone-copy small { display: none; }
 
 .metraly-dashboard-resize-handle {
-  display: inline-grid;
-  place-items: center;
-  inline-size: 1rem;
-  block-size: 1rem;
-  border: 1px solid rgba(255,255,255,0.18);
-  border-radius: var(--metraly-radius-sm);
-  background: rgba(255,255,255,0.04);
-  cursor: nwse-resize;
+  width: 8px;
+  height: 8px;
+  border: 1px solid oklch(1 0 0 / 0.18);
+  border-radius: 2px;
+  background: oklch(0.195 0.012 250);
   box-shadow: none;
 }
 
-.metraly-dashboard-resize-handle > span {
-  width: 0.45rem;
-  height: 0.45rem;
-  border-inline-end: 1px solid var(--metraly-text-secondary);
-  border-block-end: 1px solid var(--metraly-text-secondary);
-  border-end-end-radius: 1px;
-}
-
-.metraly-dashboard-resize-handle.is-east {
-  cursor: ew-resize;
-}
-
-.metraly-dashboard-resize-handle.is-east > span {
-  width: 0.25rem;
-  height: 0.65rem;
-  border-block-end: 0;
-}
-
-.metraly-dashboard-resize-handle.is-south {
-  cursor: ns-resize;
-}
-
-.metraly-dashboard-resize-handle.is-south > span {
-  width: 0.65rem;
-  height: 0.25rem;
-  border-inline-end: 0;
-}
+.metraly-dashboard-resize-handle > span { display: none; }
 
 .metraly-dashboard-resize-handle.is-active {
-  border-color: rgba(0,229,204,0.42);
-  background: rgba(0,229,204,0.08);
+  border-color: oklch(0.78 0.13 200);
+  background: oklch(0.155 0.010 250);
+  box-shadow: 0 0 8px -1px oklch(0.78 0.13 200 / 0.40);
 }
 
-.metraly-dashboard-resize-handle.is-active > span {
-  border-color: var(--metraly-primary);
-}
+/* Direction-specific positions (within .metraly-widget-shell-resize-handles overlay) */
+.metraly-dashboard-resize-handle.is-northwest { top: 2px; left: 2px; cursor: nwse-resize; }
+.metraly-dashboard-resize-handle.is-north     { top: 2px; left: calc(50% - 4px); cursor: ns-resize; }
+.metraly-dashboard-resize-handle.is-northeast { top: 2px; right: 2px; cursor: nesw-resize; }
+.metraly-dashboard-resize-handle.is-east      { top: calc(50% - 4px); right: 2px; cursor: ew-resize; }
+.metraly-dashboard-resize-handle.is-southeast { bottom: 2px; right: 2px; cursor: nwse-resize; }
+.metraly-dashboard-resize-handle.is-south     { bottom: 2px; left: calc(50% - 4px); cursor: ns-resize; }
+.metraly-dashboard-resize-handle.is-southwest { bottom: 2px; left: 2px; cursor: nesw-resize; }
+.metraly-dashboard-resize-handle.is-west      { top: calc(50% - 4px); left: 2px; cursor: ew-resize; }
 
 .react-grid-item > .metraly-dashboard-widget,
 .react-grid-item > .metraly-dashboard-grid-shell {
