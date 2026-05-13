@@ -277,30 +277,13 @@
   min-width: 0;
   display: flex;
   align-items: stretch;
-  gap: 18px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  overscroll-behavior: contain;
-  scrollbar-width: none;
+  gap: 4px;
+  border-bottom: 1px solid oklch(1 0 0 / 0.085);
 }
-
-.metraly-tabs::after {
-  content: "";
-  position: absolute;
-  inset-inline: 0;
-  inset-block-end: 0;
-  height: 1px;
-  background: oklch(1 0 0 / 0.085);
-  transform: none;
-  z-index: 0;
-}
-
-.metraly-tabs::-webkit-scrollbar { display: none; }
 
 .metraly-tab {
   position: relative;
-  min-height: 38px;
-  padding: 0;
+  padding: 8px 12px;
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -312,7 +295,6 @@
   font-weight: 650;
   white-space: nowrap;
   transition: color 140ms var(--metraly-ease-out), background 140ms var(--metraly-ease-out);
-  z-index: 1;
 }
 
 .metraly-tab:hover:not(:disabled),
@@ -328,8 +310,6 @@
   height: 0;
   background: transparent;
   transform: none;
-  transition: height 140ms var(--metraly-ease-out), background 140ms var(--metraly-ease-out);
-  z-index: 2;
 }
 
 .metraly-tab-content {
@@ -337,8 +317,8 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  min-height: 38px;
-  padding-inline: 0;
+  min-height: 0;
+  padding: 0;
 }
 
 .metraly-tab-content::after {
@@ -376,12 +356,16 @@
 }
 
 .metraly-tab.is-active::after {
-  height: 0;
+  height: 2px;
+  inset-inline: 8px;
+  inset-block-end: -1px;
+  background: oklch(0.78 0.13 200);
+  border-radius: 1px;
+  box-shadow: 0 0 8px -1px oklch(0.78 0.13 200 / 0.72);
 }
 
 .metraly-tab.is-active .metraly-tab-content::after {
-  height: 3px;
-  background: oklch(0.78 0.13 200);
+  height: 0;
 }
 
 .metraly-tab.is-active .metraly-tab-count {

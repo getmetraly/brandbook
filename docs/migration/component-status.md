@@ -27,7 +27,7 @@ This table records the current maturity of Metraly Brandbook components. It shou
 | `MetralyRadio` | Hardening | `/components/previews`, `/components/forms` | Yes | Yes | Later | Later | Pulse marker removed from DOM. Needs group behavior and keyboard review before RC. |
 | `MetralySwitch` | Hardening | `/components/previews`, `/components/forms` | Yes | Yes | Later | Later | Pulse marker removed from DOM. Needs keyboard and disabled-state review before RC. |
 | `MetralySelect` | Hardening | `/components/previews`, `/components/forms` | Partial | Basic | No | No | Keep native/simple until custom behavior has full keyboard/a11y model. |
-| `MetralyTabs` | Hardening | `/components/previews`, `/components/forms` | Partial | Yes | No | No | Count slot and keyboard navigation are covered. Needs final visual review against Claude Design top navigation before RC. |
+| `MetralyTabs` | Hardening | `/components/previews`, `/components/forms` | Partial | Yes | No | No | Count slot and keyboard navigation are covered. Rail/underline geometry now matches the Claude Design prototype source of truth in `metraly-forms.css`; keep final visual verification before RC. |
 | `MetralyTable` | Hardening | `/components/previews`, `/components/data-display` | Yes | Yes | Candidate | Candidate | Promote only as display-first primitive; sorting/filtering wrappers come later. |
 | `WidgetPickerCard` | Hardening | `/components/previews`, `/components/dashboard` | Yes | Yes | No | Candidate | Useful for product app editor; not first website candidate. |
 | `DashboardWidget` | Hardening | `/components/previews`, `/components/dashboard` | Yes | Yes | No | Candidate | First dashboard primitive candidate for metraly pilot. |
@@ -49,7 +49,7 @@ This table records the current maturity of Metraly Brandbook components. It shou
 ## Next promotion targets
 
 1. Finish visual review for `StateBadge` + `MetralyCard` / `MetralyPanel` / `MetralyMetricCard` RC candidates.
-2. Complete forms-control visual review for `MetralyCheckbox`, `MetralyRadio`, `MetralySwitch`, `MetralySelect`, and `MetralyTabs`.
+2. Complete forms-control visual review for `MetralyCheckbox`, `MetralyRadio`, `MetralySwitch`, `MetralySelect`, and `MetralyTabs` against the prototype source of truth.
 3. `MetralyTable` as display-only Release Candidate.
 4. `MetralyChartCard` + `MetralySparkline` to chart hardening review.
 5. `DashboardWidget` shell to metraly pilot candidate.

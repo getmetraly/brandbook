@@ -211,6 +211,9 @@ Usage rules:
 - Prefer these primitives over ad hoc local reimplementations when the visual and behavioral contract matches.
 - Use composites like `WidgetPickerCard` and `DashboardWidget` only when the page needs dashboard-specific density or interaction state.
 - Keep page-specific embellishments outside the primitive layer so the base API stays stable.
+- Chart preview surfaces should expose hover/focus tooltips on plotted values instead of relying on static line art alone.
+- Chart preview surfaces should show a visible hover cursor line on plotted values when that improves scanability.
+- Chart preview surfaces should show a point marker at the hovered value for line and area charts where that improves readability, and a hover background band for column charts.
 - If a new primitive is needed, document the need in migration notes before expanding the export surface.
 
 Board flow contract:

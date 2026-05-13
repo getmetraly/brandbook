@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import {
   ComponentStateBoard,
@@ -44,8 +44,10 @@ describe('Claude Design preview hardening surface', () => {
 
     [
       'MetralyCheckbox',
-      'MetralyRadio / MetralySwitch',
-      'MetralySelect / MetralyTabs',
+      'MetralyRadio',
+      'MetralySwitch',
+      'MetralySelect',
+      'MetralyTabs',
       'StateBadge / WidgetPickerCard',
       'DashboardWidget / MetralyTable',
       'DashboardToolbar / DropZone / ResizeHandle',
@@ -95,6 +97,30 @@ describe('Claude Design preview hardening surface', () => {
     expect(selectedWidget).toBeInTheDocument();
     expect(draggingWidget).toBeInTheDocument();
     expect(container.querySelectorAll('.metraly-dashboard-resize-handle').length).toBeGreaterThanOrEqual(3);
+  });
+
+  it('shows the area chart tooltip on hover over a plotted value', () => {
+    const { container } = render(<EngineeringDashboardEditorPreview />);
+
+    fireEvent.pointerEnter(screen.getByRole('button', { name: 'Tue: Flow efficiency 74%' }));
+    expect(screen.getByRole('tooltip')).toHaveTextContent('Tue');
+    expect(screen.getByRole('tooltip')).toHaveTextContent('Flow efficiency');
+    expect(screen.getByRole('tooltip')).toHaveTextContent('74%');
+    expect(container.querySelector('.claude-chart-cursor-point')).toBeInTheDocument();
+  });
+
+  it('shows the composite chart tooltip on hover over a plotted value', () => {
+    const { container } = render(<EngineeringDashboardEditorPreview />);
+
+    fireEvent.pointerEnter(
+      screen.getByRole('button', {
+        name: 'Wed: Deployments 21/day, Flow efficiency 77%, Failure rate 3.9%',
+      }),
+    );
+    expect(screen.getByRole('tooltip')).toHaveTextContent('Deployments');
+    expect(screen.getByRole('tooltip')).toHaveTextContent('21/day');
+    expect(screen.getByRole('tooltip')).toHaveTextContent('Failure rate');
+    expect(container.querySelector('.claude-chart-hover-band')).toBeInTheDocument();
   });
 
   it('does not render pulse-wave before drag labels or inside default drop zones', () => {
