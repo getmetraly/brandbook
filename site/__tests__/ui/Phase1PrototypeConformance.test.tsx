@@ -123,7 +123,7 @@ describe('Phase 1 prototype conformance states', () => {
     expect(loadingField).toHaveClass('is-loading');
     expect(screen.getByRole('option', { name: 'Select source…' })).toBeDisabled();
 
-    rerender(<MetralySelect label="Empty source" options={[]} hint="No sources connected" />);
+    rerender(<MetralySelect id="phase-empty-select" label="Empty source" options={[]} hint="No sources connected" />);
 
     const emptySelect = screen.getByRole('combobox', { name: 'Empty source' });
     const emptyField = emptySelect.closest('.metraly-select-field');
