@@ -169,6 +169,31 @@ It includes:
 - board edit mode and drag-and-drop states.
 
 The final Claude Design zip is treated as a visual reference only. Production-aligned translation lives in `site/app/components/previews/claude-design-handoff.md`, `/components/previews`, `/components/dashboard`, `/patterns/dashboard-layout`, `/patterns/widget-editor`, `/examples/engineering-dashboard` and `@metraly/ui/charts`.
+## Website shell migration boundary
+
+The website migration phase treats shell composition as a boundary, not a new brandbook primitive layer.
+
+Current safe-first migration candidates from the website repo are:
+
+- `ButtonLink`
+- `Card`, `CardLink`, `CardHeader`, `CardText`
+- `Grid`
+- `Page`
+- `Section`
+- `SectionHeader`
+- `Stack`
+- `StatusPill`
+- `Prose`
+- `Note`
+- `Highlight`
+- `Icon`
+
+The website-specific composition layers that should stay editorial-aware are `SiteShell`, `SiteNav`, `SiteFooter`, `ThemeToggle`, `ArticleShell`, `ArticleToc` and `ReadingProgress`.
+
+Route-aware navigation, footer link groups, legal copy and client theme persistence remain website responsibilities.
+
+This phase should document boundaries before any direct route migration.
+
 
 ## Core primitive set
 
