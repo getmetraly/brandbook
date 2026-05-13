@@ -155,7 +155,6 @@ export function DashboardEditor() {
       />
 
       <div className="dashboard-editor-banner" data-state={editMode ? "edit" : "view"}>
-        <span className="dashboard-editor-banner-marker" aria-hidden="true" />
         <span>Edit mode</span>
         <span>Drag widgets with grip dots, resize from the corner handles and persist changes with Save.</span>
       </div>

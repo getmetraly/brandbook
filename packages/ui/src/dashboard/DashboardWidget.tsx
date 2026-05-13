@@ -99,11 +99,15 @@ export function DashboardWidget({
           "metraly-widget-shell",
           selected && "is-selected",
           dragging && "is-dragging",
+          (state === "error" || state === "disconnected") && "is-error",
+          (state === "stale" || state === "delayed") && "is-stale",
+          state === "noData" && "is-empty",
           fullWidth && "is-fullwidth",
           resizable && "is-resizable",
         ]
           .filter(Boolean)
           .join(" ")}
+        data-state={state}
         data-testid="widget-shell"
       >
         <header className="metraly-widget-shell-head">

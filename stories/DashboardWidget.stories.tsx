@@ -45,10 +45,26 @@ export const FullWidth: Story = {
   },
 };
 
+export const Stale: Story = {
+  args: {
+    state: 'stale',
+    stateLabel: 'Stale 4m',
+    children: <p>Latest sync is outside the freshness window.</p>,
+  },
+};
+
 export const Disconnected: Story = {
   args: {
     state: 'disconnected',
     stateLabel: 'Disconnected',
     children: <p>Reconnect CI to restore failure-rate telemetry.</p>,
+  },
+};
+
+export const Empty: Story = {
+  args: {
+    state: 'noData',
+    stateLabel: 'No data',
+    children: <p>No telemetry for the selected interval.</p>,
   },
 };
