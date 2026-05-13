@@ -19,19 +19,9 @@ const data: Row[] = [
 ];
 
 const frameStyle = {
-  display: 'grid',
-  gap: 12,
-  padding: 20,
-  borderRadius: 24,
-  border: '1px solid rgba(255,255,255,0.08)',
-  background: '#111722',
-  minHeight: 220,
-  color: '#f0f4f8',
-};
-
-const tableStyle = {
   width: '100%',
   maxWidth: 720,
+  minHeight: 220,
 };
 
 const meta: Meta<typeof MetralyTable<Row>> = {
@@ -48,9 +38,7 @@ const meta: Meta<typeof MetralyTable<Row>> = {
   },
   render: (args) => (
     <div style={frameStyle}>
-      <div style={tableStyle}>
-        <MetralyTable {...args} />
-      </div>
+      <MetralyTable {...args} />
     </div>
   ),
 };

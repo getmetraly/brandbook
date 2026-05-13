@@ -21,12 +21,12 @@ const meta: Meta<typeof WidgetPickerCard> = {
   title: 'Metraly/WidgetPickerCard',
   component: WidgetPickerCard,
   args: {
-    title: 'Flow efficiency',
-    description: 'Track delivery throughput, review health and deployment flow.',
+    title: 'Deployment frequency',
+    description: 'Deploys per day, by service & team.',
     selected: true,
-    kind: 'flow/efficiency',
-    iconLabel: 'flow',
-    tags: ['github', 'telemetry'],
+    kind: 'dora/deploy-freq',
+    iconLabel: 'lightning',
+    tags: ['dora', 'delivery'],
     state: 'live',
   },
   render: (args) => (
@@ -46,8 +46,10 @@ export const Selected: Story = {};
 export const Unselected: Story = {
   args: {
     selected: false,
-    kind: 'review/latency',
-    iconLabel: 'review',
+    title: 'Change failure rate',
+    description: '% of deploys that triggered a rollback or incident.',
+    kind: 'dora/cfr',
+    iconLabel: 'chart',
     state: 'stale',
   },
 };
@@ -55,8 +57,10 @@ export const Unselected: Story = {
 export const Delayed: Story = {
   args: {
     selected: false,
-    kind: 'review/latency',
-    iconLabel: 'latency',
+    title: 'Blocked work',
+    description: 'Issues stalled > 3 days, by stage.',
+    kind: 'flow/blocked',
+    iconLabel: 'bell',
     state: 'delayed',
     stateLabel: 'Delayed',
   },
@@ -67,9 +71,9 @@ export const Disabled: Story = {
     selected: false,
     disabled: true,
     title: 'WIP per engineer',
-    description: 'Source is not connected yet.',
+    description: 'Source is not connected.',
     kind: 'flow/wip',
-    iconLabel: 'wip',
+    iconLabel: 'table',
     state: 'noData',
   },
 };
