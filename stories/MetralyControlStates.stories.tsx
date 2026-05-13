@@ -70,7 +70,7 @@ function ControlStatesShowcase() {
 }
 
 const meta: Meta<typeof ControlStatesShowcase> = {
-  title: 'Metraly/Control States',
+  title: 'Scenarios/Component State Board',
   component: ControlStatesShowcase,
 };
 

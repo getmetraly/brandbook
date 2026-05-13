@@ -31,7 +31,7 @@ describe('dashboard components', () => {
 
   it('renders the canonical widget chrome', () => {
     const { container } = render(
-      <DashboardWidget id="w1" title="Flow efficiency" onDragStart={() => undefined}>81%</DashboardWidget>
+      <DashboardWidget id="w1" title="Flow efficiency" selected onDragStart={() => undefined}>81%</DashboardWidget>
     );
 
     expect(screen.getByRole('button', { name: 'Drag to move' })).toBeInTheDocument();

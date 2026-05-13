@@ -28,12 +28,9 @@ function StatusBadge({ status }: { status?: DocsNavItem["status"] }) {
   if (!status) return null;
   const label =
     status === "ready" ? "Ready" :
-    status === "visual-ready" ? "Visual-ready" :
-    status === "hardening" ? "Hardening" :
-    status === "preview-only" ? "Preview-only" :
     status === "legacy" ? "Legacy" :
     status === "planned" ? "Planned" :
-    "Preview-only";
+    "Draft";
   return <span className={`docs-status docs-status-${status}`}>{label}</span>;
 }
 
@@ -62,10 +59,10 @@ export function DocsSidebar({ currentPath }: { currentPath: string }) {
             {group.title}
           </Link>
           <div className="docs-sidebar-items">
-            {group.items.map((item) => (
-              <Link key={item.href} className={currentPath === item.href ? "docs-sidebar-link is-active" : "docs-sidebar-link"} href={item.href}>
-                <span>{item.title}</span>
-                <StatusBadge status={item.status} />
+        {group.items.map((item) => (
+          <Link key={item.href} className={currentPath === item.href ? "docs-sidebar-link is-active" : "docs-sidebar-link"} href={item.href}>
+            <span>{item.title}</span>
+            <StatusBadge status={item.status} />
               </Link>
             ))}
           </div>

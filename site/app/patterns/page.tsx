@@ -2,6 +2,8 @@ import DocsShell from "../components/docs/DocsShell";
 import { DocsCardGrid, DocsRouteCard, DocsSection } from "../components/docs/DocsBlocks";
 import { docsNavigation, getRelatedLinks } from "../lib/docs/navigation";
 
+export const dynamic = "force-dynamic";
+
 const group = docsNavigation.find((item) => item.href === "/patterns")!;
 
 export default function PatternsPage() {

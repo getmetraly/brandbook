@@ -28,7 +28,6 @@ export function DashboardWidgetPicker({
             title={definition.title}
             description={definition.description}
             iconLabel={definition.iconLabel ?? definition.type}
-            tags={definition.tags ?? []}
             state={definition.state ?? "live"}
             stateLabel={definition.stateLabel}
             selected={selectedType === definition.type}

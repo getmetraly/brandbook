@@ -118,10 +118,10 @@ export function DashboardEditor() {
         meta={dashboard ? `Dashboard ${dashboard.id} · ${dashboard.widgets.length} widgets · ${status}` : status}
         actions={(
           <>
-            <button className="btn btn-secondary" type="button" onClick={handleReset} disabled={loading || saving}>
+            <button className="metraly-dashboard-toolbar-button" type="button" onClick={handleReset} disabled={loading || saving}>
               Reset
             </button>
-            <button className="btn btn-primary" type="button" onClick={handleSave} disabled={loading || saving || !dashboard}>
+            <button className="metraly-dashboard-toolbar-button is-primary" type="button" onClick={handleSave} disabled={loading || saving || !dashboard}>
               {saving ? "Saving…" : "Save"}
             </button>
           </>

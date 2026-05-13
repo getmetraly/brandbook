@@ -2,7 +2,7 @@ export type DocsNavItem = {
   title: string;
   href: string;
   description?: string;
-  status?: "ready" | "visual-ready" | "hardening" | "preview-only" | "legacy" | "planned" | "draft";
+  status?: "ready" | "draft" | "legacy" | "planned";
 };
 
 export type DocsNavGroup = {
@@ -28,16 +28,13 @@ export const docsNavigation: DocsNavGroup[] = [
   {
     title: "Components",
     href: "/components",
-    description: "Grouped previews of production UI from @metraly/ui.",
+    description: "Prototype-aligned component pages backed by @metraly/ui.",
     items: [
       { title: "Primitives", href: "/components/primitives", description: "Cards, panels, badges, logos and surfaces.", status: "ready" },
       { title: "Forms", href: "/components/forms", description: "Checkbox, radio, switch, select and tabs.", status: "ready" },
       { title: "Data Display", href: "/components/data-display", description: "Tables, state badges and metric cards.", status: "ready" },
       { title: "Dashboard", href: "/components/dashboard", description: "Dashboard grid, widgets, toolbar and empty states.", status: "ready" },
-      { title: "Preview Hardening", href: "/components/previews", description: "Claude Design state board and dashboard editor scenario.", status: "hardening" },
-      { title: "Feedback", href: "/components/feedback", description: "Toasts, alerts, skeletons and progress states.", status: "planned" },
-      { title: "Navigation", href: "/components/navigation", description: "Sidebar, topbar, breadcrumbs and command surfaces.", status: "planned" },
-      { title: "Charts", href: "/components/charts", description: "Recharts-backed chart previews and chart rules.", status: "draft" },
+      { title: "Charts", href: "/components/charts", description: "Recharts-backed chart wrappers and chart rules.", status: "draft" },
     ],
   },
   {

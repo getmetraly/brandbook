@@ -32,7 +32,7 @@ function FormsShowcase() {
 }
 
 const meta: Meta<typeof FormsShowcase> = {
-  title: 'Metraly/Form Primitives',
+  title: 'Components/Forms',
   component: FormsShowcase,
 };
 

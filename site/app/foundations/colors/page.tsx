@@ -2,6 +2,8 @@ import DocsShell from "../../components/docs/DocsShell";
 import { DocsSection } from "../../components/docs/DocsBlocks";
 import { getRelatedLinks } from "../../lib/docs/navigation";
 
+export const dynamic = "force-dynamic";
+
 const swatches = [
   ["Primary cyan", "#00E5CC", "Primary action and telemetry signal"],
   ["Secondary purple", "#A855F7", "Brand depth and secondary highlights"],

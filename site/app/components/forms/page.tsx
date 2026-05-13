@@ -3,6 +3,8 @@ import DocsShell from "../../components/docs/DocsShell";
 import { ComponentPreview, ComponentStateGrid, DocsSection } from "../../components/docs/DocsBlocks";
 import { getRelatedLinks } from "../../lib/docs/navigation";
 
+export const dynamic = "force-dynamic";
+
 const sourceOptions = [
   { value: "github", label: "GitHub" },
   { value: "ci", label: "CI/CD" },
@@ -19,7 +21,7 @@ const dashboardTabs = [
 
 export default function FormsPage() {
   return (
-    <DocsShell currentPath="/components/forms" title="Forms" description="Inputs and controls for dashboard settings, filters, widget configuration and row selection." status="ready" related={getRelatedLinks(["/patterns/filters", "/components/dashboard", "/components/data-display"])} toc={[{ title: "Selection", href: "#selection" }, { title: "Choice", href: "#choice" }]}> 
+    <DocsShell currentPath="/components/forms" title="Forms" description="Inputs and controls for dashboard settings, filters, widget configuration and row selection." status="ready" related={getRelatedLinks(["/patterns/filters", "/components/dashboard", "/components/data-display"])} toc={[{ title: "Selection", href: "#selection" }, { title: "Choice", href: "#choice" }]}>
       <DocsSection id="selection" title="Selection controls" description="Use these controls for row selection, settings, feature toggles and option lists.">
         <ComponentPreview title="MetralyCheckbox" description="Checkbox pattern used in widget picker, tables and bulk selection." states={["default", "checked", "disabled", "description"]} code={'import { MetralyCheckbox } from "@metraly/ui";'}>
           <ComponentStateGrid>
@@ -36,8 +38,9 @@ export default function FormsPage() {
           </ComponentStateGrid>
         </ComponentPreview>
       </DocsSection>
+
       <DocsSection id="choice" title="Choice controls" description="Select and tabs should stay calm: compact, flat and pulse-free.">
-        <ComponentPreview title="MetralySelect" description="Native select wrapper for source and filter settings." states={["default", "error", "disabled"]}>
+        <ComponentPreview title="MetralySelect" description="Popover select wrapper for source and filter settings." states={["default", "error", "disabled"]}>
           <ComponentStateGrid>
             <MetralySelect label="Metric source" defaultValue="github" options={sourceOptions} />
             <MetralySelect label="Disabled source" defaultValue="ci" options={sourceOptions} disabled />
