@@ -13,12 +13,12 @@ export interface MetralyTelemetryLineProps {
 }
 
 const pulseColors: Record<NonNullable<MetralyTelemetryLineProps["variant"]>, string> = {
-  primary: "var(--metraly-primary)",
-  secondary: "var(--metraly-secondary)",
-  success: "var(--metraly-success)",
-  warning: "var(--metraly-warning)",
-  error: "var(--metraly-error)",
-  info: "var(--metraly-info)",
+  primary: "var(--m-cyan-500)",
+  secondary: "var(--m-purple-500)",
+  success: "var(--m-ok)",
+  warning: "var(--m-warn)",
+  error: "var(--m-err)",
+  info: "var(--m-fg-2)",
 };
 
 const pulseClipPath =

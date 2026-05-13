@@ -79,7 +79,7 @@ export function MetralyTable<T extends Record<string, any>>({
   }
 
   const tableStyle = {
-    ["--metraly-table-row-height" as const]: dense ? "28px" : "34px",
+    ["--m-table-row-height" as const]: dense ? "28px" : "34px",
   } as React.CSSProperties;
 
   const renderSkeletonRows = () => {

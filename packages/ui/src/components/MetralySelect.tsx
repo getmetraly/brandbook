@@ -21,8 +21,10 @@ export interface MetralySelectProps {
   description?: React.ReactNode;
   /** Prototype-compatible alias for description. */
   hint?: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
   className?: string;
-  onChange?: React.ChangeEventHandler<HTMLSelectElement>;
+  onChange?: (value: string) => void;
 }
 
 export function MetralySelect({
@@ -38,6 +40,8 @@ export function MetralySelect({
   error = false,
   description,
   hint,
+  open: openProp,
+  onOpenChange,
   className,
   onChange,
 }: MetralySelectProps) {
@@ -46,6 +50,12 @@ export function MetralySelect({
   const descriptionId = helperText ? `${id ?? generatedId}-description` : undefined;
   const isDisabled = disabled || loading;
   const isEmpty = options.length === 0;
+  const isControlled = value !== undefined;
+  const [uncontrolledValue, setUncontrolledValue] = React.useState(defaultValue);
+  const selectedValue = isControlled ? value : uncontrolledValue;
+  const [uncontrolledOpen, setUncontrolledOpen] = React.useState(false);
+  const open = openProp ?? uncontrolledOpen;
+  const setOpen = onOpenChange ?? setUncontrolledOpen;
   const classes = [
     "metraly-select-field",
     isDisabled && "is-disabled",
@@ -57,46 +67,60 @@ export function MetralySelect({
     .filter(Boolean)
     .join(" ");
 
+  const selectedOption = options.find((option) => option.value === selectedValue);
+  const resolvedLabel = selectedOption?.label ?? placeholder ?? "Select";
+
   return (
-    <label className={classes} data-state={loading ? "loading" : error ? "error" : isDisabled ? "disabled" : isEmpty ? "empty" : value || defaultValue ? "selected" : "default"}>
+    <div className={classes} data-state={loading ? "loading" : error ? "error" : isDisabled ? "disabled" : isEmpty ? "empty" : selectedValue ? "selected" : "default"}>
       <span className="metraly-control-label">{label}</span>
-      <span className="metraly-select-control">
-        <select
-          id={id}
-          name={name}
-          value={value}
-          defaultValue={defaultValue ?? (placeholder ? "" : undefined)}
-          disabled={isDisabled || isEmpty}
+      <div className="metraly-select-shell">
+        <button
+          type="button"
+          className="metraly-select-button"
+          aria-haspopup="listbox"
+          aria-expanded={open}
+          aria-label={typeof label === "string" ? label : undefined}
           aria-invalid={error || undefined}
           aria-describedby={descriptionId}
-          aria-busy={loading || undefined}
-          onChange={loading ? undefined : onChange}
+          disabled={isDisabled}
+          onClick={() => setOpen(!open)}
         >
-          {placeholder ? (
-            <option value="" disabled>
-              {placeholder}
-            </option>
-          ) : null}
-          {isEmpty ? (
-            <option value="">No options</option>
-          ) : (
-            options.map((option) => (
-              <option key={option.value} value={option.value} disabled={option.disabled}>
-                {option.label}
-              </option>
-            ))
-          )}
-        </select>
-        <span className="metraly-select-indicator" aria-hidden="true">
-          {loading ? <span className="metraly-control-spinner" /> : null}
-        </span>
-      </span>
-      {helperText ? (
-        <span id={descriptionId} className="metraly-control-description">
-          {helperText}
-        </span>
-      ) : null}
-    </label>
+          <span className="metraly-select-button-label">{loading ? "Loading…" : resolvedLabel}</span>
+          <span className="metraly-select-button-icon" aria-hidden="true">▾</span>
+        </button>
+        {open && !isDisabled ? (
+          <div className="metraly-select-list" role="listbox" aria-label={typeof label === "string" ? label : "Select options"}>
+            {isEmpty ? (
+              <div className="metraly-select-empty">No options</div>
+            ) : (
+              options.map((option) => {
+                const selected = option.value === selectedValue;
+                return (
+                  <button
+                    key={option.value}
+                    type="button"
+                    role="option"
+                    aria-selected={selected}
+                    className={selected ? "metraly-select-option is-selected" : "metraly-select-option"}
+                    disabled={option.disabled}
+                    onClick={() => {
+                      if (option.disabled) return;
+                      if (!isControlled) setUncontrolledValue(option.value);
+                      onChange?.(option.value);
+                      setOpen(false);
+                    }}
+                  >
+                    <span>{option.label}</span>
+                    {selected ? <span aria-hidden="true">✓</span> : null}
+                  </button>
+                );
+              })
+            )}
+          </div>
+        ) : null}
+      </div>
+      {helperText ? <span id={descriptionId} className="metraly-control-description">{helperText}</span> : null}
+    </div>
   );
 }
 

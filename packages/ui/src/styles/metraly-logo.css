@@ -1,16 +1,15 @@
 .metraly-logo-mark {
   width: 32px;
   height: 32px;
-  color: var(--metraly-primary, #00e5cc);
-  filter: drop-shadow(0 0 14px rgba(0,229,204,0.22));
+  color: var(--m-cyan-500);
 }
 
 .metraly-logo-wordmark {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  color: var(--metraly-text-primary, #f0f4f8);
-  font-family: var(--metraly-font-display, "Space Grotesk", Inter, sans-serif);
+  color: var(--m-fg-0);
+  font-family: var(--m-font-ui);
   font-weight: 700;
   letter-spacing: -0.035em;
 }
@@ -22,7 +21,7 @@
 .metraly-pulse-line {
   stroke-dasharray: 148;
   stroke-dashoffset: 148;
-  animation: metraly-pulse-draw 1400ms var(--metraly-ease-out, ease-out) forwards;
+  animation: metraly-pulse-draw 1400ms var(--m-ease) forwards;
 }
 
 @keyframes metraly-pulse-draw {
@@ -30,3 +29,4 @@
     stroke-dashoffset: 0;
   }
 }
+
