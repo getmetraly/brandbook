@@ -293,6 +293,7 @@ It includes:
 
 - checkbox, radio, switch, dropdown, search, tabs and segmented control;
 - widget picker, widget shell, grid item and table row;
+- widget picker search rail and catalog states;
 - state badges, toast, notification center, timeline, empty state and skeleton;
 - sidebar, topbar, dashboard toolbar and real dashboard scenario;
 - Recharts gallery, heatmap, sprint burndown and widget registry coverage;

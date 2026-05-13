@@ -15,7 +15,14 @@ const columns = [
 const data: Row[] = [
   { name: 'Alpha', value: 42 },
   { name: 'Beta', value: 73 },
+  { name: 'Gamma', value: 18 },
 ];
+
+const frameStyle = {
+  width: '100%',
+  maxWidth: 720,
+  minHeight: 220,
+};
 
 const meta: Meta<typeof MetralyTable<Row>> = {
   title: 'Metraly/MetralyTable',
@@ -23,7 +30,17 @@ const meta: Meta<typeof MetralyTable<Row>> = {
   args: {
     columns,
     data,
+    rowKey: (row) => row.name,
+    stickyHeader: true,
+    dense: true,
+    liveRowKeys: ['Alpha'],
+    unreadRowKeys: ['Gamma'],
   },
+  render: (args) => (
+    <div style={frameStyle}>
+      <MetralyTable {...args} />
+    </div>
+  ),
 };
 
 export default meta;
@@ -47,7 +64,6 @@ export const Loading: Story = {
 
 export const SelectedRow: Story = {
   args: {
-    rowKey: (row) => row.name,
     selectedRowKeys: ['Beta'],
   },
 };

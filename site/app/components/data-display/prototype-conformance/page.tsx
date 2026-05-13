@@ -1,3 +1,4 @@
+"use client";
 import {
   DashboardDropZone,
   DashboardEmptyState,
@@ -143,7 +144,7 @@ export default function DataDisplayPrototypeConformancePage() {
           </DashboardWidget>
         </StateCell>
         <StateCell label="empty dashboard">
-          <DashboardEmptyState title="No widgets yet" description="Add the first delivery widget to start composing this board." actionLabel="Add delivery widget" />
+          <DashboardEmptyState title="No widgets yet" description="Add the first delivery widget to start composing this board." action={<button type="button" className="btn btn-primary">Add delivery widget</button>} />
         </StateCell>
       </StateGroup>
     </main>

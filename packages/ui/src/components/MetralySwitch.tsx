@@ -28,6 +28,9 @@ export function MetralySwitch({
   onClick,
 }: MetralySwitchProps) {
   const helperText = description ?? hint;
+  const generatedId = React.useId();
+  const labelId = `${generatedId}-label`;
+  const descriptionId = helperText ? `${generatedId}-description` : undefined;
   const isDisabled = disabled || loading;
   const classes = [
     "metraly-control-row",
@@ -48,7 +51,8 @@ export function MetralySwitch({
         className="metraly-switch"
         role="switch"
         aria-checked={checked}
-        aria-label={typeof label === "string" ? label : undefined}
+        aria-labelledby={labelId}
+        aria-describedby={descriptionId}
         aria-busy={loading || undefined}
         disabled={isDisabled}
         onClick={loading ? undefined : onClick}
@@ -59,8 +63,10 @@ export function MetralySwitch({
         </span>
       </button>
       <span className="metraly-control-copy">
-        <span className="metraly-control-label">{label}</span>
-        {helperText ? <span className="metraly-control-description">{helperText}</span> : null}
+        <span id={labelId} className="metraly-control-label">
+          {label}
+        </span>
+        {helperText ? <span id={descriptionId} className="metraly-control-description">{helperText}</span> : null}
       </span>
     </span>
   );

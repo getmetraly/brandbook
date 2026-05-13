@@ -1,9 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import type { CSSProperties } from 'react';
 
+function GripDotsPreview() {
+  return (
+    <span aria-hidden="true" style={gripStyle}>
+      {Array.from({ length: 6 }, (_, index) => (
+        <span key={index} style={gripDotStyle} />
+      ))}
+    </span>
+  );
+}
+
 function OverlayPrimitivesShowcase() {
   return (
-    <div style={{ display: 'grid', gap: 20, maxWidth: 720 }}>
+    <div style={stageStyle}>
       <section aria-label="Command palette" style={panelStyle}>
         <strong>Command palette</strong>
         <input aria-label="Search commands" placeholder="Search commands, widgets or boards" style={inputStyle} />
@@ -54,7 +64,7 @@ function OverlayPrimitivesShowcase() {
       </div>
 
       <div aria-label="Drag overlay" style={dragOverlayStyle}>
-        <span aria-hidden="true" style={gripStyle}>⋮⋮</span>
+        <GripDotsPreview />
         <strong>Review latency</strong>
       </div>
     </div>
@@ -71,19 +81,30 @@ type Story = StoryObj<typeof OverlayPrimitivesShowcase>;
 
 export const Default: Story = {};
 
+const stageStyle: CSSProperties = {
+  display: 'grid',
+  gap: 20,
+  width: '100%',
+  padding: 24,
+  background: '#0b0f14',
+  color: '#f0f4f8',
+};
+
 const panelStyle: CSSProperties = {
   display: 'grid',
   gap: 12,
-  padding: 20,
-  borderRadius: 20,
+  padding: 16,
+  borderRadius: 16,
   border: '1px solid rgba(255,255,255,0.08)',
-  background: 'rgba(17,23,34,0.92)',
+  background: 'rgba(17,23,34,0.96)',
+  boxShadow: '0 18px 60px rgba(0,0,0,0.28)',
 };
 
 const copyStyle: CSSProperties = {
   margin: 0,
   color: 'rgba(240,244,248,0.72)',
-  lineHeight: 1.6,
+  lineHeight: 1.5,
+  fontSize: 14,
 };
 
 const stackStyle: CSSProperties = {
@@ -92,13 +113,15 @@ const stackStyle: CSSProperties = {
 };
 
 const inputStyle: CSSProperties = {
+  width: '100%',
   minHeight: 44,
-  borderRadius: 14,
-  border: '1px solid rgba(255,255,255,0.13)',
-  background: 'rgba(11,15,20,0.72)',
+  borderRadius: 12,
+  border: '1px solid rgba(255,255,255,0.12)',
+  background: 'rgba(8,12,18,0.82)',
   color: '#f0f4f8',
   padding: '0 14px',
   font: 'inherit',
+  outline: 'none',
 };
 
 const labelStyle: CSSProperties = {
@@ -109,23 +132,29 @@ const labelStyle: CSSProperties = {
 };
 
 const buttonStyle: CSSProperties = {
+  width: '100%',
   minHeight: 40,
   borderRadius: 999,
-  border: '1px solid rgba(255,255,255,0.13)',
+  border: '1px solid rgba(255,255,255,0.12)',
   background: 'rgba(255,255,255,0.04)',
   color: '#f0f4f8',
   padding: '0 14px',
   textAlign: 'left',
+  cursor: 'pointer',
+  font: 'inherit',
 };
 
 const switchStyle: CSSProperties = {
+  display: 'inline-flex',
+  alignItems: 'center',
   minHeight: 40,
   minWidth: 72,
+  padding: 4,
   borderRadius: 999,
   border: '1px solid rgba(0,229,204,0.36)',
   background: 'rgba(0,229,204,0.12)',
   color: '#f0f4f8',
-  padding: 4,
+  cursor: 'pointer',
 };
 
 const switchTrackStyle: CSSProperties = {
@@ -135,6 +164,7 @@ const switchTrackStyle: CSSProperties = {
   borderRadius: 999,
   background: '#00e5cc',
   marginLeft: 'auto',
+  boxShadow: '0 0 18px rgba(0,229,204,0.28)',
 };
 
 const tooltipStyle: CSSProperties = {
@@ -147,6 +177,7 @@ const tooltipStyle: CSSProperties = {
   border: '1px solid rgba(0,229,204,0.28)',
   background: 'rgba(0,229,204,0.08)',
   color: '#f0f4f8',
+  fontSize: 13,
 };
 
 const dragOverlayStyle: CSSProperties = {
@@ -159,9 +190,20 @@ const dragOverlayStyle: CSSProperties = {
   background: 'rgba(168,85,247,0.08)',
   color: '#f0f4f8',
   width: 'fit-content',
+  boxShadow: '0 16px 32px rgba(0,0,0,0.24)',
 };
 
 const gripStyle: CSSProperties = {
-  letterSpacing: '-4px',
-  color: 'rgba(240,244,248,0.8)',
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, 4px)',
+  gap: '2px 3px',
+  width: 14,
+  color: 'rgba(240,244,248,0.72)',
+};
+
+const gripDotStyle: CSSProperties = {
+  width: 4,
+  height: 4,
+  borderRadius: 999,
+  background: 'currentColor',
 };

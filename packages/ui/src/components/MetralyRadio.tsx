@@ -31,7 +31,8 @@ export function MetralyRadio({
   onChange,
 }: MetralyRadioProps) {
   const helperText = description ?? hint;
-  const describedBy = helperText && id ? `${id}-description` : undefined;
+  const generatedId = React.useId();
+  const descriptionId = helperText ? `${id ?? generatedId}-description` : undefined;
   const classes = [
     "metraly-control-row",
     "metraly-radio",
@@ -54,7 +55,7 @@ export function MetralyRadio({
         defaultChecked={defaultChecked}
         disabled={disabled}
         aria-invalid={error || undefined}
-        aria-describedby={describedBy}
+        aria-describedby={descriptionId}
         onChange={onChange}
         readOnly={checked !== undefined && !onChange ? true : undefined}
       />
@@ -62,7 +63,7 @@ export function MetralyRadio({
       <span className="metraly-control-copy">
         <span className="metraly-control-label">{label}</span>
         {helperText ? (
-          <span id={describedBy} className="metraly-control-description">
+          <span id={descriptionId} className="metraly-control-description">
             {helperText}
           </span>
         ) : null}

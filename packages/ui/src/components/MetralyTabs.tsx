@@ -28,9 +28,25 @@ export function MetralyTabs({
   livePulse = false,
   onValueChange,
 }: MetralyTabsProps) {
-  const activeValue = value ?? defaultValue ?? items[0]?.value;
+  const isControlled = value !== undefined;
+  const [uncontrolledValue, setUncontrolledValue] = React.useState(() => defaultValue ?? items[0]?.value);
+  const activeValue = isControlled ? value : uncontrolledValue;
   const classes = ["metraly-tabs", livePulse && "has-live-pulse", className].filter(Boolean).join(" ");
   const refs = React.useRef<(HTMLButtonElement | null)[]>([]);
+
+  React.useEffect(() => {
+    if (isControlled) return;
+    if (uncontrolledValue === undefined && items[0]?.value !== undefined) {
+      setUncontrolledValue(items[0].value);
+    }
+  }, [isControlled, items, uncontrolledValue]);
+
+  function handleSelect(nextValue: string) {
+    if (!isControlled) {
+      setUncontrolledValue(nextValue);
+    }
+    onValueChange?.(nextValue);
+  }
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLButtonElement>, index: number) {
     if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
@@ -42,7 +58,7 @@ export function MetralyTabs({
       next = (next + direction + count) % count;
     }
     refs.current[next]?.focus();
-    if (!items[next].disabled) onValueChange?.(items[next].value);
+    if (!items[next].disabled) handleSelect(items[next].value);
   }
 
   return (
@@ -52,7 +68,9 @@ export function MetralyTabs({
         return (
           <button
             key={item.value}
-            ref={(el) => { refs.current[index] = el; }}
+            ref={(el) => {
+              refs.current[index] = el;
+            }}
             type="button"
             role="tab"
             className={selected ? "metraly-tab is-active" : "metraly-tab"}
@@ -61,7 +79,7 @@ export function MetralyTabs({
             data-live-pulse={selected && livePulse ? "on" : "off"}
             tabIndex={selected ? 0 : -1}
             disabled={item.disabled}
-            onClick={onValueChange && !item.disabled ? () => onValueChange(item.value) : undefined}
+            onClick={!item.disabled ? () => handleSelect(item.value) : undefined}
             onKeyDown={(e) => handleKeyDown(e, index)}
           >
             <span className="metraly-tab-content">

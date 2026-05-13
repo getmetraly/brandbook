@@ -52,51 +52,53 @@ export function MetralyLineChart<TDatum extends MetralyChartDatum = MetralyChart
     );
   }
 
+  const chart = width ? (
+    <LineChart width={width} height={height} data={data} margin={metralyChartMargin} title={ariaLabel}>
+      <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
+      <XAxis dataKey={xKey} {...metralyAxisProps} />
+      <YAxis {...metralyAxisProps} />
+      <MetralyChartTooltip />
+      {series.map((item) => (
+        <Line
+          key={item.dataKey}
+          type="monotone"
+          dataKey={item.dataKey}
+          name={item.name}
+          stroke={resolveChartTone(item.tone)}
+          strokeWidth={3}
+          dot={false}
+          activeDot={{ r: 5 }}
+          isAnimationActive={false}
+        />
+      ))}
+    </LineChart>
+  ) : (
+    <ResponsiveContainer width="100%" height={height}>
+      <LineChart data={data} margin={metralyChartMargin} title={ariaLabel}>
+        <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
+        <XAxis dataKey={xKey} {...metralyAxisProps} />
+        <YAxis {...metralyAxisProps} />
+        <MetralyChartTooltip />
+        {series.map((item) => (
+          <Line
+            key={item.dataKey}
+            type="monotone"
+            dataKey={item.dataKey}
+            name={item.name}
+            stroke={resolveChartTone(item.tone)}
+            strokeWidth={3}
+            dot={false}
+            activeDot={{ r: 5 }}
+            isAnimationActive={false}
+          />
+        ))}
+      </LineChart>
+    </ResponsiveContainer>
+  );
+
   return (
     <div className={classes} role="img" aria-label={ariaLabel} {...chartProps}>
-      {width ? (
-        <LineChart width={width} height={height} data={data} margin={metralyChartMargin} title={ariaLabel}>
-          <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
-          <XAxis dataKey={xKey} {...metralyAxisProps} />
-          <YAxis {...metralyAxisProps} />
-          <MetralyChartTooltip />
-          {series.map((item) => (
-            <Line
-              key={item.dataKey}
-              type="monotone"
-              dataKey={item.dataKey}
-              name={item.name}
-              stroke={resolveChartTone(item.tone)}
-              strokeWidth={3}
-              dot={false}
-              activeDot={{ r: 5 }}
-              isAnimationActive={false}
-            />
-          ))}
-        </LineChart>
-      ) : (
-        <ResponsiveContainer width="100%" height={height}>
-          <LineChart data={data} margin={metralyChartMargin} title={ariaLabel}>
-            <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
-            <XAxis dataKey={xKey} {...metralyAxisProps} />
-            <YAxis {...metralyAxisProps} />
-            <MetralyChartTooltip />
-            {series.map((item) => (
-              <Line
-                key={item.dataKey}
-                type="monotone"
-                dataKey={item.dataKey}
-                name={item.name}
-                stroke={resolveChartTone(item.tone)}
-                strokeWidth={3}
-                dot={false}
-                activeDot={{ r: 5 }}
-                isAnimationActive={false}
-              />
-            ))}
-          </LineChart>
-        </ResponsiveContainer>
-      )}
+      {chart}
       <span className="metraly-chart-sr">{summary}</span>
     </div>
   );

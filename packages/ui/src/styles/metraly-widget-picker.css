@@ -1,25 +1,51 @@
 .metraly-widget-picker-card {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
   min-width: 0;
-  padding: 18px;
-  border-radius: 24px;
+  padding: 10px 12px;
+  border-radius: var(--metraly-radius-xl);
   border: 1px solid rgba(255,255,255,0.08);
   background: rgba(15,19,26,0.86);
-  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease,
+    transform 160ms ease,
+    opacity 160ms ease;
+}
+
+.metraly-widget-picker-card:hover:not(:disabled) {
+  border-color: rgba(255,255,255,0.14);
+  background: rgba(18,24,34,0.94);
 }
 
 .metraly-widget-picker-card.is-selected {
-  border-color: rgba(0,229,204,0.34);
-  box-shadow: 0 0 0 1px rgba(0,229,204,0.14);
+  border-color: oklch(0.78 0.13 200);
+  background: oklch(0.78 0.13 200 / 0.10);
+  box-shadow: 0 0 0 1px oklch(0.78 0.13 200), 0 0 12px -2px oklch(0.78 0.13 200 / 0.22);
+}
+
+.metraly-widget-picker-card.is-dragging {
+  opacity: 0.6;
+  transform: scale(0.97) rotate(-1deg);
+  outline: 1px dashed oklch(0.78 0.13 200);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.28);
+}
+
+.metraly-widget-picker-card.is-loading {
+  opacity: 0.88;
+}
+
+.metraly-widget-picker-card.is-disabled {
+  opacity: 0.62;
 }
 
 .metraly-widget-picker-head {
   display: grid;
-  grid-template-columns: 58px minmax(0, 1fr) auto;
-  align-items: flex-start;
-  gap: 14px;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
   min-width: 0;
 }
 
@@ -31,15 +57,21 @@
   place-items: center;
 }
 
+.metraly-widget-picker-card.is-selected .metraly-widget-picker-icon {
+  border-color: rgba(0,229,204,0.22);
+  background: rgba(0,229,204,0.12);
+  box-shadow: 0 0 0 1px rgba(0,229,204,0.1);
+}
+
 .metraly-widget-picker-icon {
-  width: 58px;
-  height: 58px;
-  border-radius: 18px;
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
 }
 
 .metraly-widget-picker-icon small {
   color: var(--text-secondary, #8b9bb4);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -47,8 +79,8 @@
 
 .metraly-widget-picker-icon-pulse,
 .metraly-widget-picker-select-pulse {
-  width: 42px;
-  height: 18px;
+  width: 18px;
+  height: 8px;
   display: inline-block;
   background: var(--cyan, #00e5cc);
   clip-path: var(--metraly-pulse-marker-path, polygon(0 52%, 20% 52%, 26% 25%, 36% 82%, 47% 8%, 58% 52%, 100% 52%, 100% 66%, 52% 66%, 47% 48%, 37% 100%, 27% 55%, 23% 66%, 0 66%));
@@ -58,27 +90,39 @@
 .metraly-widget-picker-title-copy {
   min-width: 0;
   display: grid;
-  gap: 5px;
+  gap: 4px;
 }
 
 .metraly-widget-picker-title-copy strong {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: var(--text-primary, #f0f4f8);
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .metraly-widget-picker-title-copy span {
   color: var(--text-secondary, #8b9bb4);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 750;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .metraly-widget-picker-select-control {
   width: 30px;
   height: 30px;
   border-radius: 999px;
+  align-self: start;
+}
+
+.metraly-widget-picker-select-control.is-selected {
+  border-color: rgba(0,229,204,0.28);
+  background: rgba(0,229,204,0.12);
 }
 
 .metraly-widget-picker-select-control:not(.is-selected) .metraly-widget-picker-select-pulse {
@@ -94,14 +138,15 @@
 .metraly-widget-picker-tags {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
 .metraly-widget-picker-card p {
   margin: 0;
   color: var(--text-secondary, #8b9bb4);
-  line-height: 1.6;
+  line-height: 1.45;
+  font-size: 12px;
 }
 
 @media (prefers-reduced-motion: reduce) {
