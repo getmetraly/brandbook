@@ -148,6 +148,137 @@ The current site structure uses grouped docs pages instead of one oversized show
 - `/examples/engineering-dashboard`
 - `/editor`
 
+## Docs shell migration boundary
+
+The website docs surface should keep route-aware composition inside the website repo while reusing shared primitives where they already fit.
+
+Current docs layout candidates are:
+
+- `Page`
+- `Section`
+- `SectionHeader`
+- `Grid`
+- `Card`
+- `CardLink`
+- `CardHeader`
+- `CardText`
+- `Stack`
+- `ContentPage`
+- `Prose`
+- `StatusPill`
+- `ButtonLink`
+- `Icon`
+
+Website-specific docs composition remains responsible for `SiteShell`, docs layout wrappers, article shell wrappers, reading progress, article TOC and route-specific hero panels.
+
+The docs shell should stay readable and route-stable rather than turning into a generic brandbook showcase.
+## Website cross-repo primitive split
+
+The website can reuse shared layout and content primitives without moving its route wrappers into the canonical primitive layer.
+
+Shared cross-repo candidates:
+
+- `ButtonLink`
+- `Card`, `CardLink`, `CardHeader`, `CardText`
+- `Grid`
+- `Page`
+- `Section`
+- `SectionHeader`
+- `Stack`
+- `StatusPill`
+- `Prose`
+- `Note`
+- `Highlight`
+- `Icon`
+
+Website-local wrappers that should remain in `../website`:
+
+- `SiteShell`
+- `SiteNav`
+- `SiteFooter`
+- `ThemeToggle`
+- `ContentPage`
+- `ReadingProgress`
+- `ArticleToc`
+
+This preserves editorial routing and claim-safe composition while still converging on the shared presentation primitives.
+## Website route stability and claim safety
+
+Public website routes should remain stable while primitives are migrated:
+
+- `/`
+- `/ai`
+- `/pricing`
+- `/docs`
+- `/demo`
+- `/trust`
+- `/blog`
+- `/privacy`
+- `/terms`
+
+Public wording should stay aligned with the docs/status system:
+
+- real UI and synthetic data are safe;
+- dashboard editing is in progress;
+- connectors are next;
+- AI direction is designed / evolving;
+- pricing pages stay preview anchors until license activation exists.
+
+Route and wording changes should not outpace the public status docs.
+## Website coverage baseline
+
+The website already has a route smoke baseline, but it is not yet a full visual/regression matrix for shared surfaces.
+
+Current coverage points:
+
+- `website/tests/e2e/routes.spec.ts` covers route render smoke for the public surface set.
+- `website/scripts/smoke-routes.mjs` covers the same route set at the HTTP layer.
+
+Next checks to add or formalize are page-level visual checks for homepage, pricing, demo and docs, plus responsive checks for desktop and mobile widths.
+## Website migration boundary matrix
+
+Safe first-phase candidates:
+
+- `ButtonLink`
+- `Card`, `CardLink`, `CardHeader`, `CardText`
+- `Grid`
+- `Page`
+- `Section`
+- `SectionHeader`
+- `Stack`
+- `StatusPill`
+- `Prose`
+- `Note`
+- `Highlight`
+- `Icon`
+
+Already-adjacent website surfaces that can adopt those primitives first:
+
+- homepage hero, feature grid, role cards, AI block and roadmap cards;
+- pricing cards and CTA rows;
+- docs landing cards, callouts and hero CTA pairs;
+- trust page cards, notes and centered prose;
+- blog archive cards and article metadata blocks.
+
+Wait-until-stable wrappers:
+
+- `SiteShell`
+- `SiteNav`
+- `SiteFooter`
+- `ThemeToggle`
+- `ContentPage`
+- `ReadingProgress`
+- `ArticleToc`
+
+Route-level hero and shell composition for `/`, `/docs`, `/blog`, `/privacy`, and `/terms` should stay website-owned until the shared primitives are fully settled.
+
+
+Claim-safe wording should continue to be validated against the public docs/status system before route copy changes land.
+
+
+
+
+
 ## Preview hardening structure
 
 The preview component set complements the grouped docs pages and still covers the product-scenario review surfaces:
