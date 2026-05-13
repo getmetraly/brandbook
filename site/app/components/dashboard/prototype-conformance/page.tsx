@@ -1,3 +1,4 @@
+"use client";
 import {
   DashboardDropZone,
   DashboardEmptyState,
@@ -139,7 +140,7 @@ export default function DashboardPrototypeConformancePage() {
 
       <StateGroup title="Board-edit composition states">
         <StateCell label="empty dashboard">
-          <DashboardEmptyState title="No widgets yet" description="Add the first delivery widget to start composing this board." actionLabel="Add delivery widget" />
+          <DashboardEmptyState title="No widgets yet" description="Add the first delivery widget to start composing this board." action={<button type="button" className="btn btn-primary">Add delivery widget</button>} />
         </StateCell>
         <StateCell label="drop target + selected widget">
           <div className="claude-board-edit-composition">

@@ -33,6 +33,7 @@ export function DashboardDropZone({
 }: DashboardDropZoneProps) {
   const resolvedState = state ?? (active ? "active" : "idle");
   const resolvedLabel = label ?? defaultDropZoneLabel(resolvedState);
+  const ariaLabel = typeof resolvedLabel === "string" ? resolvedLabel : defaultDropZoneLabel(resolvedState);
   const tone = dropZoneTone(resolvedState);
   const classes = [
     "metraly-dashboard-drop-zone",
@@ -43,12 +44,14 @@ export function DashboardDropZone({
   ]
     .filter(Boolean)
     .join(" ");
+  const showLine = resolvedState === "hover" || resolvedState === "active" || resolvedState === "empty";
 
   return (
     <div
       className={classes}
       role="status"
       aria-live="polite"
+      aria-label={ariaLabel}
       data-drop-zone-state={resolvedState}
       data-tone={tone}
       data-pulse="off"
@@ -56,6 +59,7 @@ export function DashboardDropZone({
       <span className="metraly-dashboard-drop-zone-icon" aria-hidden="true">
         {resolvedState === "rejected" ? "!" : "+"}
       </span>
+      {showLine ? <span className="metraly-dashboard-drop-zone-line" aria-hidden="true" /> : null}
       <span className="metraly-dashboard-drop-zone-copy">
         <strong>{resolvedLabel}</strong>
         {description ? <small>{description}</small> : null}

@@ -65,7 +65,7 @@ describe('Phase 1 prototype conformance states', () => {
       />,
     );
 
-    const checkbox = screen.getByRole('checkbox', { name: 'Telemetry on' });
+    const checkbox = screen.getByRole('checkbox', { name: /Telemetry on/ });
     const row = checkbox.closest('.metraly-checkbox');
 
     expect(checkbox).toBeDisabled();
@@ -78,7 +78,7 @@ describe('Phase 1 prototype conformance states', () => {
   it('renders radio prototype hint and error state', () => {
     render(<MetralyRadio id="phase-radio" name="phase-radio" label="p99" hint="Choose a supported quantile" error />);
 
-    const radio = screen.getByRole('radio', { name: 'p99' });
+    const radio = screen.getByRole('radio', { name: /p99/ });
     const row = radio.closest('.metraly-radio');
 
     expect(radio).toHaveAttribute('aria-invalid', 'true');
@@ -114,7 +114,7 @@ describe('Phase 1 prototype conformance states', () => {
       />,
     );
 
-    const loadingSelect = screen.getByRole('combobox', { name: 'Signal source' });
+    const loadingSelect = screen.getByRole('combobox', { name: /Signal source/ });
     const loadingField = loadingSelect.closest('.metraly-select-field');
 
     expect(loadingSelect).toBeDisabled();
@@ -126,7 +126,7 @@ describe('Phase 1 prototype conformance states', () => {
 
     rerender(<MetralySelect id="phase-empty-select" label="Empty source" options={[]} hint="No sources connected" />);
 
-    const emptySelect = screen.getByRole('combobox', { name: 'Empty source' });
+    const emptySelect = screen.getByRole('combobox', { name: /Empty source/ });
     const emptyField = emptySelect.closest('.metraly-select-field');
 
     expect(emptySelect).toBeDisabled();

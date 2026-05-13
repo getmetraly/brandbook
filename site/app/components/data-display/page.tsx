@@ -34,7 +34,9 @@ export default function DataDisplayPage() {
       </DocsSection>
       <DocsSection id="tables" title="Tables and metrics">
         <ComponentPreview title="MetralyTable" description="Display-only review queue table for dense engineering dashboards." states={["display-only", "selected", "empty", "loading"]} code={'import { MetralyTable } from "@metraly/ui";'}>
-          <div className="component-preview-stage is-wide"><MetralyTable columns={columns} data={data} rowKey={(row) => row.team} selectedRowKeys={["Growth"]} ariaLabel="Review queue by team" /></div>
+          <div className="component-preview-stage is-wide" style={{ display: "block", width: "100%" }}>
+            <MetralyTable columns={columns} data={data} rowKey={(row) => row.team} selectedRowKeys={["Growth"]} liveRowKeys={["Platform"]} unreadRowKeys={["Data"]} ariaLabel="Review queue by team" />
+          </div>
         </ComponentPreview>
         <ComponentPreview title="MetralyMetricCard" description="Compact KPI surface for dashboard overviews." states={["primary", "success", "warning"]}>
           <ComponentStateGrid>
