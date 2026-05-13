@@ -46,7 +46,7 @@ export function MetralyChartTooltipContent({
 export function MetralyChartTooltip() {
   return (
     <Tooltip
-      cursor={{ stroke: "rgba(0,229,204,0.22)", strokeWidth: 1 }}
+      cursor={{ stroke: "var(--m-cyan-500)", strokeOpacity: 0.18, strokeWidth: 1 }}
       content={<MetralyChartTooltipContent />}
     />
   );

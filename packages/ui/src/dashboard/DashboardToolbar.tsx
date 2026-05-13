@@ -71,7 +71,7 @@ export function DashboardToolbar({
           <div className="metraly-dashboard-toolbar-controls">
             {hasSearch ? (
               <label className="metraly-dashboard-toolbar-search">
-                <span>Search dashboard widgets</span>
+                <span>Search widgets</span>
                 <input
                   type="search"
                   value={searchValue ?? ""}
@@ -98,7 +98,7 @@ export function DashboardToolbar({
                   aria-pressed={editMode}
                   onClick={onToggleEdit}
                 >
-                  {editMode ? "Edit mode on" : "Edit mode"}
+                  {editMode ? "Editing" : "Edit mode"}
                 </button>
               ) : null}
               {onAddWidget ? (

@@ -30,6 +30,7 @@ export interface StateBadgeProps extends Omit<React.HTMLAttributes<HTMLSpanEleme
    * not generic decoration.
    */
   pulse?: boolean;
+  withPulse?: boolean;
   className?: string;
 }
 
@@ -81,16 +82,17 @@ export function StateBadge({
   tone = "subtle",
   showIndicator = true,
   pulse,
+  withPulse,
   className,
   ...rest
 }: StateBadgeProps) {
   const resolvedLabel = label ?? defaultStateLabel(state);
-  const resolvedPulse = pulse ?? shouldPulseByDefault(state);
+  const resolvedPulse = pulse ?? withPulse ?? shouldPulseByDefault(state);
   const visualState = visualStateAliases[state] ?? state;
   const classes = [
     "metraly-state-badge",
-    `is-${visualState}`,
-    visualState !== state ? `is-${state}` : null,
+    `is-${state}`,
+    visualState !== state ? `is-${visualState}` : null,
     resolvedPulse ? "is-pulsing" : "is-static",
     `metraly-state-badge--tone-${tone}`,
     size !== "md" ? `metraly-state-badge--${size}` : null,

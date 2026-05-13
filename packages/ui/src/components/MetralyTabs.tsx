@@ -17,6 +17,7 @@ export interface MetralyTabsProps {
   /** Prototype-compatible selected-tab telemetry marker. */
   livePulse?: boolean;
   onValueChange?: (value: string) => void;
+  onChange?: (value: string) => void;
 }
 
 export function MetralyTabs({
@@ -27,6 +28,7 @@ export function MetralyTabs({
   className,
   livePulse = false,
   onValueChange,
+  onChange,
 }: MetralyTabsProps) {
   const isControlled = value !== undefined;
   const [uncontrolledValue, setUncontrolledValue] = React.useState(() => defaultValue ?? items[0]?.value);
@@ -46,6 +48,7 @@ export function MetralyTabs({
       setUncontrolledValue(nextValue);
     }
     onValueChange?.(nextValue);
+    onChange?.(nextValue);
   }
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLButtonElement>, index: number) {

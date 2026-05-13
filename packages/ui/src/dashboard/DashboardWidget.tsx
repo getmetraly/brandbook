@@ -46,15 +46,8 @@ function DragHandle({ canDrag, id, onDragStart }: { canDrag: boolean; id?: strin
             role: "presentation" as const,
             "aria-hidden": true,
           })}
-    >
-      <span className="metraly-widget-shell-grip-dots" aria-hidden="true">
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-      </span>
+      >
+      <span className="metraly-widget-shell-grip-dots" aria-hidden="true"><span /><span /><span /><span /><span /><span /></span>
     </span>
   );
 }
@@ -123,6 +116,7 @@ export function DashboardWidget({
             <StateBadge
               state={state}
               label={stateLabel ?? defaultStateLabel(state)}
+              size="sm"
               className="metraly-widget-shell-badge"
             />
           )}

@@ -7,16 +7,14 @@
   flex-direction: column;
   gap: 0.75rem;
   padding: 1rem;
-  transition: background var(--metraly-motion-base) var(--metraly-ease-out), border-color var(--metraly-motion-base) var(--metraly-ease-out), box-shadow var(--metraly-motion-base) var(--metraly-ease-out);
-}
-
-.metraly-metric-card--compact {
-  gap: 0.5rem;
-  padding: 0.75rem;
+  border-radius: var(--m-r-4);
+  border: 1px solid var(--m-line);
+  background: var(--m-bg-2);
+  transition: background var(--m-dur-2) var(--m-ease), border-color var(--m-dur-2) var(--m-ease), box-shadow var(--m-dur-2) var(--m-ease);
 }
 
 .metraly-metric-card:hover {
-  background: var(--metraly-bg-card-hover);
+  background: var(--m-bg-3);
 }
 
 .metraly-metric-card-header {
@@ -26,17 +24,9 @@
   min-width: 0;
 }
 
-.metraly-metric-card--compact .metraly-metric-card-header {
-  gap: 0.5rem;
-}
-
 .metraly-metric-card-icon {
   flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 0.125rem;
-  color: var(--metraly-primary);
+  color: var(--m-cyan-500);
 }
 
 .metraly-metric-card-copy {
@@ -48,51 +38,39 @@
 }
 
 .metraly-metric-card-title {
-  font-family: var(--metraly-font-ui);
-  font-size: 0.8125rem;
-  font-weight: 650;
-  color: var(--metraly-text-secondary);
+  color: var(--m-fg-2);
+  font-size: var(--m-fs-12);
 }
 
 .metraly-metric-card-value {
-  font-family: var(--metraly-font-display);
+  color: var(--m-fg-0);
+  font-family: var(--m-font-mono);
   font-size: clamp(1.5rem, 3vw, 2rem);
-  font-weight: 700;
-  letter-spacing: -0.045em;
-  color: var(--metraly-metric-accent, var(--metraly-primary));
+  font-weight: 500;
+  letter-spacing: -0.04em;
   line-height: 1;
 }
 
-.metraly-metric-card--compact .metraly-metric-card-value {
-  font-size: clamp(1.25rem, 2.5vw, 1.625rem);
-}
-
 .metraly-metric-card-description {
-  font-family: var(--metraly-font-ui);
-  font-size: 0.75rem;
-  color: var(--metraly-text-muted);
+  color: var(--m-fg-3);
+  font-size: var(--m-fs-10);
 }
 
 .metraly-metric-card-badge {
   flex: 0 0 auto;
-  margin-left: auto;
 }
 
 .metraly-metric-card-footer {
-  border-top: 1px solid var(--metraly-border);
   padding-top: 0.75rem;
-  font-family: var(--metraly-font-ui);
-  font-size: 0.75rem;
-  color: var(--metraly-text-muted);
+  border-top: 1px solid var(--m-line);
+  color: var(--m-fg-3);
+  font-size: var(--m-fs-10);
 }
 
-.metraly-metric-card--compact .metraly-metric-card-footer {
-  padding-top: 0.5rem;
-}
+.metraly-metric-card.is-primary { --metraly-metric-accent: var(--m-cyan-500); }
+.metraly-metric-card.is-secondary { --metraly-metric-accent: var(--m-purple-500); }
+.metraly-metric-card.is-success { --metraly-metric-accent: var(--m-ok); }
+.metraly-metric-card.is-warning { --metraly-metric-accent: var(--m-warn); }
+.metraly-metric-card.is-error { --metraly-metric-accent: var(--m-err); }
+.metraly-metric-card.is-info { --metraly-metric-accent: var(--m-fg-2); }
 
-.metraly-metric-card.is-primary { --metraly-metric-accent: var(--metraly-primary); }
-.metraly-metric-card.is-secondary { --metraly-metric-accent: var(--metraly-secondary); }
-.metraly-metric-card.is-success { --metraly-metric-accent: var(--metraly-success); }
-.metraly-metric-card.is-warning { --metraly-metric-accent: var(--metraly-warning); }
-.metraly-metric-card.is-error { --metraly-metric-accent: var(--metraly-error); }
-.metraly-metric-card.is-info { --metraly-metric-accent: var(--metraly-info); }

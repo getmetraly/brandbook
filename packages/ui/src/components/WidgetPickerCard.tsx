@@ -1,5 +1,4 @@
 import * as React from "react";
-import { MetralyBadge } from "./MetralyBadge";
 import { StateBadge, type StateBadgeState } from "./StateBadge";
 
 export type WidgetPickerCardVisualState = "default" | "selected" | "new" | "loading" | "dragging" | "disabled";
@@ -11,7 +10,6 @@ export interface WidgetPickerCardProps {
   /** Prototype-compatible widget kind metadata, for example `dora/overview`. */
   kind?: React.ReactNode;
   iconLabel?: string;
-  tags?: string[];
   state?: StateBadgeState;
   stateLabel?: string;
   /** Prototype visual state for widget picker cards. */
@@ -26,8 +24,7 @@ export interface WidgetPickerCardProps {
 function WidgetPickerIcon({ label, loading = false }: { label: string; loading?: boolean }) {
   return (
     <span className="metraly-widget-picker-icon" aria-hidden="true" data-loading={loading ? "true" : "false"}>
-      <span className="metraly-widget-picker-icon-pulse" />
-      <small>{loading ? "…" : label.slice(0, 2).toUpperCase()}</small>
+      {loading ? <span className="metraly-control-spinner" /> : <small>{label.slice(0, 2).toUpperCase()}</small>}
     </span>
   );
 }
@@ -43,7 +40,6 @@ export function WidgetPickerCard({
   selected = false,
   kind,
   iconLabel = "pulse",
-  tags = ["github", "telemetry"],
   state = "live",
   stateLabel,
   visualState = "default",
@@ -87,12 +83,7 @@ export function WidgetPickerCard({
           <span>{effectiveKind}</span>
         </div>
 
-        <span
-          className={selected ? "metraly-widget-picker-select-control is-selected" : "metraly-widget-picker-select-control"}
-          aria-hidden="true"
-        >
-          <span className="metraly-widget-picker-select-pulse" />
-        </span>
+        <span className={selected ? "metraly-widget-picker-select-control is-selected" : "metraly-widget-picker-select-control"} aria-hidden="true" />
       </div>
 
       <div className="metraly-widget-picker-meta">
@@ -100,16 +91,6 @@ export function WidgetPickerCard({
       </div>
 
       <p>{description}</p>
-
-      {tags.length > 0 ? (
-        <div className="metraly-widget-picker-tags" aria-label="Widget tags">
-          {tags.map((tag, index) => (
-            <MetralyBadge key={tag} variant={index === 0 ? "primary" : "success"}>
-              {tag}
-            </MetralyBadge>
-          ))}
-        </div>
-      ) : null}
     </>
   );
 

@@ -1,168 +1,99 @@
 .metraly-state-badge {
   display: inline-flex;
   align-items: center;
-  justify-self: start;
-  align-self: flex-start;
-  box-sizing: border-box;
-  width: fit-content;
-  max-width: 100%;
-  min-width: 0;
-  flex: 0 1 auto;
   gap: 6px;
+  min-width: 0;
+  max-width: 100%;
   padding: 2px 8px 2px 6px;
-  font-family: var(--metraly-font-mono);
-  font-size: 11px;
-  font-weight: 650;
-  line-height: 13.2px;
-  letter-spacing: 0.44px;
-  text-transform: uppercase;
-  text-rendering: optimizeLegibility;
-  border-radius: var(--metraly-radius-pill);
   border: 1px solid transparent;
-  background: rgba(255,255,255,0.04);
-  color: var(--metraly-text-secondary);
+  border-radius: var(--m-r-5);
+  font-family: var(--m-font-mono);
+  font-size: var(--m-fs-10);
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   white-space: nowrap;
-  overflow: hidden;
-}
-
-.metraly-state-badge > * {
-  flex-shrink: 0;
+  color: var(--m-fg-1);
+  background: var(--m-bg-3);
 }
 
 .metraly-state-badge > span:last-child {
-  display: block;
   min-width: 0;
-  max-width: 100%;
-  flex: 1 1 auto;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .metraly-state-badge--sm {
-  gap: 5px;
   padding: 2px 7px 2px 6px;
-  font-size: 10px;
-  line-height: 12px;
-  letter-spacing: 0.4px;
+  font-size: var(--m-fs-9);
 }
 
-.metraly-state-badge .metraly-state-pulse {
+.metraly-state-pulse {
   flex: 0 0 5px;
   width: 5px;
   height: 5px;
-  border-radius: var(--metraly-radius-pill);
+  border-radius: 999px;
   background: currentColor;
 }
 
 .metraly-state-badge--sm .metraly-state-pulse {
-  flex-basis: 4px;
   width: 4px;
   height: 4px;
 }
 
-.metraly-state-badge--tone-solid {
-  color: var(--metraly-bg-base);
-  border-color: transparent;
-  background: var(--metraly-state-solid-bg, var(--metraly-primary));
-}
-
 .metraly-state-badge.is-live,
 .metraly-state-badge.is-success {
-  color: oklch(0.78 0.14 155);
+  color: var(--m-ok);
+  background: var(--m-ok-bg);
   border-color: oklch(0.78 0.14 155 / 0.2);
-  background: oklch(0.78 0.14 155 / 0.12);
-  --metraly-state-solid-bg: oklch(0.78 0.14 155);
 }
 
 .metraly-state-badge.is-stale {
-  color: oklch(0.82 0.14 80);
+  color: var(--m-warn);
+  background: var(--m-warn-bg);
   border-color: oklch(0.82 0.14 80 / 0.22);
-  background: oklch(0.82 0.14 80 / 0.12);
-  --metraly-state-solid-bg: oklch(0.82 0.14 80);
 }
 
 .metraly-state-badge.is-delayed,
 .metraly-state-badge.is-warning {
-  color: oklch(0.82 0.14 80);
+  color: var(--m-warn);
+  background: var(--m-warn-bg);
   border-color: oklch(0.82 0.14 80 / 0.22);
-  background: oklch(0.82 0.14 80 / 0.12);
-  --metraly-state-solid-bg: oklch(0.82 0.14 80);
 }
 
 .metraly-state-badge.is-disconnected,
 .metraly-state-badge.is-error {
-  color: oklch(0.72 0.18 25);
+  color: var(--m-err);
+  background: var(--m-err-bg);
   border-color: oklch(0.72 0.18 25 / 0.24);
-  background: oklch(0.72 0.18 25 / 0.13);
-  --metraly-state-solid-bg: oklch(0.72 0.18 25);
 }
 
 .metraly-state-badge.is-noData {
-  color: oklch(0.50 0.012 250);
-  border-color: oklch(1 0 0 / 0.06);
-  background: oklch(1 0 0 / 0.035);
-  --metraly-state-solid-bg: oklch(0.50 0.012 250);
-}
-
-/* data-state overrides for design-correct colours (alias classes left intact for test compat) */
-.metraly-state-badge[data-state="new"] {
-  color: oklch(0.78 0.13 200);
-  border-color: oklch(0.78 0.13 200 / 0.2);
-  background: oklch(0.78 0.13 200 / 0.10);
-}
-
-.metraly-state-badge[data-state="purple"] {
-  color: oklch(0.66 0.14 295);
-  border-color: oklch(0.66 0.14 295 / 0.22);
-  background: oklch(0.66 0.14 295 / 0.10);
-}
-
-.metraly-state-badge[data-state="disabled"] {
-  color: oklch(0.38 0.012 250);
-  border: 1px dashed oklch(1 0 0 / 0.085);
-  background: oklch(0.225 0.014 250 / 0.60);
+  color: var(--m-fg-3);
+  background: oklch(0.225 0.014 250 / 0.6);
+  border-color: var(--m-line);
 }
 
 .metraly-state-badge.is-new {
-  color: oklch(0.78 0.13 200);
+  color: var(--m-cyan-500);
+  background: var(--m-cyan-bg);
   border-color: oklch(0.78 0.13 200 / 0.2);
-  background: oklch(0.78 0.13 200 / 0.10);
-  --metraly-state-solid-bg: oklch(0.78 0.13 200);
 }
 
 .metraly-state-badge.is-purple {
-  color: oklch(0.66 0.14 295);
+  color: var(--m-purple-500);
+  background: var(--m-purple-bg);
   border-color: oklch(0.66 0.14 295 / 0.22);
-  background: oklch(0.66 0.14 295 / 0.10);
-  --metraly-state-solid-bg: oklch(0.66 0.14 295);
 }
 
 .metraly-state-badge.is-disabled {
-  color: oklch(0.38 0.012 250);
-  border: 1px dashed oklch(1 0 0 / 0.085);
-  background: oklch(0.225 0.014 250 / 0.60);
+  color: var(--m-fg-4);
+  background: oklch(0.225 0.014 250 / 0.6);
+  border-color: var(--m-line);
 }
 
-.metraly-state-badge.is-info {
-  color: oklch(0.84 0.008 250);
-  border-color: oklch(1 0 0 / 0.085);
-  background: oklch(0.260 0.014 250);
-  --metraly-state-solid-bg: oklch(0.50 0.012 250);
+.metraly-state-badge--tone-solid {
+  color: var(--m-bg-0);
 }
 
-.metraly-state-badge--tone-solid.is-live,
-.metraly-state-badge--tone-solid.is-success,
-.metraly-state-badge--tone-solid.is-stale,
-.metraly-state-badge--tone-solid.is-delayed,
-.metraly-state-badge--tone-solid.is-warning,
-.metraly-state-badge--tone-solid.is-disconnected,
-.metraly-state-badge--tone-solid.is-error,
-.metraly-state-badge--tone-solid.is-noData,
-.metraly-state-badge--tone-solid.is-info,
-.metraly-state-badge--tone-solid.is-new,
-.metraly-state-badge--tone-solid.is-purple {
-  color: oklch(0.155 0.010 250);
-  border-color: transparent;
-  background: var(--metraly-state-solid-bg);
-}
