@@ -218,6 +218,13 @@ Usage rules:
 
 Board flow contract:
 
+- `DashboardGrid` is display-first and renders widgets against upstream layout data.
+- `DashboardWidget` owns the shell chrome, state badge and drag/select/remove affordances.
+- `DashboardToolbar` owns dashboard-level controls such as tabs, search, sync state and editor actions.
+- `DashboardEmptyState` owns first-run board messaging and call to action placement.
+- `DashboardDropZone` owns DnD feedback only and should stay pulse-free by default.
+- `DashboardResizeHandle` owns resize affordance geometry and accessibility labeling.
+- `WidgetRegistry` owns widget catalog metadata, default layouts and instance creation helpers.
 - `dashboardRepository.createWidget` is the canonical widget constructor for the editor flow.
 - It resolves registry-backed defaults for known widget types and accepts partial layout overrides.
 - The editor should remain orchestration-only: select a widget type, create the instance through the repository, persist, reload and re-enter edit mode with the same instance.
