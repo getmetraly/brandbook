@@ -56,6 +56,8 @@ The current brandbook implementation now includes:
 - a dedicated `/components/previews` route for the Claude Design-derived state board and dashboard editor preview;
 - preview hardening updates for dashboard primitives, drop zones, resize handles, toolbar state, tables and widget shells;
 - `@metraly/ui/charts` wrappers for Recharts-based line, area, bar, composed and sparkline patterns;
+- a stable SVG fallback for the dashboard editor chart cards in the preview surface so the editor remains visible even when Recharts layout measurement is unreliable in dev;
+- hover/focus tooltips on plotted chart values in the preview surface so chart cards expose concrete data on interaction, with point markers for line/area charts and hover background bands for column charts;
 - Storybook coverage for chart wrappers, preview hardening scenarios and updated dashboard widget states;
 - supporting docs that keep the Claude Design artifact labeled as visual reference only.
 

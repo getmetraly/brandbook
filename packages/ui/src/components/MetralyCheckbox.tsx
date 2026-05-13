@@ -8,6 +8,7 @@ export interface MetralyCheckboxProps {
   description?: React.ReactNode;
   checked?: boolean;
   defaultChecked?: boolean;
+  indeterminate?: boolean;
   disabled?: boolean;
   error?: boolean;
   className?: string;
@@ -22,6 +23,7 @@ export function MetralyCheckbox({
   description,
   checked,
   defaultChecked,
+  indeterminate = false,
   disabled = false,
   error = false,
   className,
@@ -31,6 +33,7 @@ export function MetralyCheckbox({
   const classes = [
     "metraly-control-row",
     "metraly-checkbox",
+    indeterminate && "is-indeterminate",
     disabled && "is-disabled",
     error && "is-error",
     className,
@@ -49,14 +52,13 @@ export function MetralyCheckbox({
         checked={checked}
         defaultChecked={defaultChecked}
         disabled={disabled}
+        aria-checked={indeterminate ? "mixed" : undefined}
         aria-invalid={error || undefined}
         aria-describedby={describedBy}
         onChange={onChange}
-        readOnly={checked !== undefined && !onChange ? true : undefined}
+        readOnly={(checked !== undefined || indeterminate) && !onChange ? true : undefined}
       />
-      <span className="metraly-checkbox-box" aria-hidden="true">
-        <span className="metraly-checkbox-pulse" />
-      </span>
+      <span className="metraly-checkbox-box" aria-hidden="true" />
       <span className="metraly-control-copy">
         <span className="metraly-control-label">{label}</span>
         {description ? (

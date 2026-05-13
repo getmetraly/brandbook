@@ -26,6 +26,14 @@ describe('Metraly control state coverage', () => {
     expect(screen.getByText('Collect anonymous usage metrics.')).toBeInTheDocument();
   });
 
+  it('renders checkbox mixed state for partial selections', () => {
+    const { container } = render(<MetralyCheckbox indeterminate label="Some sources" />);
+    const checkbox = screen.getByRole('checkbox', { name: 'Some sources' });
+
+    expect(checkbox).toHaveAttribute('aria-checked', 'mixed');
+    expect(container.querySelector('.metraly-checkbox.is-indeterminate')).toBeInTheDocument();
+  });
+
   it('renders radio labels, descriptions and disabled state', () => {
     render(
       <MetralyRadio
@@ -58,6 +66,20 @@ describe('Metraly control state coverage', () => {
 
     fireEvent.click(toggle);
     expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not render legacy pulse markers in choice controls', () => {
+    const { container } = render(
+      <>
+        <MetralyCheckbox checked label="Telemetry" />
+        <MetralyRadio checked label="Primary source" name="source" value="primary" />
+        <MetralySwitch checked label="Live sync" />
+      </>
+    );
+
+    expect(container.querySelector('.metraly-checkbox-pulse')).not.toBeInTheDocument();
+    expect(container.querySelector('.metraly-radio-pulse')).not.toBeInTheDocument();
+    expect(container.querySelector('.metraly-switch-pulse')).not.toBeInTheDocument();
   });
 
   it('renders select error and disabled states', () => {
