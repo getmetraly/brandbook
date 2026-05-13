@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { DashboardWidget, WidgetPickerCard } from '@metraly/ui';
+import { DashboardDropZone, DashboardToolbar, DashboardWidget, WidgetPickerCard } from '@metraly/ui';
 
 describe('Phase 2 dashboard primitive conformance', () => {
   it('renders WidgetPickerCard kind metadata and new state', () => {
@@ -105,5 +105,62 @@ describe('Phase 2 dashboard primitive conformance', () => {
     );
 
     expect(screen.queryAllByRole('separator')).toHaveLength(0);
+  });
+
+  it('renders DashboardDropZone states with tone and no-pulse contract', () => {
+    const { rerender, container } = render(<DashboardDropZone state="idle" />);
+
+    let zone = screen.getByRole('status', { name: /Drop widget here/i });
+    expect(zone).toHaveAttribute('data-drop-zone-state', 'idle');
+    expect(zone).toHaveAttribute('data-tone', 'neutral');
+    expect(zone).toHaveAttribute('data-pulse', 'off');
+    expect(zone.querySelector('.metraly-pulse-marker')).not.toBeInTheDocument();
+
+    rerender(<DashboardDropZone state="hover" />);
+    zone = screen.getByRole('status', { name: /Widget can land here/i });
+    expect(zone).toHaveAttribute('data-drop-zone-state', 'hover');
+    expect(zone).toHaveAttribute('data-tone', 'cyan');
+
+    rerender(<DashboardDropZone state="active" />);
+    zone = screen.getByRole('status', { name: /Release to add widget/i });
+    expect(zone).toHaveClass('is-active');
+    expect(zone).toHaveAttribute('data-tone', 'cyan');
+
+    rerender(<DashboardDropZone state="rejected" />);
+    zone = screen.getByRole('status', { name: /Cannot drop here/i });
+    expect(zone).toHaveAttribute('data-tone', 'danger');
+    expect(within(zone).getByText('!')).toBeInTheDocument();
+
+    rerender(<DashboardDropZone state="empty" />);
+    zone = screen.getByRole('status', { name: /Add the first widget/i });
+    expect(zone).toHaveAttribute('data-tone', 'cyan');
+    expect(container.querySelector('.metraly-dashboard-drop-zone-line')).not.toBeInTheDocument();
+  });
+
+  it('renders DashboardToolbar as a two-row editor surface', () => {
+    render(
+      <DashboardToolbar
+        title="Delivery board"
+        description="DORA and flow signals."
+        tabs={[{ value: 'delivery', label: 'Delivery' }, { value: 'dora', label: 'DORA' }]}
+        activeTab="delivery"
+        searchValue=""
+        syncState="live"
+        editMode
+        onToggleEdit={() => undefined}
+        onAddWidget={() => undefined}
+      />,
+    );
+
+    const toolbar = screen.getByRole('banner');
+    expect(toolbar).toHaveAttribute('data-layout', 'two-row');
+    expect(toolbar).toHaveAttribute('data-edit-mode', 'on');
+    expect(toolbar.querySelector('[data-row="tabs"]')).toBeInTheDocument();
+    expect(toolbar.querySelector('[data-row="controls"]')).toBeInTheDocument();
+    expect(screen.getByRole('tablist', { name: 'Dashboard sections' })).toBeInTheDocument();
+    expect(screen.getByRole('searchbox', { name: 'Search dashboard widgets' })).toBeInTheDocument();
+    expect(screen.getByRole('status', { name: 'Live sync' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Edit mode on' })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('button', { name: 'Add widget' })).toBeInTheDocument();
   });
 });
