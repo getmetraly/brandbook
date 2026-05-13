@@ -33,10 +33,10 @@
 }
 
 .metraly-widget-picker-head {
-  display: grid;
-  grid-template-columns: 22px minmax(0, 1fr) 14px;
-  gap: 8px;
+  display: flex;
   align-items: center;
+  gap: 8px;
+  min-width: 0;
 }
 
 .metraly-widget-picker-icon {
@@ -63,6 +63,7 @@
 
 .metraly-widget-picker-title-copy {
   min-width: 0;
+  flex: 1 1 auto;
   display: grid;
   gap: 2px;
 }
@@ -87,19 +88,6 @@
   text-transform: uppercase;
 }
 
-.metraly-widget-picker-select-control {
-  width: 14px;
-  height: 14px;
-  border-radius: 999px;
-  border: 1px solid var(--m-line-strong);
-  background: transparent;
-}
-
-.metraly-widget-picker-select-control.is-selected {
-  border-color: var(--m-cyan-500);
-  background: var(--m-cyan-bg);
-  box-shadow: 0 0 0 1px var(--m-cyan-500);
-}
 
 .metraly-widget-picker-meta {
   display: flex;
