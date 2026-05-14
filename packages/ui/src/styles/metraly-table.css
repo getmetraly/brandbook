@@ -119,3 +119,16 @@
   letter-spacing: 0.04em;
   white-space: normal;
 }
+
+.metraly-table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 28px;
+  padding: 0 8px;
+  border-top: 1px solid var(--m-line-faint);
+  color: var(--m-fg-3);
+  font-family: var(--m-font-mono);
+  font-size: var(--m-fs-10);
+  letter-spacing: 0.04em;
+}
