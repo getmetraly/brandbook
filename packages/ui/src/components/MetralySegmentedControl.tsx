@@ -77,7 +77,7 @@ export function MetralySegmentedControl({
     .join(" ");
 
   return (
-    <div className={classes} role="group" aria-label={ariaLabel}>
+    <div className={classes} role="radiogroup" aria-label={ariaLabel}>
       {options.map((option, index) => {
         const selected = option.value === selectedValue;
         return (
@@ -88,7 +88,8 @@ export function MetralySegmentedControl({
             }}
             type="button"
             className={selected ? "metraly-segmented-control__option is-selected" : "metraly-segmented-control__option"}
-            aria-pressed={selected}
+            role="radio"
+            aria-checked={selected}
             data-state={option.disabled ? "disabled" : selected ? "selected" : "default"}
             disabled={option.disabled}
             onClick={() => {
