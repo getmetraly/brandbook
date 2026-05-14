@@ -2,10 +2,15 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { DashboardToolbar } from "@metraly/ui";
 
 const stageStyle = {
-  minHeight: 260,
+  minHeight: '100dvh',
+  boxSizing: 'border-box' as const,
   padding: 24,
   background: 'var(--m-bg-0)',
   color: 'var(--m-fg-0)',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'flex-start',
+  overflow: 'hidden',
 };
 
 const frameStyle = {

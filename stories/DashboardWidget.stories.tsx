@@ -2,18 +2,24 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { DashboardWidget } from '@metraly/ui';
 
 const stageStyle = {
-  minHeight: 360,
+  minHeight: '100dvh',
+  boxSizing: 'border-box' as const,
   padding: 24,
   background: 'var(--m-bg-0)',
   color: 'var(--m-fg-0)',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'flex-start',
+  overflow: 'hidden',
 };
 
 function widgetFrameStyle(args: Partial<React.ComponentProps<typeof DashboardWidget>>) {
   const isWide = Boolean(args.fullWidth);
+  const hasFooter = Boolean(args.footer);
   const isTallState = Boolean(args.loading || args.state === 'noData' || args.state === 'error' || args.state === 'disconnected');
   return {
-    width: isWide ? 'min(920px, 100%)' : 320,
-    height: isWide ? 132 : isTallState ? 220 : 180,
+    width: isWide ? 'min(920px, 100%)' : 'min(320px, 100%)',
+    height: isWide ? (hasFooter ? 170 : 148) : isTallState ? 220 : 180,
   };
 }
 

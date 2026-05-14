@@ -68,6 +68,7 @@ export function StateBadge({
   pulse,
   withPulse,
   className,
+  title,
   ...rest
 }: StateBadgeProps) {
   const resolvedLabel = label ?? defaultStateLabel(state);
@@ -87,6 +88,7 @@ export function StateBadge({
     <span
       {...rest}
       className={classes}
+      title={title ?? resolvedLabel}
       data-state={state}
       data-size={size}
       data-tone={tone}
