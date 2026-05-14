@@ -268,3 +268,113 @@
   text-align: center;
 }
 
+/* ── MetralyTabs ─────────────────────────────────────────────── */
+
+.metraly-tabs {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  border-bottom: 1px solid var(--m-line);
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.metraly-tabs::-webkit-scrollbar { display: none; }
+
+.metraly-tab {
+  position: relative;
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  color: var(--m-fg-2);
+  font: inherit;
+  font-family: var(--m-font-ui);
+  font-size: var(--m-fs-12);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  flex: 0 0 auto;
+  transition: color var(--m-dur-2) var(--m-ease);
+}
+
+.metraly-tab:hover:not(:disabled) {
+  color: var(--m-fg-1);
+}
+
+.metraly-tab:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.metraly-tab.is-active {
+  color: var(--m-fg-0);
+}
+
+.metraly-tab.is-active::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: -1px;
+  height: 2px;
+  background: var(--m-cyan-500);
+  border-radius: 1px;
+  box-shadow: 0 0 8px -1px var(--m-cyan-glow);
+}
+
+.metraly-tab-count {
+  font-family: var(--m-font-mono);
+  font-size: var(--m-fs-10);
+  padding: 1px 6px;
+  border-radius: 999px;
+  min-width: 18px;
+  text-align: center;
+  background: var(--m-bg-3);
+  color: var(--m-fg-3);
+  transition: background var(--m-dur-2) var(--m-ease), color var(--m-dur-2) var(--m-ease);
+}
+
+.metraly-tab.is-active .metraly-tab-count {
+  background: var(--m-cyan-bg);
+  color: var(--m-cyan-500);
+}
+
+.metraly-tab-icon {
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+  flex: 0 0 auto;
+}
+
+.metraly-tab-live-pulse {
+  position: absolute;
+  right: -2px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 6px;
+  background: var(--m-cyan-500);
+  clip-path: var(--metraly-pulse-marker-path);
+  animation: m-pulse 1.6s var(--m-ease) infinite;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+[data-pulse="off"] .metraly-tab-live-pulse,
+[data-live-pulse="off"] .metraly-tab-live-pulse {
+  animation: none !important;
+  opacity: 0.5 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .metraly-tab-live-pulse { animation: none !important; }
+}
+
+[data-density="compact"] .metraly-tab {
+  padding: 6px 10px;
+}
