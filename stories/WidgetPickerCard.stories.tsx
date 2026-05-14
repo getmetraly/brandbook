@@ -4,7 +4,7 @@ import { WidgetPickerCard } from '@metraly/ui';
 const stageStyle = {
   display: 'grid',
   placeItems: 'start',
-  minHeight: 260,
+  minHeight: 300,
   padding: 24,
   background: 'var(--m-bg-0)',
   color: 'var(--m-fg-0)',
@@ -12,12 +12,13 @@ const stageStyle = {
 
 const cardStyle = {
   width: '100%',
-  maxWidth: 420,
+  maxWidth: 340,
 };
 
 const meta: Meta<typeof WidgetPickerCard> = {
   title: 'Components/WidgetPickerCard',
   component: WidgetPickerCard,
+  parameters: { layout: 'fullscreen' },
   args: {
     title: 'Deployment frequency',
     description: 'Deploys per day, by service & team.',
