@@ -16,17 +16,6 @@ export function MetralyLogo({
   const mark = (
     <svg viewBox="0 0 128 128" className="metraly-logo-mark" fill="none" aria-hidden="true">
       <rect x="8" y="8" width="112" height="112" rx="18" fill="var(--m-bg-2)" stroke="var(--m-line)" />
-      <text
-        x="64"
-        y="73"
-        textAnchor="middle"
-        fontFamily="var(--m-font-mono)"
-        fontSize="42"
-        fontWeight="600"
-        fill={tone === "light" ? "var(--m-bg-0)" : "var(--m-cyan-500)"}
-      >
-        M
-      </text>
       <path d="M20 84H36L44 60L54 96L66 42L78 84H108" stroke="var(--m-cyan-500)" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
