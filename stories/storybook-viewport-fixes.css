@@ -1,0 +1,98 @@
+html,
+body,
+#storybook-root,
+.sb-show-main,
+.sb-main-padded,
+.sb-main-fullscreen {
+  background: var(--m-bg-0) !important;
+}
+
+.sb-show-main {
+  overflow-x: clip;
+}
+
+.sb-main-fullscreen #storybook-root,
+.sb-main-padded #storybook-root {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.docs-story,
+.docs-story > div,
+.docs-story [data-name="Story"] {
+  background: var(--m-bg-0) !important;
+}
+
+/* Dashboard toolbar stories should compress inside Storybook viewport frames instead of
+   forcing the frame wider than the selected device width. */
+.metraly-dashboard-toolbar {
+  box-sizing: border-box;
+  overflow: clip;
+}
+
+.metraly-dashboard-toolbar *,
+.metraly-dashboard-toolbar *::before,
+.metraly-dashboard-toolbar *::after {
+  box-sizing: border-box;
+}
+
+.metraly-dashboard-toolbar-tabs-row,
+.metraly-dashboard-toolbar-row,
+.metraly-dashboard-toolbar-row-tabs,
+.metraly-dashboard-toolbar-row-controls,
+.metraly-dashboard-toolbar-controls,
+.metraly-dashboard-toolbar-actions {
+  max-width: 100%;
+  min-width: 0;
+}
+
+.metraly-dashboard-toolbar-tabs-row {
+  overflow: hidden;
+}
+
+.metraly-dashboard-toolbar-tabs-row .metraly-tabs,
+.metraly-dashboard-toolbar-tabs {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.metraly-dashboard-toolbar-search {
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .metraly-dashboard-toolbar {
+    padding: 0.625rem;
+  }
+
+  .metraly-dashboard-toolbar .metraly-tab {
+    padding-inline: 9px;
+  }
+
+  .metraly-dashboard-toolbar .metraly-tab-count {
+    min-width: 16px;
+    padding-inline: 5px;
+  }
+
+  .metraly-dashboard-toolbar-row-controls {
+    align-items: flex-start;
+  }
+
+  .metraly-dashboard-toolbar-controls,
+  .metraly-dashboard-toolbar-actions {
+    flex: 1 1 100%;
+  }
+}
+
+@media (max-width: 430px) {
+  .metraly-dashboard-toolbar .metraly-tab {
+    padding-inline: 8px;
+  }
+
+  .metraly-dashboard-toolbar .metraly-tab-label {
+    max-width: 64px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
