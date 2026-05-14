@@ -1,0 +1,503 @@
+.metraly-shell {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--m-bg-0);
+  color: var(--m-fg-1);
+}
+
+.metraly-sidebar {
+  width: var(--m-sidebar-expanded-width, 228px);
+  flex-shrink: 0;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--m-bg-1);
+  border-right: 1px solid var(--m-line);
+  overflow: hidden;
+  transition: width var(--m-dur-2) var(--m-ease);
+}
+
+.metraly-sidebar.is-collapsed {
+  width: var(--m-sidebar-collapsed-width, 64px);
+}
+
+.metraly-sidebar__header,
+.metraly-sidebar__footer {
+  flex-shrink: 0;
+}
+
+.metraly-sidebar__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--m-3) var(--m-2);
+}
+
+.metraly-sidebar__footer {
+  padding: var(--m-3) var(--m-2);
+  border-top: 1px solid var(--m-line-faint);
+}
+
+.metraly-sidebar-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m-1);
+}
+
+.metraly-sidebar-section + .metraly-sidebar-section {
+  margin-top: var(--m-4);
+}
+
+.metraly-sidebar-section__label {
+  padding: 0 var(--m-2);
+  color: var(--m-fg-3);
+  font-size: var(--m-fs-9);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.metraly-sidebar-section__items {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metraly-sidebar-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--m-2);
+  width: 100%;
+  min-width: 0;
+  min-height: var(--m-row-h);
+  padding: 0 var(--m-2);
+  border: 1px solid transparent;
+  border-radius: var(--m-r-2);
+  background: transparent;
+  color: var(--m-fg-2);
+  font-family: var(--m-font-ui);
+  font-size: var(--m-fs-12);
+  text-decoration: none;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background var(--m-dur-2) var(--m-ease),
+    border-color var(--m-dur-2) var(--m-ease),
+    color var(--m-dur-2) var(--m-ease),
+    box-shadow var(--m-dur-2) var(--m-ease);
+}
+
+.metraly-sidebar-item:hover:not(.is-disabled) {
+  background: var(--m-bg-2);
+  border-color: var(--m-line-faint);
+  color: var(--m-fg-1);
+}
+
+.metraly-sidebar-item:focus-visible {
+  outline: none;
+  box-shadow: var(--m-glow-focus);
+}
+
+.metraly-sidebar-item.is-active {
+  background: var(--m-cyan-bg);
+  color: var(--m-cyan-500);
+}
+
+.metraly-sidebar-item.is-accent {
+  border-style: dashed;
+  border-color: var(--m-cyan-500);
+  background: var(--m-cyan-bg);
+  color: var(--m-cyan-500);
+}
+
+.metraly-sidebar-item.is-disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+.metraly-sidebar-item__accent {
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.metraly-sidebar-item__icon,
+.metraly-sidebar-item__meta {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.metraly-sidebar-item__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metraly-sidebar-item__meta {
+  color: inherit;
+}
+
+.metraly-sidebar.is-collapsed .metraly-sidebar__body,
+.metraly-sidebar.is-collapsed .metraly-sidebar__footer {
+  padding-left: var(--m-1);
+  padding-right: var(--m-1);
+}
+
+.metraly-sidebar.is-collapsed .metraly-sidebar-section__label {
+  display: none;
+}
+
+.metraly-sidebar.is-collapsed .metraly-sidebar-item {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.metraly-sidebar.is-collapsed .metraly-sidebar-item__label,
+.metraly-sidebar.is-collapsed .metraly-sidebar-item__meta {
+  display: none;
+}
+
+.metraly-topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--m-4);
+  min-width: 0;
+  border-bottom: 1px solid var(--m-line);
+  background: var(--m-bg-1);
+  padding: 0 var(--m-6);
+}
+
+.metraly-topbar--compact {
+  min-height: 48px;
+  padding-left: var(--m-4);
+  padding-right: var(--m-4);
+}
+
+.metraly-topbar--comfortable {
+  min-height: 56px;
+  padding-left: var(--m-6);
+  padding-right: var(--m-6);
+}
+
+.metraly-topbar--spacious {
+  min-height: 64px;
+  padding-left: var(--m-7);
+  padding-right: var(--m-7);
+}
+
+.metraly-topbar__copy {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metraly-topbar__breadcrumb {
+  color: var(--m-fg-3);
+  font-family: var(--m-font-mono);
+  font-size: var(--m-fs-9);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metraly-topbar__title {
+  color: var(--m-fg-0);
+  font-size: var(--m-fs-16);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.metraly-topbar__subtitle {
+  color: var(--m-fg-2);
+  font-size: var(--m-fs-10);
+  line-height: 1.35;
+}
+
+.metraly-topbar__content,
+.metraly-topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--m-2);
+  min-width: 0;
+}
+
+.metraly-topbar__actions {
+  flex-shrink: 0;
+}
+
+.metraly-drawer-root {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.metraly-drawer-scrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: color-mix(in oklab, var(--m-bg-0) 52%, transparent);
+  pointer-events: auto;
+}
+
+.metraly-drawer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: min(var(--m-drawer-width, 320px), 100vw);
+  display: flex;
+  flex-direction: column;
+  background: var(--m-bg-1);
+  border-color: var(--m-line);
+  box-shadow:
+    var(--m-shadow-3),
+    0 0 0 1px color-mix(in oklab, var(--m-line) 72%, transparent);
+  pointer-events: auto;
+}
+
+.metraly-drawer--left {
+  left: 0;
+  border-right: 1px solid var(--m-line);
+}
+
+.metraly-drawer--right {
+  right: 0;
+  border-left: 1px solid var(--m-line);
+}
+
+.metraly-drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--m-2);
+  min-height: 44px;
+  padding: 10px 12px 8px;
+  border-bottom: 1px solid var(--m-line-faint);
+}
+
+.metraly-drawer__copy {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.metraly-drawer__title {
+  color: var(--m-fg-0);
+  font-size: var(--m-fs-12);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.metraly-drawer__description {
+  color: var(--m-fg-3);
+  font-family: var(--m-font-mono);
+  font-size: var(--m-fs-9);
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+}
+
+.metraly-drawer__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border: 1px solid var(--m-line);
+  border-radius: var(--m-r-2);
+  background: var(--m-bg-2);
+  color: var(--m-fg-2);
+  cursor: pointer;
+  transition:
+    color var(--m-dur-2) var(--m-ease),
+    border-color var(--m-dur-2) var(--m-ease),
+    background var(--m-dur-2) var(--m-ease),
+    box-shadow var(--m-dur-2) var(--m-ease);
+}
+
+.metraly-drawer__close:hover {
+  color: var(--m-fg-0);
+  border-color: var(--m-line-strong);
+  background: var(--m-bg-3);
+}
+
+.metraly-drawer__close:focus-visible {
+  outline: none;
+  box-shadow: var(--m-glow-focus);
+}
+
+.metraly-drawer__close--floating {
+  position: absolute;
+  top: var(--m-4);
+  right: var(--m-4);
+}
+
+.metraly-drawer__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  background: var(--m-bg-1);
+}
+
+.metraly-bottom-sheet-root {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.metraly-bottom-sheet-scrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: color-mix(in oklab, var(--m-bg-0) 52%, transparent);
+  pointer-events: auto;
+}
+
+.metraly-bottom-sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: min(var(--m-bottom-sheet-max-height, 78dvh), 100dvh);
+  display: flex;
+  flex-direction: column;
+  background: var(--m-bg-1);
+  border-top: 1px solid var(--m-line);
+  border-radius: var(--m-r-3) var(--m-r-3) 0 0;
+  box-shadow: var(--m-shadow-3);
+  pointer-events: auto;
+}
+
+.metraly-bottom-sheet__grabber {
+  width: 36px;
+  height: 4px;
+  margin: 8px auto 4px;
+  border-radius: 999px;
+  background: var(--m-line-strong);
+  opacity: 0.72;
+  flex-shrink: 0;
+}
+
+.metraly-bottom-sheet__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--m-2);
+  min-height: 40px;
+  padding: 0 12px 8px;
+  border-bottom: 1px solid var(--m-line-faint);
+  flex-shrink: 0;
+}
+
+.metraly-bottom-sheet__copy {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.metraly-bottom-sheet__title {
+  color: var(--m-fg-0);
+  font-size: var(--m-fs-12);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.metraly-bottom-sheet__description {
+  color: var(--m-fg-3);
+  font-family: var(--m-font-mono);
+  font-size: var(--m-fs-9);
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+}
+
+.metraly-bottom-sheet__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border: 1px solid var(--m-line);
+  border-radius: var(--m-r-2);
+  background: var(--m-bg-2);
+  color: var(--m-fg-2);
+  cursor: pointer;
+  transition:
+    color var(--m-dur-2) var(--m-ease),
+    border-color var(--m-dur-2) var(--m-ease),
+    background var(--m-dur-2) var(--m-ease),
+    box-shadow var(--m-dur-2) var(--m-ease);
+}
+
+.metraly-bottom-sheet__close:hover {
+  color: var(--m-fg-0);
+  border-color: var(--m-line-strong);
+  background: var(--m-bg-3);
+}
+
+.metraly-bottom-sheet__close:focus-visible {
+  outline: none;
+  box-shadow: var(--m-glow-focus);
+}
+
+.metraly-bottom-sheet__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  background: var(--m-bg-1);
+}
+
+@media (max-width: 767px) {
+  .metraly-shell--stack-mobile {
+    flex-direction: column;
+  }
+
+  .metraly-topbar {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding-top: var(--m-3);
+    padding-bottom: var(--m-3);
+  }
+
+  .metraly-topbar__copy {
+    width: 100%;
+  }
+
+  .metraly-topbar__content,
+  .metraly-topbar__actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .metraly-drawer {
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  .metraly-drawer--left,
+  .metraly-drawer--right {
+    left: 0;
+    right: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+}

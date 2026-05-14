@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { MetralyButton, MetralyButtonVariant } from "@metraly/ui";
+import { MetralyButton, MetralyButtonVariant, MetralyIcon } from "@metraly/ui";
 import { ThemeProvider } from "@metraly/ui";
 import React from "react";
 
@@ -46,6 +46,19 @@ export const AllSizes: Story = {
         <MetralyButton variant="ghost" size="sm">Small</MetralyButton>
         <MetralyButton variant="ghost" size="md">Medium</MetralyButton>
         <MetralyButton variant="ghost" size="lg">Large</MetralyButton>
+      </div>
+    </ThemeProvider>
+  ),
+};
+
+export const WithIcons: Story = {
+  name: "With icons",
+  render: () => (
+    <ThemeProvider>
+      <div style={{ padding: 24, background: "var(--m-bg-0)", display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+        <MetralyButton variant="primary" iconLeft={<MetralyIcon name="check" size="sm" />}>Save</MetralyButton>
+        <MetralyButton variant="ghost" iconLeft={<MetralyIcon name="refresh" size="sm" />}>Refresh</MetralyButton>
+        <MetralyButton variant="neutral" aria-label="Notifications" iconLeft={<MetralyIcon name="bell" size="sm" />} />
       </div>
     </ThemeProvider>
   ),

@@ -8,7 +8,8 @@ export { MetralyInput } from "./components/MetralyInput";
 export type { MetralyInputProps } from "./components/MetralyInput";
 
 export { MetralyIcon, metralyIconPaths } from "./components/MetralyIcon";
-export type { MetralyIconName, MetralyIconProps } from "./components/MetralyIcon";
+export { metralyIconSizeMap } from "./components/MetralyIcon";
+export type { MetralyIconName, MetralyIconProps, MetralyIconSize } from "./components/MetralyIcon";
 
 export { MetralyCard } from "./components/MetralyCard";
 export type { MetralyCardDensity, MetralyCardProps, MetralyCardState } from "./components/MetralyCard";
@@ -51,6 +52,46 @@ export type { MetralySelectOption, MetralySelectProps } from "./components/Metra
 
 export { MetralyTabs } from "./components/MetralyTabs";
 export type { MetralyTabItem, MetralyTabsProps } from "./components/MetralyTabs";
+
+export { MetralySegmentedControl } from "./components/MetralySegmentedControl";
+export type {
+  MetralySegmentedControlOption,
+  MetralySegmentedControlProps,
+  MetralySegmentedControlSize,
+} from "./components/MetralySegmentedControl";
+
+export { MetralyNavigationTree } from "./components/MetralyNavigationTree";
+export type {
+  MetralyNavigationTreeItem,
+  MetralyNavigationTreeProps,
+  MetralyNavigationTreeTone,
+} from "./components/MetralyNavigationTree";
+
+export { MetralyCodeBlock } from "./components/MetralyCodeBlock";
+export type {
+  MetralyCodeBlockAccent,
+  MetralyCodeBlockProps,
+  MetralyCodeBlockVariant,
+} from "./components/MetralyCodeBlock";
+
+export { MetralyShell } from "./shell/MetralyShell";
+export type { MetralyShellProps } from "./shell/MetralyShell";
+
+export { MetralySidebar, MetralySidebarSection, MetralySidebarItem } from "./shell/MetralySidebar";
+export type {
+  MetralySidebarProps,
+  MetralySidebarSectionProps,
+  MetralySidebarItemProps,
+} from "./shell/MetralySidebar";
+
+export { MetralyTopbar } from "./shell/MetralyTopbar";
+export type { MetralyTopbarDensity, MetralyTopbarProps } from "./shell/MetralyTopbar";
+
+export { MetralyDrawer } from "./shell/MetralyDrawer";
+export type { MetralyDrawerProps, MetralyDrawerSide } from "./shell/MetralyDrawer";
+
+export { MetralyBottomSheet } from "./shell/MetralyBottomSheet";
+export type { MetralyBottomSheetProps } from "./shell/MetralyBottomSheet";
 
 export { WidgetPickerCard } from "./components/WidgetPickerCard";
 export type { WidgetPickerCardProps } from "./components/WidgetPickerCard";

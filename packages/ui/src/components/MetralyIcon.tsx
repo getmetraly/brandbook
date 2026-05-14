@@ -99,41 +99,62 @@ export const metralyIconPaths = {
 } as const;
 
 export type MetralyIconName = keyof typeof metralyIconPaths;
+export type MetralyIconSize = "xs" | "sm" | "md" | "lg" | "xl" | number;
+
+export const metralyIconSizeMap = {
+  xs: 12,
+  sm: 14,
+  md: 16,
+  lg: 20,
+  xl: 24,
+} as const;
 
 export interface MetralyIconProps {
   name: MetralyIconName;
-  size?: number;
+  size?: MetralyIconSize;
   color?: string;
+  strokeWidth?: number;
   "aria-label"?: string;
   "aria-hidden"?: boolean | "true" | "false";
   className?: string;
   style?: React.CSSProperties;
 }
 
+function resolveIconSize(size: MetralyIconSize | undefined) {
+  if (size === undefined) return metralyIconSizeMap.md;
+  return typeof size === "number" ? size : metralyIconSizeMap[size];
+}
+
 export const MetralyIcon: React.FC<MetralyIconProps> = ({
   name,
-  size = 16,
+  size = "md",
   color = "currentColor",
+  strokeWidth = 1.5,
   "aria-label": ariaLabel,
   "aria-hidden": ariaHidden,
   className,
   style,
-}) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke={color}
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    aria-label={ariaLabel}
-    aria-hidden={ariaHidden ?? (ariaLabel ? undefined : true)}
-    role={ariaLabel ? "img" : undefined}
-    className={className}
-    style={style}
-  >
-    <path d={metralyIconPaths[name]} />
-  </svg>
-);
+}) => {
+  const resolvedSize = resolveIconSize(size);
+
+  return (
+    <svg
+      width={resolvedSize}
+      height={resolvedSize}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-label={ariaLabel}
+      aria-hidden={ariaHidden ?? (ariaLabel ? undefined : true)}
+      role={ariaLabel ? "img" : undefined}
+      focusable="false"
+      className={className}
+      style={style}
+    >
+      <path d={metralyIconPaths[name]} />
+    </svg>
+  );
+};
