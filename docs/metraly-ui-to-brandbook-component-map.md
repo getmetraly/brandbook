@@ -1,359 +1,279 @@
 # Metraly UI → Brandbook Component Map
 
-**Status:** Updated after UI/UX research for future `@metraly/ui` migration into `getmetraly/metraly/ui`.  
+**Status:** Reworked from the source-of-truth UI/UX audit. This map now includes mandatory local component renames, API changes, structure changes, and product terminology changes for migration into `getmetraly/metraly/ui`.  
 **Last updated:** 2026-05-15  
 **Companion documents:**
 - `docs/metraly-ui-to-brandbook-component-plan.md`
 - `docs/metraly-ui-ux-scenario-audit.md`
-
-**Source rule:** `getmetraly/metraly/ui` is a read-only product inventory and future migration target. `@metraly/ui` must use brandbook tokens, component contracts, responsive contracts, Storybook scenarios, and dense engineering-dashboard visual language.
-
----
-
-## 1. Mapping principle
-
-This map separates four layers:
-
-1. **Public component API** — reusable exports from `packages/ui`.
-2. **Recipes** — Storybook-level screen assemblies that demonstrate composition.
-3. **Product adapters** — data/state/layout integration that must stay in `getmetraly/metraly/ui`.
-4. **Product flows** — business workflows, permissions, API calls, and copy that must stay product-owned.
-
-Do not promote a recipe or product adapter into public `@metraly/ui` API unless it repeats across at least three product areas and has stable props.
+- `docs/metraly-local-ui-layer-architecture.md`
 
 ---
 
-## 2. Current public exports and migration role
+## 1. Mapping rule
 
-### Foundation / primitives
+The migration target is not “use brandbook component names everywhere”.
 
-| Export | Category | Migration role | Decision |
-|---|---|---|---|
-| `MetralyButton` | Action primitive | Replace product buttons, icon buttons, primary/secondary actions | Keep public |
-| `MetralyInput` | Form primitive | Replace search, text, password, labeled fields | Keep public |
-| `MetralyIcon`, `metralyIconPaths`, `metralyIconSizeMap` | Icon primitive | Replace product icon registry where names exist | Keep public |
-| `MetralyCodeBlock` | Code/data primitive | CLI snippets, formulas, auth/onboarding setup examples | Keep public |
-| `MetralyLogo` | Brand primitive | Product shell and brand surfaces | Keep public |
-| `ThemeProvider`, `MetralyThemeProvider` | System | Token/theme bootstrap in product app | Keep public |
-| `MetralyBadge` | Badge primitive | Inline labels, tags, categories | Keep public |
-| `StateBadge` | Operational status | Live/stale/error/delayed/new/no-data states | Keep public |
-
-### Surface / data display
-
-| Export | Category | Migration role | Decision |
-|---|---|---|---|
-| `MetralyCard` | Surface | Base card composition | Keep public |
-| `MetralyPanel` | Surface | Larger panel/workspace surfaces | Keep public |
-| `MetralyMetricCard` | Metric display | DORA/stat/KPI cards | Keep public |
-| `MetralyTable` | Table | Data tables with internal scroll | Keep public |
-| `MetralyTelemetryLine` | Dense telemetry row | Widget rows, activity/metric rows | Keep public |
-| Chart wrappers | Charts | Line/bar/area/composed/sparkline/chart card/tooltip | Keep public |
-
-### Forms and navigation
-
-| Export | Category | Migration role | Decision |
-|---|---|---|---|
-| `MetralyCheckbox` | Form | Selection/bulk/filter states | Keep public |
-| `MetralyRadio` | Form | Single-choice controls | Keep public |
-| `MetralySwitch` | Form | Toggles/settings | Keep public |
-| `MetralySelect` | Form | Compact selectors and filter composition | Keep public |
-| `MetralyTabs` | Navigation | Tabbed content | Keep public |
-| `MetralySegmentedControl` | Navigation/form selector | Time range/view toggles | Keep public |
-| `MetralyNavigationTree` | Navigation tree | Metrics Explorer tree | Keep public |
-
-### Shell / overlays
-
-| Export | Category | Migration role | Decision |
-|---|---|---|---|
-| `MetralyShell` | Layout seam | Canonical product app shell | Keep public |
-| `MetralySidebar` | Navigation shell | Desktop nav | Keep public |
-| `MetralySidebarSection` | Navigation subcomponent | Sidebar grouping | Keep public |
-| `MetralySidebarItem` | Navigation subcomponent | Sidebar link/button rows | Keep public |
-| `MetralyTopbar` | Header seam | Page/shell header | Keep public |
-| `MetralyDrawer` | Overlay | Mobile navigation and setup details | Keep public; a11y hardening required |
-| `MetralyBottomSheet` | Mobile overlay/tray | Widget library, mobile utility surfaces | Keep public; a11y hardening required |
-
-### Dashboard
-
-| Export | Migration role | Decision |
-|---|---|---|
-| `DashboardGrid` | Dashboard layout seam | Keep public |
-| `DashboardWidget` | Widget shell | Keep public |
-| `DashboardToolbar` | Dashboard action row | Keep public |
-| `DashboardEmptyState` | Empty board state | Keep public |
-| `DashboardDropZone` | Drop target | Keep public |
-| `DashboardResizeHandle` | Resize affordance | Keep public |
-| `WidgetPickerCard` | Widget library item | Keep public |
-| `defaultDashboardWidgetRegistry` and helpers | Story/demo registry and helper contracts | Keep public |
-| Dashboard types | Product adapter typing | Keep public |
-
----
-
-## 3. Product screen coverage matrix
-
-| Product area | Brandbook coverage | Product-owned pieces | Missing UX documentation | Migration readiness |
-|---|---|---|---|---:|
-| App shell | `MetralyShell`, sidebar, topbar, drawer | user/workspace state, route selection, permissions | action priority and mobile nav behavior | 8/10 |
-| Dashboard overview | cards, metric cards, chart wrappers, table, badges, dashboard widgets | widget data fetching, dashboard persistence | empty/loading/stale/error widget states | 8/10 |
-| Board | same as Dashboard | decision whether Board is distinct | naming/IA decision | 5/10 until IA resolved |
-| Dashboard editor | dashboard seams, `WidgetPickerCard`, drawer/sheet | drag/drop adapter, save/update logic | mobile widget-library behavior, unsaved changes | 8/10 |
-| Dashboard wizard | primitives + wizard recipe | wizard state machine, templates, creation API | source/template/review/error scenarios | 7/10 |
-| Metrics Explorer | nav tree, segmented control, inputs/select, charts, tables | metrics API, query/filter state | save-as-widget path, no-results/errors | 8/10 |
-| Marketplace | card/button/badge/icon recipes | install/setup API, permissions | installed/error/loading/coming-soon variants | 7/10 |
-| Connectors | primitives + table/card/status badges | connector setup, OAuth/API keys, sync status | active connection health states | 5/10 until documented |
-| AI Assistant | panel/card/input/button/code/badge composition | chat state, streaming, context, suggestions | contextual modes and trust states | 6/10 |
-| Onboarding | primitives + wizard recipe | first-run state, connection validation | activation path and recovery states | 7/10 |
-| Settings | primitives, cards, tables, switches | workspace/account settings | scenario inventory needed | 5/10 |
-
----
-
-## 4. Scenario-to-component mapping
-
-### 4.1 App shell
-
-| UI need | Use from brandbook | Do not add |
-|---|---|---|
-| Desktop navigation | `MetralySidebar`, `MetralySidebarSection`, `MetralySidebarItem` | `ProductSidebar` |
-| Page header | `MetralyTopbar` | `ProductTopbar` |
-| Mobile navigation | `MetralyDrawer` | separate nav modal |
-| Mobile utility tray | `MetralyBottomSheet` | per-screen custom sheet |
-| Workspace/user footer | sidebar slot composition | `MetralyUserBlock` for now |
-| Command/search entry | `MetralyInput` + optional kbd/badge composition | `MetralyCommandSearch` for now |
-
-### 4.2 Dashboard overview
-
-| UI need | Use from brandbook | Product-owned |
-|---|---|---|
-| Dashboard layout | `DashboardGrid` | grid persistence/data adapter |
-| Widget chrome | `DashboardWidget` | widget-specific renderer |
-| KPI cards | `MetralyMetricCard` | metric value computation |
-| Chart widgets | chart wrappers + `MetralyChartCard` | data transforms |
-| Table widgets | `MetralyTable` | row actions/data |
-| Widget status | `StateBadge` | status semantics from API |
-| Empty board | `DashboardEmptyState` | CTA routing/copy |
-
-### 4.3 Dashboard editor
-
-| UI need | Use from brandbook | Product-owned |
-|---|---|---|
-| Edit toolbar | `DashboardToolbar`, `MetralyButton`, `StateBadge` | save/discard logic |
-| Drag layout | `DashboardGrid`, `DashboardWidget` | `react-grid-layout` adapter |
-| Drop target | `DashboardDropZone` | drag event wiring |
-| Resize control | `DashboardResizeHandle` | layout mutation |
-| Widget library item | `WidgetPickerCard` | widget catalog data |
-| Mobile library | `MetralyBottomSheet` | open/close/search state |
-| Unsaved changes | `StateBadge`, `MetralyButton` | dirty-state detection |
-
-### 4.4 Metrics Explorer
-
-| UI need | Use from brandbook | Product-owned |
-|---|---|---|
-| Metric tree | `MetralyNavigationTree` | metric taxonomy/data |
-| Search | `MetralyInput` | search query behavior |
-| Time/view toggle | `MetralySegmentedControl` | selected range/query |
-| Filter selector | `MetralySelect` | filter values |
-| Current metric summary | `MetralyMetricCard`, `StateBadge` | metric semantics |
-| Trend charts | chart wrappers | query/data transform |
-| Raw data | `MetralyTable` | pagination/export |
-| Save as widget | `MetralyButton` + dashboard adapter | widget creation |
-
-### 4.5 Marketplace and connectors
-
-| UI need | Use from brandbook | Product-owned |
-|---|---|---|
-| Integration card | `MetralyCard`, `MetralyIcon`, badges, buttons | install/setup behavior |
-| Installed/setup/error states | `StateBadge`, `MetralyBadge` | connector status mapping |
-| Setup instructions | `MetralyCodeBlock`, inputs, buttons | provider-specific steps |
-| Connector health table | `MetralyTable`, `StateBadge` | sync diagnostics |
-| Retry/reconnect actions | `MetralyButton` | API calls |
-| Mobile setup details | `MetralyDrawer` or `MetralyBottomSheet` | step state |
-
-### 4.6 Onboarding and dashboard wizard
-
-| UI need | Use from brandbook | Product-owned |
-|---|---|---|
-| Step container | `MetralyCard`/`MetralyPanel` recipe | wizard state machine |
-| Step navigation | `MetralyButton`, recipe stepper | route/step validation |
-| Source selection | `MetralySelect`, cards, badges | provider list |
-| Setup code/API key examples | `MetralyCodeBlock`, `MetralyInput` | secret handling |
-| Validation status | `StateBadge`, `MetralyTelemetryLine` | validation polling |
-| Template selection | `MetralyCard`, `MetralyRadio`/cards | template schema |
-| Review/create | `MetralyButton`, `MetralyTable`/cards | creation API |
-
-### 4.7 AI Assistant
-
-| UI need | Use from brandbook | Product-owned |
-|---|---|---|
-| Assistant panel | `MetralyPanel`/`MetralyCard` | assistant route/state |
-| Prompt input | `MetralyInput`, `MetralyButton` | submit/stream logic |
-| Context chip | `MetralyBadge`, `StateBadge` | selected entity context |
-| Suggested actions | `MetralyButton`, `MetralyIcon` | action execution |
-| Code/query snippets | `MetralyCodeBlock` | generated content handling |
-| Streaming messages | product component | chat bubble/streaming UI |
-
----
-
-## 5. Component coverage matrix
-
-| Need | Current coverage | Coverage | Notes |
-|---|---|---:|---|
-| Action buttons | `MetralyButton` | full | Do not add polymorphic API until product migration proves need. |
-| Text/search/password fields | `MetralyInput` | full | Label/description/error/icon slots are enough. |
-| Icons | `MetralyIcon` | full / evolving | Add typed icon paths only when migration finds gaps. |
-| Code/CLI/formula blocks | `MetralyCodeBlock` | full | Needed for setup/onboarding/auth/query examples. |
-| Inline badges | `MetralyBadge` | full | Variants: `primary`, `secondary`, `success`, `warning`, `error`, `info`. |
-| Operational status | `StateBadge` | full | Use for live/stale/error/delayed/no-data/new states. |
-| Cards/panels | `MetralyCard`, `MetralyPanel` | full | Compose product cards from these. |
-| Metric cards | `MetralyMetricCard` | full | DORA/KPI/dashboard stats. |
-| Tables | `MetralyTable` | full | Must scroll internally, never force body overflow. |
-| Basic forms | checkbox/radio/switch/select | full | No new primitive needed. |
-| Tab navigation | `MetralyTabs` | full | Separate from segmented control. |
-| Segmented selectors | `MetralySegmentedControl` | full | Time/view toggles. |
-| Hierarchical navigation | `MetralyNavigationTree` | full for Metrics Explorer | Group selection remains deferred. |
-| App shell | `MetralyShell` | full | Canonical shell container. |
-| Sidebar | `MetralySidebar` | full | Product specifics stay slots. |
-| Topbar | `MetralyTopbar` | full | Action priority still needs recipe documentation. |
-| Mobile nav overlay | `MetralyDrawer` | partial | Focus trap/body lock required before production migration. |
-| Mobile utility tray | `MetralyBottomSheet` | partial | Same a11y gap as drawer. |
-| Dashboard grid/widgets | dashboard exports | full | Product adapter remains outside package. |
-| Chart cards/wrappers | chart exports | mostly full | Gauge/heatmap deferred. |
-| Widget library rows | `WidgetPickerCard` | full | Mobile sheet scenario still needs verification. |
-| Auth form | primitives + recipe | recipe | Do not add public `AuthCard`. |
-| Marketplace card | card/button/badge/icon + recipe | recipe | Do not add public `PluginCard`. |
-| Wizard stepper | recipe | partial | Keep recipe-only until more reuse evidence. |
-| AI chat | primitives + product code | partial | Chat bubbles/streaming are product-specific. |
-
----
-
-## 6. Gaps that require documentation, not new components
-
-| Gap | Why not a component yet | Documentation target |
-|---|---|---|
-| Dashboard vs Board naming | IA/product decision, not UI primitive | plan + scenario audit |
-| Dashboard wizard | stateful creation flow | wizard recipe + scenario audit |
-| Connector health | product semantics/API statuses | scenario audit |
-| AI Assistant context | product logic/trust model | scenario audit |
-| Marketplace installed/error states | recipe variants enough | IntegrationCard recipe |
-| Widget library mobile behavior | existing bottom sheet + cards enough | DashboardEditor scenario |
-| Topbar action priority | layout recipe decision | shell recipe |
-| Save metric as widget | cross-screen workflow | MetricsExplorer recipe |
-
----
-
-## 7. Deferred public APIs
-
-| Possible API | Trigger before implementation | Current decision |
-|---|---|---|
-| `MetralyPopover` | Repeated anchored overlay/picker pattern | defer |
-| `MetralyGauge` | Gauge appears in multiple migrated screens | defer |
-| `MetralyHeatmap` | Heatmap appears in multiple migrated screens | defer |
-| `MetralyFilterPill` | `MetralySelect` composition cannot support filters cleanly | defer |
-| `WizardStepIndicator` | Third reusable wizard flow appears | recipe-only |
-| `PluginCard` / `MarketplaceCard` | Three repeated integration card surfaces with stable props | recipe-only |
-| `MessageBubble` / chat components | Assistant UI becomes generic and stable | product-only |
-| `ProductDashboardRenderer` | never | product adapter only |
-
----
-
-## 8. Rejected public components
-
-| Component | Reason | Alternative |
-|---|---|---|
-| `DraggableTweaksPanel` | Demo/developer utility | Product-only |
-| `AIOnlyCard` | Product-specific assistant surface | Panel/card composition |
-| `MetricsExplorerSidebar` | Too screen-specific | Sidebar + navigation tree + input |
-| `ProductTopbar` | Duplicates `MetralyTopbar` | Topbar slots |
-| `MetralyNotificationButton` | Too narrow | Button + badge/dot composition |
-| `MetralyUserBlock` | Product-specific sidebar footer | Sidebar footer slot |
-| `MetralyCommandSearch` | Too narrow today | Input + kbd/badge composition |
-| Product dashboard renderer | Data/layout integration | Product adapter |
-
----
-
-## 9. Storybook coverage and required additions
-
-| Story group | Current role | Required follow-up |
-|---|---|---|
-| `Scenarios/DashboardEditor` | Key migration benchmark | Add/verify mobile widget-library sheet behavior and unsaved state. |
-| `Scenarios/ComponentStateBoard` | Regression benchmark | Keep as required smoke test. |
-| `Patterns/MetralyShell` | App shell recipe | Add action priority/mobile nav notes after overlay hardening. |
-| `Patterns/MetricsExplorerRecipe` | Explorer migration recipe | Add loading/empty/error/no-results and save-as-widget states. |
-| `Patterns/IntegrationCardRecipe` | Marketplace recipe | Add installed/loading/error/setup-required/coming-soon states. |
-| `Patterns/AuthFormRecipe` | Auth composition | Keep recipe-only. |
-| `Patterns/WizardLayoutRecipe` | Wizard composition | Expand with onboarding/dashboard-wizard examples; keep recipe-only. |
-| `Components/MetralyDrawer` | Overlay seam | Add focus trap/restore/body-lock tests/stories. |
-| `Components/MetralyBottomSheet` | Mobile utility seam | Add focus trap/restore/body-lock tests/stories. |
-
----
-
-## 10. Migration readiness score
-
-| Area | Score | Blocking issue | Next action |
-|---|---:|---|---|
-| Foundation primitives | 9/10 | Product icon gaps unknown | Start migration with typed gap list |
-| Shell/navigation | 8/10 | Overlay a11y and action priority | Phase 1a/1b |
-| Dashboard overview | 8/10 | State documentation | Phase 2 |
-| Dashboard editor | 8/10 | Mobile widget library verification | Phase 2 |
-| Metrics Explorer | 8/10 | Save-as-widget and error states | Phase 3 |
-| Marketplace | 7/10 | More state variants | Phase 4 |
-| Connectors | 5/10 | Scenario not documented enough | Phase 4 |
-| Onboarding | 7/10 | Activation flow needs details | Phase 5 |
-| Dashboard wizard | 7/10 | Product state machine details | Phase 5 |
-| AI Assistant | 6/10 | Context/streaming/trust states | Phase 6 |
-| Settings | 5/10 | Inventory needed | Future audit |
-
----
-
-## 11. Verification matrix
-
-Run:
-
-```bash
-npm run ui:check
-npm run site:typecheck
-npm run site:test
-npm run build-storybook
-npm run test:e2e
-```
-
-Manual viewport matrix:
+The target is:
 
 ```text
-320px
-375px
-390px
-430px
-768px
-1024px
-1280px
-1440px
+brandbook upstream component/spec
+→ local metraly/ui design-system component
+→ feature-owned product adapter
+→ screen flow
 ```
 
-Required checks:
-- no body-level horizontal overflow;
-- internal scroll for tables/charts;
-- focus-visible state on all controls;
-- drawer/sheet keyboard behavior;
-- topbar wrapping/action priority;
-- sidebar collapsed/drawer behavior;
-- dashboard editor widget-library behavior;
-- chart/table clipping;
-- selected/disabled/loading/error states;
-- idle surfaces remain pulse/glow-free.
+Brandbook names can be preserved through a temporary compatibility barrel, but local app code should converge on shorter, product-neutral names.
 
 ---
 
-## 12. Current conclusion
+## 2. Required local UI layer
 
-`@metraly/ui` is ready as a migration foundation, but the migration will fail if product scenarios remain ambiguous.
-
-Do not add more public components now.
-
-Next work should be:
+Target location:
 
 ```text
-1. Harden overlay accessibility.
-2. Verify shell/mobile behavior.
-3. Expand scenario recipes for Dashboard Editor, Metrics Explorer, Integrations/Connectors, Onboarding/Wizard, and AI Assistant.
-4. Only then begin product migration into getmetraly/metraly/ui.
+getmetraly/metraly/ui/src/design-system/
 ```
+
+Subdomains:
+
+| Folder | Purpose |
+|---|---|
+| `tokens/` | Semantic token bridge from brandbook into app. |
+| `primitives/` | Button, IconButton, Tabs, Input, Select, Dialog, Tooltip. |
+| `telemetry/` | StatusBadge, TrendBadge, PulseMarker, HealthPill. |
+| `surfaces/` | Card, Panel, MetricCard, WidgetShell, WidgetCatalogCard, DataTable, EmptyState, Skeleton, FilterBar. |
+| `board/` | BoardCanvas, BoardDropZone, BoardToolbar, GripHandle, MoveMenu. |
+| `wizard/` | WizardLayout, StepRail, ReviewPanel, StickyWizardFooter. |
+| `ai/` | AIWorkspaceLayout, EvidencePanel, AnswerCard, TraceDrawer. |
+| `plugins/` | PluginCatalog, PluginReviewDrawer, PermissionBadge, SigningBanner. |
+| `compat/` | Temporary legacy/brandbook alias exports. |
+
+---
+
+## 3. Mandatory component rename map
+
+| Brandbook/current name | Local canonical name | Category | API action | Compatibility |
+|---|---|---|---|---|
+| `MetralyButton` | `Button` | primitive | keep behavior, expose local import | compat optional |
+| `MetralyInput` | `Input` | primitive | keep label/error/search/icon slots | compat optional |
+| `MetralySelect` | `Select` | primitive | keep compact selector role | compat optional |
+| `MetralyTabs` | `Tabs` | primitive/navigation | enforce real tab semantics | compat optional |
+| `MetralyCard` | `Card` | surface | add `variant`, `density`, `tone`, `header`, `footer`, `actions` | required |
+| `MetralyPanel` | `Panel` | surface | preserve panel contract | required |
+| `MetralyMetricCard` | `MetricCard` | surface/data | add explicit metric/status slots if missing | required |
+| `DashboardWidget` | `WidgetShell` | dashboard/surface | split shell from renderer; add state slots | required |
+| `DashboardGrid` | `BoardCanvas` / layout adapter | board | local board surface + product adapter | required |
+| `DashboardDropZone` | `BoardDropZone` | board | add keyboard target, drop intent, pointer fallback | required |
+| `DashboardToolbar` | `BoardToolbar` | board | add view/edit controls and action slots | required |
+| `DashboardResizeHandle` | `GripHandle` / `ResizeHandle` | board | neutral handle, no pulse | required |
+| `WidgetPickerCard` | `WidgetCatalogCard` | catalog/widget | add category, compatibility, preview, gated status | required |
+| `MetralyTable` | `DataTable<Row>` | data/table | typed columns + status row + summary footer + mobile presentation | required |
+| `MetralyBadge` | `Badge` / `StatusBadge` | label/status | split generic label from operational status | required |
+| `StateBadge` | `StatusBadge` / `HealthPill` | operational status | consolidate taxonomy | required |
+| `MetralyTelemetryLine` | `TelemetryLine` | telemetry | keep as local telemetry primitive | optional |
+| `MetralyDrawer` | `Dialog` / `Drawer` | overlay | add focus trap, focus restore, body lock | required |
+| `MetralyBottomSheet` | `BottomSheet` | overlay | add focus trap, focus restore, body lock | required |
+| `AI Assistant` page | `AIWorkspace` | product surface | rename page-level surface | n/a |
+| `Connect Sources` | `Connectors` | product surface | rename route/nav/copy | n/a |
+| `Marketplace` | `Plugins` / `Plugin Marketplace` | product surface | rename top-level to Plugins; keep Marketplace gated | n/a |
+
+---
+
+## 4. API contract map
+
+| Local component | Required contract |
+|---|---|
+| `Card` | `variant`, `density`, `tone`, `header`, `footer`, `actions`, stable hover/focus without layout jump. |
+| `MetricCard` | metric label/value/delta/status, loading/empty/error, optional compact mode. |
+| `WidgetShell` | title, description, status, actions, footer, loading, empty, error, selected, editMode. |
+| `BoardToolbar` | `mode`, `status`, `viewControls`, `editControls`, `primaryActions`, `secondaryActions`. |
+| `BoardDropZone` | `active`, `intent`, `keyboardTarget`, `pointerFallbackLabel`. |
+| `GripHandle` | neutral grip/resize affordance, keyboard label, no pulse marker. |
+| `MoveMenu` | accessible non-drag fallback for move/reorder operations. |
+| `DataTable<Row>` | typed rows/columns, `getRowId`, `loadingState`, `emptyState`, `errorState`, `statusRow`, `summaryFooter`, `bulkActions`, `mobilePresentation`. |
+| `WidgetCatalogCard` | title, category, compatibility, density, preview, requiresPro, status, add/select action. |
+| `StatusBadge` | canonical status taxonomy only; no ad hoc status labels. |
+| `TrendBadge` | trend direction/strength with tokenized semantics. |
+| `PulseMarker` | telemetry/heartbeat only; never drag handle or decoration. |
+| `HealthPill` | connector/widget health state. |
+| `Tabs` | real `tablist/tab/tabpanel` semantics when used as tabs. |
+| route navigation | link/nav semantics, not tabs. |
+| `WizardLayout` | step rail, content, review panel, sticky footer. |
+| `EvidencePanel` | source, metric, time range, synthetic/live/provider context. |
+| `PluginReviewDrawer` | permissions, signing, publisher, version, revocation/update state. |
+
+---
+
+## 5. Product terminology map
+
+| Current drift | Canonical target | Required action |
+|---|---|---|
+| `AI Soon`, `AI direction`, `AI Workspace`, `AI Assistant` | `AI Workspace` with assistant capability | Rename page/shell copy; gate incomplete capabilities. |
+| `Plugin ecosystem`, `Plugins`, `Marketplace` | `Plugins`; `Plugin Marketplace` gated subset | Top-level nav should be `Plugins` until marketplace is truly live. |
+| `Connect Sources`, `Connectors`, `Connector Wizard` | `Connectors` | Use one name across shell, wizard, docs, website. |
+| `Dashboard`, `Board`, `Dashboard Editor`, `Dashboard Wizard` | Dashboard + edit mode + creation wizard | Decide whether Board is a distinct model; otherwise merge into Dashboard terminology. |
+| role nav in sidebar + active top role tab | one clear scope model | Do not show conflicting role scopes. |
+| `Preview`, `Designed`, `Planned`, `In progress`, `Next`, `Then`, `Later`, `Policy defined`, `Benchmark pending` | canonical status taxonomy | Replace vague planning labels with mapped statuses. |
+
+---
+
+## 6. Canonical status mapping
+
+| Canonical status | Replaces / absorbs | Usage |
+|---|---|---|
+| `Live` | production-ready, active | Available and operational. |
+| `Preview` | preview/demo | Visible but not final. |
+| `Designed` | designed, design-ready | Design exists; not production-ready. |
+| `Planned` | planned, next/then/later | Roadmap item; not operable. |
+| `In progress` | in progress | Implementation active. |
+| `Gated` | pilot-only, requires access, requires Pro | Access-controlled or trust-gated. |
+| `Policy defined` | policy defined | Governance documented; UI may be non-operational. |
+| `Benchmark pending` | benchmark pending | AI/claim not validated yet. |
+| `Coming soon` | coming soon | Display alias only; must map internally to Planned or Designed. |
+| `Error` | failed/error | Recoverable failure state. |
+| `Delayed` | stale/delayed | Sync/data freshness warning. |
+| `No data` | empty/no data yet | Source connected but no usable data. |
+
+---
+
+## 7. Surface migration map
+
+### App shell
+
+| Current surface | Target |
+|---|---|
+| App shell with conflicting role nav/title/tabs | `AppShell` + `Sidebar` + `HeaderBar` + `PageHeader` with one active scope model. |
+| Sidebar route items | canonical routes: Dashboard, Metrics Explorer, Connectors, Plugins, AI Workspace, Settings. |
+| Top role tabs | either real tabs for subviews or route links; no pseudo-tabs. |
+| `Connect Sources` nav | `Connectors`. |
+| `Marketplace` nav | `Plugins` or gated `Plugin Marketplace`. |
+| `AI Assistant` nav | `AI Workspace`. |
+
+### Dashboard overview
+
+| Current / inferred | Target |
+|---|---|
+| KPI/metric cards | `MetricCard` inside `WidgetShell`. |
+| dashboard widget wrappers | `WidgetShell` + renderer from `widgets/*`. |
+| status chips | `StatusBadge` / `HealthPill`. |
+| charts | local chart/widget renderer inside `WidgetShell`; keep brandbook chart language. |
+| tables | `DataTable<Row>`. |
+| empty dashboard | `EmptyState` with Dashboard Wizard CTA. |
+
+### Dashboard editor / board edit mode
+
+| Current / inferred | Target |
+|---|---|
+| dashboard editor canvas | `BoardCanvas`. |
+| drop areas | `BoardDropZone`. |
+| edit toolbar | `BoardToolbar`. |
+| drag/resize affordance | `GripHandle` / `ResizeHandle`. |
+| non-drag fallback | `MoveMenu`. |
+| widget picker | `WidgetCatalogCard` + catalog rail/sheet. |
+| mobile catalog | `BottomSheet` / `Drawer` with search/category/selection. |
+
+### Metrics Explorer
+
+| Current / inferred | Target |
+|---|---|
+| metric tree/search | `Tabs`/nav as appropriate, `Input`, metric taxonomy component if needed. |
+| metric table | `DataTable<Row>` with status row and summary footer. |
+| filters | `FilterBar`, `Select`, `StatusBadge`. |
+| trend/result widgets | `WidgetShell` + chart renderer. |
+| save as widget | product adapter creates widget and routes to Dashboard Editor. |
+
+### Connectors
+
+| Current / inferred | Target |
+|---|---|
+| Connect Sources / Connector Wizard | `Connectors` route + `WizardLayout`. |
+| provider setup | source card + permission review. |
+| dry run | `ReviewPanel` + `DataTable<Row>` for signals/errors. |
+| health | `HealthPill`, `StatusBadge`, `DataTable<Row>`. |
+| reconnect/retry | explicit actions with recoverable errors. |
+
+### Dashboard Wizard
+
+| Current / inferred | Target |
+|---|---|
+| `+ New Dashboard` | opens `Dashboard Wizard`. |
+| template selection | `WizardLayout` + role/goal cards. |
+| widget bundle | `WidgetCatalogCard` selection. |
+| preview layout | `ReviewPanel`. |
+| create | generated dashboard, then overview or editor. |
+
+### AI Workspace
+
+| Current / inferred | Target |
+|---|---|
+| AI Assistant / AI Workspace drift | single `AI Workspace` route. |
+| chat-only interface | `AIWorkspaceLayout` + `EvidencePanel` + `AnswerCard` + `TraceDrawer`. |
+| synthetic/live ambiguity | visible source/provider/status badge. |
+| suggested action | explicit user-confirmed action. |
+
+### Plugins
+
+| Current / inferred | Target |
+|---|---|
+| Marketplace/Plugins drift | `Plugins` top-level; `Plugin Marketplace` gated subset. |
+| plugin cards | `PluginCatalog`. |
+| install flow | `PluginReviewDrawer` before commit. |
+| permission/signing state | `PermissionBadge`, `SigningBanner`. |
+| update/revocation state | visible in review drawer. |
+
+---
+
+## 8. Deprecated / removed patterns
+
+| Pattern | Reason | Replacement |
+|---|---|---|
+| pulse marker as drag handle | violates brandbook/a11y intent | `GripHandle` / `MoveMenu`. |
+| pseudo-tabs for route navigation | accessibility/mental model risk | links/nav items. |
+| duplicate role navigation in sidebar and top tabs | context conflict | one scope model. |
+| ad hoc status strings | trust/comprehension risk | canonical status taxonomy. |
+| full-width widget picker card blocks | violates brandbook width contract | `WidgetCatalogCard` in constrained rail/sheet. |
+| feature-level raw colors | design drift | semantic token bridge. |
+| one-off wizard layouts | inconsistent setup UX | `WizardLayout`. |
+| install-before-review plugin UX | trust risk | `PluginReviewDrawer`. |
+| chat-only AI surface | trust/evidence gap | AI Workspace with evidence panel. |
+| mixed `.jsx`/`.tsx` entrypoints | migration smell | one TypeScript runtime path. |
+
+---
+
+## 9. Compatibility map
+
+Temporary compat exports are required:
+
+```ts
+export { Card as MetralyCard } from "../surfaces/Card";
+export { MetricCard as MetralyMetricCard } from "../surfaces/MetricCard";
+export { WidgetShell as DashboardWidget } from "../surfaces/WidgetShell";
+export { DataTable as MetralyTable } from "../surfaces/DataTable";
+export { BoardDropZone as DashboardDropZone } from "../board/BoardDropZone";
+export { BoardToolbar as DashboardToolbar } from "../board/BoardToolbar";
+export { WidgetCatalogCard as WidgetPickerCard } from "../surfaces/WidgetCatalogCard";
+export { StatusBadge as StateBadge } from "../telemetry/StatusBadge";
+```
+
+Rules:
+
+- compat is for migration only;
+- new feature code imports canonical names;
+- cleanup phase removes compat usage.
+
+---
+
+## 10. Required app-level conformance targets
+
+| Target | Required checks |
+|---|---|
+| AppShell | no conflicting context; predictable focus order; mobile nav. |
+| Tabs/navigation | real tabs or real links; no hybrid. |
+| Dashboard | all widgets use `WidgetShell`; loading/empty/error/stale states. |
+| Dashboard Editor | non-drag fallback, visible edit mode, keyboard/focus checks. |
+| DataTable | typed columns, status row, summary footer, internal scroll. |
+| Widget Catalog | constrained width, search/category, gated state. |
+| Connector Wizard | permission review, dry run, partial errors, health handoff. |
+| Dashboard Wizard | goal + role + widgets + review + generated dashboard. |
+| AI Workspace | evidence panel, source/provider/status context. |
+| Plugins | review drawer, permissions, signing, revocation/update state. |
