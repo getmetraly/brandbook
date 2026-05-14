@@ -1,27 +1,40 @@
-# Full-file replacement: fix dashboard e2e draft assertion
+# Metraly final Storybook conformance full files
 
 Commit name:
 
 ```bash
-test(e2e): scope dashboard docs legacy assertions
+fix(storybook): finalize prototype conformance frames
 ```
 
-Copy this file over the repository root:
+This archive contains full files to overwrite in the repository.
+
+Copy from the extracted archive root into `getmetraly/brandbook`:
 
 ```bash
-cp -R e2e/* ./e2e/
-```
+cp -R stories/* ./stories/
+git rm docs/superpowers/plans/2026-05-14-prototype-pixel-perfect-parity.md
 
-Then run:
-
-```bash
-npm run test:e2e
 npm run ui:check
 npm run site:typecheck
 npm run site:test
 npm run build-storybook
+npm run test:e2e
 ```
+
+Files included:
+
+- stories/DashboardWidget.stories.tsx
+- stories/MetralyCard.stories.tsx
+- stories/DashboardDropZone.stories.tsx
+- stories/DashboardToolbar.stories.tsx
+- stories/MetralyTable.stories.tsx
+- stories/WidgetPickerCard.stories.tsx
+- DELETE_FILES.md
 
 Why:
 
-`/components/dashboard` legitimately contains multiple `draft` labels in the current documentation/status UI, so the previous broad assertion `getByText(/draft/i).toHaveCount(0)` is no longer valid. The replacement keeps the useful regression guard by checking that old preview-hardening paths/copy are not exposed.
+- DashboardWidget and Cards stories were rendering full-width strips instead of prototype-sized surfaces.
+- DropZone and Toolbar stories lacked a constrained prototype frame.
+- WidgetPickerCard was too wide for the right-rail/reference picker contract.
+- MetralyTable stories were missing the footer/status row examples.
+- The transient execution plan should not remain in the production branch.

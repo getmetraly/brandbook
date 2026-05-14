@@ -25,15 +25,22 @@ const data: Row[] = [
   { name: 'Gamma', value: 18 },
 ];
 
+const stageStyle = {
+  minHeight: 360,
+  padding: 24,
+  background: 'var(--m-bg-0)',
+  color: 'var(--m-fg-0)',
+};
+
 const frameStyle = {
-  width: '100%',
-  maxWidth: 720,
+  width: 'min(720px, 100%)',
   minHeight: 220,
 };
 
 const meta: Meta<typeof MetralyTable<Row>> = {
   title: 'Components/MetralyTable',
   component: MetralyTable<Row>,
+  parameters: { layout: 'fullscreen' },
   args: {
     columns,
     data,
@@ -42,10 +49,13 @@ const meta: Meta<typeof MetralyTable<Row>> = {
     dense: true,
     liveRowKeys: ['Alpha'],
     unreadRowKeys: ['Gamma'],
+    footer: <span>updated 12s ago</span>,
   },
   render: (args) => (
-    <div style={frameStyle}>
-      <MetralyTable {...args} />
+    <div style={stageStyle}>
+      <div style={frameStyle}>
+        <MetralyTable {...args} />
+      </div>
     </div>
   ),
 };
@@ -59,6 +69,7 @@ export const Empty: Story = {
   args: {
     data: [],
     emptyText: 'No entries',
+    footer: <span>0 rows</span>,
   },
 };
 
@@ -66,12 +77,14 @@ export const Loading: Story = {
   args: {
     data: [],
     loading: true,
+    footer: <span>loading telemetry</span>,
   },
 };
 
 export const SelectedRow: Story = {
   args: {
     selectedRowKeys: ['Beta'],
+    footer: <span>3 rows · 1 selected</span>,
   },
 };
 
@@ -93,16 +106,20 @@ const prReviewData: PRReviewRow[] = [
 ];
 
 export const PRReviewBoard: StoryObj<typeof MetralyTable<PRReviewRow>> = {
+  parameters: { layout: 'fullscreen' },
   render: () => (
-    <div style={{ width: '100%', maxWidth: 920, minHeight: 280 }}>
-      <MetralyTable<PRReviewRow>
-        columns={prReviewColumns}
-        data={prReviewData}
-        rowKey={(row) => row.team}
-        ariaLabel="PR review latency by team"
-        stickyHeader
-        dense
-      />
+    <div style={stageStyle}>
+      <div style={{ width: 'min(920px, 100%)', minHeight: 280 }}>
+        <MetralyTable<PRReviewRow>
+          columns={prReviewColumns}
+          data={prReviewData}
+          rowKey={(row) => row.team}
+          ariaLabel="PR review latency by team"
+          stickyHeader
+          dense
+          footer={<span>updated 12s ago</span>}
+        />
+      </div>
     </div>
   ),
 };
