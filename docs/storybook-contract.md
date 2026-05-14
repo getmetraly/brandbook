@@ -17,11 +17,29 @@ Storybook is a visual conformance harness for the prototype translation.
 - Scenarios / Dashboard Editor
 - Scenarios / Component State Board
 
+## Viewport coverage
+
+Responsive stories and scenarios must be inspected at:
+
+- 320px
+- 375px
+- 390px
+- 430px
+- 768px
+- 1024px
+- 1280px
+- 1440px
+- 1920px
+
+Stories do not need bespoke layouts per breakpoint, but they must collapse safely and avoid body overflow.
+
 ## Expectations
 
 - Stories mirror the prototype states, not an ad hoc demo gallery.
 - No local visual overrides unless they are layout-only.
 - Global CSS should come from `@metraly/ui`.
+- Story layout wrappers may use responsive grids, but they must not restyle production primitives.
+- Dense boards should use collapsing grids or auto-fit layouts instead of fixed desktop-only columns.
 
 ## Required story coverage per component
 

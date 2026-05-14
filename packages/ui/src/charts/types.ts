@@ -1,4 +1,4 @@
-import type * as React from "react";
+import * as React from "react";
 
 export type MetralyChartDatum = Record<string, string | number>;
 
@@ -53,5 +53,59 @@ export const metralyAxisProps = {
   axisLine: false,
   fontSize: 12,
 } as const;
+
+export function resolveResponsiveAxisProps(width: number) {
+  const compact = width > 0 && width <= 360;
+  const narrow = width > 0 && width <= 520;
+
+  return {
+    xAxisProps: {
+      ...metralyAxisProps,
+      interval: compact ? 1 : 0,
+      minTickGap: compact ? 28 : narrow ? 20 : 12,
+      tickMargin: narrow ? 8 : 10,
+    },
+    yAxisProps: {
+      ...metralyAxisProps,
+      width: compact ? 28 : narrow ? 32 : 40,
+    },
+  };
+}
+
+export function useResponsiveChartAxisProps(fixedWidth?: number) {
+  const containerRef = React.useRef<HTMLDivElement | null>(null);
+  const [measuredWidth, setMeasuredWidth] = React.useState(fixedWidth ?? 0);
+
+  React.useEffect(() => {
+    if (fixedWidth) {
+      setMeasuredWidth(fixedWidth);
+      return;
+    }
+
+    const element = containerRef.current;
+    if (!element) return;
+
+    const updateWidth = () => {
+      setMeasuredWidth(Math.max(0, Math.floor(element.getBoundingClientRect().width)));
+    };
+
+    updateWidth();
+
+    if (typeof ResizeObserver === "undefined") {
+      window.addEventListener("resize", updateWidth);
+      return () => window.removeEventListener("resize", updateWidth);
+    }
+
+    const observer = new ResizeObserver(updateWidth);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [fixedWidth]);
+
+  return {
+    containerRef,
+    measuredWidth,
+    ...resolveResponsiveAxisProps(measuredWidth),
+  };
+}
 
 export const metralyChartMargin = { top: 18, right: 18, left: -18, bottom: 0 };

@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import {
   Bar,
   BarChart,
@@ -12,9 +11,9 @@ import {
 import { MetralyChartTooltip } from "./MetralyChartTooltip";
 import {
   chartStateFromData,
-  metralyAxisProps,
   metralyChartMargin,
   resolveChartTone,
+  useResponsiveChartAxisProps,
   type MetralyChartBaseProps,
   type MetralyChartDatum,
 } from "./types";
@@ -31,6 +30,7 @@ export function MetralyBarChart<TDatum extends MetralyChartDatum = MetralyChartD
   className,
 }: MetralyChartBaseProps<TDatum>) {
   const resolvedState = chartStateFromData(state, data.length);
+  const { containerRef, xAxisProps, yAxisProps } = useResponsiveChartAxisProps(width);
   const classes = ["metraly-chart", "is-bar", resolvedState !== "default" && `is-${resolvedState}`, className]
     .filter(Boolean)
     .join(" ");
@@ -65,12 +65,12 @@ export function MetralyBarChart<TDatum extends MetralyChartDatum = MetralyChartD
   ));
 
   return (
-    <div className={classes} role="img" aria-label={ariaLabel} {...chartProps}>
+    <div ref={containerRef} className={classes} role="img" aria-label={ariaLabel} {...chartProps}>
       {width ? (
         <BarChart width={width} height={height} data={data} margin={metralyChartMargin} title={ariaLabel}>
           <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
-          <XAxis dataKey={xKey} {...metralyAxisProps} />
-          <YAxis {...metralyAxisProps} />
+          <XAxis dataKey={xKey} {...xAxisProps} />
+          <YAxis {...yAxisProps} />
           <MetralyChartTooltip />
           {bars}
         </BarChart>
@@ -78,8 +78,8 @@ export function MetralyBarChart<TDatum extends MetralyChartDatum = MetralyChartD
         <ResponsiveContainer width="100%" height={height}>
           <BarChart data={data} margin={metralyChartMargin} title={ariaLabel}>
             <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
-            <XAxis dataKey={xKey} {...metralyAxisProps} />
-            <YAxis {...metralyAxisProps} />
+            <XAxis dataKey={xKey} {...xAxisProps} />
+            <YAxis {...yAxisProps} />
             <MetralyChartTooltip />
             {bars}
           </BarChart>
