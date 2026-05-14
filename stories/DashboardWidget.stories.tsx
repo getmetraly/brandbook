@@ -15,10 +15,11 @@ const stageStyle = {
 
 function widgetFrameStyle(args: Partial<React.ComponentProps<typeof DashboardWidget>>) {
   const isWide = Boolean(args.fullWidth);
+  const hasFooter = Boolean(args.footer);
   const isTallState = Boolean(args.loading || args.state === 'noData' || args.state === 'error' || args.state === 'disconnected');
   return {
     width: isWide ? 'min(920px, 100%)' : 'min(320px, 100%)',
-    height: isWide ? 132 : isTallState ? 220 : 180,
+    height: isWide ? (hasFooter ? 170 : 148) : isTallState ? 220 : 180,
   };
 }
 
