@@ -41,7 +41,9 @@
   box-shadow: var(--m-glow-focus);
 }
 
-.metraly-navigation-tree__item.is-selected {
+.metraly-navigation-tree__item.is-selected,
+.metraly-navigation-tree__item[data-tone="primary"].is-selected,
+.metraly-navigation-tree__item[data-tone="cyan"].is-selected {
   background: var(--m-cyan-bg);
   color: var(--m-cyan-500);
 }
@@ -62,28 +64,38 @@
   cursor: not-allowed;
 }
 
+.metraly-navigation-tree__item[data-tone="secondary"].is-selected,
 .metraly-navigation-tree__item[data-tone="purple"].is-selected {
   background: var(--m-purple-bg);
   border-color: var(--m-purple-500);
   color: var(--m-purple-500);
 }
 
+.metraly-navigation-tree__item[data-tone="success"].is-selected,
 .metraly-navigation-tree__item[data-tone="ok"].is-selected {
   background: var(--m-ok-bg);
   border-color: var(--m-ok);
   color: var(--m-ok);
 }
 
+.metraly-navigation-tree__item[data-tone="warning"].is-selected,
 .metraly-navigation-tree__item[data-tone="warn"].is-selected {
   background: var(--m-warn-bg);
   border-color: var(--m-warn);
   color: var(--m-warn);
 }
 
+.metraly-navigation-tree__item[data-tone="error"].is-selected,
 .metraly-navigation-tree__item[data-tone="err"].is-selected {
   background: var(--m-err-bg);
   border-color: var(--m-err);
   color: var(--m-err);
+}
+
+.metraly-navigation-tree__item[data-tone="info"].is-selected {
+  background: var(--m-bg-3);
+  border-color: var(--m-line-strong);
+  color: var(--m-fg-0);
 }
 
 .metraly-navigation-tree__indent {
