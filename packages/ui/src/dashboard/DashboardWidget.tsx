@@ -16,6 +16,11 @@ export interface DashboardWidgetProps {
   fullWidth?: boolean;
   children?: React.ReactNode;
   footer?: React.ReactNode;
+  /** Copy used by built-in empty/error states when custom children are not provided. */
+  stateTitle?: React.ReactNode;
+  stateDescription?: React.ReactNode;
+  /** Optional action for built-in empty/error states. Keep product-specific copy outside the primitive. */
+  stateAction?: React.ReactNode;
   className?: string;
   onSelect?: (id: string) => void;
   onRemove?: (id: string) => void;
@@ -79,27 +84,42 @@ function LoadingSkeleton() {
   );
 }
 
-function ErrorBody() {
+function ErrorBody({
+  title = "Unable to load widget",
+  description = "Check the source or retry this widget.",
+  action,
+}: {
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+  action?: React.ReactNode;
+}) {
   return (
-    <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, padding: 16 }}>
-      <div style={{ width: 28, height: 28, borderRadius: "50%", background: "var(--m-err-bg)", color: "var(--m-err)", display: "inline-flex", alignItems: "center", justifyContent: "center", border: "1px solid var(--m-err)" }}>
+    <div className="metraly-widget-shell-state metraly-widget-shell-state--error">
+      <div className="metraly-widget-shell-state-icon" aria-hidden="true">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"><path d="M4 4 L10 10 M10 4 L4 10" /></svg>
       </div>
-      <div style={{ fontSize: "var(--m-fs-12)", color: "var(--m-fg-1)" }}>Source disconnected</div>
-      <div style={{ fontSize: "var(--m-fs-10)", color: "var(--m-fg-3)", fontFamily: "var(--m-font-mono)" }}>last sync 12m ago · retrying...</div>
-      <button className="metraly-focus-ring" type="button" style={{ marginTop: 4, background: "transparent", color: "var(--m-cyan-500)", border: "1px solid var(--m-cyan-500)", padding: "4px 10px", borderRadius: "var(--m-r-2)", fontSize: "var(--m-fs-11)", fontFamily: "var(--m-font-ui)", cursor: "pointer" }}>
-        Reconnect
-      </button>
+      <div className="metraly-widget-shell-state-title">{title}</div>
+      {description ? <div className="metraly-widget-shell-state-description">{description}</div> : null}
+      {action ? <div className="metraly-widget-shell-state-action">{action}</div> : null}
     </div>
   );
 }
 
-function EmptyBody() {
+function EmptyBody({
+  title = "No telemetry in this range",
+  description = "0 events · widen the time window",
+  action,
+}: {
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+  action?: React.ReactNode;
+}) {
   return (
-    <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 6, padding: 16, color: "var(--m-fg-3)" }}>
-      <svg width="20" height="20" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M3 11 V8 M6 11 V5 M9 11 V7 M12 11 V3" strokeLinecap="round" /></svg>
-      <div style={{ fontSize: "var(--m-fs-11)" }}>No telemetry in this range</div>
-      <div style={{ fontSize: "var(--m-fs-10)", fontFamily: "var(--m-font-mono)" }}>0 events · widen the time window</div>
+    <div className="metraly-widget-shell-state metraly-widget-shell-state--empty">
+      <svg className="metraly-widget-shell-state-icon" width="20" height="20" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true"><path d="M3 11 V8 M6 11 V5 M9 11 V7 M12 11 V3" strokeLinecap="round" /></svg>
+      <div className="metraly-widget-shell-state-title">{title}</div>
+      {description ? <div className="metraly-widget-shell-state-description">{description}</div> : null}
+      {action ? <div className="metraly-widget-shell-state-action">{action}</div> : null}
     </div>
   );
 }
@@ -118,6 +138,9 @@ export function DashboardWidget({
   fullWidth = false,
   children,
   footer,
+  stateTitle,
+  stateDescription,
+  stateAction,
   className,
   onSelect,
   onRemove,
@@ -185,9 +208,9 @@ export function DashboardWidget({
           {loading && !children ? (
             <LoadingSkeleton />
           ) : (state === "error" || state === "disconnected") && !children ? (
-            <ErrorBody />
+            <ErrorBody title={stateTitle} description={stateDescription} action={stateAction} />
           ) : state === "noData" && !children ? (
-            <EmptyBody />
+            <EmptyBody title={stateTitle} description={stateDescription} action={stateAction} />
           ) : (
             <div className="metraly-dashboard-widget-content">{children}</div>
           )}

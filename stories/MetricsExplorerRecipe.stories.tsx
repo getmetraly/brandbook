@@ -30,10 +30,10 @@ const metricTree = [
     label: "DORA metrics",
     icon: <MetralyIcon name="zap" size="sm" />,
     children: [
-      { value: "deploy-frequency", label: "Deployment frequency", tone: "cyan" as const, meta: "24/day" },
-      { value: "lead-time", label: "Lead time for changes", tone: "ok" as const, meta: "41h" },
-      { value: "change-failure-rate", label: "Change failure rate", tone: "warn" as const, meta: "4.2%" },
-      { value: "mttr", label: "MTTR", tone: "ok" as const, meta: "37m" },
+      { value: "deploy-frequency", label: "Deployment frequency", tone: "primary" as const, meta: "24/day" },
+      { value: "lead-time", label: "Lead time for changes", tone: "success" as const, meta: "41h" },
+      { value: "change-failure-rate", label: "Change failure rate", tone: "warning" as const, meta: "4.2%" },
+      { value: "mttr", label: "MTTR", tone: "success" as const, meta: "37m" },
     ],
   },
   {
@@ -43,7 +43,7 @@ const metricTree = [
     children: [
       { value: "cycle-time", label: "Cycle time breakdown", meta: "4 stages" },
       { value: "review-latency", label: "Review latency", meta: "5.4h" },
-      { value: "blocked-work", label: "Blocked work", tone: "warn" as const, meta: "9 items" },
+      { value: "blocked-work", label: "Blocked work", tone: "warning" as const, meta: "9 items" },
     ],
   },
   {
@@ -51,8 +51,8 @@ const metricTree = [
     label: "Build and release",
     icon: <MetralyIcon name="refresh" size="sm" />,
     children: [
-      { value: "ci-failure-rate", label: "CI failure rate", tone: "err" as const, meta: "8.1%" },
-      { value: "flaky-builds", label: "Flaky builds", tone: "warn" as const, meta: "37" },
+      { value: "ci-failure-rate", label: "CI failure rate", tone: "error" as const, meta: "8.1%" },
+      { value: "flaky-builds", label: "Flaky builds", tone: "warning" as const, meta: "37" },
     ],
   },
 ];
@@ -93,6 +93,7 @@ function MetricsExplorerRecipe({ mode = "desktop" }: { mode?: RecipeMode }) {
   const [compareEnabled, setCompareEnabled] = React.useState("compare-off");
   const [metricGroup, setMetricGroup] = React.useState("dora");
   const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const [filterSheetOpen, setFilterSheetOpen] = React.useState(false);
   const showSidebar = mode === "desktop";
   const metricColumns = mode === "desktop" ? "repeat(4, minmax(0, 1fr))" : mode === "tablet" ? "repeat(2, minmax(0, 1fr))" : "1fr";
   const contentColumns = mode === "desktop" ? "minmax(0, 1.5fr) minmax(320px, 0.8fr)" : "1fr";
@@ -190,6 +191,47 @@ function MetricsExplorerRecipe({ mode = "desktop" }: { mode?: RecipeMode }) {
     </div>
   );
 
+  const filterControls = (
+    <>
+      <div style={{ width: mode === "mobile" ? "100%" : 164 }}>
+        <MetralySelect
+          label="Team"
+          defaultValue="all-teams"
+          options={[
+            { value: "all-teams", label: "All teams" },
+            { value: "platform", label: "Platform" },
+            { value: "growth", label: "Growth" },
+            { value: "search", label: "Search" },
+          ]}
+        />
+      </div>
+      <div style={{ width: mode === "mobile" ? "100%" : 164 }}>
+        <MetralySelect
+          label="Repository"
+          defaultValue="all-repos"
+          options={[
+            { value: "all-repos", label: "All repositories" },
+            { value: "frontend", label: "frontend-app" },
+            { value: "platform", label: "platform-core" },
+            { value: "data", label: "data-pipelines" },
+          ]}
+        />
+      </div>
+      <MetralySegmentedControl
+        ariaLabel="Comparison mode"
+        size="sm"
+        value={compareEnabled}
+        onValueChange={setCompareEnabled}
+        interactionMode={mode === "mobile" ? "toolbar" : "radio"}
+        fullWidth={mode === "mobile"}
+        options={[
+          { value: "compare-off", label: "Current only" },
+          { value: "compare-on", label: "Compare to prev." },
+        ]}
+      />
+    </>
+  );
+
   return (
     <ThemeProvider>
       <div style={{ height: 820, background: "var(--m-bg-0)" }}>
@@ -271,42 +313,14 @@ function MetricsExplorerRecipe({ mode = "desktop" }: { mode?: RecipeMode }) {
                         { value: "12m", label: "12m" },
                       ]}
                     />
-                    <div style={{ width: 164 }}>
-                      <MetralySelect
-                        label="Team"
-                        defaultValue="all-teams"
-                        options={[
-                          { value: "all-teams", label: "All teams" },
-                          { value: "platform", label: "Platform" },
-                          { value: "growth", label: "Growth" },
-                          { value: "search", label: "Search" },
-                        ]}
-                      />
-                    </div>
-                    <div style={{ width: 164 }}>
-                      <MetralySelect
-                        label="Repository"
-                        defaultValue="all-repos"
-                        options={[
-                          { value: "all-repos", label: "All repositories" },
-                          { value: "frontend", label: "frontend-app" },
-                          { value: "platform", label: "platform-core" },
-                          { value: "data", label: "data-pipelines" },
-                        ]}
-                      />
-                    </div>
+                    {mode === "mobile" ? (
+                      <MetralyButton variant="secondary" iconLeft={<MetralyIcon name="settings" size="sm" />} onClick={() => setFilterSheetOpen(true)}>
+                        Filters
+                      </MetralyButton>
+                    ) : (
+                      filterControls
+                    )}
                   </div>
-
-                  <MetralySegmentedControl
-                    ariaLabel="Comparison mode"
-                    size="sm"
-                    value={compareEnabled}
-                    onValueChange={setCompareEnabled}
-                    options={[
-                      { value: "compare-off", label: "Current only" },
-                      { value: "compare-on", label: "Compare to prev." },
-                    ]}
-                  />
                 </div>
               </MetralyPanel>
 
@@ -395,7 +409,7 @@ function MetricsExplorerRecipe({ mode = "desktop" }: { mode?: RecipeMode }) {
                       <div style={{ color: "var(--m-fg-0)", fontSize: "var(--m-fs-12)", fontWeight: 600 }}>Custom formula</div>
                       <MetralyButton variant="primary" size="sm">Run formula</MetralyButton>
                     </div>
-                    <MetralyCodeBlock accent="cyan">
+                    <MetralyCodeBlock accent="primary">
                       {`ratio(
   deploys(status = "success"),
   deploys(environment = "prod")
@@ -435,14 +449,24 @@ function MetricsExplorerRecipe({ mode = "desktop" }: { mode?: RecipeMode }) {
           </div>
         </MetralyShell>
         {mode === "mobile" ? (
-          <MetralyBottomSheet
-            open={drawerOpen}
-            onOpenChange={setDrawerOpen}
-            title="Switch metric"
-            description="quick telemetry jump"
-          >
-            {metricSwitcherContent}
-          </MetralyBottomSheet>
+          <>
+            <MetralyBottomSheet
+              open={drawerOpen}
+              onOpenChange={setDrawerOpen}
+              title="Switch metric"
+              description="quick telemetry jump"
+            >
+              {metricSwitcherContent}
+            </MetralyBottomSheet>
+            <MetralyBottomSheet
+              open={filterSheetOpen}
+              onOpenChange={setFilterSheetOpen}
+              title="Filters"
+              description="team, repository, and comparison mode"
+            >
+              <div style={{ display: "grid", gap: 10, padding: 12 }}>{filterControls}</div>
+            </MetralyBottomSheet>
+          </>
         ) : (
           <MetralyDrawer
             open={mode === "tablet" && drawerOpen}

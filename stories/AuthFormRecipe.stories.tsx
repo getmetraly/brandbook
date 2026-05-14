@@ -7,10 +7,17 @@ import {
   MetralyIcon,
   MetralyInput,
   MetralyPanel,
+  MetralySegmentedControl,
   ThemeProvider,
 } from "@metraly/ui";
 
-function AuthFormRecipe() {
+type AuthState = "default" | "loading" | "error" | "sso";
+
+function AuthFormRecipe({ state = "default" }: { state?: AuthState }) {
+  const [method, setMethod] = React.useState(state === "sso" ? "sso" : "local");
+  const isLoading = state === "loading";
+  const isError = state === "error";
+
   return (
     <ThemeProvider>
       <div
@@ -54,34 +61,60 @@ function AuthFormRecipe() {
                     Operators and engineering leads
                   </div>
                 </div>
-                <MetralyBadge variant="success">live instance</MetralyBadge>
+                <MetralyBadge variant={isError ? "warning" : "success"}>{isError ? "attention" : "live instance"}</MetralyBadge>
               </div>
 
-              <MetralyInput
+              <MetralySegmentedControl
+                ariaLabel="Authentication method"
                 fullWidth
-                label="Email"
-                type="email"
-                placeholder="ops@metraly.dev"
-                iconLeft={<MetralyIcon name="user" size="sm" />}
-              />
-              <MetralyInput
-                fullWidth
-                label="Password"
-                type="password"
-                placeholder="••••••••••••"
-                iconLeft={<MetralyIcon name="lock" size="sm" />}
-                description="Use SSO or a workspace-local account. No auth-only component needed here."
+                value={method}
+                onValueChange={setMethod}
+                options={[
+                  { value: "local", label: "Workspace account" },
+                  { value: "sso", label: "SSO" },
+                ]}
               />
 
-              <MetralyButton variant="primary" fullWidth>
-                Sign in
-              </MetralyButton>
+              {method === "sso" ? (
+                <div style={{ display: "grid", gap: 10 }}>
+                  <MetralyButton variant="primary" fullWidth iconLeft={<MetralyIcon name="lock" size="sm" />} loading={isLoading}>
+                    Continue with SSO
+                  </MetralyButton>
+                  <div style={{ color: "var(--m-fg-3)", fontSize: "var(--m-fs-10)", lineHeight: 1.45 }}>
+                    Redirects to the configured identity provider for this workspace.
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <MetralyInput
+                    fullWidth
+                    label="Email"
+                    type="email"
+                    placeholder="ops@metraly.dev"
+                    iconLeft={<MetralyIcon name="user" size="sm" />}
+                    error={isError ? "No workspace account exists for this email" : undefined}
+                  />
+                  <MetralyInput
+                    fullWidth
+                    label="Password"
+                    type="password"
+                    placeholder="••••••••••••"
+                    iconLeft={<MetralyIcon name="lock" size="sm" />}
+                    error={isError ? "Password did not match" : undefined}
+                    description={!isError ? "Use SSO or a workspace-local account. No auth-only component needed here." : undefined}
+                  />
+
+                  <MetralyButton variant="primary" fullWidth loading={isLoading}>
+                    Sign in
+                  </MetralyButton>
+                </>
+              )}
 
               <div style={{ display: "grid", gap: 8 }}>
                 <div style={{ color: "var(--m-fg-2)", fontSize: "var(--m-fs-10)", fontWeight: 500 }}>
                   Self-host bootstrap
                 </div>
-                <MetralyCodeBlock accent="cyan">
+                <MetralyCodeBlock accent="primary">
                   {`npx @metraly/bootstrap login \
   --workspace acme-core \
   --env production`}
@@ -127,6 +160,18 @@ type Story = StoryObj<typeof AuthFormRecipe>;
 
 export const Default: Story = {
   render: () => <AuthFormRecipe />,
+};
+
+export const Loading: Story = {
+  render: () => <AuthFormRecipe state="loading" />,
+};
+
+export const InvalidCredentials: Story = {
+  render: () => <AuthFormRecipe state="error" />,
+};
+
+export const Sso: Story = {
+  render: () => <AuthFormRecipe state="sso" />,
 };
 
 export const Mobile: Story = {

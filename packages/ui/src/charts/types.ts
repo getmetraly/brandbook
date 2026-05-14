@@ -2,7 +2,15 @@ import * as React from "react";
 
 export type MetralyChartDatum = Record<string, string | number>;
 
-export type MetralyChartTone = "primary" | "secondary" | "warning" | "success" | "error" | string;
+export type MetralyChartTone =
+  | "primary"
+  | "secondary"
+  | "success"
+  | "warning"
+  | "error"
+  | "info"
+  | `var(--m-${string})`
+  | string;
 
 export type MetralyChartState =
   | "default"
@@ -44,6 +52,7 @@ export function resolveChartTone(tone: MetralyChartTone = "primary"): string {
   if (tone === "warning") return "var(--m-warn)";
   if (tone === "success") return "var(--m-ok)";
   if (tone === "error") return "var(--m-err)";
+  if (tone === "info") return "var(--m-fg-1)";
   return tone;
 }
 
