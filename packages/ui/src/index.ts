@@ -1,6 +1,15 @@
 export { MetralyBadge } from "./components/MetralyBadge";
 export type { MetralyBadgeProps, MetralyBadgeVariant } from "./components/MetralyBadge";
 
+export { MetralyButton } from "./components/MetralyButton";
+export type { MetralyButtonProps, MetralyButtonVariant, MetralyButtonSize } from "./components/MetralyButton";
+
+export { MetralyInput } from "./components/MetralyInput";
+export type { MetralyInputProps } from "./components/MetralyInput";
+
+export { MetralyIcon, metralyIconPaths } from "./components/MetralyIcon";
+export type { MetralyIconName, MetralyIconProps } from "./components/MetralyIcon";
+
 export { MetralyCard } from "./components/MetralyCard";
 export type { MetralyCardDensity, MetralyCardProps, MetralyCardState } from "./components/MetralyCard";
 

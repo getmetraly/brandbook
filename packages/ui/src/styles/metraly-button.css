@@ -1,0 +1,139 @@
+.m-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--m-2);
+  height: var(--m-control-h);
+  padding: 0 var(--m-3);
+  border-radius: var(--m-r-3);
+  border: 1px solid transparent;
+  font-family: var(--m-font-ui);
+  font-size: var(--m-fs-12);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background var(--m-dur-2) var(--m-ease),
+    border-color var(--m-dur-2) var(--m-ease),
+    color var(--m-dur-2) var(--m-ease),
+    box-shadow var(--m-dur-2) var(--m-ease),
+    opacity var(--m-dur-2) var(--m-ease);
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.m-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--m-glow-focus);
+}
+
+.m-btn:disabled,
+.m-btn[aria-disabled="true"] {
+  opacity: 0.38;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Sizes */
+.m-btn--sm {
+  height: 26px;
+  padding: 0 var(--m-2);
+  font-size: var(--m-fs-11);
+  border-radius: var(--m-r-2);
+  gap: var(--m-1);
+}
+
+.m-btn--lg {
+  height: 38px;
+  padding: 0 var(--m-4);
+  font-size: var(--m-fs-13);
+  border-radius: var(--m-r-4);
+}
+
+/* Variants */
+
+/* primary — gradient fill */
+.m-btn--primary {
+  background: linear-gradient(135deg, var(--m-cyan-500), var(--m-purple-500));
+  border-color: transparent;
+  color: oklch(0.12 0.01 250);
+}
+.m-btn--primary:not(:disabled):hover {
+  filter: brightness(1.1);
+}
+
+/* secondary — cyan outline */
+.m-btn--secondary {
+  background: var(--m-cyan-bg);
+  border-color: var(--m-cyan-500);
+  color: var(--m-cyan-500);
+}
+.m-btn--secondary:not(:disabled):hover {
+  background: oklch(from var(--m-cyan-bg) l c h / 0.18);
+}
+
+/* ghost — transparent with border */
+.m-btn--ghost {
+  background: var(--m-bg-2);
+  border-color: var(--m-line);
+  color: var(--m-fg-1);
+}
+.m-btn--ghost:not(:disabled):hover {
+  background: var(--m-bg-3);
+  border-color: var(--m-line-strong);
+}
+
+/* neutral — no border, subtle bg */
+.m-btn--neutral {
+  background: transparent;
+  border-color: transparent;
+  color: var(--m-fg-2);
+}
+.m-btn--neutral:not(:disabled):hover {
+  background: var(--m-bg-2);
+  color: var(--m-fg-1);
+}
+
+/* danger — error tone */
+.m-btn--danger {
+  background: var(--m-err-bg);
+  border-color: var(--m-err);
+  color: var(--m-err);
+}
+.m-btn--danger:not(:disabled):hover {
+  background: oklch(from var(--m-err-bg) l c h / 0.22);
+}
+
+/* dashed — "add" / new affordance */
+.m-btn--dashed {
+  background: var(--m-cyan-bg);
+  border: 1px dashed var(--m-cyan-500);
+  color: var(--m-cyan-500);
+  opacity: 0.85;
+}
+.m-btn--dashed:not(:disabled):hover {
+  opacity: 1;
+  background: oklch(from var(--m-cyan-bg) l c h / 0.18);
+}
+
+/* Loading spinner */
+.m-btn__spinner {
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: m-btn-spin 0.65s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes m-btn-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Icon slot sizing */
+.m-btn svg {
+  flex-shrink: 0;
+}

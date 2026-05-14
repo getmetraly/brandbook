@@ -12,6 +12,8 @@ import "@metraly/ui/styles/metraly-state-badge.css";
 import "@metraly/ui/styles/metraly-table.css";
 import "@metraly/ui/styles/metraly-widget-picker.css";
 import "@metraly/ui/styles/metraly-widget-shell.css";
+import "@metraly/ui/styles/metraly-button.css";
+import "@metraly/ui/styles/metraly-input.css";
 
 const preview: Preview = {
   parameters: {
