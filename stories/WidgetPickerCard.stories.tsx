@@ -1,32 +1,30 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { WidgetPickerCard } from '@metraly/ui';
-import '@metraly/ui/styles/metraly-state-badge.css';
-import '@metraly/ui/styles/metraly-widget-picker.css';
 
 const stageStyle = {
   display: 'grid',
   placeItems: 'start',
-  minHeight: 260,
+  minHeight: 300,
   padding: 24,
-  background: '#0b0f14',
-  color: '#f0f4f8',
+  background: 'var(--m-bg-0)',
+  color: 'var(--m-fg-0)',
 };
 
 const cardStyle = {
   width: '100%',
-  maxWidth: 420,
+  maxWidth: 340,
 };
 
 const meta: Meta<typeof WidgetPickerCard> = {
-  title: 'Metraly/WidgetPickerCard',
+  title: 'Components/WidgetPickerCard',
   component: WidgetPickerCard,
+  parameters: { layout: 'fullscreen' },
   args: {
     title: 'Deployment frequency',
     description: 'Deploys per day, by service & team.',
     selected: true,
     kind: 'dora/deploy-freq',
     iconLabel: 'lightning',
-    tags: ['dora', 'delivery'],
     state: 'live',
   },
   render: (args) => (
@@ -43,7 +41,7 @@ type Story = StoryObj<typeof WidgetPickerCard>;
 
 export const Selected: Story = {};
 
-export const Unselected: Story = {
+export const Stale: Story = {
   args: {
     selected: false,
     title: 'Change failure rate',
@@ -54,15 +52,14 @@ export const Unselected: Story = {
   },
 };
 
-export const Delayed: Story = {
+export const New: Story = {
   args: {
     selected: false,
-    title: 'Blocked work',
-    description: 'Issues stalled > 3 days, by stage.',
-    kind: 'flow/blocked',
-    iconLabel: 'bell',
-    state: 'delayed',
-    stateLabel: 'Delayed',
+    title: 'Flaky builds',
+    description: 'Tests retried-then-passed in the last 7 days.',
+    kind: 'ci/flaky',
+    iconLabel: 'lightning',
+    visualState: 'new',
   },
 };
 
@@ -74,6 +71,16 @@ export const Disabled: Story = {
     description: 'Source is not connected.',
     kind: 'flow/wip',
     iconLabel: 'table',
-    state: 'noData',
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    selected: false,
+    title: 'PR review latency',
+    description: 'First review response, by team.',
+    kind: 'review/latency',
+    iconLabel: 'metric',
+    loading: true,
   },
 };

@@ -38,4 +38,12 @@
 
 ## Current design status
 
-This document should be interpreted together with `brandbook/current-design-state.md` and `AGENTS.md`. The current accepted direction is the phase-13 `/draft` design: dark engineering dashboard UI, cyan telemetry signal, restrained pulse-wave usage, stable interactions, protected `/components` baseline and `/draft` as the active hardening lab.
+This checklist is historical migration context only.
+
+The current accepted direction for this repository is defined by:
+
+- `../docs/prototypes/brandbook/*` as the canonical visual and behavioral source of truth;
+- `AGENTS.md` for stable repository operating rules;
+- `docs/*.md` in this repo for the current component, site, and Storybook contracts.
+
+Do not treat old phase notes, `/draft`, `/components`, or preview-hardening assumptions as current guidance.

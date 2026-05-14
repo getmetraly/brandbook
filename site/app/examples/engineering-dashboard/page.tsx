@@ -5,6 +5,8 @@ import DocsShell from "../../components/docs/DocsShell";
 import { DocsSection } from "../../components/docs/DocsBlocks";
 import { getRelatedLinks } from "../../lib/docs/navigation";
 
+export const dynamic = "force-dynamic";
+
 type TeamRow = { team: string; flow: string; health: ReactNode };
 const columns: MetralyTableColumn<TeamRow>[] = [
   { key: "team", header: "Team" },

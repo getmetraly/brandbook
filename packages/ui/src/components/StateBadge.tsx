@@ -30,6 +30,7 @@ export interface StateBadgeProps extends Omit<React.HTMLAttributes<HTMLSpanEleme
    * not generic decoration.
    */
   pulse?: boolean;
+  withPulse?: boolean;
   className?: string;
 }
 
@@ -49,22 +50,6 @@ const stateLabels: Record<StateBadgeState, string> = {
   info: "Info",
 };
 
-const visualStateAliases: Record<StateBadgeState, StateBadgeState> = {
-  live: "live",
-  ok: "success",
-  new: "live",
-  purple: "info",
-  disabled: "noData",
-  stale: "stale",
-  delayed: "delayed",
-  disconnected: "disconnected",
-  noData: "noData",
-  error: "error",
-  warning: "warning",
-  success: "success",
-  info: "info",
-};
-
 function defaultStateLabel(state: StateBadgeState): string {
   return stateLabels[state];
 }
@@ -81,16 +66,15 @@ export function StateBadge({
   tone = "subtle",
   showIndicator = true,
   pulse,
+  withPulse,
   className,
   ...rest
 }: StateBadgeProps) {
   const resolvedLabel = label ?? defaultStateLabel(state);
-  const resolvedPulse = pulse ?? shouldPulseByDefault(state);
-  const visualState = visualStateAliases[state] ?? state;
+  const resolvedPulse = pulse ?? withPulse ?? shouldPulseByDefault(state);
   const classes = [
     "metraly-state-badge",
-    `is-${visualState}`,
-    visualState !== state ? `is-${state}` : null,
+    `is-${state}`,
     resolvedPulse ? "is-pulsing" : "is-static",
     `metraly-state-badge--tone-${tone}`,
     size !== "md" ? `metraly-state-badge--${size}` : null,
@@ -104,7 +88,6 @@ export function StateBadge({
       {...rest}
       className={classes}
       data-state={state}
-      data-visual-state={visualState}
       data-size={size}
       data-tone={tone}
       data-pulse={resolvedPulse ? "on" : "off"}

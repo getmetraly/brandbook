@@ -8,7 +8,7 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "test": "jest --runInBand",
-    "test:e2e": "cd .. && playwright test",
+    "test:e2e": "cd .. && npm run test:e2e",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -28,7 +28,6 @@
   },
   "devDependencies": {
     "@babel/runtime": "7.28.4",
-    "@playwright/test": "1.59.1",
     "@storybook/nextjs": "10.0.8",
     "@storybook/react": "10.0.8",
     "@testing-library/jest-dom": "6.9.1",

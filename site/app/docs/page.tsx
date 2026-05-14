@@ -4,6 +4,8 @@ import DocsShell from "../components/docs/DocsShell";
 import { DocsSection } from "../components/docs/DocsBlocks";
 import { getRelatedLinks } from "../lib/docs/navigation";
 
+export const dynamic = "force-dynamic";
+
 export default function DocsIndexPage() {
   const docs = getAllDocs();
   const grouped = docs.reduce<Record<string, typeof docs>>((acc, doc) => {

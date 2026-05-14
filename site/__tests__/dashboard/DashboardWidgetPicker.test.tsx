@@ -42,7 +42,7 @@ describe('dashboard widget registry and picker (4.2)', () => {
     });
   });
 
-  it('renders registry entries with state badges, tags and selection', () => {
+  it('renders registry entries with selection and kind label', () => {
     const onAdd = jest.fn();
 
     render(<DashboardWidgetPicker selectedType="metric-chart" onAdd={onAdd} />);
@@ -53,8 +53,10 @@ describe('dashboard widget registry and picker (4.2)', () => {
     expect(options).toHaveLength(3);
     expect(within(options[0]).getByText('Stat Card')).toBeInTheDocument();
     expect(within(options[1]).getByText('Metric Chart')).toBeInTheDocument();
-    expect(within(options[1]).getByText('trend')).toBeInTheDocument();
-    expect(within(options[1]).getByText('Live')).toBeInTheDocument();
+    expect(within(options[1]).getByText('chart')).toBeInTheDocument();
+    // "Live" badge is intentionally suppressed for regular live state — only
+    // "new" / "disabled" / "loading" states show a badge in the picker row.
+    expect(within(options[1]).queryByText('Live')).not.toBeInTheDocument();
     expect(options[1]).toHaveAttribute('aria-selected', 'true');
 
     fireEvent.click(options[0]);

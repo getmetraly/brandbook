@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
-export type DocSection = "brandbook" | "design-system" | "framework" | "migration";
+export type DocSection = "brandbook" | "migration";
 
 export type DocItem = {
   slug: string[];
@@ -15,10 +15,8 @@ const SITE_LIB_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(SITE_LIB_DIR, "../..");
 
 const SECTIONS: Record<DocSection, string> = {
-  "brandbook": "brandbook",
-  "design-system": "design-system",
-  "framework": "framework",
-  "migration": "migration",
+  brandbook: "docs",
+  migration: "docs/migration",
 };
 
 function walk(dir: string): string[] {
@@ -46,20 +44,25 @@ export function getDocs(section: DocSection): DocItem[] {
     return [];
   }
 
-  return walk(baseDir).map((filePath) => {
-    const relative = path.relative(baseDir, filePath);
-    const slug = relative.replace(/\.mdx?$/, "").split(path.sep);
+  return walk(baseDir)
+    .filter((filePath) => {
+      const relative = path.relative(baseDir, filePath);
+      return section === "brandbook" ? !relative.startsWith(`migration${path.sep}`) : true;
+    })
+    .map((filePath) => {
+      const relative = path.relative(baseDir, filePath);
+      const slug = relative.replace(/\.mdx?$/, "").split(path.sep);
 
-    const raw = fs.readFileSync(filePath, "utf-8");
-    const firstHeading = raw.match(/^#\s+(.+)$/m)?.[1];
+      const raw = fs.readFileSync(filePath, "utf-8");
+      const firstHeading = raw.match(/^#\s+(.+)$/m)?.[1];
 
-    return {
-      slug,
-      title: firstHeading || slug[slug.length - 1],
-      filePath,
-      section,
-    };
-  });
+      return {
+        slug,
+        title: firstHeading || slug[slug.length - 1],
+        filePath,
+        section,
+      };
+    });
 }
 
 export function getAllDocs(): DocItem[] {

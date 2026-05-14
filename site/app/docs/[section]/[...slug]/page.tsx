@@ -2,12 +2,9 @@ import { notFound } from "next/navigation";
 import type { DocSection } from "@/lib/docs";
 import { getDocBySlug, readDoc } from "@/lib/docs";
 
-const validSections = new Set<DocSection>([
-  "brandbook",
-  "design-system",
-  "framework",
-  "migration",
-]);
+export const dynamic = "force-dynamic";
+
+const validSections = new Set<DocSection>(["brandbook", "migration"]);
 
 type DocPageParams = {
   section: DocSection;
@@ -37,11 +34,8 @@ export default async function DocPage({
     <main className="shell" style={{ padding: "48px 0 96px" }}>
       <div className="section-head">
         <div>
-          <div className="eyebrow">
-            <span className="metraly-pulse-marker" />
-            {resolvedParams.section}
-          </div>
-          <h1 style={{ fontSize: "clamp(38px,5vw,72px)", marginTop: 20 }}>
+          <div className="eyebrow">{resolvedParams.section}</div>
+          <h1 style={{ fontSize: "clamp(34px,4vw,56px)", marginTop: 16 }}>
             {doc.title}
           </h1>
         </div>
@@ -53,8 +47,8 @@ export default async function DocPage({
             margin: 0,
             whiteSpace: "pre-wrap",
             lineHeight: 1.75,
-            fontFamily: "var(--font-ui)",
-            color: "var(--text-secondary)",
+            fontFamily: "var(--m-font-ui)",
+            color: "var(--m-fg-1)",
           }}
         >
           {content}

@@ -7,8 +7,6 @@ import {
   MetralyComposedChart,
   MetralyLineChart,
 } from '@metraly/ui/charts';
-import '@metraly/ui/styles/metraly-state-badge.css';
-import '@metraly/ui/styles/metraly-charts.css';
 
 const data = [
   { name: 'Mon', review: 8.4, deploys: 14, flow: 72, failure: 4.6 },
@@ -50,7 +48,7 @@ function ChartWrapperShowcase() {
 }
 
 const meta: Meta<typeof ChartWrapperShowcase> = {
-  title: 'Metraly/Chart Wrappers',
+  title: 'Components/Charts',
   component: ChartWrapperShowcase,
 };
 

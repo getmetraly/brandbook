@@ -39,16 +39,16 @@ export function chartStateFromData(state: MetralyChartState = "default", pointCo
 }
 
 export function resolveChartTone(tone: MetralyChartTone = "primary"): string {
-  if (tone === "primary") return "var(--metraly-graph-1, #00e5cc)";
-  if (tone === "secondary") return "var(--metraly-graph-3, #a855f7)";
-  if (tone === "warning") return "var(--metraly-warning, #f59e0b)";
-  if (tone === "success") return "var(--metraly-success, #22c55e)";
-  if (tone === "error") return "var(--metraly-error, #ef4444)";
+  if (tone === "primary") return "var(--m-cyan-500)";
+  if (tone === "secondary") return "var(--m-purple-500)";
+  if (tone === "warning") return "var(--m-warn)";
+  if (tone === "success") return "var(--m-ok)";
+  if (tone === "error") return "var(--m-err)";
   return tone;
 }
 
 export const metralyAxisProps = {
-  stroke: "rgba(240,244,248,0.48)",
+  stroke: "oklch(0.66 0.012 250 / 0.55)",
   tickLine: false,
   axisLine: false,
   fontSize: 12,

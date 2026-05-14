@@ -57,7 +57,7 @@ export function DashboardDropZone({
       data-pulse="off"
     >
       <span className="metraly-dashboard-drop-zone-icon" aria-hidden="true">
-        {resolvedState === "rejected" ? "!" : "+"}
+        {resolvedState === "rejected" ? "×" : "+"}
       </span>
       {showLine ? <span className="metraly-dashboard-drop-zone-line" aria-hidden="true" /> : null}
       <span className="metraly-dashboard-drop-zone-copy">

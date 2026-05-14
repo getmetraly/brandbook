@@ -50,7 +50,7 @@ describe('Metraly control state coverage', () => {
 
     expect(screen.getByRole('checkbox', { name: /Telemetry/ })).toHaveAttribute('aria-describedby');
     expect(screen.getByRole('radio', { name: /Primary source/ })).toHaveAttribute('aria-describedby');
-    expect(screen.getByRole('combobox', { name: /Metric source/ })).toHaveAttribute('aria-describedby');
+    expect(screen.getByRole('button', { name: /Metric source/ })).toHaveAttribute('aria-describedby');
     expect(screen.getByRole('switch', { name: 'Live sync' })).toHaveAttribute('aria-describedby');
   });
 
@@ -117,9 +117,10 @@ describe('Metraly control state coverage', () => {
       />
     );
 
-    const select = screen.getByRole('combobox', { name: 'Metric source' });
+    const select = screen.getByRole('button', { name: 'Metric source' });
 
     expect(select).toHaveAttribute('aria-invalid', 'true');
+    fireEvent.click(select);
     expect(screen.getByRole('option', { name: 'CI/CD' })).toBeDisabled();
   });
 

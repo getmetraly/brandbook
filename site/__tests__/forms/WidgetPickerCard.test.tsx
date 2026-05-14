@@ -1,31 +1,29 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { WidgetPickerCard } from '@metraly/ui';
 
 describe('WidgetPickerCard', () => {
-  it('renders title, description, selected state and tags', () => {
+  it('renders title, description, selected state and kind label', () => {
     render(
       <WidgetPickerCard
         title="Flow efficiency"
         description="Track delivery throughput."
         selected
-        iconLabel="pulse"
-        tags={['github', 'telemetry']}
+        iconLabel="metric"
         state="live"
       />
     );
 
     expect(screen.getByRole('option', { selected: true })).toBeInTheDocument();
-    expect(screen.getByLabelText('Live')).toBeInTheDocument();
     expect(screen.getByText('Flow efficiency')).toBeInTheDocument();
     expect(screen.getByText('Track delivery throughput.')).toBeInTheDocument();
-    expect(screen.getByText('Live')).toBeInTheDocument();
-    expect(screen.getByText('github')).toBeInTheDocument();
-    expect(screen.getByText('telemetry')).toBeInTheDocument();
-    expect(screen.getByText('PU')).toBeInTheDocument();
+    // The kind label (effectiveKind = iconLabel when no kind prop is provided) is always rendered.
+    expect(screen.getByText('metric')).toBeInTheDocument();
+    // Routine "live" state does not show a badge in the picker row — only "new" / "disabled" / "loading" do.
+    expect(screen.queryByText('Live')).not.toBeInTheDocument();
   });
 
-  it('supports selection callbacks and disabled state', () => {
+  it('supports selection callbacks and suppresses routine state badges', () => {
     const onSelect = jest.fn();
 
     render(
@@ -34,7 +32,6 @@ describe('WidgetPickerCard', () => {
         description="Track PR waiting time."
         selected={false}
         iconLabel="review"
-        tags={[]}
         state="delayed"
         onSelect={onSelect}
       />
@@ -45,7 +42,8 @@ describe('WidgetPickerCard', () => {
 
     expect(onSelect).toHaveBeenCalledTimes(1);
     expect(option).toHaveAttribute('aria-selected', 'false');
-    expect(screen.getByText('Delayed')).toBeInTheDocument();
+    // "delayed" is a routine operational state — no badge shown in picker rows.
+    expect(screen.queryByText('Delayed')).not.toBeInTheDocument();
 
     render(
       <WidgetPickerCard

@@ -15,8 +15,7 @@ describe('StateBadge', () => {
 
   it('has role=status and aria-label for screen readers', () => {
     render(<StateBadge state="live" label="Live" />);
-    const badge = screen.getByRole('status');
-    expect(badge).toHaveAttribute('aria-label', 'Live');
+    expect(screen.getByRole('status')).toHaveAttribute('aria-label', 'Live');
   });
 
   it('supports custom aria label', () => {
@@ -47,8 +46,7 @@ describe('StateBadge', () => {
 
   it('derives aria-label from state when label is omitted', () => {
     render(<StateBadge state="delayed" />);
-    const badge = screen.getByRole('status');
-    expect(badge).toHaveAttribute('aria-label', 'Delayed');
+    expect(screen.getByRole('status')).toHaveAttribute('aria-label', 'Delayed');
   });
 
   it.each([
@@ -72,18 +70,18 @@ describe('StateBadge', () => {
     expect(container.querySelector('.metraly-state-badge.is-stale')).toBeInTheDocument();
   });
 
-  it('keeps the indicator and label in separate constrained elements', () => {
+  it('renders the visual indicator and label inline', () => {
     const { container } = render(<StateBadge state="disconnected" label="Pipeline source disconnected" />);
-    expect(container.querySelector('.metraly-state-dot')).toBeInTheDocument();
-    expect(container.querySelector('.metraly-state-badge-label')).toHaveTextContent('Pipeline source disconnected');
+    expect(container.querySelector('.metraly-state-pulse')).toBeInTheDocument();
+    expect(screen.getByText('Pipeline source disconnected')).toBeInTheDocument();
   });
 });
 
 describe('MetralyBadge', () => {
-  it('uses the Claude Design badge class contract', () => {
+  it('uses the badge class contract', () => {
     const { container } = render(<MetralyBadge variant="warning">Chart wrapper</MetralyBadge>);
     const badge = container.querySelector('.metraly-badge');
-    expect(badge).toHaveClass('metraly-badge--warning');
+    expect(badge).toHaveClass('is-warning');
     expect(badge).toHaveAttribute('data-variant', 'warning');
     expect(badge).toHaveTextContent('Chart wrapper');
   });
