@@ -28,6 +28,8 @@ export interface MetralyTableProps<T extends Record<string, any>> {
   className?: string;
   /** Accessible label for screen readers. */
   ariaLabel?: string;
+  /** Optional compact footer/status row rendered below the table body. */
+  footer?: React.ReactNode;
   /** Row keys that should be rendered as selected without adding client handlers. */
   selectedRowKeys?: string[];
   /** Row keys that should render as unread/new without owning interaction state. */
@@ -56,6 +58,7 @@ export function MetralyTable<T extends Record<string, any>>({
   rowKey,
   className,
   ariaLabel = "Data table",
+  footer,
   selectedRowKeys = [],
   unreadRowKeys = [],
   liveRowKeys = [],
@@ -166,6 +169,7 @@ export function MetralyTable<T extends Record<string, any>>({
             })}
         </tbody>
       </table>
+      {footer ? <div className="metraly-table-footer">{footer}</div> : null}
     </div>
   );
 }
