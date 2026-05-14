@@ -3,6 +3,8 @@ import {
   DashboardDropZone,
   DashboardToolbar,
   DashboardWidget,
+  MetralyBottomSheet,
+  MetralyDrawer,
   MetralyTable,
   StateBadge,
   WidgetPickerCard,
@@ -100,6 +102,21 @@ const reviewRows: ReviewRow[] = [
   { team: "mobile", open: 4, first: "3h", merge: "14h", stale: 0 },
 ];
 
+
+function useMediaQuery(query: string) {
+  const [matches, setMatches] = React.useState(false);
+
+  React.useEffect(() => {
+    const mediaQuery = window.matchMedia(query);
+    const updateMatches = () => setMatches(mediaQuery.matches);
+    updateMatches();
+    mediaQuery.addEventListener("change", updateMatches);
+    return () => mediaQuery.removeEventListener("change", updateMatches);
+  }, [query]);
+
+  return matches;
+}
+
 const reviewColumns = [
   { key: "team" as const, header: "Team", width: "34%" },
   { key: "open" as const, header: "Open…", align: "right" as const, width: "16%" },
@@ -152,14 +169,13 @@ function renderWidgetBody(widget: WidgetDef) {
   }
 }
 
-function Sidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
+function SidebarContent({ onClose }: { onClose: () => void }) {
   return (
-    <aside className={`des-sidebar ${open ? "is-open" : ""}`} aria-label="Dashboard navigation" id="dashboard-editor-nav">
+    <>
       <div className="des-sidebar-head">
         <div className="des-logo-mark">M</div>
         <div className="des-logo-title">METRALY</div>
         <div className="des-logo-subtitle">engineering intelligence</div>
-        <button className="des-icon-button des-drawer-close" type="button" onClick={onClose} aria-label="Close navigation"><Icon name="close" /></button>
       </div>
       <nav className="des-nav-links">
         {navItems.map((item) => (
@@ -175,6 +191,14 @@ function Sidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
         <a href="#settings" onClick={onClose}><Icon name="settings" /><span>Settings</span></a>
         <a href="#user" onClick={onClose}><Icon name="user" /><span>ops@metraly</span></a>
       </div>
+    </>
+  );
+}
+
+function SidebarPanel({ onClose }: { onClose: () => void }) {
+  return (
+    <aside className="des-sidebar des-sidebar--static" aria-label="Dashboard navigation" id="dashboard-editor-nav">
+      <SidebarContent onClose={onClose} />
     </aside>
   );
 }
@@ -203,13 +227,27 @@ function EditBanner() {
   );
 }
 
-function WidgetLibrary({ open, onClose }: { open: boolean; onClose: () => void }) {
+function WidgetLibraryContent({ onClose, showHeader = true }: { onClose: () => void; showHeader?: boolean }) {
   return (
-    <aside className={`des-library ${open ? "is-open" : ""}`} id="dashboard-editor-library" aria-label="Widget library">
-      <div className="des-library-head"><Icon name="grid" /><span>Widget library</span><button className="des-icon-button" type="button" onClick={onClose} aria-label="Close widget library"><Icon name="close" /></button></div>
+    <>
+      {showHeader ? (
+        <div className="des-library-head">
+          <Icon name="grid" />
+          <span>Widget library</span>
+          <button className="des-icon-button" type="button" onClick={onClose} aria-label="Close widget library"><Icon name="close" /></button>
+        </div>
+      ) : null}
       <div className="des-library-list">
         {pickerItems.map((item) => <WidgetPickerCard key={item.id} {...item} />)}
       </div>
+    </>
+  );
+}
+
+function WidgetLibraryPanel({ onClose }: { onClose: () => void }) {
+  return (
+    <aside className="des-library des-library--static" id="dashboard-editor-library" aria-label="Widget library">
+      <WidgetLibraryContent onClose={onClose} />
     </aside>
   );
 }
@@ -231,6 +269,7 @@ function DashboardGrid() {
 export function DashboardEditorStoryScenario() {
   const [navOpen, setNavOpen] = React.useState(false);
   const [libraryOpen, setLibraryOpen] = React.useState(false);
+  const useOverlayPanels = useMediaQuery("(max-width: 1180px)");
 
   const closeOverlays = React.useCallback(() => {
     setNavOpen(false);
@@ -239,7 +278,7 @@ export function DashboardEditorStoryScenario() {
 
   return (
     <div className="des-shell">
-      <Sidebar open={navOpen} onClose={() => setNavOpen(false)} />
+      <SidebarPanel onClose={() => setNavOpen(false)} />
       <div className="des-main">
         <Topbar onOpenNav={() => setNavOpen(true)} onOpenLibrary={() => setLibraryOpen(true)} />
         <main className="des-content">
@@ -264,8 +303,30 @@ export function DashboardEditorStoryScenario() {
           <DashboardGrid />
         </main>
       </div>
-      <WidgetLibrary open={libraryOpen} onClose={() => setLibraryOpen(false)} />
-      <button className={`des-backdrop ${navOpen || libraryOpen ? "is-open" : ""}`} type="button" aria-label="Close overlay" onClick={closeOverlays} />
+      <WidgetLibraryPanel onClose={() => setLibraryOpen(false)} />
+      <MetralyDrawer
+        open={useOverlayPanels && navOpen}
+        onOpenChange={setNavOpen}
+        title="Workspace sections"
+        description="Dashboard navigation"
+        width="min(100vw, 286px)"
+        className="des-nav-drawer"
+      >
+        <div className="des-overlay-sidebar">
+          <SidebarContent onClose={() => setNavOpen(false)} />
+        </div>
+      </MetralyDrawer>
+      <MetralyBottomSheet
+        open={useOverlayPanels && libraryOpen}
+        onOpenChange={setLibraryOpen}
+        title="Widget library"
+        description="Drag or select a widget to add"
+      >
+        <div className="des-overlay-library">
+          <WidgetLibraryContent onClose={() => setLibraryOpen(false)} showHeader={false} />
+        </div>
+      </MetralyBottomSheet>
+      <button className={`des-backdrop ${!useOverlayPanels && (navOpen || libraryOpen) ? "is-open" : ""}`} type="button" aria-label="Close overlay" onClick={closeOverlays} />
     </div>
   );
 }
