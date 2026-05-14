@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { MetralyIcon, MetralyIconName, metralyIconPaths } from "@metraly/ui";
+import { MetralyIcon, MetralyIconName, metralyIconPaths, metralyIconSizeMap } from "@metraly/ui";
 import { ThemeProvider } from "@metraly/ui";
 import React from "react";
 
@@ -73,11 +73,11 @@ export const SizeGrid: Story = {
   name: "Size scale",
   render: () => (
     <ThemeProvider>
-      <div style={{ padding: 24, background: "var(--m-bg-0)", display: "flex", gap: 24, alignItems: "flex-end" }}>
-        {([12, 14, 16, 20, 24] as const).map((size) => (
-          <div key={size} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
-            <MetralyIcon name="zap" size={size} color="var(--m-cyan-500)" />
-            <span style={{ fontFamily: "var(--m-font-mono)", fontSize: 10, color: "var(--m-fg-3)" }}>{size}</span>
+        <div style={{ padding: 24, background: "var(--m-bg-0)", display: "flex", gap: 24, alignItems: "flex-end" }}>
+        {(Object.entries(metralyIconSizeMap) as Array<[keyof typeof metralyIconSizeMap, number]>).map(([token, px]) => (
+          <div key={token} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+            <MetralyIcon name="zap" size={token} color="var(--m-cyan-500)" />
+            <span style={{ fontFamily: "var(--m-font-mono)", fontSize: 10, color: "var(--m-fg-3)" }}>{token} · {px}px</span>
           </div>
         ))}
       </div>

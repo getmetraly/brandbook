@@ -4,93 +4,29 @@ import {
   DashboardResizeHandle,
   DashboardToolbar,
   DashboardWidget,
+  MetralyButton,
+  MetralyIcon,
+  MetralyInput,
+  MetralyLogo,
+  MetralyShell,
+  MetralySidebar,
+  MetralySidebarItem,
+  MetralySidebarSection,
   MetralyTable,
+  MetralyTopbar,
   StateBadge,
   WidgetPickerCard,
 } from "@metraly/ui";
 
-function Icon({ name, size = 13 }: { name: string; size?: number }) {
-  const paths: Record<string, React.ReactNode> = {
-    grid: (
-      <>
-        <rect x="1.5" y="1.5" width="4" height="4" rx="0.5" strokeWidth="1.35" />
-        <rect x="8.5" y="1.5" width="4" height="4" rx="0.5" strokeWidth="1.35" />
-        <rect x="1.5" y="8.5" width="4" height="4" rx="0.5" strokeWidth="1.35" />
-        <rect x="8.5" y="8.5" width="4" height="4" rx="0.5" strokeWidth="1.35" />
-      </>
-    ),
-    metric: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.35" d="M1.5 10.5h2V7h2v3.5h2V5h2v5.5h2V2.5h2v8" />,
-    lightning: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.35" fill="currentColor" fillOpacity={0.2} d="M8.5 1.5 5 7h4.5l-3 6 6-7.5H8.5z" />,
-    chart: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.35" d="M1.5 10.5 4.5 7l2.5 2L10 4l3 3" />,
-    log: <path strokeLinecap="round" strokeWidth="1.35" d="M2.5 4.5h9M2.5 7h6M2.5 9.5h8" />,
-    refresh: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.35" d="M11.5 4A5 5 0 1 0 12 7M11.5 1v3h-3" />,
-    bell: (
-      <>
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.35" d="M4 8a3 3 0 0 1 6 0v3H4V8z" />
-        <path strokeLinecap="round" strokeWidth="1.35" d="M5.5 11v.5a1.5 1.5 0 0 0 3 0V11" />
-      </>
-    ),
-    user: (
-      <>
-        <circle cx="7" cy="5" r="2.5" strokeWidth="1.35" />
-        <path strokeLinecap="round" strokeWidth="1.35" d="M2 13c0-2.8 2.2-5 5-5s5 2.2 5 5" />
-      </>
-    ),
-    settings: (
-      <>
-        <circle cx="7" cy="7" r="2" strokeWidth="1.35" />
-        <path strokeLinecap="round" strokeWidth="1.35" d="M7 2v1.5M7 11.5V13M2 7h1.5M11.5 7H13" />
-      </>
-    ),
-    search: (
-      <>
-        <circle cx="6" cy="6" r="3.5" strokeWidth="1.35" />
-        <path strokeLinecap="round" strokeWidth="1.35" d="M9 9 12 12" />
-      </>
-    ),
-    check: <path strokeLinecap="round" strokeWidth="1.35" d="M2.5 7l3 3 6-6" />,
-  };
-
-  return (
-    <svg viewBox="0 0 14 14" width={size} height={size} fill="none" stroke="currentColor" aria-hidden="true" style={{ flexShrink: 0 }}>
-      {paths[name] ?? null}
-    </svg>
-  );
-}
-
-const shellStyle: React.CSSProperties = {
-  display: "flex",
-  width: "100%",
-  height: 840,
-  background: "var(--m-bg-0)",
-  color: "var(--m-fg-1)",
-  overflow: "hidden",
-};
-
-const ghostButtonStyle: React.CSSProperties = {
-  height: 30,
-  padding: "0 10px",
-  background: "var(--m-bg-2)",
-  border: "1px solid var(--m-line)",
-  color: "var(--m-fg-1)",
-  borderRadius: "var(--m-r-2)",
-  fontSize: 11,
-  fontFamily: "var(--m-font-ui)",
-  display: "inline-flex",
-  alignItems: "center",
-  gap: 6,
-  cursor: "pointer",
-};
-
 const sidebarNav = [
-  { id: "overview", label: "Overview", icon: "grid" },
-  { id: "delivery", label: "Delivery", icon: "metric", active: true },
-  { id: "dora", label: "DORA", icon: "lightning" },
+  { id: "overview", label: "Overview", icon: "home" as const },
+  { id: "delivery", label: "Delivery", icon: "bar2" as const, active: true },
+  { id: "dora", label: "DORA", icon: "zap" as const },
   { id: "flow", label: "Flow & WIP", icon: "chart" },
-  { id: "reviews", label: "Code review", icon: "log", badge: 3 },
+  { id: "reviews", label: "Code review", icon: "copy" as const, badge: 3 },
   { id: "ci", label: "CI health", icon: "refresh" },
   { id: "incidents", label: "Incidents", icon: "bell" },
-  { id: "teams", label: "Teams", icon: "user" },
+  { id: "teams", label: "Teams", icon: "users" as const },
 ];
 
 const sidebarFooter = [
@@ -308,54 +244,70 @@ function PRReviewTableBody() {
 }
 
 function ScenarioSidebar() {
+  const header = (
+    <div style={{ display: "flex", flexDirection: "column", gap: 10, padding: "16px 12px 14px", borderBottom: "1px solid var(--m-line-faint)" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <MetralyLogo variant="mark" />
+        <div style={{ minWidth: 0, display: "flex", flexDirection: "column", gap: 2 }}>
+          <span style={{ color: "var(--m-fg-0)", fontSize: "var(--m-fs-11)", fontWeight: 600, letterSpacing: "0.04em" }}>METRALY</span>
+          <span style={{ color: "var(--m-fg-3)", fontFamily: "var(--m-font-mono)", fontSize: "var(--m-fs-9)" }}>engineering intelligence</span>
+        </div>
+      </div>
+      <div style={{ display: "inline-flex", alignItems: "center", gap: 6, width: "fit-content", borderRadius: 999, border: "1px solid var(--m-line-faint)", background: "var(--m-ok-bg)", padding: "4px 10px", color: "var(--m-ok)", fontFamily: "var(--m-font-mono)", fontSize: "var(--m-fs-9)" }}>
+        <span className="m-pulse-dot" style={{ width: 6, height: 6, borderRadius: 999, background: "currentColor" }} />
+        All systems nominal
+      </div>
+    </div>
+  );
+
+  const footer = (
+    <MetralySidebarSection>
+      {sidebarFooter.map((item) => (
+        <MetralySidebarItem
+          key={item.id}
+          icon={<MetralyIcon name={item.icon} size={14} />}
+          label={item.label}
+        />
+      ))}
+    </MetralySidebarSection>
+  );
+
   return (
-    <aside style={{ width: 196, flexShrink: 0, background: "var(--m-bg-1)", borderRight: "1px solid var(--m-line)", display: "flex", flexDirection: "column", padding: "16px 8px" }}>
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3, padding: "6px 0 12px", borderBottom: "1px solid var(--m-line-faint)", marginBottom: 10 }}>
-        <div style={{ width: 32, height: 32, borderRadius: 8, background: "var(--m-bg-2)", border: "1px solid var(--m-cyan-500)", display: "grid", placeItems: "center", fontFamily: "var(--m-font-mono)", fontSize: 14, fontWeight: 600, color: "var(--m-cyan-500)" }}>M</div>
-        <div style={{ fontSize: 10, color: "var(--m-fg-1)", fontWeight: 500, letterSpacing: "0.04em" }}>METRALY</div>
-        <div style={{ fontSize: 9, color: "var(--m-fg-3)", fontFamily: "var(--m-font-mono)" }}>engineering intelligence</div>
-      </div>
-      <nav style={{ display: "flex", flexDirection: "column", gap: 1 }}>
+    <MetralySidebar expandedWidth={196} header={header} footer={footer} aria-label="Dashboard navigation">
+      <MetralySidebarSection label="Dashboards">
         {sidebarNav.map((item) => (
-          <div key={item.id} style={{ position: "relative", display: "flex", alignItems: "center", gap: 10, padding: "7px 10px", borderRadius: "var(--m-r-2)", background: item.active ? "var(--m-cyan-bg)" : "transparent", color: item.active ? "var(--m-cyan-500)" : "var(--m-fg-2)", fontSize: "var(--m-fs-12)", cursor: "pointer" }}>
-            {item.active ? <span style={{ position: "absolute", left: 0, top: 6, bottom: 6, width: 2, background: "var(--m-cyan-500)", borderRadius: 2 }} /> : null}
-            <Icon name={item.icon} size={13} />
-            <span style={{ flex: 1 }}>{item.label}</span>
-            {item.badge != null ? <span style={{ fontFamily: "var(--m-font-mono)", fontSize: 8, color: "var(--m-cyan-500)", background: "var(--m-cyan-bg)", padding: "1px 4px", borderRadius: 999, border: "1px solid var(--m-cyan-500)" }}>{item.badge}</span> : null}
-          </div>
+          <MetralySidebarItem
+            key={item.id}
+            active={item.active}
+            icon={<MetralyIcon name={item.icon} size={14} />}
+            label={item.label}
+            meta={item.badge != null ? <span style={{ fontFamily: "var(--m-font-mono)", fontSize: 8, color: "inherit", background: "var(--m-cyan-bg)", padding: "1px 4px", borderRadius: 999, border: "1px solid currentColor" }}>{item.badge}</span> : undefined}
+          />
         ))}
-      </nav>
-      <div style={{ flex: 1 }} />
-      <div style={{ display: "flex", flexDirection: "column", gap: 1, paddingTop: 12, borderTop: "1px solid var(--m-line-faint)" }}>
-        {sidebarFooter.map((item) => (
-          <div key={item.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "7px 10px", color: "var(--m-fg-2)", fontSize: "var(--m-fs-12)", borderRadius: "var(--m-r-2)", cursor: "pointer" }}>
-            <Icon name={item.icon} size={13} />
-            <span>{item.label}</span>
-          </div>
-        ))}
-      </div>
-    </aside>
+      </MetralySidebarSection>
+    </MetralySidebar>
   );
 }
 
 function ScenarioTopbar() {
   return (
-    <header style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 18px", borderBottom: "1px solid var(--m-line)", background: "var(--m-bg-1)", flexShrink: 0 }}>
-      <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 1 }}>
-        <div style={{ fontSize: 10, color: "var(--m-fg-3)", fontFamily: "var(--m-font-mono)", letterSpacing: "0.04em", textTransform: "uppercase" }}>Workspace / Acme / Dashboards / Delivery</div>
-        <div style={{ fontSize: "var(--m-fs-16)", color: "var(--m-fg-0)", fontWeight: 500, display: "flex", alignItems: "center", gap: 10 }}>
-          Delivery · all teams
-          <span style={{ fontFamily: "var(--m-font-mono)", fontSize: 10, color: "var(--m-fg-3)", letterSpacing: "0.04em" }}>· 14d window · 6 teams</span>
-        </div>
-      </div>
-      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-        <select style={{ height: 30, padding: "0 8px", border: "1px solid var(--m-line)", borderRadius: "var(--m-r-2)", background: "var(--m-bg-2)", color: "var(--m-fg-1)", fontFamily: "var(--m-font-ui)", fontSize: 11 }}>
-          <option>Last 14 days</option>
-        </select>
-        <button style={ghostButtonStyle}><Icon name="refresh" size={12} /> Refresh</button>
-        <button style={ghostButtonStyle}><Icon name="settings" size={12} /></button>
-      </div>
-    </header>
+    <MetralyTopbar
+      density="compact"
+      breadcrumb="Workspace / Acme / Dashboards / Delivery"
+      title={
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
+          <span>Delivery · all teams</span>
+          <span style={{ color: "var(--m-fg-3)", fontFamily: "var(--m-font-mono)", fontSize: "var(--m-fs-9)", letterSpacing: "0.04em" }}>· 14d window · 6 teams</span>
+        </span>
+      }
+      actions={
+        <>
+          <MetralyButton variant="ghost">Last 14 days</MetralyButton>
+          <MetralyButton variant="ghost" iconLeft={<MetralyIcon name="refresh" size={12} />}>Refresh</MetralyButton>
+          <MetralyButton variant="ghost" aria-label="Dashboard settings" iconLeft={<MetralyIcon name="settings" size={12} />} />
+        </>
+      }
+    />
   );
 }
 
@@ -365,7 +317,7 @@ function ScenarioEditBanner() {
       <span style={{ textTransform: "uppercase" }}>Edit mode</span>
       <span style={{ color: "var(--m-fg-2)", textTransform: "none", letterSpacing: 0 }}>· Drag widgets with grip dots · Resize from corner handles · Drag from library to add</span>
       <span style={{ flex: 1 }} />
-      <button style={{ ...ghostButtonStyle, height: 24, padding: "0 8px", fontSize: 10, color: "var(--m-cyan-500)", borderColor: "var(--m-cyan-500)", background: "transparent" }}><Icon name="check" size={11} /> Done</button>
+      <MetralyButton size="sm" variant="secondary" iconLeft={<MetralyIcon name="check" size={11} />}>Done</MetralyButton>
     </div>
   );
 }
@@ -416,15 +368,19 @@ function ScenarioWidgetLibrary() {
   return (
     <aside style={{ width: 320, flexShrink: 0, background: "var(--m-bg-1)", borderLeft: "1px solid var(--m-line)", display: "flex", flexDirection: "column" }}>
       <div style={{ padding: "10px 12px 8px", display: "flex", alignItems: "center", gap: 8, borderBottom: "1px solid var(--m-line-faint)", flexShrink: 0 }}>
-        <Icon name="grid" size={13} />
+        <MetralyIcon name="boxes" size={13} />
         <span style={{ flex: 1, fontSize: "var(--m-fs-12)", color: "var(--m-fg-0)", fontWeight: 500 }}>Widget library</span>
-        <button style={{ background: "transparent", border: "none", color: "var(--m-fg-3)", cursor: "pointer", padding: 4, borderRadius: 4, lineHeight: 1 }}>✕</button>
+        <MetralyButton variant="neutral" size="sm" aria-label="Close widget library" iconLeft={<MetralyIcon name="x" size={12} />} />
       </div>
       <div style={{ padding: "8px 12px", borderBottom: "1px solid var(--m-line-faint)", flexShrink: 0 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, background: "var(--m-bg-2)", border: "1px solid var(--m-line)", borderRadius: "var(--m-r-2)", padding: "0 10px", height: "var(--m-control-h)" }}>
-          <Icon name="search" size={12} />
-          <input placeholder="Filter widgets…" readOnly style={{ flex: 1, background: "transparent", border: "none", outline: "none", color: "var(--m-fg-1)", fontFamily: "var(--m-font-ui)", fontSize: "var(--m-fs-12)" }} />
-        </div>
+        <MetralyInput
+          search
+          readOnly
+          value=""
+          placeholder="Filter widgets…"
+          fullWidth
+          iconLeft={<MetralyIcon name="search" size={12} />}
+        />
       </div>
       <div style={{ flex: 1, overflow: "auto", padding: 10, display: "flex", flexDirection: "column", gap: 8 }}>
         {pickerItems.map((item) => (
@@ -437,7 +393,7 @@ function ScenarioWidgetLibrary() {
 
 export function DashboardEditorScenario() {
   return (
-    <div style={shellStyle}>
+    <MetralyShell style={{ height: 840 }}>
       <ScenarioSidebar />
       <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0 }}>
         <ScenarioTopbar />
@@ -464,7 +420,7 @@ export function DashboardEditorScenario() {
         </main>
       </div>
       <ScenarioWidgetLibrary />
-    </div>
+    </MetralyShell>
   );
 }
 

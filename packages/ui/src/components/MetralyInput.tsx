@@ -1,9 +1,12 @@
 import React from "react";
+import { MetralyIcon } from "./MetralyIcon";
 
 export interface MetralyInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
   /** Renders a search icon and sets type to "search" by default */
   search?: boolean;
+  label?: React.ReactNode;
+  description?: React.ReactNode;
   iconLeft?: React.ReactNode;
   iconRight?: React.ReactNode;
   error?: string;
@@ -19,6 +22,8 @@ export const MetralyInput = React.forwardRef<
   (
     {
       search = false,
+      label,
+      description,
       iconLeft,
       iconRight,
       error,
@@ -32,11 +37,16 @@ export const MetralyInput = React.forwardRef<
     },
     ref,
   ) => {
-    const wrapClasses = [
-      "m-input-wrap",
-      fullWidth ? "m-input-wrap--full" : "",
-      error ? "m-input-wrap--error" : "",
-      disabled ? "m-input-wrap--disabled" : "",
+    const generatedId = React.useId();
+    const inputId = id ?? `metraly-input-${generatedId}`;
+    const helperText = error ?? description;
+    const helperId = helperText ? `${inputId}-description` : undefined;
+    const resolvedIconLeft = iconLeft ?? (search ? <MetralyIcon name="search" size="sm" /> : undefined);
+    const rootClasses = [
+      "metraly-input",
+      fullWidth ? "metraly-input--full" : "",
+      error ? "metraly-input--error" : "",
+      disabled ? "metraly-input--disabled" : "",
       wrapperClassName ?? "",
     ]
       .filter(Boolean)
@@ -44,37 +54,40 @@ export const MetralyInput = React.forwardRef<
 
     const inputType = type ?? (search ? "search" : "text");
 
-    const descId = error && id ? `${id}-error` : undefined;
-
     return (
-      <div style={{ display: fullWidth ? "block" : "inline-block" }}>
-        <div className={wrapClasses}>
-          {iconLeft && (
-            <span className="m-input-wrap__icon" aria-hidden="true">
-              {iconLeft}
+      <div className={rootClasses}>
+        {label ? <label className="metraly-control-label" htmlFor={inputId}>{label}</label> : null}
+        <div className="metraly-input__control">
+          {resolvedIconLeft && (
+            <span className="metraly-input__icon" aria-hidden="true">
+              {resolvedIconLeft}
             </span>
           )}
           <input
             ref={ref}
-            id={id}
+            id={inputId}
             type={inputType}
-            className={`m-input-wrap__field${className ? ` ${className}` : ""}`}
+            className={`metraly-input__field${className ? ` ${className}` : ""}`}
             disabled={disabled}
             aria-invalid={error ? true : undefined}
-            aria-describedby={descId}
+            aria-describedby={helperId}
             {...props}
           />
           {iconRight && (
-            <span className="m-input-wrap__icon" aria-hidden="true">
+            <span className="metraly-input__icon" aria-hidden="true">
               {iconRight}
             </span>
           )}
         </div>
-        {error && (
-          <div id={descId} className="m-input-error" role="alert">
-            {error}
+        {helperText ? (
+          <div
+            id={helperId}
+            className={error ? "metraly-control-description is-error" : "metraly-control-description"}
+            role={error ? "alert" : undefined}
+          >
+            {helperText}
           </div>
-        )}
+        ) : null}
       </div>
     );
   },

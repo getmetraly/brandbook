@@ -1,16 +1,20 @@
-.m-btn {
+.metraly-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--m-2);
+  min-width: 0;
   height: var(--m-control-h);
   padding: 0 var(--m-3);
-  border-radius: var(--m-r-3);
-  border: 1px solid transparent;
+  border-radius: var(--m-r-2);
+  border: 1px solid var(--m-line);
   font-family: var(--m-font-ui);
   font-size: var(--m-fs-12);
   font-weight: 500;
   line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
   cursor: pointer;
   text-decoration: none;
@@ -24,116 +28,125 @@
   -webkit-font-smoothing: antialiased;
 }
 
-.m-btn:focus-visible {
+.metraly-button:focus-visible {
   outline: none;
   box-shadow: var(--m-glow-focus);
 }
 
-.m-btn:disabled,
-.m-btn[aria-disabled="true"] {
+.metraly-button:disabled,
+.metraly-button[aria-disabled="true"] {
   opacity: 0.38;
   cursor: not-allowed;
   pointer-events: none;
 }
 
-/* Sizes */
-.m-btn--sm {
+.metraly-button--full {
+  width: 100%;
+}
+
+.metraly-button--sm {
   height: 26px;
   padding: 0 var(--m-2);
-  font-size: var(--m-fs-11);
+  font-size: var(--m-fs-10);
   border-radius: var(--m-r-2);
   gap: var(--m-1);
 }
 
-.m-btn--lg {
-  height: 38px;
+.metraly-button--lg {
+  height: 34px;
   padding: 0 var(--m-4);
   font-size: var(--m-fs-13);
-  border-radius: var(--m-r-4);
+  border-radius: var(--m-r-3);
 }
 
-/* Variants */
-
-/* primary — gradient fill */
-.m-btn--primary {
-  background: linear-gradient(135deg, var(--m-cyan-500), var(--m-purple-500));
-  border-color: transparent;
-  color: oklch(0.12 0.01 250);
-}
-.m-btn--primary:not(:disabled):hover {
-  filter: brightness(1.1);
+.metraly-button--icon-only {
+  width: var(--m-control-h);
+  padding-left: 0;
+  padding-right: 0;
 }
 
-/* secondary — cyan outline */
-.m-btn--secondary {
-  background: var(--m-cyan-bg);
+.metraly-button--sm.metraly-button--icon-only {
+  width: 26px;
+}
+
+.metraly-button--lg.metraly-button--icon-only {
+  width: 34px;
+}
+
+.metraly-button--primary {
+  background: var(--m-cyan-500);
   border-color: var(--m-cyan-500);
-  color: var(--m-cyan-500);
+  color: var(--m-bg-0);
+  box-shadow: 0 0 0 1px var(--m-cyan-500);
 }
-.m-btn--secondary:not(:disabled):hover {
-  background: oklch(from var(--m-cyan-bg) l c h / 0.18);
+.metraly-button--primary:not(:disabled):hover {
+  background: var(--m-cyan-400);
+  border-color: var(--m-cyan-400);
 }
 
-/* ghost — transparent with border */
-.m-btn--ghost {
+.metraly-button--secondary {
+  background: var(--m-bg-2);
+  border-color: var(--m-line-strong);
+  color: var(--m-fg-0);
+}
+.metraly-button--secondary:not(:disabled):hover {
+  background: var(--m-bg-3);
+  border-color: var(--m-cyan-500);
+}
+
+.metraly-button--ghost {
   background: var(--m-bg-2);
   border-color: var(--m-line);
   color: var(--m-fg-1);
 }
-.m-btn--ghost:not(:disabled):hover {
+.metraly-button--ghost:not(:disabled):hover {
   background: var(--m-bg-3);
   border-color: var(--m-line-strong);
 }
 
-/* neutral — no border, subtle bg */
-.m-btn--neutral {
+.metraly-button--neutral {
   background: transparent;
   border-color: transparent;
   color: var(--m-fg-2);
 }
-.m-btn--neutral:not(:disabled):hover {
-  background: var(--m-bg-2);
+.metraly-button--neutral:not(:disabled):hover {
+  background: var(--m-bg-1);
   color: var(--m-fg-1);
 }
 
-/* danger — error tone */
-.m-btn--danger {
+.metraly-button--danger {
   background: var(--m-err-bg);
   border-color: var(--m-err);
   color: var(--m-err);
 }
-.m-btn--danger:not(:disabled):hover {
-  background: oklch(from var(--m-err-bg) l c h / 0.22);
+.metraly-button--danger:not(:disabled):hover {
+  background: oklch(from var(--m-err-bg) l c h / 0.18);
 }
 
-/* dashed — "add" / new affordance */
-.m-btn--dashed {
-  background: var(--m-cyan-bg);
+.metraly-button--dashed {
+  background: transparent;
   border: 1px dashed var(--m-cyan-500);
   color: var(--m-cyan-500);
-  opacity: 0.85;
 }
-.m-btn--dashed:not(:disabled):hover {
-  opacity: 1;
-  background: oklch(from var(--m-cyan-bg) l c h / 0.18);
+.metraly-button--dashed:not(:disabled):hover {
+  background: var(--m-cyan-bg);
 }
 
-/* Loading spinner */
-.m-btn__spinner {
+.metraly-button__spinner {
   width: 12px;
   height: 12px;
   border: 1.5px solid currentColor;
   border-top-color: transparent;
   border-radius: 50%;
-  animation: m-btn-spin 0.65s linear infinite;
+  animation: m-spin 0.65s linear infinite;
   flex-shrink: 0;
 }
 
-@keyframes m-btn-spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Icon slot sizing */
-.m-btn svg {
+.metraly-button > :where(span, svg) {
   flex-shrink: 0;
+}
+.metraly-button > :not(.metraly-button__spinner):not(svg) {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

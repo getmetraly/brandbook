@@ -1,0 +1,144 @@
+.metraly-navigation-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.metraly-navigation-tree__item {
+  --m-tree-item-indent: calc((var(--m-tree-level, 1) - 1) * 14px);
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  min-height: var(--m-row-h);
+  padding: 0 var(--m-2) 0 calc(var(--m-2) + var(--m-tree-item-indent));
+  border: 1px solid transparent;
+  border-radius: var(--m-r-2);
+  background: transparent;
+  color: var(--m-fg-2);
+  font-family: var(--m-font-ui);
+  font-size: var(--m-fs-12);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background var(--m-dur-2) var(--m-ease),
+    border-color var(--m-dur-2) var(--m-ease),
+    color var(--m-dur-2) var(--m-ease),
+    box-shadow var(--m-dur-2) var(--m-ease);
+}
+
+.metraly-navigation-tree__item:hover:not(:disabled) {
+  background: var(--m-bg-2);
+  border-color: var(--m-line-faint);
+  color: var(--m-fg-1);
+}
+
+.metraly-navigation-tree__item:focus-visible {
+  outline: none;
+  box-shadow: var(--m-glow-focus);
+}
+
+.metraly-navigation-tree__item.is-selected {
+  background: var(--m-cyan-bg);
+  color: var(--m-cyan-500);
+}
+
+.metraly-navigation-tree__item.is-selected::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.metraly-navigation-tree__item.is-disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+.metraly-navigation-tree__item[data-tone="purple"].is-selected {
+  background: var(--m-purple-bg);
+  border-color: var(--m-purple-500);
+  color: var(--m-purple-500);
+}
+
+.metraly-navigation-tree__item[data-tone="ok"].is-selected {
+  background: var(--m-ok-bg);
+  border-color: var(--m-ok);
+  color: var(--m-ok);
+}
+
+.metraly-navigation-tree__item[data-tone="warn"].is-selected {
+  background: var(--m-warn-bg);
+  border-color: var(--m-warn);
+  color: var(--m-warn);
+}
+
+.metraly-navigation-tree__item[data-tone="err"].is-selected {
+  background: var(--m-err-bg);
+  border-color: var(--m-err);
+  color: var(--m-err);
+}
+
+.metraly-navigation-tree__indent {
+  width: 0;
+  flex: 0 0 auto;
+}
+
+.metraly-navigation-tree__chevron,
+.metraly-navigation-tree__marker,
+.metraly-navigation-tree__icon,
+.metraly-navigation-tree__meta {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+}
+
+.metraly-navigation-tree__chevron {
+  width: 12px;
+  justify-content: center;
+  color: var(--m-fg-3);
+}
+
+.metraly-navigation-tree__marker {
+  width: 10px;
+  justify-content: center;
+}
+
+.metraly-navigation-tree__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.78;
+}
+
+.metraly-navigation-tree__icon {
+  color: inherit;
+}
+
+.metraly-navigation-tree__label {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metraly-navigation-tree__meta {
+  color: var(--m-fg-3);
+  font-family: var(--m-font-mono);
+  font-size: var(--m-fs-9);
+  white-space: nowrap;
+}
+
+.metraly-navigation-tree__item.is-selected .metraly-navigation-tree__meta {
+  color: inherit;
+  opacity: 0.78;
+}

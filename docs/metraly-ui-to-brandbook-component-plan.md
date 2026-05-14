@@ -1,8 +1,10 @@
 # Metraly UI → Brandbook Component Plan
 
-**Status:** Phase 0 complete (audit + plan).  
+**Status:** Phase 0 planning complete; Phases 1 through 5 reusable seams are implemented in `packages/ui`.  
 **Last updated:** 2026-05-14  
 **Author:** Design-system audit — session May 14 2026
+
+**Implementation note:** `getmetraly/metraly/ui` remains a source inventory only. Public `@metraly/ui` styling must be canonical to brandbook tokens, CSS contracts, and Storybook/state-board behavior rather than copied from product-side inline styles.
 
 ---
 
@@ -144,6 +146,16 @@
 | `DashboardDropZone` | Drop target for widget library |
 | `DashboardResizeHandle` | Directional resize affordance overlay |
 | `WidgetRegistry` (types + helpers) | Registry types and helpers |
+
+**Shell / overlays**
+
+| Component | Purpose |
+|---|---|
+| `MetralyShell` | Top-level app shell composition root |
+| `MetralySidebar` | Left-rail navigation shell with sections/items |
+| `MetralyTopbar` | Page header and action row |
+| `MetralyDrawer` | Narrow-width navigation / utility overlay |
+| `MetralyBottomSheet` | Mobile utility sheet for widget-library style workflows |
 
 **Charts (7)**
 
@@ -373,7 +385,7 @@ Product widget catalog includes:
 
 **Exists now:** Nothing
 
-**Missing (deferred):** Drawer, popover, dropdown panel, bottom sheet, overlay scrim — the responsive contract mentions these for mobile editor but no product screen currently requires them as shared components. Defer until Phase 6.
+**Missing (deferred):** Popover and dropdown panel. `MetralyDrawer` and `MetralyBottomSheet` are now justified and implemented. Remaining overlays stay deferred until recipe pressure proves them necessary.
 
 ### Icons
 
@@ -665,9 +677,9 @@ See Section 7.
 ### `MetralyDrawer` / `MetralyBottomSheet` / `MetralyPopover`
 
 - **Product need:** Responsive overlay patterns (mobile widget library, navigation drawer)
-- **Why rejected (for now):** No product screen currently implements these; the responsive contract documents them as future requirements. Implementing them now would be speculative.
-- **Covered by:** Future Phase 6 — implement when mobile layout requires it
-- **Stays:** Deferred
+- **Updated decision:** `MetralyDrawer` and `MetralyBottomSheet` are now justified and implemented. `MetralyDrawer` covers app-navigation and general overlay use. `MetralyBottomSheet` covers widget-library and utility-tray behavior on narrow widths. `MetralyPopover` remains deferred.
+- **Covered by:** `MetralyDrawer` public seam, `MetralyBottomSheet` public seam
+- **Stays:** Partial defer (`MetralyPopover` only)
 
 ---
 
@@ -770,14 +782,16 @@ See Section 7.
 - Segmented control selected state matches MetricsScreen time-range appearance
 - DashboardDropZone + DashboardResizeHandle correctly exported
 
+**Status:** Implemented. `MetralySegmentedControl` is now shipped with public API and Storybook coverage.
+
 ---
 
 ### Phase 4 — Metrics Explorer Patterns
 
-**Goal:** Add `MetralyNavigationTree`, extend `MetralySelect` (optional `labelPrefix`), add `MetralyCodeBlock`.
+**Goal:** Add `MetralyNavigationTree`, extend `MetralySelect` only if recipe pressure proves it is needed, and add `MetralyCodeBlock`.
 
 **Components:**
-- `packages/ui/src/components/MetralyNavigationTree.tsx` + `styles/metraly-nav-tree.css`
+- `packages/ui/src/components/MetralyNavigationTree.tsx` + `styles/metraly-navigation-tree.css`
 - `packages/ui/src/components/MetralyCodeBlock.tsx` + `styles/metraly-code-block.css`
 - Extend `MetralySelect` with optional `labelPrefix` prop
 
@@ -794,6 +808,8 @@ See Section 7.
 - MetralyNavigationTree keyboard-navigable with arrow keys
 - MetralyCodeBlock renders mono font with correct token colors
 - MetralySelect with labelPrefix matches FilterPill appearance
+
+**Status:** Mostly implemented. `MetralyNavigationTree` and `MetralyCodeBlock` are shipped with Storybook coverage; `MetralySelect` remains unchanged until a concrete recipe demonstrates that `labelPrefix` deserves public API.
 
 ---
 
@@ -812,7 +828,7 @@ See Section 7.
 
 ### Phase 6 — Storybook Recipes and Docs
 
-**Goal:** Add recipe stories for product screen patterns. Add overlay primitives if product requires them.
+**Goal:** Add recipe stories for product screen patterns and prove the overlay seams in real assemblies.
 
 **Stories to add:**
 - App shell recipe (MetralyShell + MetralySidebar + MetralyTopbar + main area)
@@ -820,9 +836,15 @@ See Section 7.
 - Integration/plugin card recipe (MetralyCard + MetralyButton + MetralyIcon)
 - Onboarding wizard step recipe (step indicator pattern)
 - Metrics Explorer recipe (NavTree + SegmentedControl + FilterPill + ChartCard)
-- Mobile shell recipe (overlay sidebar pattern using CSS)
+- Mobile shell recipe (app-navigation drawer pattern)
+- Metrics explorer narrow recipe (utility-switcher overlay pattern)
 
-**Deferred overlays:** MetralyDrawer, MetralyBottomSheet — implement only if mobile product screen requires them
+**Overlay decision notes:**
+- `MetralyShell` mobile keeps a stronger app-navigation drawer pattern.
+- `MetricsExplorerRecipe` tablet/mobile should prefer a lighter utility-switcher pattern for fast metric switching.
+- `MetralyBottomSheet` is now available for widget-library and tray-like narrow flows.
+
+**Status:** Partially implemented. App shell, auth form, metrics explorer, integration card, and wizard layout recipes now exist in Storybook, including desktop/tablet/mobile variants for shell, explorer, and wizard flows. `MetralyDrawer` and `MetralyBottomSheet` are both implemented. Remaining Phase 6 work is recipe polish plus migration-guide documentation that proves these seams against product adoption.
 
 ---
 
@@ -931,24 +953,21 @@ Add `ThemeProvider` from `@metraly/ui` to `App.jsx` and `index.css` — this inj
 
 ### Recommended minimal component set
 
-**Phase 1 (implement now — highest value, zero risk):**
-- `MetralyButton` — eliminates hundreds of inline-styled buttons
-- `MetralyInput` — eliminates inline-styled inputs across all screens
-- `MetralyIcon` — provides typed icon system
-
-**Phase 2 (implement after Phase 1 approval):**
+**Implemented reusable set:**
+- `MetralyButton` — canonical compact action primitive
+- `MetralyInput` — canonical text/search/password field
+- `MetralyIcon` — typed icon system
 - `MetralyShell` — layout container
 - `MetralySidebar` — collapsible nav rail
 - `MetralyTopbar` — page header
+- `MetralySegmentedControl` — compact range and view selector
+- `MetralyNavigationTree` — dense hierarchical navigation/data tree
+- `MetralyCodeBlock` — mono code and command surface
 
-**Phase 3 (implement after Phase 2):**
-- `MetralySegmentedControl` — closes a clear pattern gap
-- Fix any missing exports (DashboardDropZone, DashboardResizeHandle)
-
-**Phases 4–6 (implement after plan review with product team):**
-- `MetralyNavigationTree`
-- `MetralyCodeBlock`
-- Recipe stories
+**Next minimal work:**
+- Metrics Explorer recipe coverage
+- Auth/onboarding recipe coverage
+- Marketplace/integration recipe coverage
 
 ### Implementation phases (summary)
 
@@ -977,14 +996,20 @@ Add `ThemeProvider` from `@metraly/ui` to `App.jsx` and `index.css` — this inj
 
 ### Components rejected from public API
 
-`DraggableTweaksPanel`, `AIOnlyCard`, `MessageBubble`, `WizardStepIndicator`, `MetricsExplorerSidebar`, `PluginCard`, `MarketplaceOnlyPanel`, `DashboardEditorOnlySidebar`, `ProductTopbar`, `MetralyNotificationButton`, `MetralyUserBlock`, `MetralyCommandSearch`, `MetralyDrawer`, `MetralyBottomSheet`.
+`DraggableTweaksPanel`, `AIOnlyCard`, `MessageBubble`, `WizardStepIndicator`, `MetricsExplorerSidebar`, `PluginCard`, `MarketplaceOnlyPanel`, `DashboardEditorOnlySidebar`, `ProductTopbar`, `MetralyNotificationButton`, `MetralyUserBlock`, `MetralyCommandSearch`.
+
+### Current overlay decisions to preserve
+
+1. `MetralyShell` mobile is intentionally different from narrow utility switchers because it represents app-level navigation.
+2. `MetricsExplorerRecipe` tablet/mobile uses a quicker utility-switcher overlay, optimized for find-and-switch behavior instead of full workspace navigation.
+3. `MetralyBottomSheet` should be preferred for widget-library, tray, and picker-like mobile flows.
+4. `MetralyDrawer` should remain available for full navigation overlays and for utility overlays that still need a drawer-like shell.
 
 ### What should be implemented first
 
-**Phase 1 can begin immediately.** `MetralyButton`, `MetralyInput`, and `MetralyIcon` are:
-- Additive (no existing components modified)
-- Zero breaking-change risk
-- The highest-leverage gap to close
-- Prerequisite for Phases 2–6
+**The next work should begin at Phase 6.** The highest-value minimal step is proving the new seams in Storybook recipes:
+- `MetricsExplorerRecipe`
+- `AuthFormRecipe`
+- `IntegrationCardRecipe`
 
-The recommendation is to implement Phase 1 in the current session and defer Phases 2–7 pending plan review.
+That keeps `packages/ui` lean while validating that the current public API is sufficient for the future product rewrite.

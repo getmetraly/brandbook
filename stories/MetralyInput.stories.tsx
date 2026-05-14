@@ -22,15 +22,15 @@ export default meta;
 type Story = StoryObj<typeof MetralyInput>;
 
 export const Default: Story = {
-  args: { placeholder: "Enter a value…", fullWidth: true },
+  args: { label: "Name", placeholder: "Enter a value…", fullWidth: true },
 };
 
 export const SearchInput: Story = {
   name: "Search input",
   args: {
     search: true,
+    label: "Search",
     placeholder: "Filter…",
-    iconLeft: <MetralyIcon name="search" size={13} />,
     fullWidth: true,
   },
 };
@@ -42,19 +42,21 @@ export const WithIconSlots: Story = {
       <div style={{ padding: 24, background: "var(--m-bg-0)", display: "flex", flexDirection: "column", gap: 10 }}>
         <MetralyInput
           placeholder="Search metrics…"
-          iconLeft={<MetralyIcon name="search" size={13} />}
+          label="Metric search"
           fullWidth
         />
         <MetralyInput
           type="email"
+          label="Email"
           placeholder="admin@metraly.local"
-          iconLeft={<MetralyIcon name="user" size={13} />}
+          iconLeft={<MetralyIcon name="user" size="sm" />}
           fullWidth
         />
         <MetralyInput
           type="password"
+          label="Password"
           placeholder="Password"
-          iconLeft={<MetralyIcon name="lock" size={13} />}
+          iconLeft={<MetralyIcon name="lock" size="sm" />}
           fullWidth
         />
       </div>
@@ -66,6 +68,7 @@ export const ErrorState: Story = {
   name: "Error state",
   args: {
     id: "email-error-example",
+    label: "Email",
     placeholder: "admin@metraly.local",
     defaultValue: "not-an-email",
     error: "Invalid email address",
@@ -75,5 +78,5 @@ export const ErrorState: Story = {
 
 export const DisabledState: Story = {
   name: "Disabled",
-  args: { placeholder: "Cannot edit…", disabled: true, fullWidth: true },
+  args: { label: "Workspace", placeholder: "Cannot edit…", disabled: true, fullWidth: true },
 };
