@@ -280,12 +280,19 @@
   text-align: left;
 }
 
-.metraly-select-option:hover:not(:disabled) {
+.metraly-select-option:hover:not(:disabled),
+.metraly-select-option.is-active:not(:disabled) {
   background: var(--m-bg-3);
 }
 
 .metraly-select-option.is-selected {
   background: var(--m-cyan-bg);
+  color: var(--m-cyan-500);
+}
+
+.metraly-select-option:focus-visible {
+  outline: none;
+  box-shadow: var(--m-glow-focus);
 }
 
 .metraly-select-option:disabled {
