@@ -1,5 +1,7 @@
 import type { Preview } from "@storybook/react";
 
+import "./preview.css";
+
 import "@metraly/ui/styles/metraly-theme.css";
 import "@metraly/ui/styles/metraly-badge.css";
 import "@metraly/ui/styles/metraly-card.css";
