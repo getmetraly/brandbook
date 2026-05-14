@@ -1,7 +1,37 @@
 import * as React from "react";
 
 export type MetralyCodeBlockVariant = "block" | "inline";
-export type MetralyCodeBlockAccent = "default" | "cyan" | "ok" | "warn" | "err";
+export type MetralyCodeBlockAccent =
+  | "default"
+  | "primary"
+  | "secondary"
+  | "success"
+  | "warning"
+  | "error"
+  | "info"
+  /** @deprecated Use "primary". */
+  | "cyan"
+  /** @deprecated Use "success". */
+  | "ok"
+  /** @deprecated Use "warning". */
+  | "warn"
+  /** @deprecated Use "error". */
+  | "err";
+
+function normalizeAccent(accent: MetralyCodeBlockAccent) {
+  switch (accent) {
+    case "cyan":
+      return "primary";
+    case "ok":
+      return "success";
+    case "warn":
+      return "warning";
+    case "err":
+      return "error";
+    default:
+      return accent;
+  }
+}
 
 export interface MetralyCodeBlockProps
   extends Omit<React.HTMLAttributes<HTMLElement>, "children"> {
@@ -20,7 +50,7 @@ export function MetralyCodeBlock({
   const classes = [
     "metraly-code-block",
     `metraly-code-block--${variant}`,
-    `metraly-code-block--${accent}`,
+    `metraly-code-block--${normalizeAccent(accent)}`,
     className,
   ]
     .filter(Boolean)
