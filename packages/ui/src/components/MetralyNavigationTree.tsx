@@ -4,10 +4,21 @@ import * as React from "react";
 
 export type MetralyNavigationTreeTone =
   | "default"
+  | "primary"
+  | "secondary"
+  | "success"
+  | "warning"
+  | "error"
+  | "info"
+  /** @deprecated Use "primary". */
   | "cyan"
+  /** @deprecated Use "secondary". */
   | "purple"
+  /** @deprecated Use "success". */
   | "ok"
+  /** @deprecated Use "warning". */
   | "warn"
+  /** @deprecated Use "error". */
   | "err";
 
 export interface MetralyNavigationTreeItem {
@@ -75,6 +86,23 @@ function findSiblings(
   return items;
 }
 
+function normalizeTone(tone: MetralyNavigationTreeTone | undefined) {
+  switch (tone) {
+    case "cyan":
+      return "primary";
+    case "purple":
+      return "secondary";
+    case "ok":
+      return "success";
+    case "warn":
+      return "warning";
+    case "err":
+      return "error";
+    default:
+      return tone ?? "default";
+  }
+}
+
 export function MetralyNavigationTree({
   items,
   value,
@@ -139,6 +167,7 @@ export function MetralyNavigationTree({
         const selected = item.value === selectedValue;
         const siblings = findSiblings(items, parentValue);
         const siblingIndex = siblings.findIndex((entry) => entry.value === item.value);
+        const normalizedTone = normalizeTone(item.tone);
 
         return (
           <button
@@ -160,7 +189,7 @@ export function MetralyNavigationTree({
             aria-expanded={isGroup ? expanded : undefined}
             aria-selected={selected}
             aria-disabled={item.disabled || undefined}
-            data-tone={item.tone ?? "default"}
+            data-tone={normalizedTone}
             data-state={item.disabled ? "disabled" : selected ? "selected" : "default"}
             tabIndex={selected || (!selectedValue && index === 0) ? 0 : -1}
             disabled={item.disabled}
