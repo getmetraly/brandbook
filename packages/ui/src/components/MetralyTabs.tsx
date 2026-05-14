@@ -6,6 +6,8 @@ export interface MetralyTabItem {
   label: React.ReactNode;
   disabled?: boolean;
   count?: React.ReactNode;
+  /** Optional SVG icon element, 12x12 viewBox recommended. */
+  icon?: React.ReactNode;
 }
 
 export interface MetralyTabsProps {
@@ -52,14 +54,33 @@ export function MetralyTabs({
   }
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLButtonElement>, index: number) {
-    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
-    event.preventDefault();
-    const direction = event.key === "ArrowRight" ? 1 : -1;
     const count = items.length;
-    let next = (index + direction + count) % count;
-    while (items[next].disabled && next !== index) {
-      next = (next + direction + count) % count;
+    let next = index;
+
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      next = (index + 1) % count;
+      while (items[next].disabled && next !== index) next = (next + 1) % count;
+    } else if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      next = (index - 1 + count) % count;
+      while (items[next].disabled && next !== index) next = (next - 1 + count) % count;
+    } else if (event.key === "Home") {
+      event.preventDefault();
+      next = items.findIndex((item) => !item.disabled);
+      if (next === -1) return;
+    } else if (event.key === "End") {
+      event.preventDefault();
+      for (let i = count - 1; i >= 0; i -= 1) {
+        if (!items[i].disabled) {
+          next = i;
+          break;
+        }
+      }
+    } else {
+      return;
     }
+
     refs.current[next]?.focus();
     if (!items[next].disabled) handleSelect(items[next].value);
   }
@@ -86,6 +107,7 @@ export function MetralyTabs({
             onKeyDown={(e) => handleKeyDown(e, index)}
           >
             <span className="metraly-tab-content">
+              {item.icon ? <span className="metraly-tab-icon" aria-hidden="true">{item.icon}</span> : null}
               <span className="metraly-tab-label">{item.label}</span>
               {item.count !== undefined ? <span className="metraly-tab-count">{item.count}</span> : null}
               {selected && livePulse ? <span className="metraly-tab-live-pulse" aria-hidden="true" /> : null}
