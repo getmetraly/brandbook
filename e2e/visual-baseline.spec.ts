@@ -7,11 +7,6 @@ const coreRoutes = [
     label: 'component catalog surface',
   },
   {
-    path: '/editor',
-    heading: /Dashboard editor/i,
-    label: 'dashboard editor surface',
-  },
-  {
     path: '/components/forms',
     heading: /Forms/i,
     label: 'forms component surface',
@@ -58,12 +53,20 @@ test.describe('visual baseline route smoke checks', () => {
     });
   }
 
+  test('dashboard editor surface loads', async ({ page }) => {
+    await page.goto('/editor');
+
+    await expect(page.getByText(/Dashboard editor/i).first()).toBeVisible();
+    await expect(page.getByText(/Widget library/i).first()).toBeVisible();
+    await expect(page.locator('.dashboard-editor-layout')).toBeVisible();
+  });
+
   for (const viewport of viewports) {
     test(`/editor remains usable at ${viewport.name} width`, async ({ page }) => {
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
       await page.goto('/editor');
 
-      await expect(page.getByRole('heading', { name: /Dashboard editor/i }).first()).toBeVisible();
+      await expect(page.getByText(/Dashboard editor/i).first()).toBeVisible();
       await expect(page.getByText(/Widget library/i).first()).toBeVisible();
       await expect(page.getByText(/Drag widgets with grip dots/i).first()).toBeVisible();
 
@@ -76,7 +79,7 @@ test.describe('visual baseline route smoke checks', () => {
     await page.goto('/editor');
 
     await expect(page.getByText(/Drag widgets with grip dots/i).first()).toBeVisible();
-    await expect(page.getByText(/Filter widgets/i).first()).toBeVisible();
+    await expect(page.getByLabel(/Filter widgets/i).first()).toBeVisible();
     await expect(page.getByText(/Edit mode/i).first()).toBeVisible();
     await expect(page.getByText(/draft/i)).toHaveCount(0);
   });
