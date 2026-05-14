@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { DashboardWidget } from '@metraly/ui';
+import { DashboardWidget, MetralyButton } from '@metraly/ui';
 
 const stageStyle = {
   minHeight: '100dvh',
@@ -71,7 +71,16 @@ export const Loading: Story = {
 };
 
 export const Empty: Story = {
-  args: { id: 'w1', title: 'CI failure rate', subtitle: 'CI/FAIL', state: 'noData', children: undefined },
+  args: {
+    id: 'w1',
+    title: 'CI failure rate',
+    subtitle: 'CI/FAIL',
+    state: 'noData',
+    children: undefined,
+    stateTitle: 'No telemetry in this range',
+    stateDescription: '0 events · widen the time window',
+    stateAction: <MetralyButton variant='ghost' size='sm'>Change range</MetralyButton>,
+  },
 };
 
 export const Stale: Story = {
@@ -88,11 +97,29 @@ export const Stale: Story = {
 };
 
 export const Error: Story = {
-  args: { id: 'w1', title: 'Flaky builds', subtitle: 'METRIC/SCALAR', state: 'error', children: undefined },
+  args: {
+    id: 'w1',
+    title: 'Flaky builds',
+    subtitle: 'METRIC/SCALAR',
+    state: 'error',
+    children: undefined,
+    stateTitle: 'Unable to load widget',
+    stateDescription: 'The metric source returned an error.',
+    stateAction: <MetralyButton variant='secondary' size='sm'>Retry</MetralyButton>,
+  },
 };
 
 export const Disconnected: Story = {
-  args: { id: 'w1', title: 'Flaky builds', subtitle: 'METRIC/SCALAR', state: 'disconnected', children: undefined },
+  args: {
+    id: 'w1',
+    title: 'Flaky builds',
+    subtitle: 'METRIC/SCALAR',
+    state: 'disconnected',
+    children: undefined,
+    stateTitle: 'Source disconnected',
+    stateDescription: 'Last sync 12m ago · reconnect to restore live data.',
+    stateAction: <MetralyButton variant='secondary' size='sm'>Reconnect</MetralyButton>,
+  },
 };
 
 export const FullWidth: Story = {

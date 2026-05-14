@@ -8,8 +8,10 @@ const meta: Meta<typeof MetralySegmentedControl> = {
   decorators: [
     (Story) => (
       <ThemeProvider>
-        <div style={{ padding: 24, background: "var(--m-bg-0)", minHeight: 120, display: "grid", gap: 16 }}>
-          <Story />
+        <div style={{ boxSizing: "border-box", width: "100%", minHeight: 120, padding: 24, background: "var(--m-bg-0)", display: "grid", gap: 16, alignContent: "start" }}>
+          <div style={{ width: "min(720px, 100%)", minWidth: 0 }}>
+            <Story />
+          </div>
         </div>
       </ThemeProvider>
     ),

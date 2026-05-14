@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import {
   MetralyBadge,
+  MetralyBottomSheet,
   MetralyButton,
   MetralyCodeBlock,
   MetralyDrawer,
@@ -29,10 +30,10 @@ const metricTree = [
     label: "DORA metrics",
     icon: <MetralyIcon name="zap" size="sm" />,
     children: [
-      { value: "deploy-frequency", label: "Deployment frequency", tone: "cyan" as const, meta: "24/day" },
-      { value: "lead-time", label: "Lead time for changes", tone: "ok" as const, meta: "41h" },
-      { value: "change-failure-rate", label: "Change failure rate", tone: "warn" as const, meta: "4.2%" },
-      { value: "mttr", label: "MTTR", tone: "ok" as const, meta: "37m" },
+      { value: "deploy-frequency", label: "Deployment frequency", tone: "primary" as const, meta: "24/day" },
+      { value: "lead-time", label: "Lead time for changes", tone: "success" as const, meta: "41h" },
+      { value: "change-failure-rate", label: "Change failure rate", tone: "warning" as const, meta: "4.2%" },
+      { value: "mttr", label: "MTTR", tone: "success" as const, meta: "37m" },
     ],
   },
   {
@@ -42,7 +43,7 @@ const metricTree = [
     children: [
       { value: "cycle-time", label: "Cycle time breakdown", meta: "4 stages" },
       { value: "review-latency", label: "Review latency", meta: "5.4h" },
-      { value: "blocked-work", label: "Blocked work", tone: "warn" as const, meta: "9 items" },
+      { value: "blocked-work", label: "Blocked work", tone: "warning" as const, meta: "9 items" },
     ],
   },
   {
@@ -50,8 +51,8 @@ const metricTree = [
     label: "Build and release",
     icon: <MetralyIcon name="refresh" size="sm" />,
     children: [
-      { value: "ci-failure-rate", label: "CI failure rate", tone: "err" as const, meta: "8.1%" },
-      { value: "flaky-builds", label: "Flaky builds", tone: "warn" as const, meta: "37" },
+      { value: "ci-failure-rate", label: "CI failure rate", tone: "error" as const, meta: "8.1%" },
+      { value: "flaky-builds", label: "Flaky builds", tone: "warning" as const, meta: "37" },
     ],
   },
 ];
@@ -80,13 +81,19 @@ const breakdownRows: BreakdownRow[] = [
   { team: "data-platform", deploys: 14, leadTime: <span style={{ color: "var(--m-warn)" }}>57h</span>, cfr: "6.3%", incidents: 3 },
 ];
 
-const metricGroups = ["DORA", "Flow", "CI"] as const;
+const metricGroups = [
+  { value: "dora", label: "DORA" },
+  { value: "flow", label: "Flow" },
+  { value: "ci", label: "CI" },
+] as const;
 
 function MetricsExplorerRecipe({ mode = "desktop" }: { mode?: RecipeMode }) {
   const [selectedMetric, setSelectedMetric] = React.useState("deploy-frequency");
   const [range, setRange] = React.useState("28d");
   const [compareEnabled, setCompareEnabled] = React.useState("compare-off");
+  const [metricGroup, setMetricGroup] = React.useState("dora");
   const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const [filterSheetOpen, setFilterSheetOpen] = React.useState(false);
   const showSidebar = mode === "desktop";
   const metricColumns = mode === "desktop" ? "repeat(4, minmax(0, 1fr))" : mode === "tablet" ? "repeat(2, minmax(0, 1fr))" : "1fr";
   const contentColumns = mode === "desktop" ? "minmax(0, 1.5fr) minmax(320px, 0.8fr)" : "1fr";
@@ -137,6 +144,92 @@ function MetricsExplorerRecipe({ mode = "desktop" }: { mode?: RecipeMode }) {
         description="Demonstrates tree search placement without introducing a dedicated explorer component."
       />
     </div>
+  );
+
+  const metricSwitcherContent = (
+    <div style={{ display: "grid", gap: 10, padding: 12 }}>
+      <MetralyInput search fullWidth placeholder="Search metrics" />
+      <MetralySegmentedControl
+        ariaLabel="Metric groups"
+        size="sm"
+        value={metricGroup}
+        onValueChange={setMetricGroup}
+        options={metricGroups}
+      />
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 10,
+          padding: "10px 12px",
+          border: "1px solid var(--m-line)",
+          borderRadius: "var(--m-r-3)",
+          background: "var(--m-bg-2)",
+        }}
+      >
+        <div style={{ minWidth: 0, display: "grid", gap: 2 }}>
+          <span style={{ color: "var(--m-fg-3)", fontFamily: "var(--m-font-mono)", fontSize: "var(--m-fs-9)" }}>
+            Current selection
+          </span>
+          <span style={{ color: "var(--m-fg-0)", fontSize: "var(--m-fs-11)", fontWeight: 500 }}>
+            {selectedMetricLabel}
+          </span>
+        </div>
+        <MetralyBadge variant="primary">Live</MetralyBadge>
+      </div>
+      <MetralyNavigationTree
+        ariaLabel="Metric navigation"
+        items={metricTree}
+        value={selectedMetric}
+        defaultExpandedValues={["dora", "flow", "ci"]}
+        onValueChange={(value) => {
+          setSelectedMetric(value);
+          setDrawerOpen(false);
+        }}
+      />
+    </div>
+  );
+
+  const filterControls = (
+    <>
+      <div style={{ width: mode === "mobile" ? "100%" : 164 }}>
+        <MetralySelect
+          label="Team"
+          defaultValue="all-teams"
+          options={[
+            { value: "all-teams", label: "All teams" },
+            { value: "platform", label: "Platform" },
+            { value: "growth", label: "Growth" },
+            { value: "search", label: "Search" },
+          ]}
+        />
+      </div>
+      <div style={{ width: mode === "mobile" ? "100%" : 164 }}>
+        <MetralySelect
+          label="Repository"
+          defaultValue="all-repos"
+          options={[
+            { value: "all-repos", label: "All repositories" },
+            { value: "frontend", label: "frontend-app" },
+            { value: "platform", label: "platform-core" },
+            { value: "data", label: "data-pipelines" },
+          ]}
+        />
+      </div>
+      <MetralySegmentedControl
+        ariaLabel="Comparison mode"
+        size="sm"
+        value={compareEnabled}
+        onValueChange={setCompareEnabled}
+        interactionMode={mode === "mobile" ? "toolbar" : "radio"}
+        fullWidth={mode === "mobile"}
+        options={[
+          { value: "compare-off", label: "Current only" },
+          { value: "compare-on", label: "Compare to prev." },
+        ]}
+      />
+    </>
   );
 
   return (
@@ -220,42 +313,14 @@ function MetricsExplorerRecipe({ mode = "desktop" }: { mode?: RecipeMode }) {
                         { value: "12m", label: "12m" },
                       ]}
                     />
-                    <div style={{ width: 164 }}>
-                      <MetralySelect
-                        label="Team"
-                        defaultValue="all-teams"
-                        options={[
-                          { value: "all-teams", label: "All teams" },
-                          { value: "platform", label: "Platform" },
-                          { value: "growth", label: "Growth" },
-                          { value: "search", label: "Search" },
-                        ]}
-                      />
-                    </div>
-                    <div style={{ width: 164 }}>
-                      <MetralySelect
-                        label="Repository"
-                        defaultValue="all-repos"
-                        options={[
-                          { value: "all-repos", label: "All repositories" },
-                          { value: "frontend", label: "frontend-app" },
-                          { value: "platform", label: "platform-core" },
-                          { value: "data", label: "data-pipelines" },
-                        ]}
-                      />
-                    </div>
+                    {mode === "mobile" ? (
+                      <MetralyButton variant="secondary" iconLeft={<MetralyIcon name="settings" size="sm" />} onClick={() => setFilterSheetOpen(true)}>
+                        Filters
+                      </MetralyButton>
+                    ) : (
+                      filterControls
+                    )}
                   </div>
-
-                  <MetralySegmentedControl
-                    ariaLabel="Comparison mode"
-                    size="sm"
-                    value={compareEnabled}
-                    onValueChange={setCompareEnabled}
-                    options={[
-                      { value: "compare-off", label: "Current only" },
-                      { value: "compare-on", label: "Compare to prev." },
-                    ]}
-                  />
                 </div>
               </MetralyPanel>
 
@@ -265,7 +330,7 @@ function MetricsExplorerRecipe({ mode = "desktop" }: { mode?: RecipeMode }) {
                   value="24 / day"
                   description="Across 18 services in production"
                   icon={<MetralyIcon name="zap" size="md" />}
-                  badge={<MetralyBadge variant="ok">Elite</MetralyBadge>}
+                  badge={<MetralyBadge variant="success">Elite</MetralyBadge>}
                   footer={<span style={{ color: "var(--m-ok)", fontFamily: "var(--m-font-mono)", fontSize: "var(--m-fs-9)" }}>▲ 18% vs prev. window</span>}
                 />
                 <MetralyMetricCard
@@ -273,7 +338,7 @@ function MetricsExplorerRecipe({ mode = "desktop" }: { mode?: RecipeMode }) {
                   value="41h"
                   description="p50 PR open to deploy"
                   icon={<MetralyIcon name="gitPullRequest" size="md" />}
-                  badge={<MetralyBadge variant="cyan">Healthy</MetralyBadge>}
+                  badge={<MetralyBadge variant="primary">Healthy</MetralyBadge>}
                   footer={<span style={{ color: "var(--m-ok)", fontFamily: "var(--m-font-mono)", fontSize: "var(--m-fs-9)" }}>▼ 6h vs prev. window</span>}
                 />
                 <MetralyMetricCard
@@ -282,7 +347,7 @@ function MetricsExplorerRecipe({ mode = "desktop" }: { mode?: RecipeMode }) {
                   description="Rollback-triggering deploys"
                   icon={<MetralyIcon name="alertTri" size="md" />}
                   variant="warning"
-                  badge={<MetralyBadge variant="warn">Watch</MetralyBadge>}
+                  badge={<MetralyBadge variant="warning">Watch</MetralyBadge>}
                   footer={<span style={{ color: "var(--m-warn)", fontFamily: "var(--m-font-mono)", fontSize: "var(--m-fs-9)" }}>▲ 0.8% vs prev. window</span>}
                 />
                 <MetralyMetricCard
@@ -291,7 +356,7 @@ function MetricsExplorerRecipe({ mode = "desktop" }: { mode?: RecipeMode }) {
                   description="Incident open to resolved"
                   icon={<MetralyIcon name="refresh" size="md" />}
                   variant="info"
-                  badge={<MetralyBadge variant="ok">Elite</MetralyBadge>}
+                  badge={<MetralyBadge variant="success">Elite</MetralyBadge>}
                   footer={<span style={{ color: "var(--m-ok)", fontFamily: "var(--m-font-mono)", fontSize: "var(--m-fs-9)" }}>▼ 12m vs prev. window</span>}
                 />
               </div>
@@ -308,7 +373,7 @@ function MetricsExplorerRecipe({ mode = "desktop" }: { mode?: RecipeMode }) {
                           `MetralyChartCard` can replace this placeholder later without changing recipe structure.
                         </div>
                       </div>
-                      <MetralyBadge variant="cyan">selected: {selectedMetric}</MetralyBadge>
+                      <MetralyBadge variant="primary">selected: {selectedMetric}</MetralyBadge>
                     </div>
                     <div
                       style={{
@@ -344,7 +409,7 @@ function MetricsExplorerRecipe({ mode = "desktop" }: { mode?: RecipeMode }) {
                       <div style={{ color: "var(--m-fg-0)", fontSize: "var(--m-fs-12)", fontWeight: 600 }}>Custom formula</div>
                       <MetralyButton variant="primary" size="sm">Run formula</MetralyButton>
                     </div>
-                    <MetralyCodeBlock accent="cyan">
+                    <MetralyCodeBlock accent="primary">
                       {`ratio(
   deploys(status = "success"),
   deploys(environment = "prod")
@@ -383,104 +448,36 @@ function MetricsExplorerRecipe({ mode = "desktop" }: { mode?: RecipeMode }) {
             </main>
           </div>
         </MetralyShell>
-        <MetralyDrawer
-          open={mode !== "desktop" && drawerOpen}
-          onOpenChange={setDrawerOpen}
-          title="Switch metric"
-          description={mode === "mobile" ? "quick telemetry jump" : "compact metric switcher"}
-          width={mode === "tablet" ? 320 : 360}
-          className={mode === "mobile" ? "metraly-metrics-switcher-drawer" : undefined}
-        >
-          <div style={{ display: "grid", gap: 10, padding: 12 }}>
-            {mode === "mobile" ? (
-              <style>{`
-                .metraly-metrics-switcher-drawer {
-                  top: auto;
-                  bottom: 0;
-                  width: 100vw;
-                  max-width: 100vw;
-                  max-height: 78dvh;
-                  border-left: 0;
-                  border-right: 0;
-                  border-top: 1px solid var(--m-line);
-                  border-radius: var(--m-r-3) var(--m-r-3) 0 0;
-                  box-shadow: var(--m-shadow-3);
-                }
-
-                .metraly-metrics-switcher-drawer::before {
-                  content: "";
-                  width: 36px;
-                  height: 4px;
-                  border-radius: 999px;
-                  background: var(--m-line-strong);
-                  opacity: 0.72;
-                  position: absolute;
-                  top: 8px;
-                  left: 50%;
-                  transform: translateX(-50%);
-                }
-
-                .metraly-metrics-switcher-drawer .metraly-drawer__header {
-                  min-height: 40px;
-                  padding-top: 18px;
-                }
-              `}</style>
-            ) : null}
-            <MetralyInput search fullWidth placeholder="Search metrics" />
-            <div aria-label="Metric groups" style={{ display: "flex", gap: 6, overflowX: "auto", paddingBottom: 2 }}>
-              {metricGroups.map((label, index) => (
-                <button
-                  key={label}
-                  type="button"
-                  style={{
-                    border: "1px solid var(--m-line-faint)",
-                    background: index === 0 ? "var(--m-cyan-bg)" : "var(--m-bg-2)",
-                    color: index === 0 ? "var(--m-cyan-400)" : "var(--m-fg-2)",
-                    borderRadius: "999px",
-                    padding: "6px 10px",
-                    fontFamily: "var(--m-font-mono)",
-                    fontSize: "var(--m-fs-9)",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 10,
-                padding: "10px 12px",
-                border: "1px solid var(--m-line)",
-                borderRadius: "var(--m-r-3)",
-                background: "var(--m-bg-2)",
-              }}
+        {mode === "mobile" ? (
+          <>
+            <MetralyBottomSheet
+              open={drawerOpen}
+              onOpenChange={setDrawerOpen}
+              title="Switch metric"
+              description="quick telemetry jump"
             >
-              <div style={{ minWidth: 0, display: "grid", gap: 2 }}>
-                <span style={{ color: "var(--m-fg-3)", fontFamily: "var(--m-font-mono)", fontSize: "var(--m-fs-9)" }}>
-                  Current selection
-                </span>
-                <span style={{ color: "var(--m-fg-0)", fontSize: "var(--m-fs-11)", fontWeight: 500 }}>
-                  {selectedMetricLabel}
-                </span>
-              </div>
-              <MetralyBadge variant="cyan">Live</MetralyBadge>
-            </div>
-            <MetralyNavigationTree
-              ariaLabel="Metric navigation"
-              items={metricTree}
-              value={selectedMetric}
-              defaultExpandedValues={["dora", "flow", "ci"]}
-              onValueChange={(value) => {
-                setSelectedMetric(value);
-                setDrawerOpen(false);
-              }}
-            />
-          </div>
-        </MetralyDrawer>
+              {metricSwitcherContent}
+            </MetralyBottomSheet>
+            <MetralyBottomSheet
+              open={filterSheetOpen}
+              onOpenChange={setFilterSheetOpen}
+              title="Filters"
+              description="team, repository, and comparison mode"
+            >
+              <div style={{ display: "grid", gap: 10, padding: 12 }}>{filterControls}</div>
+            </MetralyBottomSheet>
+          </>
+        ) : (
+          <MetralyDrawer
+            open={mode === "tablet" && drawerOpen}
+            onOpenChange={setDrawerOpen}
+            title="Switch metric"
+            description="compact metric switcher"
+            width={320}
+          >
+            {metricSwitcherContent}
+          </MetralyDrawer>
+        )}
       </div>
     </ThemeProvider>
   );

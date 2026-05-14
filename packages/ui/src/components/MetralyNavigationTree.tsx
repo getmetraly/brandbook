@@ -4,10 +4,21 @@ import * as React from "react";
 
 export type MetralyNavigationTreeTone =
   | "default"
+  | "primary"
+  | "secondary"
+  | "success"
+  | "warning"
+  | "error"
+  | "info"
+  /** @deprecated Use "primary". */
   | "cyan"
+  /** @deprecated Use "secondary". */
   | "purple"
+  /** @deprecated Use "success". */
   | "ok"
+  /** @deprecated Use "warning". */
   | "warn"
+  /** @deprecated Use "error". */
   | "err";
 
 export interface MetralyNavigationTreeItem {
@@ -38,6 +49,8 @@ type VisibleTreeNode = {
   item: MetralyNavigationTreeItem;
   level: number;
   parentValue?: string;
+  posInSet: number;
+  setSize: number;
 };
 
 function flattenVisibleItems(
@@ -48,8 +61,8 @@ function flattenVisibleItems(
 ): VisibleTreeNode[] {
   const result: VisibleTreeNode[] = [];
 
-  for (const item of items) {
-    result.push({ item, level, parentValue });
+  for (const [index, item] of items.entries()) {
+    result.push({ item, level, parentValue, posInSet: index + 1, setSize: items.length });
     if (item.children?.length && expandedValues.includes(item.value)) {
       result.push(...flattenVisibleItems(item.children, expandedValues, level + 1, item.value));
     }
@@ -73,6 +86,34 @@ function findSiblings(
   }
 
   return items;
+}
+
+function labelToText(label: React.ReactNode): string {
+  if (typeof label === "string") return label;
+  if (typeof label === "number") return String(label);
+  if (Array.isArray(label)) return label.map(labelToText).join(" ");
+  return "";
+}
+
+function normalizeSearchKey(value: string) {
+  return value.trim().toLocaleLowerCase();
+}
+
+function normalizeTone(tone: MetralyNavigationTreeTone | undefined) {
+  switch (tone) {
+    case "cyan":
+      return "primary";
+    case "purple":
+      return "secondary";
+    case "ok":
+      return "success";
+    case "warn":
+      return "warning";
+    case "err":
+      return "error";
+    default:
+      return tone ?? "default";
+  }
 }
 
 export function MetralyNavigationTree({
@@ -105,6 +146,8 @@ export function MetralyNavigationTree({
     [items, currentExpandedValues],
   );
   const refs = React.useRef<(HTMLButtonElement | null)[]>([]);
+  const typeaheadRef = React.useRef("");
+  const typeaheadTimerRef = React.useRef<number | null>(null);
 
   function setExpanded(nextExpanded: string[]) {
     if (!isExpandedControlled) setUncontrolledExpandedValues(nextExpanded);
@@ -129,16 +172,40 @@ export function MetralyNavigationTree({
     refs.current[index]?.focus();
   }
 
+  function focusByTypeahead(character: string, currentIndex: number) {
+    if (typeaheadTimerRef.current) {
+      window.clearTimeout(typeaheadTimerRef.current);
+    }
+
+    typeaheadRef.current = normalizeSearchKey(`${typeaheadRef.current}${character}`);
+    typeaheadTimerRef.current = window.setTimeout(() => {
+      typeaheadRef.current = "";
+      typeaheadTimerRef.current = null;
+    }, 650);
+
+    const search = typeaheadRef.current;
+    const candidates = [...visibleItems.slice(currentIndex + 1), ...visibleItems.slice(0, currentIndex + 1)];
+    const match = candidates.find((entry) => {
+      if (entry.item.disabled) return false;
+      return normalizeSearchKey(labelToText(entry.item.label)).startsWith(search);
+    });
+
+    if (!match) return;
+    const nextIndex = visibleItems.findIndex((entry) => entry.item.value === match.item.value);
+    if (nextIndex >= 0) focusVisible(nextIndex);
+  }
+
   const classes = ["metraly-navigation-tree", className].filter(Boolean).join(" ");
 
   return (
     <div className={classes} role="tree" aria-label={ariaLabel}>
-      {visibleItems.map(({ item, level, parentValue }, index) => {
+      {visibleItems.map(({ item, level, parentValue, posInSet, setSize }, index) => {
         const isGroup = Boolean(item.children?.length);
         const expanded = isGroup ? currentExpandedValues.includes(item.value) : undefined;
         const selected = item.value === selectedValue;
         const siblings = findSiblings(items, parentValue);
         const siblingIndex = siblings.findIndex((entry) => entry.value === item.value);
+        const normalizedTone = normalizeTone(item.tone);
 
         return (
           <button
@@ -160,7 +227,9 @@ export function MetralyNavigationTree({
             aria-expanded={isGroup ? expanded : undefined}
             aria-selected={selected}
             aria-disabled={item.disabled || undefined}
-            data-tone={item.tone ?? "default"}
+            aria-posinset={posInSet}
+            aria-setsize={setSize}
+            data-tone={normalizedTone}
             data-state={item.disabled ? "disabled" : selected ? "selected" : "default"}
             tabIndex={selected || (!selectedValue && index === 0) ? 0 : -1}
             disabled={item.disabled}
@@ -208,6 +277,8 @@ export function MetralyNavigationTree({
                 } else {
                   selectValue(item.value);
                 }
+              } else if (event.key.length === 1 && !event.metaKey && !event.ctrlKey && !event.altKey && event.key !== "*" && event.key !== " ") {
+                focusByTypeahead(event.key, index);
               } else if (event.key === "*" && parentValue === undefined && siblingIndex >= 0) {
                 event.preventDefault();
                 const nextExpanded = [...currentExpandedValues];

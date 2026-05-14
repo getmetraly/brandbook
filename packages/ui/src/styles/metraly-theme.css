@@ -142,6 +142,27 @@
   --m-fg-4: oklch(0.72 0.008 250);
 }
 
+
+/* Defensive layout baseline for every package surface.
+   Components must fit their parent without relying on Storybook wrappers. */
+.metraly-theme,
+.metraly-theme *,
+.metraly-theme *::before,
+.metraly-theme *::after,
+[class^="metraly-"],
+[class^="metraly-"]::before,
+[class^="metraly-"]::after,
+[class*=" metraly-"],
+[class*=" metraly-"]::before,
+[class*=" metraly-"]::after {
+  box-sizing: border-box;
+}
+
+[class^="metraly-"],
+[class*=" metraly-"] {
+  min-width: 0;
+}
+
 .metraly-theme {
   background: var(--m-bg-0);
   color: var(--m-fg-1);
@@ -149,6 +170,9 @@
 }
 
 .metraly-panel {
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
   background: var(--m-bg-2);
   border: 1px solid var(--m-line);
   border-radius: var(--m-r-4);

@@ -1,7 +1,9 @@
 .metraly-segmented-control {
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   gap: 2px;
+  width: fit-content;
   min-width: 0;
   max-width: 100%;
   overflow-x: auto;
@@ -22,11 +24,13 @@
 }
 
 .metraly-segmented-control__option {
+  box-sizing: border-box;
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 0;
+  min-width: max-content;
+  max-width: 100%;
   min-height: calc(var(--m-control-h) - 6px);
   padding: 0 var(--m-3);
   border: 1px solid transparent;
@@ -37,6 +41,7 @@
   font-size: var(--m-fs-11);
   line-height: 1;
   white-space: nowrap;
+  flex: 0 0 auto;
   cursor: pointer;
   transition:
     background var(--m-dur-2) var(--m-ease),
@@ -79,5 +84,6 @@
 }
 
 .metraly-segmented-control--full .metraly-segmented-control__option {
+  min-width: 0;
   flex: 1 1 0;
 }
