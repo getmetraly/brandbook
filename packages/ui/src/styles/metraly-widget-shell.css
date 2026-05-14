@@ -5,7 +5,7 @@
   min-width: 0;
   height: 100%;
   overflow: hidden;
-  border-radius: var(--m-r-3);
+  border-radius: var(--m-r-4);
   border: 1px solid var(--m-line);
   background: var(--m-bg-2);
   transition: background var(--m-dur-2) var(--m-ease), border-color var(--m-dur-2) var(--m-ease), box-shadow var(--m-dur-2) var(--m-ease);
