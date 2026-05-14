@@ -5,55 +5,23 @@
   width: fit-content;
   max-width: 100%;
   min-width: 0;
-  flex: 0 1 auto;
   gap: 6px;
   padding: 2px 8px;
-  font-family: var(--metraly-font-mono);
-  font-size: 11px;
-  font-weight: 650;
-  line-height: 13.2px;
-  letter-spacing: 0.44px;
-  text-transform: uppercase;
-  text-rendering: optimizeLegibility;
-  border-radius: var(--metraly-radius-pill);
+  border-radius: var(--m-r-5);
   border: 1px solid transparent;
+  font-family: var(--m-font-mono);
+  font-size: var(--m-fs-9);
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-.metraly-badge.is-primary {
-  color: oklch(0.78 0.13 200);
-  border-color: oklch(0.78 0.13 200 / 0.2);
-  background: oklch(0.78 0.13 200 / 0.1);
-}
+.metraly-badge.is-primary { color: var(--m-cyan-500); border-color: oklch(0.78 0.13 200 / 0.2); background: var(--m-cyan-bg); }
+.metraly-badge.is-secondary { color: var(--m-purple-500); border-color: oklch(0.66 0.14 295 / 0.2); background: var(--m-purple-bg); }
+.metraly-badge.is-success { color: var(--m-ok); border-color: oklch(0.78 0.14 155 / 0.2); background: var(--m-ok-bg); }
+.metraly-badge.is-warning { color: var(--m-warn); border-color: oklch(0.82 0.14 80 / 0.22); background: var(--m-warn-bg); }
+.metraly-badge.is-error { color: var(--m-err); border-color: oklch(0.72 0.18 25 / 0.24); background: var(--m-err-bg); }
+.metraly-badge.is-info { color: var(--m-fg-1); border-color: var(--m-line); background: var(--m-bg-3); }
 
-.metraly-badge.is-secondary {
-  color: oklch(0.66 0.14 295);
-  border-color: oklch(0.66 0.14 295 / 0.2);
-  background: oklch(0.66 0.14 295 / 0.1);
-}
-
-.metraly-badge.is-success {
-  color: oklch(0.78 0.14 155);
-  border-color: oklch(0.78 0.14 155 / 0.2);
-  background: oklch(0.78 0.14 155 / 0.12);
-}
-
-.metraly-badge.is-warning {
-  color: oklch(0.82 0.14 80);
-  border-color: oklch(0.82 0.14 80 / 0.22);
-  background: oklch(0.82 0.14 80 / 0.12);
-}
-
-.metraly-badge.is-error {
-  color: oklch(0.72 0.18 25);
-  border-color: oklch(0.72 0.18 25 / 0.24);
-  background: oklch(0.72 0.18 25 / 0.13);
-}
-
-.metraly-badge.is-info {
-  color: oklch(0.66 0.012 250);
-  border-color: oklch(1 0 0 / 0.085);
-  background: oklch(1 0 0 / 0.045);
-}

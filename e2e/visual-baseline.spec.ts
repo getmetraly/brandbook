@@ -4,12 +4,7 @@ const coreRoutes = [
   {
     path: '/components',
     heading: /Components/i,
-    label: 'protected components baseline',
-  },
-  {
-    path: '/components/previews',
-    heading: /Preview Hardening/i,
-    label: 'preview hardening surface',
+    label: 'component catalog surface',
   },
   {
     path: '/components/forms',
@@ -58,26 +53,34 @@ test.describe('visual baseline route smoke checks', () => {
     });
   }
 
-  for (const viewport of viewports) {
-    test(`/components/previews remains usable at ${viewport.name} width`, async ({ page }) => {
-      await page.setViewportSize({ width: viewport.width, height: viewport.height });
-      await page.goto('/components/previews');
+  test('dashboard editor surface loads', async ({ page }) => {
+    await page.goto('/editor');
 
-      await expect(page.getByRole('heading', { name: /Preview Hardening/i })).toBeVisible();
-      await expect(page.getByRole('heading', { name: /Engineering Dashboard Editor/i })).toBeVisible();
-      await expect(page.getByText(/Release to add widget/i).first()).toBeVisible();
+    await expect(page.getByText(/Dashboard editor/i).first()).toBeVisible();
+    await expect(page.getByText(/Widget library/i).first()).toBeVisible();
+    await expect(page.locator('.dashboard-editor-layout')).toBeVisible();
+  });
+
+  for (const viewport of viewports) {
+    test(`/editor remains usable at ${viewport.name} width`, async ({ page }) => {
+      await page.setViewportSize({ width: viewport.width, height: viewport.height });
+      await page.goto('/editor');
+
+      await expect(page.getByText(/Dashboard editor/i).first()).toBeVisible();
+      await expect(page.getByText(/Widget library/i).first()).toBeVisible();
+      await expect(page.getByText(/Drag widgets with grip dots/i).first()).toBeVisible();
 
       const bodyBox = await page.locator('body').boundingBox();
       expect(bodyBox?.width).toBeLessThanOrEqual(viewport.width + 1);
     });
   }
 
-  test('preview hardening route keeps drag and drop visual rules visible', async ({ page }) => {
-    await page.goto('/components/previews');
+  test('dashboard editor route keeps drag and drop visual rules visible', async ({ page }) => {
+    await page.goto('/editor');
 
-    await expect(page.getByText(/neutral grip dots/i)).toBeVisible();
-    await expect(page.getByText(/No pulse-wave in default drop zones/i)).toBeVisible();
-    await expect(page.getByText(/Dashed cyan border/i).first()).toBeVisible();
+    await expect(page.getByText(/Drag widgets with grip dots/i).first()).toBeVisible();
+    await expect(page.getByLabel(/Filter widgets/i).first()).toBeVisible();
+    await expect(page.getByText(/Edit mode/i).first()).toBeVisible();
     await expect(page.getByText(/draft/i)).toHaveCount(0);
   });
 });

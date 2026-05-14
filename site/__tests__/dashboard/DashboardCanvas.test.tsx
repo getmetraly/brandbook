@@ -158,7 +158,7 @@ describe('DashboardDropZone all states (4.3)', () => {
 
   it('rejected state shows ! icon', () => {
     const { container } = render(<DashboardDropZone state="rejected" />);
-    expect(container.querySelector('.metraly-dashboard-drop-zone-icon')).toHaveTextContent('!');
+    expect(container.querySelector('.metraly-dashboard-drop-zone-icon')).toHaveTextContent('×');
   });
 
   it('non-rejected states show + icon', () => {

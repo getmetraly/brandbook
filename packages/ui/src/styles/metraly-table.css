@@ -4,25 +4,11 @@
   min-height: 0;
   overflow: auto;
   flex: 1 1 auto;
-  border: 1px solid oklch(1 0 0 / 0.085);
-  border-radius: var(--metraly-radius-md);
-  background: oklch(0.225 0.014 250);
+  border: 1px solid var(--m-line);
+  border-radius: var(--m-r-3);
+  background: var(--m-bg-2);
   scrollbar-width: thin;
-  scrollbar-color: oklch(0.305 0.015 250) transparent;
-}
-
-.metraly-table-frame::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-.metraly-table-frame::-webkit-scrollbar-thumb {
-  background: oklch(0.305 0.015 250);
-  border-radius: 4px;
-}
-
-.metraly-table-frame::-webkit-scrollbar-track {
-  background: transparent;
+  scrollbar-color: var(--m-bg-4) transparent;
 }
 
 .metraly-table {
@@ -32,41 +18,32 @@
   border-collapse: collapse;
   background: transparent;
   border: 0;
-  border-radius: 0;
   overflow: visible;
-  font-family: var(--metraly-font-ui);
-  font-size: 0.6875rem;
-  color: oklch(0.84 0.008 250);
+  font-family: var(--m-font-ui);
+  font-size: var(--m-fs-11);
+  color: var(--m-fg-1);
 }
 
 .metraly-table thead th {
   position: sticky;
   top: 0;
   z-index: 1;
-  background: oklch(0.195 0.012 250);
-  font-family: var(--metraly-font-mono);
+  background: var(--m-bg-1);
+  font-family: var(--m-font-mono);
   font-weight: 500;
-  font-size: 0.625rem;
+  font-size: var(--m-fs-9);
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: oklch(0.50 0.012 250);
-  border-bottom: 1px solid oklch(1 0 0 / 0.085);
-}
-
-.metraly-table thead th:first-child {
-  border-top-left-radius: var(--metraly-radius-md);
-}
-
-.metraly-table thead th:last-child {
-  border-top-right-radius: var(--metraly-radius-md);
+  color: var(--m-fg-3);
+  border-bottom: 1px solid var(--m-line);
 }
 
 .metraly-table th,
 .metraly-table td {
   min-width: 0;
-  height: var(--metraly-table-row-height, 34px);
-  padding: 0 10px;
-  border-bottom: 1px solid oklch(1 0 0 / 0.045);
+  height: var(--m-table-row-height, 34px);
+  padding: 0 8px;
+  border-bottom: 1px solid var(--m-line-faint);
   text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -75,47 +52,23 @@
 }
 
 .metraly-table[data-density="dense"] {
-  --metraly-table-row-height: 28px;
-}
-
-.metraly-table[data-density="default"] {
-  --metraly-table-row-height: 34px;
-}
-
-.metraly-table td > .metraly-state-badge,
-.metraly-table td > .metraly-badge {
-  max-width: 100%;
-}
-
-.metraly-table tbody tr:last-child td {
-  border-bottom: none;
+  --m-table-row-height: 28px;
 }
 
 .metraly-table-row {
-  transition: background var(--metraly-motion-fast) var(--metraly-ease-out);
+  transition: background var(--m-dur-1) var(--m-ease);
 }
 
 .metraly-table-row:hover {
-  background: oklch(0.260 0.014 250);
-  cursor: pointer;
-}
-
-.metraly-table-row.is-loading:hover,
-.metraly-table-empty:hover {
-  background: transparent;
-  cursor: default;
+  background: var(--m-bg-3);
 }
 
 .metraly-table-row.is-selected {
-  background: oklch(0.78 0.13 200 / 0.10);
+  background: var(--m-cyan-bg);
 }
 
 .metraly-table-row.is-selected > *:first-child {
-  box-shadow: inset 2px 0 0 oklch(0.78 0.13 200);
-}
-
-.metraly-table-row.is-unread > *:first-child {
-  color: oklch(0.84 0.008 250);
+  box-shadow: inset 2px 0 0 var(--m-cyan-500);
 }
 
 .metraly-table-row-marker {
@@ -125,75 +78,27 @@
   margin-right: 6px;
   vertical-align: middle;
   border-radius: 999px;
-  background: #00e5cc;
-  box-shadow:
-    0 0 0 1px oklch(0.155 0.010 250),
-    0 0 12px rgba(0,229,204,0.34);
-}
-
-.metraly-table-row-marker[data-marker='live'],
-.metraly-table-row-marker[data-marker='unread'],
-.metraly-table-row-marker[data-marker='new'] {
-  animation: table-marker-pulse 1.6s ease-in-out infinite;
+  background: var(--m-cyan-500);
+  box-shadow: 0 0 0 1px var(--m-bg-0), 0 0 10px var(--m-cyan-glow);
 }
 
 .metraly-table-row-marker[data-marker='stale'] {
-  background: #f59e0b;
-  box-shadow:
-    0 0 0 1px oklch(0.155 0.010 250),
-    0 0 12px rgba(245,158,11,0.24);
+  background: var(--m-warn);
+  box-shadow: 0 0 0 1px var(--m-bg-0), 0 0 10px var(--m-warn-bg);
 }
 
 .metraly-table-row-marker[data-marker='error'] {
-  background: #ef4444;
-  box-shadow:
-    0 0 0 1px oklch(0.155 0.010 250),
-    0 0 12px rgba(239,68,68,0.24);
+  background: var(--m-err);
+  box-shadow: 0 0 0 1px var(--m-bg-0), 0 0 10px var(--m-err-bg);
 }
 
 .metraly-table-skeleton-bar {
   height: 10px;
   width: 80%;
-  border-radius: var(--metraly-radius-pill);
-  background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-  animation: skeleton-pulse 1.2s ease-in-out infinite;
-}
-
-@keyframes table-marker-pulse {
-  0% {
-    transform: scale(0.92);
-    box-shadow:
-      0 0 0 1px oklch(0.155 0.010 250),
-      0 0 10px rgba(0,229,204,0.24);
-  }
-
-  50% {
-    transform: scale(1);
-    box-shadow:
-      0 0 0 1px oklch(0.155 0.010 250),
-      0 0 14px rgba(0,229,204,0.34);
-  }
-
-  100% {
-    transform: scale(0.92);
-    box-shadow:
-      0 0 0 1px oklch(0.155 0.010 250),
-      0 0 10px rgba(0,229,204,0.24);
-  }
-}
-
-@keyframes skeleton-pulse {
-  0% {
-    opacity: 0.5;
-  }
-
-  50% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0.5;
-  }
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--m-bg-3), var(--m-bg-4), var(--m-bg-3));
+  background-size: 200% 100%;
+  animation: m-shimmer 1.4s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -206,9 +111,24 @@
 }
 
 .metraly-table-empty td {
-  padding: 2rem 1rem;
+  padding: 1.5rem 1rem;
   text-align: center;
-  color: oklch(0.50 0.012 250);
-  font-style: italic;
+  color: var(--m-fg-3);
+  font-family: var(--m-font-mono);
+  font-size: var(--m-fs-10);
+  letter-spacing: 0.04em;
   white-space: normal;
+}
+
+.metraly-table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 28px;
+  padding: 0 8px;
+  border-top: 1px solid var(--m-line-faint);
+  color: var(--m-fg-3);
+  font-family: var(--m-font-mono);
+  font-size: var(--m-fs-10);
+  letter-spacing: 0.04em;
 }

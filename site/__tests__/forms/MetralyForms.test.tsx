@@ -18,7 +18,7 @@ describe('Metraly form primitives', () => {
     expect(screen.getByRole('switch', { name: 'Live telemetry' })).toHaveAttribute('aria-checked', 'true');
   });
 
-  it('renders select options', () => {
+  it('renders select as a button-backed listbox trigger', () => {
     render(
       <MetralySelect
         label="Metric source"
@@ -29,8 +29,13 @@ describe('Metraly form primitives', () => {
         ]}
       />
     );
-    expect(screen.getByRole('combobox', { name: 'Metric source' })).toHaveValue('github');
-    expect(screen.getByText('CI/CD')).toBeInTheDocument();
+
+    const trigger = screen.getByRole('button', { name: 'Metric source' });
+    expect(trigger).toHaveTextContent('GitHub');
+
+    fireEvent.click(trigger);
+    expect(screen.getByRole('listbox', { name: 'Metric source' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'CI/CD' })).toBeInTheDocument();
   });
 
   it('renders selected tab', () => {
@@ -63,7 +68,7 @@ describe('Metraly form primitives', () => {
     expect(screen.getByRole('tab', { name: 'Boards' })).toHaveAttribute('aria-selected', 'true');
   });
 
-  it('renders Claude Design style tab counts without changing accessible tab names', () => {
+  it('renders count badges without changing accessible tab names', () => {
     render(
       <MetralyTabs
         ariaLabel="Engineering dashboard sections"

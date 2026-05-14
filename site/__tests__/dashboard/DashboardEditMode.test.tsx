@@ -15,7 +15,7 @@ describe('dashboard edit mode primitives', () => {
 
     expect(screen.getByRole('status')).toHaveTextContent('Drop widget here');
     expect(container.firstChild).toHaveClass('is-active');
-    expect(container.querySelector('.metraly-dashboard-drop-zone-line')).not.toBeInTheDocument();
+    expect(container.querySelector('.metraly-dashboard-drop-zone-line')).toBeInTheDocument();
   });
 
   it('renders neutral drop zone states without pulse markers by default', () => {

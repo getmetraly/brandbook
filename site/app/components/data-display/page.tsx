@@ -4,6 +4,8 @@ import DocsShell from "../../components/docs/DocsShell";
 import { ComponentPreview, ComponentStateGrid, DocsSection } from "../../components/docs/DocsBlocks";
 import { getRelatedLinks } from "../../lib/docs/navigation";
 
+export const dynamic = "force-dynamic";
+
 type ReviewRow = {
   team: string;
   open: string;
@@ -29,9 +31,15 @@ export default function DataDisplayPage() {
     <DocsShell currentPath="/components/data-display" title="Data Display" description="Tables, badges and metric cards for dense engineering analytics surfaces." status="ready" related={getRelatedLinks(["/components/dashboard", "/examples/engineering-dashboard"])}>
       <DocsSection id="states" title="State badges">
         <ComponentPreview title="StateBadge" description="Semantic telemetry states for rows, widgets and panels." states={["live", "delayed", "stale", "noData"]} code={'import { StateBadge } from "@metraly/ui";'}>
-          <div className="component-row"><StateBadge state="live" /><StateBadge state="delayed" /><StateBadge state="stale" /><StateBadge state="noData" /></div>
+          <div className="component-row">
+            <StateBadge state="live" />
+            <StateBadge state="delayed" />
+            <StateBadge state="stale" />
+            <StateBadge state="noData" />
+          </div>
         </ComponentPreview>
       </DocsSection>
+
       <DocsSection id="tables" title="Tables and metrics">
         <ComponentPreview title="MetralyTable" description="Display-only review queue table for dense engineering dashboards." states={["display-only", "selected", "empty", "loading"]} code={'import { MetralyTable } from "@metraly/ui";'}>
           <div className="component-preview-stage is-wide" style={{ display: "block", width: "100%" }}>

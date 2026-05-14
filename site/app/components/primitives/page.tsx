@@ -3,6 +3,8 @@ import DocsShell from "../../components/docs/DocsShell";
 import { ComponentPreview, ComponentStateGrid, DocsSection } from "../../components/docs/DocsBlocks";
 import { getRelatedLinks } from "../../lib/docs/navigation";
 
+export const dynamic = "force-dynamic";
+
 export default function PrimitivesPage() {
   return (
     <DocsShell currentPath="/components/primitives" title="Primitives" description="Low-level surfaces and identity elements used by higher-level dashboard components." status="ready" related={getRelatedLinks(["/components/forms", "/components/data-display", "/foundations/colors"])}>
