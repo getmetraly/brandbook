@@ -76,7 +76,13 @@ export function DashboardToolbar({
           <div className="metraly-dashboard-toolbar-controls">
             {hasSearch ? (
               <label className="metraly-dashboard-toolbar-search">
-                <span>Search widgets</span>
+                <span className="metraly-visually-hidden">Search widgets</span>
+                <span className="metraly-dashboard-toolbar-search-icon" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">
+                    <circle cx="6.2" cy="6.2" r="3.5" />
+                    <path d="M9 9 L12 12" />
+                  </svg>
+                </span>
                 <input
                   type="search"
                   value={searchValue ?? ""}
