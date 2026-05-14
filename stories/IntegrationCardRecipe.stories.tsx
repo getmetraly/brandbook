@@ -12,28 +12,28 @@ const integrations = [
     name: "GitHub",
     subtitle: "Pull requests, review latency, merge health",
     icon: "github" as const,
-    status: <MetralyBadge variant="ok">installed</MetralyBadge>,
+    status: <MetralyBadge variant="success">installed</MetralyBadge>,
     action: "Manage",
   },
   {
     name: "GitLab",
     subtitle: "Merge request telemetry and deployment events",
     icon: "gitlab" as const,
-    status: <MetralyBadge variant="cyan">available</MetralyBadge>,
+    status: <MetralyBadge variant="primary">available</MetralyBadge>,
     action: "Install",
   },
   {
     name: "PagerDuty",
     subtitle: "Incidents, MTTR, paging correlation",
     icon: "pagerduty" as const,
-    status: <MetralyBadge variant="warn">needs auth</MetralyBadge>,
+    status: <MetralyBadge variant="warning">needs auth</MetralyBadge>,
     action: "Connect",
   },
   {
     name: "Slack",
     subtitle: "Alert routing, digests, workflow hooks",
     icon: "slack" as const,
-    status: <MetralyBadge variant="ghost">optional</MetralyBadge>,
+    status: <MetralyBadge variant="info">optional</MetralyBadge>,
     action: "Enable",
   },
 ];
@@ -74,9 +74,9 @@ function IntegrationCardRecipe() {
                     Canonical card surface, compact density and action alignment from existing seams.
                   </div>
                   <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-                    <MetralyBadge variant="ghost">compact</MetralyBadge>
-                    <MetralyBadge variant="ghost">operational</MetralyBadge>
-                    <MetralyBadge variant="ghost">no custom API</MetralyBadge>
+                    <MetralyBadge variant="info">compact</MetralyBadge>
+                    <MetralyBadge variant="info">operational</MetralyBadge>
+                    <MetralyBadge variant="info">no custom API</MetralyBadge>
                   </div>
                 </div>
               </MetralyCard>
