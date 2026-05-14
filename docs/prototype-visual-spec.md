@@ -6,6 +6,10 @@ The prototype is the source of truth for visual tone. Existing notes inside mark
 
 ## Source inputs
 
+Last inspected prototype source: `getmetraly/docs` commit `2cd9359165a7aeed050cd206c133f7b9f97568d9` (`add brandbook prototype`).
+
+Prototype files:
+
 - `getmetraly/docs/prototypes/brandbook/Metraly Brandbook.html`
 - `getmetraly/docs/prototypes/brandbook/tokens.css`
 - `getmetraly/docs/prototypes/brandbook/app.jsx`
@@ -17,6 +21,22 @@ The prototype is the source of truth for visual tone. Existing notes inside mark
 - `getmetraly/docs/prototypes/brandbook/state-board.jsx`
 - `getmetraly/docs/prototypes/brandbook/dashboard-editor.jsx`
 - `getmetraly/docs/prototypes/brandbook/docs.jsx`
+
+If the prototype changes, update this section with the new commit SHA and re-run the parity audit before changing production components.
+
+## Traceability index
+
+| Prototype source | Primary purpose | Production target | Required proof |
+| --- | --- | --- | --- |
+| `tokens.css` | Core surfaces, typography, radius, shadow, focus, density and motion variables | `packages/ui/src/styles/*.css` | Token mapping table and visual smoke screenshots |
+| `primitives.jsx` | Shared icons, badges, cards, pulse and low-level surfaces | `packages/ui/src/components/*`, `packages/ui/src/dashboard/*` | Storybook states and component docs |
+| `form-controls.jsx` | Checkbox, radio, switch, select, tabs and control states | `MetralyCheckbox`, `MetralyRadio`, `MetralySwitch`, `MetralySelect`, `MetralyTabs` | Form state board screenshots |
+| `widgets.jsx` | Widget picker, widget shell, table, toolbar, drop zone and resize affordances | `WidgetPickerCard`, `DashboardWidget`, `MetralyTable`, `DashboardToolbar`, `DashboardDropZone`, `DashboardResizeHandle` | Dashboard/story state board screenshots |
+| `state-board.jsx` | Exhaustive state board for prototype review | `stories/*` and `/components/*` routes | All relevant states rendered in Storybook |
+| `dashboard-editor.jsx` | Realistic engineering intelligence dashboard/editor composition | `/editor`, `/components/dashboard`, dashboard primitives | Desktop/tablet/mobile screenshots |
+| `docs.jsx` | Documentation tone and production handoff language | `docs/*.md`, `site/app/*` docs routes | Docs route smoke check |
+| `design-canvas.jsx` | Artboard framing and review canvas | Storybook/story layout wrappers, preview routes | Visual regression framing without production restyling |
+| `tweaks-panel.jsx` | Accent, glow, density, pulse and scenario toggles | CSS variables, data attributes and docs contracts | Density/glow/pulse behavior documented or intentionally removed |
 
 ## Product personality
 
@@ -60,6 +80,25 @@ Rules:
 - Do not brighten component backgrounds to compensate for low contrast.
 - Keep the visual weight low; the prototype relies on compact density, not heavy shadows.
 - Body-level horizontal overflow is forbidden.
+
+## Token mapping requirements
+
+Exact token values must be verified during Phase 1 of the parity audit. This table defines the minimum mapping that must exist and remain stable.
+
+| Prototype token family | Production target | Required behavior |
+| --- | --- | --- |
+| `--m-bg-*` | `packages/ui/src/styles/*.css` | Canvas, chrome, cards, raised and active surfaces keep the same dark-on-dark hierarchy. |
+| `--m-fg-*` | `packages/ui/src/styles/*.css` | Text hierarchy supports dense UI without brightening surfaces. |
+| `--m-cyan-*` | `packages/ui/src/styles/*.css` | Cyan remains the operational signal for focus, selected, live/new and primary telemetry. |
+| `--m-purple-*` | `packages/ui/src/styles/*.css` | Purple remains secondary depth and secondary chart series, not a generic accent. |
+| `--m-line*` | `packages/ui/src/styles/*.css` | Thin borders separate surfaces and states without adding heavy shadows. |
+| `--m-r-*` | `packages/ui/src/styles/*.css` | Radius stays restrained across controls, rows, cards, panels and popovers. |
+| `--m-glow-*` | `packages/ui/src/styles/*.css` | Glow appears only for focus, selected and live/new semantics. |
+| `--m-dur-*` | `packages/ui/src/styles/*.css` | Motion is short, stable and never changes layout dimensions. |
+| `--m-control-*` | `packages/ui/src/styles/*.css` | Controls remain compact in both comfortable and compact density. |
+| `--m-font-*` | `packages/ui/src/styles/*.css` | `Inter` is UI font; `JetBrains Mono` is telemetry/metrics/meta font. |
+
+A token is considered incomplete when it only exists inside preview or story CSS but not in production `packages/ui` styles.
 
 ## Typography
 
@@ -162,79 +201,140 @@ Forbidden in production components:
 
 This intentionally narrows exploratory prototype usage. Dense operational screens become noisy when every selectable surface pulses.
 
-## Form controls
+## Intentional divergences from prototype
 
-### Checkbox and radio
+These differences are intentional and must not be "fixed" back to the prototype without an explicit design decision.
 
-- Compact square/circle chrome.
-- Label and help copy may wrap; chrome must not scale up.
-- Checked/selected state uses cyan accent and tokenized focus.
-- Disabled state lowers opacity and removes interactive cursor.
-- Hover changes surface/border only; no movement.
+| Prototype behavior | Production decision | Reason |
+| --- | --- | --- |
+| Widget picker rows may use pulse-like visual emphasis | `WidgetPickerCard` rows do not render `PulseWave` | Picker rows are selection affordances, not live telemetry. Pulse creates noise in dense rails. |
+| Drop zones may feel animated in exploratory prototype states | `DashboardDropZone` uses border/background only | Drop zones are edit affordances, not operational signals. |
+| Drag affordance can inherit surrounding accent energy | Drag handles are neutral grip dots only | Dragging must stay calm and predictable. |
+| Generic selected/active surfaces could overuse glow | Glow is limited to focus, selected and live/new semantics | Prevents neon drift and preserves telemetry hierarchy. |
+| Mobile could be redesigned as a separate simplified experience | Mobile keeps the same design language with fewer columns | Prevents a second design system. |
 
-### Switch
+## Component implementation contracts
 
-- Slim track, compact thumb.
-- On state uses cyan operational signal.
-- Off state remains neutral and low contrast.
-- Thumb movement must be smooth and dimension-stable.
+### Form controls
 
-### Select
+Production files:
 
-- Trigger is full-width inside its container.
-- Text truncates before causing overflow.
-- Popover is raised, dark, border-separated, and viewport-safe.
-- Long option lists scroll internally.
-- Do not introduce decorative chevrons or oversized dropdown chrome beyond the prototype tone.
+- `packages/ui/src/components/MetralyCheckbox.tsx`
+- `packages/ui/src/components/MetralyRadio.tsx`
+- `packages/ui/src/components/MetralySwitch.tsx`
+- `packages/ui/src/components/MetralySelect.tsx`
+- `packages/ui/src/components/MetralyTabs.tsx`
 
-### Tabs
+Prototype references:
 
-- Tabs stay compact and may horizontal-scroll.
-- Active underline or marker aligns with label text.
-- Tabs must not force page overflow.
-- Avoid pill-style tab redesign unless a prototype section explicitly uses it.
+- `form-controls.jsx`
+- `state-board.jsx`
 
-## Badges and state chips
+Required:
 
-State badges are compact, inline, and semantic.
+- compact chrome;
+- stable hover/focus/selected/disabled states;
+- density support;
+- no hover jumps;
+- wrapping labels/help text without scaling controls.
 
-Rules:
+Forbidden:
 
-- Badges never stretch to full width.
-- Badge copy may truncate before distorting layout.
-- `live` and `new` may use pulse dots.
-- Warning/error/stale states should communicate through muted semantic color and text, not through aggressive glow.
-- Badge height must align with dense table rows and widget headers.
+- oversized mobile controls;
+- decorative chevrons or loud popovers;
+- page-level overflow from long labels/options.
 
-## Tables
+### Badges and state chips
 
-Tables are first-class product surfaces, not markdown tables.
+Production files:
+
+- `packages/ui/src/components/StateBadge.tsx`
+- `packages/ui/src/components/MetralyBadge.tsx`
+
+Prototype references:
+
+- `primitives.jsx`
+- `state-board.jsx`
+
+Required:
+
+- compact inline rendering;
+- semantic colors;
+- optional indicator;
+- pulse only for `live` and `new` by default;
+- truncation before layout distortion.
+
+Forbidden:
+
+- full-width badges;
+- aggressive glow for warning/error/stale;
+- using badges as decorative pills.
+
+### Tables
+
+Production files:
+
+- `packages/ui/src/components/MetralyTable.tsx`
+- production table styles in `packages/ui/src/styles/*`
+
+Prototype references:
+
+- `widgets.jsx`
+- `dashboard-editor.jsx`
 
 Required behavior:
 
-- Keep real `<table>` semantics.
-- Use sticky headers where applicable.
-- Horizontal overflow belongs inside the table frame.
-- Footer/status rows remain compact.
-- Row hover uses background/border tone only and must not shift layout.
-- Numeric telemetry columns use mono font and right alignment when appropriate.
-- Status cells use `StateBadge` or equivalent semantic chip, not ad hoc badges.
+- keep real `<table>` semantics;
+- use sticky headers where applicable;
+- horizontal overflow belongs inside the table frame;
+- footer/status rows remain compact;
+- row hover uses background/border tone only and must not shift layout;
+- numeric telemetry columns use mono font and right alignment when appropriate;
+- status cells use `StateBadge` or equivalent semantic chip, not ad hoc badges.
 
-## Cards, panels, and metric cards
+Forbidden:
 
-Shell components own visual rhythm.
+- div-based fake tables;
+- markdown-like table styling;
+- page-level horizontal overflow;
+- row hover layout shift.
 
-Rules:
+### Cards, panels, and metric cards
 
-- Use `MetralyCard`, `MetralyPanel`, `MetralyMetricCard`, `DashboardWidget`, and `MetralyChartCard` before creating local shells.
-- Do not recreate border, radius, selected, hover, or glow behavior in page-local CSS.
-- Metric values use mono font.
-- Secondary copy should be muted and compact.
-- Header slots must tolerate wrapping without breaking badges or actions.
+Production files:
 
-## Widget picker
+- `packages/ui/src/components/MetralyCard.tsx`
+- `packages/ui/src/components/MetralyPanel.tsx`
+- `packages/ui/src/components/MetralyMetricCard.tsx`
+- chart card wrappers from `@metraly/ui/charts`
 
-Widget picker rows are compact right-rail items on desktop and dense full-width list rows on narrow layouts.
+Prototype references:
+
+- `primitives.jsx`
+- `dashboard-editor.jsx`
+
+Required:
+
+- shell components own visual rhythm;
+- metric values use mono font;
+- secondary copy stays muted and compact;
+- header slots tolerate wrapping without breaking badges or actions.
+
+Forbidden:
+
+- page-local recreation of card borders/radius/hover/selected states;
+- large soft SaaS cards that break dense dashboard tone.
+
+### Widget picker
+
+Production files:
+
+- `packages/ui/src/components/WidgetPickerCard.tsx`
+
+Prototype references:
+
+- `widgets.jsx`
+- `dashboard-editor.jsx`
 
 Required states:
 
@@ -242,65 +342,97 @@ Required states:
 - hover;
 - selected;
 - disabled;
-- dragging/new when applicable.
+- loading;
+- dragging;
+- new where applicable.
 
 Rules:
 
-- Selected state is border + background + optional selected glow.
-- No pulse wave in widget rows.
-- Icon slot remains compact.
-- Description text must not create rail overflow.
-- Disabled rows remain readable but clearly unavailable.
+- rows are compact right-rail items on desktop;
+- rows become dense full-width list items on narrow layouts;
+- selected state is border + background + optional selected glow;
+- no pulse wave in widget rows;
+- icon slot remains compact;
+- description text must not create rail overflow.
 
-## Dashboard widget shell
+### Dashboard widget shell
 
-Dashboard widgets must match the editor prototype.
+Production files:
 
-Rules:
+- `packages/ui/src/dashboard/DashboardWidget.tsx`
+- `packages/ui/src/dashboard/DashboardResizeHandle.tsx`
 
-- Widget header contains drag grip, title hierarchy, optional state badge, and actions.
-- Drag affordance is neutral grip dots only.
-- Resize handles appear only for selected/resizing widgets.
-- Widget body may scroll internally when content is dense.
-- Empty, loading, stale, disconnected, and error states must preserve shell dimensions.
-- Dragging state may use opacity/border changes but must not create pulse decoration.
+Prototype references:
 
-## Dashboard toolbar
+- `widgets.jsx`
+- `dashboard-editor.jsx`
 
-Toolbar is dense operational chrome.
+Required:
 
-Rules:
+- header contains drag grip, title hierarchy, optional state badge and actions;
+- drag affordance is neutral grip dots only;
+- resize handles appear only for selected/resizing widgets;
+- widget body may scroll internally when content is dense;
+- empty, loading, stale, disconnected and error states preserve shell dimensions;
+- dragging state may use opacity/border changes but must not create pulse decoration.
 
-- It may wrap into multiple rows on narrow widths.
-- Tabs can horizontal-scroll.
-- Search, sync state, time range, and action buttons must remain reachable.
-- Buttons stay compact and tokenized.
-- Toolbar sync/live indicator may use semantic pulse.
+### Dashboard toolbar
 
-## Drop zones and resize handles
+Production files:
 
-Drop zones are editing affordances, not telemetry signals.
+- `packages/ui/src/dashboard/DashboardToolbar.tsx`
 
-Rules:
+Prototype references:
 
-- Default, active, and rejected drop zones remain pulse-free.
-- Active state uses border and background emphasis.
-- Rejected state uses semantic error/warning color without aggressive glow.
-- Resize handles stay small and outside content rhythm.
-- Handles do not become large mobile-only controls.
+- `dashboard-editor.jsx`
 
-## Charts
+Required:
 
-Charts must live inside responsive chart cards or widget shells.
+- dense operational chrome;
+- tabs, search, sync state, time range and actions remain reachable;
+- toolbar may wrap into multiple rows on narrow widths;
+- tabs can horizontal-scroll;
+- buttons stay compact and tokenized;
+- toolbar sync/live indicator may use semantic pulse.
 
-Rules:
+### Drop zones and resize handles
 
-- Use responsive containers.
-- Reduce tick density on narrow widths.
-- Keep chart content clipped to its shell.
-- Use cyan for primary series and purple for secondary series.
-- Chart badge/header slots must be constrained and must not force card width.
-- Empty/loading/error states must preserve the chart shell contract.
+Production files:
+
+- `packages/ui/src/dashboard/DashboardDropZone.tsx`
+- `packages/ui/src/dashboard/DashboardResizeHandle.tsx`
+
+Prototype references:
+
+- `widgets.jsx`
+- `dashboard-editor.jsx`
+
+Required:
+
+- default, active and rejected drop zones remain pulse-free;
+- active state uses border and background emphasis;
+- rejected state uses semantic error/warning color without aggressive glow;
+- resize handles stay small and outside content rhythm;
+- handles do not become large mobile-only controls.
+
+### Charts
+
+Production files:
+
+- `packages/ui/src/charts/*`
+
+Prototype references:
+
+- `dashboard-editor.jsx`
+
+Required:
+
+- use responsive containers;
+- reduce tick density on narrow widths;
+- keep chart content clipped to its shell;
+- use cyan for primary series and purple for secondary series;
+- chart badge/header slots must be constrained and must not force card width;
+- empty/loading/error states must preserve the chart shell contract.
 
 ## Dashboard editor composition
 
@@ -329,6 +461,7 @@ Rules:
 - Tables must preserve semantic table structure.
 - Icon-only buttons require accessible labels.
 - Drag/drop and resize affordances must have keyboard-accessible fallbacks or documented limitations.
+- Repeated table badges should not all behave as live regions unless the state is genuinely updating and important to announce.
 
 ## Verification checklist
 
