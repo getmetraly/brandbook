@@ -17,6 +17,19 @@ The prototype is a dense engineering workspace, not a marketing page.
 - Resize handles only appear on selected or resizing widgets.
 - Pulse-wave is semantic, not decorative.
 
+## Responsive philosophy
+
+Responsive behavior preserves the same product personality.
+
+- Collapse layout before changing tone.
+- Prefer full-width stacking over over-compressed multi-column cards on narrow screens.
+- Allow internal scroll for tabs, tables, and preview stages when content is intrinsically wide.
+- Never allow the page body to overflow horizontally.
+- Reduce chart tick density and spacing before shrinking typography into illegibility.
+- Keep badges, controls, and picker rows compact even when the surrounding layout expands or collapses.
+
+Desktop remains a dense engineering dashboard. Tablet and mobile are the same dashboard with fewer simultaneous columns, not a redesigned experience.
+
 ## Pulse-wave rule
 
 Pulse-wave is allowed only where the prototype uses it semantically: logo mark, live/new/status signal, selected control marker, or chart and telemetry accent.

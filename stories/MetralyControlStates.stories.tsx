@@ -31,7 +31,7 @@ function StateBoardShowcase() {
         Component State Board · Form controls 1-6
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12 }}>
         <BoardSection title="1. MetralyCheckbox">
           <div style={{ display: "grid", gap: 8 }}>
             <MetralyCheckbox label="Stream metrics" />
@@ -119,7 +119,7 @@ function StateBoardShowcase() {
         Widget surface 7-12
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 12 }}>
         <BoardSection title="7. DashboardResizeHandle">
           <div style={{ position: "relative", height: 80, background: "var(--m-bg-1)", borderRadius: "var(--m-r-4)", border: "1px solid var(--m-cyan-500)" }}>
             <DashboardResizeHandle direction="northwest" label="nw" active />
@@ -206,7 +206,7 @@ function StateBoardShowcase() {
         </BoardSection>
 
         <BoardSection title="12. WidgetShell (DashboardWidget)">
-          <div style={{ display: "grid", gap: 8, gridTemplateColumns: "repeat(2, 1fr)" }}>
+          <div style={{ display: "grid", gap: 8, gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))" }}>
             <DashboardWidget id="w1" title="Deploy frequency" subtitle="DORA/DEPLOY-FREQ" state="live" style={{ height: 120 }} />
             <DashboardWidget id="w2" title="Lead time" subtitle="DORA/LEAD-TIME" state="live" selected style={{ height: 120 }} />
             <DashboardWidget id="w3" title="Change failure ra..." subtitle="DORA/CFR" state="stale" stateLabel="Stale 4m" style={{ height: 120 }} />

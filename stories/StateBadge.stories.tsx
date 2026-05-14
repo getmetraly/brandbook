@@ -79,7 +79,7 @@ export const CanonicalMatrix = () => (
   <div
     style={{
       display: 'grid',
-      gridTemplateColumns: 'repeat(3, minmax(160px, max-content))',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
       gap: 24,
       padding: 24,
       background: 'var(--m-bg-0)',
