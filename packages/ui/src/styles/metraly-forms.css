@@ -1,9 +1,11 @@
 .metraly-control-row,
 .metraly-select-field {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   gap: 10px;
   min-width: 0;
+  max-width: 100%;
   color: var(--m-fg-1);
 }
 
@@ -195,12 +197,18 @@
 }
 
 .metraly-select-shell {
+  box-sizing: border-box;
   position: relative;
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .metraly-select-button {
+  box-sizing: border-box;
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
   min-height: var(--m-control-h);
   padding: 0 var(--m-pad-x);
   display: inline-flex;
@@ -248,6 +256,7 @@
 }
 
 .metraly-select-list {
+  box-sizing: border-box;
   position: absolute;
   top: calc(100% + 4px);
   left: 0;
@@ -255,6 +264,7 @@
   z-index: 30;
   display: grid;
   gap: 2px;
+  max-width: min(100%, calc(100vw - 24px));
   max-height: min(50vh, 240px);
   overflow: auto;
   padding: 4px;
@@ -265,6 +275,7 @@
 }
 
 .metraly-select-option {
+  box-sizing: border-box;
   width: 100%;
   padding: 6px 8px;
   display: inline-flex;
@@ -280,17 +291,31 @@
   text-align: left;
 }
 
-.metraly-select-option:hover:not(:disabled) {
+.metraly-select-option:hover:not(:disabled),
+.metraly-select-option.is-active:not(:disabled) {
   background: var(--m-bg-3);
 }
 
 .metraly-select-option.is-selected {
   background: var(--m-cyan-bg);
+  color: var(--m-cyan-500);
+}
+
+.metraly-select-option:focus-visible {
+  outline: none;
+  box-shadow: var(--m-glow-focus);
 }
 
 .metraly-select-option:disabled {
   cursor: not-allowed;
   color: var(--m-fg-4);
+}
+
+.metraly-select-option span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .metraly-select-empty {

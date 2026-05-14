@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { MetralyIcon } from "../components/MetralyIcon";
+import { focusFirstElement, lockBodyScroll, restoreFocus, wrapFocus } from "./overlayFocus";
 
 export interface MetralyBottomSheetProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "children" | "title"> {
@@ -33,18 +34,36 @@ export function MetralyBottomSheet({
 }: MetralyBottomSheetProps) {
   const titleId = React.useId();
   const descriptionId = React.useId();
+  const sheetRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
     if (!open) return;
 
+    const previouslyFocusedElement = document.activeElement;
+    const unlockBodyScroll = lockBodyScroll();
+
+    if (sheetRef.current) {
+      focusFirstElement(sheetRef.current);
+    }
+
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
+        event.preventDefault();
         onOpenChange?.(false);
+        return;
+      }
+
+      if (sheetRef.current) {
+        wrapFocus(event, sheetRef.current);
       }
     }
 
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      unlockBodyScroll();
+      restoreFocus(previouslyFocusedElement);
+    };
   }, [open, onOpenChange]);
 
   if (!open) return null;
@@ -65,6 +84,8 @@ export function MetralyBottomSheet({
       />
       <div
         {...rest}
+        ref={sheetRef}
+        tabIndex={-1}
         className={classes}
         style={sheetStyle}
         role="dialog"

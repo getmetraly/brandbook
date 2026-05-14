@@ -5,6 +5,7 @@ import {
   MetralyButton,
   MetralyIcon,
   MetralyInput,
+  MetralySegmentedControl,
   ThemeProvider,
   WidgetPickerCard,
 } from "@metraly/ui";
@@ -44,6 +45,7 @@ const widgetItems = [
 
 function BottomSheetPreview() {
   const [open, setOpen] = React.useState(false);
+  const [category, setCategory] = React.useState("recommended");
 
   return (
     <ThemeProvider>
@@ -59,34 +61,18 @@ function BottomSheetPreview() {
         >
           <div style={{ padding: 12, display: "grid", gap: 10 }}>
             <MetralyInput search fullWidth placeholder="Filter widgets…" />
-            <div
-              aria-label="Widget categories"
-              style={{
-                display: "flex",
-                gap: 6,
-                overflowX: "auto",
-                paddingBottom: 2,
-              }}
-            >
-              {["Recommended", "DORA", "Flow", "CI"].map((label, index) => (
-                <button
-                  key={label}
-                  type="button"
-                  style={{
-                    border: "1px solid var(--m-line-faint)",
-                    background: index === 0 ? "var(--m-cyan-bg)" : "var(--m-bg-2)",
-                    color: index === 0 ? "var(--m-cyan-400)" : "var(--m-fg-2)",
-                    borderRadius: "999px",
-                    padding: "6px 10px",
-                    fontFamily: "var(--m-font-mono)",
-                    fontSize: "var(--m-fs-9)",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
+            <MetralySegmentedControl
+              ariaLabel="Widget categories"
+              size="sm"
+              value={category}
+              onValueChange={setCategory}
+              options={[
+                { value: "recommended", label: "Recommended" },
+                { value: "dora", label: "DORA" },
+                { value: "flow", label: "Flow" },
+                { value: "ci", label: "CI" },
+              ]}
+            />
             <div role="listbox" aria-label="Available widgets" style={{ display: "grid", gap: 8, paddingBottom: 4 }}>
               {widgetItems.map((item) => (
                 <WidgetPickerCard

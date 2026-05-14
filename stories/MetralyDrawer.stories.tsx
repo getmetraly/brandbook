@@ -6,6 +6,7 @@ import {
   MetralyDrawer,
   MetralyIcon,
   MetralyInput,
+  MetralySegmentedControl,
   MetralySidebar,
   MetralySidebarItem,
   MetralySidebarSection,
@@ -33,7 +34,7 @@ function DrawerPreview({ side = "left" }: { side?: "left" | "right" }) {
           onOpenChange={setOpen}
           side={side}
           title="Widget library"
-          description="utility panel"
+          description="side context panel"
           width={324}
         >
           <MetralySidebar style={{ width: "100%", height: "100%", borderRight: 0 }}>
@@ -56,86 +57,45 @@ function DrawerPreview({ side = "left" }: { side?: "left" | "right" }) {
 
 function MobileDrawerPreview() {
   const [open, setOpen] = React.useState(false);
+  const [group, setGroup] = React.useState("analytics");
 
   return (
     <ThemeProvider>
       <div style={{ minHeight: 640, background: "var(--m-bg-0)", padding: 24 }}>
-        <style>{`
-          @media (max-width: 767px) {
-            .metraly-drawer-story-sheet {
-              top: auto;
-              bottom: 0;
-              width: 100vw;
-              max-width: 100vw;
-              max-height: 78dvh;
-              border-left: 0;
-              border-right: 0;
-              border-top: 1px solid var(--m-line);
-              border-radius: var(--m-r-3) var(--m-r-3) 0 0;
-              box-shadow: var(--m-shadow-3);
-            }
-
-            .metraly-drawer-story-sheet::before {
-              content: "";
-              width: 36px;
-              height: 4px;
-              border-radius: 999px;
-              background: var(--m-line-strong);
-              opacity: 0.72;
-              position: absolute;
-              top: 8px;
-              left: 50%;
-              transform: translateX(-50%);
-            }
-
-            .metraly-drawer-story-sheet .metraly-drawer__header {
-              min-height: 40px;
-              padding-top: 18px;
-            }
-          }
-        `}</style>
         <MetralyButton variant="primary" iconLeft={<MetralyIcon name="menu" size="sm" />} onClick={() => setOpen(true)}>
-          Switch view
+          Open navigation
         </MetralyButton>
         <MetralyDrawer
           open={open}
           onOpenChange={setOpen}
           side="left"
-          title="Switch view"
-          description="quick telemetry jump"
+          title="Workspace navigation"
+          description="full-screen mobile navigation drawer"
           width="100vw"
-          className="metraly-drawer-story-sheet"
         >
           <div style={{ padding: 12, display: "grid", gap: 10 }}>
             <MetralyInput search fullWidth placeholder="Find a dashboard or analytics view…" />
-            <div
-              aria-label="View groups"
-              style={{ display: "flex", gap: 6, overflowX: "auto", paddingBottom: 2 }}
-            >
-              {["Pinned", "Dashboards", "Analytics", "System"].map((label, index) => (
-                <button
-                  key={label}
-                  type="button"
-                  style={{
-                    border: "1px solid var(--m-line-faint)",
-                    background: index === 2 ? "var(--m-cyan-bg)" : "var(--m-bg-2)",
-                    color: index === 2 ? "var(--m-cyan-400)" : "var(--m-fg-2)",
-                    borderRadius: "999px",
-                    padding: "6px 10px",
-                    fontFamily: "var(--m-font-mono)",
-                    fontSize: "var(--m-fs-9)",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
+            <MetralySegmentedControl
+              ariaLabel="View groups"
+              size="sm"
+              value={group}
+              onValueChange={setGroup}
+              fullWidth
+              options={[
+                { value: "pinned", label: "Pinned" },
+                { value: "dashboards", label: "Dashboards" },
+                { value: "analytics", label: "Analytics" },
+                { value: "system", label: "System" },
+              ]}
+            />
             <div role="listbox" aria-label="Available views" style={{ display: "grid", gap: 8, paddingBottom: 4 }}>
               {viewItems.map((item) => (
                 <button
                   key={item.id}
                   type="button"
+                  role="option"
+                  aria-selected={item.state === "active"}
+                  onClick={() => setOpen(false)}
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -159,9 +119,9 @@ function MobileDrawerPreview() {
                     </span>
                   </div>
                   {item.badge ? (
-                    <MetralyBadge variant={item.id === "ci" ? "warn" : "cyan"}>{item.badge}</MetralyBadge>
+                    <MetralyBadge variant={item.id === "ci" ? "warning" : "primary"}>{item.badge}</MetralyBadge>
                   ) : item.state === "active" ? (
-                    <MetralyBadge variant="cyan">Current</MetralyBadge>
+                    <MetralyBadge variant="primary">Current</MetralyBadge>
                   ) : null}
                 </button>
               ))}
