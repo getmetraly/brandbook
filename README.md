@@ -1,26 +1,27 @@
-# Metraly Brandbook
+# Full-file replacement: fix dashboard e2e draft assertion
 
-This repository tracks the prototype-first rebuild of the Metraly brandbook.
-
-## Canonical reference
-
-`../docs/prototypes/brandbook/*` is the source of truth for tokens, layout, component states, and dashboard editor behavior.
-
-## Repo layout
-
-- `packages/ui` translates the prototype into production React primitives.
-- `site` is a docs and showcase host for `@metraly/ui`.
-- `stories` is the conformance harness for prototype states and scenarios.
-- `docs/` contains the current working contract and migration notes.
-
-## Validation
+Commit name:
 
 ```bash
+test(e2e): scope dashboard docs legacy assertions
+```
+
+Copy this file over the repository root:
+
+```bash
+cp -R e2e/* ./e2e/
+```
+
+Then run:
+
+```bash
+npm run test:e2e
 npm run ui:check
 npm run site:typecheck
 npm run site:test
 npm run build-storybook
-npm run test:e2e
 ```
 
-`npm run check` covers the core package and site type/test pass.
+Why:
+
+`/components/dashboard` legitimately contains multiple `draft` labels in the current documentation/status UI, so the previous broad assertion `getByText(/draft/i).toHaveCount(0)` is no longer valid. The replacement keeps the useful regression guard by checking that old preview-hardening paths/copy are not exposed.
