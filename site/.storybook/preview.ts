@@ -12,7 +12,6 @@ import "@metraly/ui/styles/metraly-state-badge.css";
 import "@metraly/ui/styles/metraly-table.css";
 import "@metraly/ui/styles/metraly-widget-picker.css";
 import "@metraly/ui/styles/metraly-widget-shell.css";
-import "../../stories/storybook-viewport-fixes.css";
 
 const preview: Preview = {
   parameters: {
