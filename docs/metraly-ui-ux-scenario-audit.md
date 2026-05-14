@@ -1,433 +1,449 @@
 # Metraly UI/UX Scenario Audit
 
-**Status:** Draft scenario source for future `@metraly/ui` migration into `getmetraly/metraly/ui`.  
+**Status:** Reworked to follow the source-of-truth report `UI UX аудит миграции Metraly из Brandbook в локальный UI слой приложения`.  
 **Last updated:** 2026-05-15  
 **Related documents:**
 - `docs/metraly-ui-to-brandbook-component-plan.md`
 - `docs/metraly-ui-to-brandbook-component-map.md`
+- `docs/metraly-local-ui-layer-architecture.md`
 
 ---
 
 ## 1. Purpose
 
-This document captures the product-level UI/UX scenarios that must be clarified before and during the migration from brandbook `packages/ui` into `getmetraly/metraly/ui`.
+This document captures the product-level scenarios that must drive the local UI layer migration in `getmetraly/metraly/ui`.
 
-The goal is not to add public components for every screen. The goal is to define enough product behavior that the migration can use `@metraly/ui` without losing important flows, mobile behavior, or state coverage.
-
----
-
-## 2. Scenario design rules
-
-1. Every screen must have loading, empty, populated, error, and mobile states.
-2. Every destructive or irreversible action must have confirmation or clear undo/recovery.
-3. Every screen with data must explain where the data comes from and what stale/no-data means.
-4. Every cross-screen flow must define its handoff point.
-5. Mobile must be designed as a first-class layout, not a compressed desktop.
-6. Components from `@metraly/ui` should be composed; product logic stays in product.
+Unlike the earlier cautious version, this document assumes that the audit findings are actionable requirements. If the audit recommends adding a local component, renaming a surface, changing API, or restructuring the app UI layer, that item must appear in the plan/map.
 
 ---
 
-## 3. Cross-screen scenario map
+## 2. Product-level problems to solve
+
+| Priority | Problem | Required scenario response |
+|---:|---|---|
+| P0 | Shell context mismatch: role title, sidebar active item, and top tabs can indicate different scopes. | AppShell scenario must enforce one active context model. |
+| P0 | Duplicate role navigation without clear scope. | Decide whether role controls are route links, tabs, or segmented local filters. |
+| P0 | AI naming drift. | Use `AI Workspace`; assistant is a capability inside workspace. |
+| P0 | Plugins/Marketplace naming drift. | Use `Plugins`; marketplace is gated subset. |
+| P0 | Connect Sources/Connectors drift. | Use `Connectors` everywhere. |
+| P0 | Status taxonomy drift. | Use one canonical status set across app/site/docs. |
+| P0 | No local adapter layer. | Scenarios must consume `src/design-system/*`, not ad hoc feature components. |
+| P0 | DnD/edit-mode accessibility risk. | Dashboard editor must support non-drag move fallback. |
+| P1 | Reflow/mobile risk for dense dashboards. | Each scenario has mobile acceptance criteria. |
+| P1 | App repo lacks brandbook-level conformance. | Each scenario requires story/visual/a11y targets. |
+| P1 | Mixed JS/TS entrypoints. | Migration cleanup must leave one TypeScript runtime path. |
+
+---
+
+## 3. Cross-screen flow map
 
 ```text
 Onboarding
-  → Connector setup
+  → Connectors
   → Data validation
-  → Dashboard wizard
+  → Dashboard Wizard
   → Dashboard overview
 
 Metrics Explorer
   → Select metric
-  → Inspect trend/table
+  → Inspect chart/table
   → Save as widget
-  → Dashboard editor
+  → Dashboard Editor
   → Dashboard overview
 
-Marketplace
-  → Discover integration
-  → Connector setup
-  → Connector health
-  → Metrics Explorer / Dashboard data
+Plugins
+  → Plugin review
+  → Permissions/signing check
+  → Install or gated state
+  → Connector/AI/dashboard integration if supported
 
-AI Assistant
+AI Workspace
   → Context from dashboard / widget / metric / connector
-  → Explanation / suggested action
-  → User accepts action manually
+  → Evidence-backed answer
+  → Trace/provenance review
+  → Explicit user-confirmed action
 ```
 
 ---
 
-## 4. Dashboard overview
+## 4. Shared product patterns
+
+| Pattern | Required local components | Applies to |
+|---|---|---|
+| App shell | `AppShell`, `Sidebar`, `HeaderBar`, `PageHeader`, `FilterBar` | all main screens |
+| Wizard | `WizardLayout`, `StepRail`, `ReviewPanel`, `StickyWizardFooter` | onboarding, connectors, dashboard wizard |
+| Widget surface | `WidgetShell`, `MetricCard`, `StatusBadge`, `HealthPill` | dashboards, explorer, AI summaries |
+| Data surface | `DataTable<Row>`, `SummaryFooter`, `statusRow` | metrics, connectors, plugins, settings |
+| Evidence workspace | `EvidencePanel`, `AnswerCard`, `TraceDrawer` | AI, connectors, plugins |
+| Review before commit | `ReviewPanel`, `PluginReviewDrawer`, permission/status badges | plugins, connector scopes, destructive edits |
+| Accessible board editing | `BoardToolbar`, `BoardDropZone`, `GripHandle`, `MoveMenu` | dashboard editor |
+
+---
+
+## 5. AppShell and role navigation
 
 ### Primary user goal
 
-Understand current engineering/product health at a glance and identify what needs attention.
+Understand current role/context immediately and navigate without conflicting scope signals.
+
+### Required decisions
+
+- Sidebar active item, page title, and top controls must reference the same scope.
+- If role switching changes the current page/dashboard, use navigation links.
+- If role switching changes a subview inside the same dashboard, use real `Tabs`.
+- If role switching is only a local display filter, use segmented control, not page tabs.
 
 ### Required states
 
-| State | UX requirement |
+| State | Requirement |
 |---|---|
-| Loading | Skeleton or calm loading state for cards/charts/tables. |
-| Empty | Explain that no dashboard/widgets exist and offer Create dashboard / Add widget. |
-| Populated | Show widgets with consistent density and clear status. |
-| Stale data | Show `StateBadge` and last updated timestamp. |
-| Widget error | Contain error inside widget, not full page crash. |
-| Permission-limited | Show restricted state without broken layout. |
+| Default dashboard | active route + title + page context aligned. |
+| Role switch | one selected role, one changed scope. |
+| Gated nav item | status visible, not indistinguishable from live route. |
+| Mobile nav | drawer-based nav with focus trap/body lock. |
 
-### Required actions
+### Acceptance
 
-- Create dashboard.
-- Edit dashboard.
-- Add widget.
-- Open widget details.
-- Refresh data.
-- Navigate to Metrics Explorer for deeper analysis.
+- No `CTO` sidebar + `CTO Dashboard` title + `VP Eng` active tab mismatch.
+- AI/Plugins/Connectors labels use canonical names.
+- Planned/designed surfaces are visibly gated.
 
-### Brandbook components
+---
 
-- `MetralyShell`
-- `MetralyTopbar`
-- `MetralySidebar`
-- `DashboardGrid`
-- `DashboardWidget`
-- `MetralyMetricCard`
-- chart wrappers
-- `MetralyTable`
-- `StateBadge`
-- `MetralyButton`
+## 6. Dashboard overview
 
-### Open UX decisions
+### Primary user goal
 
-- Is "Board" a separate concept or an older name for Dashboard?
-- Should dashboard overview have a default global time range?
+See engineering health at a glance and move into investigation or editing.
+
+### Required components
+
+- `WidgetShell`
+- `MetricCard`
+- `Card`
+- `DataTable<Row>`
+- `StatusBadge`
+- `HealthPill`
+- chart/widget renderers under `widgets/*`
+- `EmptyState`
+
+### Required states
+
+| State | Requirement |
+|---|---|
+| Loading | stable skeletons; no layout jump. |
+| Empty | route to Dashboard Wizard or Add widget. |
+| Populated | all widgets use `WidgetShell`. |
+| Stale | `StatusBadge`/timestamp visible. |
+| Widget error | contained inside widget. |
+| Permission-limited | visible gated state. |
+| Mobile | widgets stack; charts/tables scroll internally. |
+
+### Open decisions
+
+- Is `Board` still a separate product concept?
+- Which dashboard is first-run default?
 - Which widgets are allowed before connectors are configured?
 
 ---
 
-## 5. Dashboard editor
+## 7. Dashboard Editor / Board edit mode
 
 ### Primary user goal
 
-Change the dashboard layout and widget configuration safely.
+Safely edit layout and widgets, including without drag-and-drop.
+
+### Required components
+
+- `BoardCanvas`
+- `BoardToolbar`
+- `BoardDropZone`
+- `GripHandle`
+- `MoveMenu`
+- `WidgetShell`
+- `WidgetCatalogCard`
+- `BottomSheet` / `Drawer`
 
 ### Required states
 
-| State | UX requirement |
+| State | Requirement |
 |---|---|
-| View mode | No drag handles unless edit mode is active. |
-| Edit mode | Drag, resize, remove, configure, and save controls are visible. |
-| Dragging | Drop targets are clear without neon/pulse overload. |
-| Resizing | Resize handle and widget boundaries are visible. |
-| Unsaved changes | Persistent indicator and Save/Discard actions. |
-| Save success | Clear confirmation without disrupting layout. |
-| Save error | Error is recoverable; user does not lose changes. |
-| Empty editor | Widget library CTA and drop zone. |
+| View mode | no drag handles. |
+| Edit mode | mode visible, controls active. |
+| Dragging | clear drop intent. |
+| Keyboard move | `MoveMenu` provides non-drag fallback. |
+| Resizing | visible handle, keyboard label. |
+| Unsaved changes | persistent status + save/discard. |
+| Save error | preserve changes and allow retry. |
+| Mobile | catalog opens as bottom sheet/drawer; no hover-only controls. |
 
-### Mobile behavior
+### Acceptance
 
-- Widget library should open as `MetralyBottomSheet` or `MetralyDrawer`.
-- Widget cards should be searchable and grouped.
-- Drag/drop may need fallback "Add" actions if touch drag is unreliable.
-- Primary action stays visible; secondary actions collapse.
-
-### Brandbook components
-
-- `DashboardToolbar`
-- `DashboardGrid`
-- `DashboardWidget`
-- `DashboardDropZone`
-- `DashboardResizeHandle`
-- `WidgetPickerCard`
-- `MetralyBottomSheet`
-- `MetralyDrawer`
-- `StateBadge`
-- `MetralyButton`
-- `MetralyInput`
-
-### Open UX decisions
-
-- Should mobile support drag/reorder or use explicit move controls?
-- Should widget configuration open in drawer or inline panel?
-- What is the exact unsaved-changes copy?
+- Key edit operations work without dragging.
+- Pulse marker is not used as handle.
+- Edit/view mode is unmistakable.
+- Widget picker follows constrained width/sheet behavior.
 
 ---
 
-## 6. Metrics Explorer
+## 8. Metrics Explorer
 
 ### Primary user goal
 
-Find a metric, understand its trend, and turn it into a useful dashboard widget.
+Find a metric, understand the trend, and save it as a widget.
 
-### Required states
+### Required components
 
-| State | UX requirement |
-|---|---|
-| Initial | Show useful metric groups and search. |
-| Searching | Keep tree/search responsive; show no-results state. |
-| Selected metric | Chart/table/details update clearly. |
-| Loading data | Chart/table loading does not collapse layout. |
-| No data | Explain source and next step. |
-| Stale data | Show last successful update. |
-| Query error | Offer retry and details. |
-| Save as widget | Confirm destination dashboard and widget type. |
+- `Input`
+- `Tabs` or route links according to semantics
+- `FilterBar`
+- `Select`
+- `DataTable<Row>`
+- `WidgetShell`
+- `StatusBadge`
+- chart renderers
+- `Button`
 
-### Core flow
+### Flow
 
 ```text
 Search/select metric
 → Inspect chart/table
-→ Adjust time range
-→ Apply filter/compare
+→ Change time range
+→ Filter/compare
 → Save as widget
 → Add to dashboard
 ```
 
-### Brandbook components
+### Required states
 
-- `MetralyNavigationTree`
-- `MetralyInput`
-- `MetralySegmentedControl`
-- `MetralySelect`
-- `MetralyMetricCard`
-- chart wrappers
-- `MetralyTable`
-- `StateBadge`
-- `MetralyButton`
-
-### Open UX decisions
-
-- Which metric groups are canonical?
-- Is compare mode required in first migration?
-- What widget types can be created from a metric?
-- Does saving create a new widget immediately or open Dashboard Wizard?
+| State | Requirement |
+|---|---|
+| Initial | metric groups/search visible. |
+| Searching | no-results state. |
+| Selected metric | chart/table/details update. |
+| No data | explain source/connector gap. |
+| Stale data | last successful update. |
+| Query error | retry and details. |
+| Save as widget | confirm dashboard/widget type. |
 
 ---
 
-## 7. Marketplace and connectors
-
-### Product distinction
-
-Marketplace is the catalogue. Connectors are active configured integrations and their health.
-
-### Marketplace states
-
-| State | UX requirement |
-|---|---|
-| Loading | Card skeletons. |
-| Available | Show integration purpose and setup CTA. |
-| Installed | Show status and manage CTA. |
-| Setup required | Continue setup CTA. |
-| Coming soon | Disabled but visible if strategically useful. |
-| Error | Retry or view details. |
-
-### Connector health states
-
-| State | UX requirement |
-|---|---|
-| Connected | Healthy status, last sync, data volume. |
-| Syncing | Progress or current step. |
-| Delayed | Warning with next retry time. |
-| Failed auth | Reconnect CTA. |
-| Rate-limited | Explanation and retry window. |
-| No data yet | Explain expected delay or setup gap. |
-
-### Brandbook components
-
-- `MetralyCard`
-- `MetralyButton`
-- `MetralyBadge`
-- `StateBadge`
-- `MetralyIcon`
-- `MetralyCodeBlock`
-- `MetralyTable`
-- `MetralyDrawer`
-- `MetralyBottomSheet`
-
-### Open UX decisions
-
-- Should connector setup be a drawer, page, or wizard?
-- Which provider types are first-class?
-- How much diagnostic detail is exposed to non-admin users?
-
----
-
-## 8. Onboarding
+## 9. Connector Wizard
 
 ### Primary user goal
 
-Reach the first meaningful dashboard as quickly as possible.
+Connect a data source with clear permissions, dry-run validation, and health handoff.
 
-### Recommended activation flow
+### Required components
+
+- `WizardLayout`
+- `StepRail`
+- `ReviewPanel`
+- `StickyWizardFooter`
+- `DataTable<Row>`
+- `StatusBadge`
+- `HealthPill`
+- `EvidencePanel`
+- `CodeBlock` / setup instructions
+
+### Happy path
 
 ```text
-Choose data source
-→ Connect source
-→ Validate incoming data
-→ Pick dashboard template
-→ Review dashboard
-→ Create first dashboard
+Choose connector type
+→ Auth/token
+→ Select scope
+→ Review permissions
+→ Dry run
+→ Review signals/errors
+→ Map repos/projects to teams
+→ Sync cadence
+→ Create connector
+→ Connector health
 ```
 
 ### Required states
 
-| State | UX requirement |
+| State | Requirement |
 |---|---|
-| First run | Explain value and next step. |
-| Source selected | Show setup instructions. |
-| Connecting | Show progress and safe waiting state. |
-| Validation failed | Explain what failed and how to retry. |
-| No data yet | Explain expected delay. |
-| Skipped | Let user resume onboarding later. |
-| Complete | Route to dashboard overview. |
-
-### Brandbook components
-
-- `MetralyCard`
-- `MetralyPanel`
-- `MetralyButton`
-- `MetralySelect`
-- `MetralyInput`
-- `MetralyCodeBlock`
-- `StateBadge`
-- `MetralyTelemetryLine`
-
-### Open UX decisions
-
-- Can users skip connector setup?
-- Which dashboard template is default?
-- Where does onboarding resume if interrupted?
+| Over-broad scope | warning with safer option. |
+| Partial dry run | imported/skipped/errors visible. |
+| Failed auth | reconnect CTA. |
+| Rate limited | retry window. |
+| No data yet | expected delay and next check. |
+| Mobile | review/details in drawer/sheet if needed. |
 
 ---
 
-## 9. Dashboard wizard
+## 10. Dashboard Wizard
 
 ### Primary user goal
 
-Create a useful dashboard without manually building every widget.
+Generate a useful dashboard from goal, role, and widget bundle.
 
-### Required steps
+### Required components
 
-1. Select purpose/template.
-2. Select data source or metric group.
-3. Choose widgets.
-4. Review layout.
-5. Create dashboard.
+- `WizardLayout`
+- `StepRail`
+- `ReviewPanel`
+- `StickyWizardFooter`
+- `WidgetCatalogCard`
+- `MetricCard`
+- `StatusBadge`
+
+### Flow
+
+```text
+Choose goal
+→ Choose role template
+→ Review recommended widget bundle
+→ Customize widgets
+→ Preview layout
+→ Generate dashboard
+→ Open dashboard overview or editor
+```
 
 ### Required states
 
-| State | UX requirement |
+| State | Requirement |
 |---|---|
-| Template selection | Clear difference between templates. |
-| Missing source | Route user to connector setup. |
-| Widget selection | Show selected count and preview. |
-| Review | Show dashboard name, widgets, source, time range. |
-| Create error | Keep state and allow retry. |
-| Success | Route to dashboard editor or overview. |
-
-### Component stance
-
-Keep wizard stepper and state machine recipe/product-owned. Do not add public `WizardStepIndicator` yet.
+| No connectors | explain synthetic/limited mode or route to Connectors. |
+| Gated widgets | disabled with explicit reason. |
+| Conflicting role/goal | explain best-fit template, no silent override. |
+| Create error | preserve wizard state and retry. |
+| Success | route to generated dashboard. |
 
 ---
 
-## 10. AI Assistant
+## 11. AI Workspace
 
 ### Primary user goal
 
-Get contextual help interpreting metrics, incidents, and dashboard changes.
+Get evidence-backed explanations and suggested actions without black-box UI.
+
+### Required naming
+
+Use `AI Workspace` as route/surface name. `AI Assistant` is a capability inside the workspace.
+
+### Required components
+
+- `AIWorkspaceLayout`
+- `EvidencePanel`
+- `AnswerCard`
+- `TraceDrawer`
+- `StatusBadge`
+- `CodeBlock`
+- `Button`
 
 ### Required context modes
 
-| Context mode | UX requirement |
+| Context | Requirement |
 |---|---|
-| No context | Show safe suggestions and ask user to select data. |
-| Selected metric | Show metric name, time range, and source. |
-| Selected widget | Show widget context and dashboard name. |
-| Selected dashboard | Assistant can summarize board-level changes. |
-| Connector issue | Assistant can explain setup/sync problem. |
-| Onboarding | Assistant can explain next step. |
+| No context | suggestions + ask user to select data. |
+| Selected metric | metric, time range, source visible. |
+| Selected widget | widget and dashboard visible. |
+| Selected dashboard | board-level summary. |
+| Connector issue | setup/sync context visible. |
+| Synthetic/live/BYO | source/provider state visible. |
 
 ### Required states
 
-| State | UX requirement |
-|---|---|
-| Empty | Suggested prompts. |
-| Thinking/streaming | Non-jarring loading state. |
-| Partial answer | User can continue or retry. |
-| Error | Retry and preserve prompt. |
-| Suggested action | Action is explicit and user-confirmed. |
-| Unsupported request | Safe explanation and alternative. |
+- empty prompts;
+- thinking/streaming;
+- partial answer;
+- failed answer;
+- uncertainty;
+- suggested action;
+- unsupported request.
 
-### Brandbook components
+### Acceptance
 
-- `MetralyPanel`
-- `MetralyCard`
-- `MetralyInput`
-- `MetralyButton`
-- `MetralyBadge`
-- `StateBadge`
-- `MetralyCodeBlock`
-- `MetralyTelemetryLine`
-
-### Product-owned
-
-- Chat bubbles.
-- Streaming implementation.
-- Tool/action execution.
-- Prompt suggestions.
-- Context binding.
+- Every answer can show “Data used” / “Why this answer”.
+- Suggested actions are user-confirmed.
+- Benchmark/policy status is visible where relevant.
 
 ---
 
-## 11. Settings and account/workspace flows
+## 12. Plugins
 
-### Current status
+### Primary user goal
 
-Settings were not deeply defined in the component map. Before migration, inventory whether `getmetraly/metraly/ui` has:
+Review plugin risk, permissions, signing, and publisher before install.
+
+### Required naming
+
+Use `Plugins` as top-level. Use `Plugin Marketplace` only as gated subset when marketplace requirements are met.
+
+### Required components
+
+- `PluginCatalog`
+- `PluginReviewDrawer`
+- `PermissionBadge`
+- `SigningBanner`
+- `StatusBadge`
+- `DataTable<Row>`
+
+### Required review fields
+
+- publisher;
+- signed/unsigned;
+- requested permissions;
+- network/data access;
+- compatible runtime tier;
+- version/update history;
+- revocation status;
+- install eligibility.
+
+### Acceptance
+
+- Install CTA becomes primary only after review.
+- Gated/coming-soon plugins are not presented as live.
+- Permissions are visible before commit.
+
+---
+
+## 13. Settings and account/workspace flows
+
+### Required inventory
+
+Before migration, inventory:
 
 - workspace settings;
 - account/profile settings;
 - API keys;
-- team/members;
+- teams/members;
 - billing/plan;
 - notification preferences;
 - connector settings.
 
-### Likely brandbook coverage
+### Likely components
 
-- `MetralyTabs`
-- `MetralyCard`
-- `MetralyPanel`
-- `MetralyInput`
-- `MetralySwitch`
-- `MetralySelect`
-- `MetralyTable`
-- `MetralyButton`
-- `StateBadge`
-
-### Open UX decisions
-
-- Which settings are MVP?
-- Which settings require admin permissions?
-- Which settings belong under Connectors instead of global Settings?
+- `Tabs`
+- `Card`
+- `Panel`
+- `Input`
+- `Select`
+- `DataTable<Row>`
+- `Button`
+- `StatusBadge`
+- `HealthPill`
 
 ---
 
-## 12. Mobile scenario checklist
+## 14. Mobile checklist
 
-For every scenario, verify:
+Required for every scenario:
 
-- primary action remains reachable;
+- primary action reachable;
 - secondary actions do not overflow topbar;
-- tables and charts scroll internally;
-- drawer/sheet traps focus;
-- bottom sheet has clear title and close action;
-- no hidden hover-only affordances;
-- touch target sizes are usable;
-- no body-level horizontal overflow;
-- state badges remain readable.
+- table/chart regions scroll internally;
+- drawer/sheet traps focus and locks body scroll;
+- no hover-only affordances;
+- target sizes and spacing are usable;
+- state badges readable;
+- no body-level horizontal overflow.
 
-Required widths:
+Widths:
 
 ```text
 320px
@@ -442,17 +458,21 @@ Required widths:
 
 ---
 
-## 13. Migration backlog from this audit
+## 15. Migration backlog
 
 | Priority | Item | Target |
 |---:|---|---|
-| P0 | Harden drawer/sheet focus trap, focus restore, body lock | `packages/ui` |
-| P0 | Resolve Dashboard vs Board naming | docs/product IA |
-| P0 | Define mobile widget library behavior | Dashboard Editor scenario |
-| P1 | Add Metrics Explorer save-as-widget recipe | Storybook/docs |
-| P1 | Add Marketplace installed/error/loading states | Storybook/docs |
-| P1 | Add Connector health scenario | docs + recipe |
-| P1 | Add Onboarding activation path | docs + recipe |
-| P2 | Add AI Assistant contextual modes | docs + optional recipe |
-| P2 | Inventory Settings flows | future audit |
-| P2 | Revisit Gauge/Heatmap after product migration evidence | `packages/ui` only if needed |
+| P0 | Naming/status taxonomy freeze | app/docs/site |
+| P0 | Local design-system structure | `metraly/ui/src/design-system` |
+| P0 | Compatibility barrel | `design-system/compat` |
+| P0 | AppShell context cleanup | `app/shell` |
+| P0 | Component rename/API migration | `design-system/*` |
+| P0 | Board edit accessibility fallback | `design-system/board` |
+| P1 | DataTable migration | `design-system/surfaces/DataTable` |
+| P1 | Unified wizard pattern | `design-system/wizard` |
+| P1 | Connector Wizard health/review states | `features/connectors` |
+| P1 | AI Workspace evidence UI | `design-system/ai` + feature |
+| P1 | Plugin review/gating UI | `design-system/plugins` + feature |
+| P1 | App-level Storybook/visual/a11y harness | `test/*` |
+| P2 | Clean mixed JS/TS entrypoints | app root |
+| P2 | Remove compat imports | final cleanup |
