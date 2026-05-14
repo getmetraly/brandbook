@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { DashboardEditorMobileViewportScenario as DashboardEditorScenario } from "./scenarios/dashboard-editor/DashboardEditorMobileViewportScenario";
+import { DashboardEditorResponsiveScenario as DashboardEditorScenario } from "./scenarios/dashboard-editor/DashboardEditorResponsiveScenario";
 
 const meta: Meta<typeof DashboardEditorScenario> = {
   title: "Scenarios/Dashboard Editor",
