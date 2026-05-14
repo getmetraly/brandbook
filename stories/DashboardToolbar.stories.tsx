@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { DashboardToolbar } from "@metraly/ui";
+import { DashboardToolbar, MetralyButton } from "@metraly/ui";
 
 const stageStyle = {
   minHeight: '100dvh',
@@ -39,7 +39,7 @@ const meta: Meta<typeof DashboardToolbar> = {
           editMode
           onToggleEdit={() => undefined}
           onAddWidget={() => undefined}
-          actions={<button className="metraly-dashboard-toolbar-button is-primary" type="button">Save</button>}
+          actions={<MetralyButton variant="primary" size="sm">Save</MetralyButton>}
         />
       </div>
     </div>
