@@ -1,6 +1,7 @@
 .dashboard-editor-panel {
   display: grid;
   gap: 12px;
+  min-width: 0;
   padding: 16px;
 }
 
@@ -76,6 +77,9 @@
 
 .dashboard-editor-layout--board-only {
   grid-template-columns: minmax(0, 1fr);
+}
+.dashboard-editor-layout > * {
+  min-width: 0;
 }
 
 .dashboard-widget-picker {
@@ -182,4 +186,40 @@
 
 .metraly-dashboard-grid-shell {
   min-width: 0;
+}
+
+@media (max-width: 960px) {
+  .dashboard-editor-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .dashboard-editor-panel {
+    padding: 12px;
+  }
+
+  .dashboard-editor-topbar {
+    padding: 12px;
+  }
+
+  .dashboard-editor-topbar-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .dashboard-editor-banner {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    min-height: auto;
+    padding: 8px 12px;
+  }
+
+  .dashboard-widget-picker {
+    padding: 10px;
+  }
+
+  .dashboard-widget-picker-list {
+    max-height: min(42vh, 320px);
+  }
 }

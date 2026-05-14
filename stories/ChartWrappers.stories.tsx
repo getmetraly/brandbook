@@ -18,7 +18,7 @@ const data = [
 
 function ChartWrapperShowcase() {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 16 }}>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
       <MetralyChartCard title="Review latency" summary="Review latency improved from 8.4 hours to 5.4 hours." badge={<StateBadge state="live" label="Live" />}>
         <MetralyLineChart data={data} xKey="name" ariaLabel="Review latency line chart" summary="Review latency improved from 8.4 hours to 5.4 hours." series={[{ dataKey: 'review', name: 'Review latency', tone: 'primary' }]} />
       </MetralyChartCard>

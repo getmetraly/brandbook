@@ -12,9 +12,9 @@ import {
 import { MetralyChartTooltip } from "./MetralyChartTooltip";
 import {
   chartStateFromData,
-  metralyAxisProps,
   metralyChartMargin,
   resolveChartTone,
+  useResponsiveChartAxisProps,
   type MetralyChartBaseProps,
   type MetralyChartDatum,
 } from "./types";
@@ -32,6 +32,7 @@ export function MetralyAreaChart<TDatum extends MetralyChartDatum = MetralyChart
 }: MetralyChartBaseProps<TDatum>) {
   const gradientId = React.useId().replace(/:/g, "");
   const resolvedState = chartStateFromData(state, data.length);
+  const { containerRef, xAxisProps, yAxisProps } = useResponsiveChartAxisProps(width);
   const classes = ["metraly-chart", "is-area", resolvedState !== "default" && `is-${resolvedState}`, className]
     .filter(Boolean)
     .join(" ");
@@ -85,13 +86,13 @@ export function MetralyAreaChart<TDatum extends MetralyChartDatum = MetralyChart
   });
 
   return (
-    <div className={classes} role="img" aria-label={ariaLabel} {...chartProps}>
+    <div ref={containerRef} className={classes} role="img" aria-label={ariaLabel} {...chartProps}>
       {width ? (
         <AreaChart width={width} height={height} data={data} margin={metralyChartMargin} title={ariaLabel}>
           {gradients}
           <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
-          <XAxis dataKey={xKey} {...metralyAxisProps} />
-          <YAxis {...metralyAxisProps} />
+          <XAxis dataKey={xKey} {...xAxisProps} />
+          <YAxis {...yAxisProps} />
           <MetralyChartTooltip />
           {areas}
         </AreaChart>
@@ -100,8 +101,8 @@ export function MetralyAreaChart<TDatum extends MetralyChartDatum = MetralyChart
           <AreaChart data={data} margin={metralyChartMargin} title={ariaLabel}>
             {gradients}
             <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
-            <XAxis dataKey={xKey} {...metralyAxisProps} />
-            <YAxis {...metralyAxisProps} />
+            <XAxis dataKey={xKey} {...xAxisProps} />
+            <YAxis {...yAxisProps} />
             <MetralyChartTooltip />
             {areas}
           </AreaChart>

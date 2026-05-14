@@ -255,6 +255,8 @@
   z-index: 30;
   display: grid;
   gap: 2px;
+  max-height: min(50vh, 240px);
+  overflow: auto;
   padding: 4px;
   border: 1px solid var(--m-line);
   border-radius: var(--m-r-3);
