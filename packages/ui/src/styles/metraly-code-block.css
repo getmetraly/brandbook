@@ -36,18 +36,30 @@
   font: inherit;
 }
 
+.metraly-code-block--primary,
 .metraly-code-block--cyan {
   color: var(--m-cyan-500);
 }
 
+.metraly-code-block--secondary {
+  color: var(--m-purple-500);
+}
+
+.metraly-code-block--success,
 .metraly-code-block--ok {
   color: var(--m-ok);
 }
 
+.metraly-code-block--warning,
 .metraly-code-block--warn {
   color: var(--m-warn);
 }
 
+.metraly-code-block--error,
 .metraly-code-block--err {
   color: var(--m-err);
+}
+
+.metraly-code-block--info {
+  color: var(--m-fg-1);
 }
