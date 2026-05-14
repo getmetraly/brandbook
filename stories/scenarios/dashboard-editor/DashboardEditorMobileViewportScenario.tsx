@@ -1,27 +1,51 @@
 import * as React from "react";
 import { DashboardEditorResponsiveScenario } from "./DashboardEditorResponsiveScenario";
 
-function MobileViewportScrollbarFix() {
+function MobileViewportLayoutFix() {
   return (
     <style>{`
       @media (max-width: 760px) {
         .de-shell,
-        .de-main,
-        .de-content {
-          scrollbar-width: none;
-          -ms-overflow-style: none;
+        .de-shell * {
+          box-sizing: border-box;
         }
 
-        .de-shell::-webkit-scrollbar,
-        .de-main::-webkit-scrollbar,
-        .de-content::-webkit-scrollbar {
-          width: 0;
-          height: 0;
-          display: none;
+        .de-shell {
+          width: 100%;
+          max-width: 100%;
+          height: 100dvh;
+          max-height: 100dvh;
+          min-height: 0;
+          overflow: clip;
+        }
+
+        .de-main {
+          width: 100%;
+          max-width: 100%;
+          min-width: 0;
+          min-height: 0;
+          overflow: clip;
+        }
+
+        .de-topbar,
+        .de-content,
+        .de-dashboard-grid,
+        .de-grid-cell,
+        .de-grid-cell > * {
+          max-width: 100%;
+          min-width: 0;
         }
 
         .de-content {
-          overscroll-behavior: contain;
+          flex: 1 1 auto;
+          min-height: 0;
+          overflow: clip;
+          scrollbar-gutter: auto;
+        }
+
+        .de-dashboard-grid {
+          width: 100%;
+          overflow: clip;
         }
       }
     `}</style>
@@ -31,7 +55,7 @@ function MobileViewportScrollbarFix() {
 export function DashboardEditorMobileViewportScenario() {
   return (
     <>
-      <MobileViewportScrollbarFix />
+      <MobileViewportLayoutFix />
       <DashboardEditorResponsiveScenario />
     </>
   );
