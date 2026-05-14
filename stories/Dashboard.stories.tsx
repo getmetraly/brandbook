@@ -4,6 +4,9 @@ import { DashboardEditorResponsiveScenario as DashboardEditorScenario } from "./
 const meta: Meta<typeof DashboardEditorScenario> = {
   title: "Scenarios/Dashboard Editor",
   component: DashboardEditorScenario,
+  parameters: {
+    layout: "fullscreen",
+  },
 };
 
 export default meta;
