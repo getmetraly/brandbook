@@ -34,7 +34,7 @@ function ShellPreview({ collapsed = false, mode = "desktop" }: { collapsed?: boo
         ) : null}
       </div>
       {!collapsed ? (
-        <MetralyBadge variant="ok">All systems nominal</MetralyBadge>
+        <MetralyBadge variant="success">All systems nominal</MetralyBadge>
       ) : null}
     </div>
   );
