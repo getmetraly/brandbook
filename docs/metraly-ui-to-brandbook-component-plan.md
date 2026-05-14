@@ -1,6 +1,6 @@
 # Metraly UI → Brandbook Migration Execution Plan
 
-**Status:** Reworked from the attached source-of-truth report: `UI UX аудит миграции Metraly из Brandbook в локальный UI слой приложения`.  
+**Status:** Reworked from the attached source-of-truth report: `Metraly UI/UX migration audit from Brandbook into the local application UI layer`.  
 **Last updated:** 2026-05-15  
 **Companion documents:**
 - `docs/metraly-ui-to-brandbook-component-map.md`
