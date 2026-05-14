@@ -212,6 +212,8 @@ These differences are intentional and must not be "fixed" back to the prototype 
 | Drag affordance can inherit surrounding accent energy | Drag handles are neutral grip dots only | Dragging must stay calm and predictable. |
 | Generic selected/active surfaces could overuse glow | Glow is limited to focus, selected and live/new semantics | Prevents neon drift and preserves telemetry hierarchy. |
 | Mobile could be redesigned as a separate simplified experience | Mobile keeps the same design language with fewer columns | Prevents a second design system. |
+| Mobile navigation could remain a partial drawer on all narrow widths | Narrow mobile uses a full-screen navigation drawer; larger mobile/tablet keeps a side drawer | Full-screen nav prevents cramped intermediate states on `mobile1` while preserving tablet density. |
+| Standalone resize handles can be useful in state boards | Full dashboard/editor scenarios do not render standalone resize handles | Resize handles are component/edit affordances and should appear only on selected/resizing widgets or isolated state examples. |
 
 ## Component implementation contracts
 
@@ -262,7 +264,8 @@ Required:
 - semantic colors;
 - optional indicator;
 - pulse only for `live` and `new` by default;
-- truncation before layout distortion.
+- truncation before layout distortion;
+- full label discoverability via tooltip/title when a constrained parent truncates chip text.
 
 Forbidden:
 
@@ -374,7 +377,8 @@ Required:
 - resize handles appear only for selected/resizing widgets;
 - widget body may scroll internally when content is dense;
 - empty, loading, stale, disconnected and error states preserve shell dimensions;
-- dragging state may use opacity/border changes but must not create pulse decoration.
+- dragging state may use opacity/border changes but must not create pulse decoration;
+- footer content participates in the widget flex layout and must not be clipped at narrow widths.
 
 ### Dashboard toolbar
 
@@ -393,7 +397,8 @@ Required:
 - toolbar may wrap into multiple rows on narrow widths;
 - tabs can horizontal-scroll;
 - buttons stay compact and tokenized;
-- toolbar sync/live indicator may use semantic pulse.
+- toolbar sync/live indicator may use semantic pulse;
+- toolbar content must not force the page wider than the viewport.
 
 ### Drop zones and resize handles
 
@@ -413,7 +418,8 @@ Required:
 - active state uses border and background emphasis;
 - rejected state uses semantic error/warning color without aggressive glow;
 - resize handles stay small and outside content rhythm;
-- handles do not become large mobile-only controls.
+- handles do not become large mobile-only controls;
+- handles are rendered only by selected/resizing widget shells or isolated component/state-board stories, not as free-floating controls in complete dashboard/editor pages.
 
 ### Charts
 
@@ -447,9 +453,21 @@ Desktop prototype composition:
 Responsive composition:
 
 - desktop keeps board + library rail;
-- tablet and mobile stack the library below the board;
+- tablet uses overlay navigation and keeps widget-library access through the editor action;
+- mobile collapses to a single board column;
+- narrow mobile navigation is full-screen;
+- widget library is a bottom sheet on mobile;
 - board may scroll internally;
-- page body must not scroll horizontally.
+- page body must not scroll horizontally;
+- full dashboard scenarios must not render standalone resize handles outside selected/resizing widgets.
+
+## Storybook scenario rules
+
+- Storybook stories should expose component behavior, not hide broken production behavior.
+- Scenario-specific CSS is allowed for composing realistic pages and editor shells.
+- Scenario-specific CSS must not be used as a substitute for fixing reusable `packages/ui` components.
+- DOM mutation or post-render cleanup is forbidden for production-like Storybook scenarios.
+- If a visual affordance should not exist in the scenario, do not render it in JSX.
 
 ## Accessibility and interaction
 
