@@ -97,9 +97,7 @@
 }
 
 .metraly-widget-shell-badge {
-  flex: 0 1 auto;
-  max-width: min(92px, 34%);
-  overflow: hidden;
+  flex: 0 0 auto;
   white-space: nowrap;
 }
 
@@ -165,10 +163,6 @@
 
   .metraly-widget-shell-heading {
     flex: 1 1 auto;
-  }
-
-  .metraly-widget-shell-badge {
-    max-width: 78px;
   }
 
   .metraly-widget-shell-body {
