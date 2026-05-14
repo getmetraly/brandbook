@@ -1,406 +1,784 @@
-# Metraly UI → Brandbook Component Plan
+# Metraly UI → Brandbook Migration Execution Plan
 
-**Status:** Updated after UI/UX research for future `@metraly/ui` migration into `getmetraly/metraly/ui`.  
+**Status:** Reworked from the attached source-of-truth report: `UI UX аудит миграции Metraly из Brandbook в локальный UI слой приложения`.  
 **Last updated:** 2026-05-15  
 **Companion documents:**
 - `docs/metraly-ui-to-brandbook-component-map.md`
 - `docs/metraly-ui-ux-scenario-audit.md`
+- `docs/metraly-local-ui-layer-architecture.md`
 
-**Scope rule:** `getmetraly/metraly/ui` is the product inventory and future migration target. `getmetraly/brandbook` remains the source of truth for reusable UI contracts, design tokens, component APIs, Storybook scenarios, and migration documentation.
-
----
-
-## 1. Executive decision
-
-The next workstream should not start with new visual components. It should start by closing **screen-level UX gaps** and **migration contracts** that will prevent a clean adoption of `@metraly/ui` inside `getmetraly/metraly/ui`.
-
-Current `@metraly/ui` already has a useful public foundation:
-
-- shell/navigation seams;
-- dashboard grid/widget seams;
-- form primitives;
-- cards/panels/badges/tables;
-- chart wrappers;
-- dashboard editor scenarios;
-- mobile drawer and bottom sheet primitives.
-
-The missing layer is the **product scenario layer**: what each screen does, which states it must support, which components it must use, and what must remain product-owned.
+**Scope rule:** `getmetraly/brandbook` remains the upstream design-system authority. `getmetraly/metraly/ui` must become a downstream product UI layer with a local design-system adapter, explicit contracts, canonical names, and app-owned feature bindings.
 
 ---
 
-## 2. Updated UX findings from the research pass
+## 1. Source-of-truth decision
 
-### 2.1 Information architecture issues
+This plan intentionally follows the audit report as the source of truth.
 
-| Finding | Impact | Required action |
-|---|---|---|
-| Dashboard / Board / Dashboard Editor / Dashboard Wizard overlap conceptually. | Users can perceive four different ways to do the same thing. | Define canonical naming and screen ownership before migration. |
-| Metrics Explorer is a strong candidate for a primary analysis workflow, but needs clearer relationship to dashboards. | Users may not know when to explore metrics versus save a widget to a dashboard. | Add an explicit "Explore → Save as widget → Add to dashboard" scenario. |
-| Marketplace / Integrations and Connectors overlap. | Integration setup can become fragmented. | Separate catalogue discovery from connection configuration/status. |
-| AI Assistant is useful but can become unclear if it is not grounded in selected data/context. | Users may not trust suggestions or know what the assistant is acting on. | Add contextual states: no context, selected metric, selected dashboard, incident investigation. |
-| Onboarding currently needs stronger product intent. | First-time users may not know what to connect or what success looks like. | Make onboarding goal-oriented: connect data → validate events → create first dashboard. |
+The migration is **not** only a cosmetic adoption of `@metraly/ui`. The audit identifies structural, naming, API, accessibility, testing, and scenario gaps. Therefore the plan must include:
 
-### 2.2 Navigation and layout issues
-
-| Finding | Impact | Required action |
-|---|---|---|
-| Desktop shell can use sidebar + topbar, but mobile needs explicit navigation behavior. | Responsive migration can regress quickly. | Use `MetralyDrawer` for mobile nav and `MetralyBottomSheet` for utility/widget library surfaces. |
-| Widget library on mobile needs a dedicated interaction model. | A desktop side panel does not scale down cleanly. | Treat widget library as a searchable bottom sheet with categories and selected-state feedback. |
-| Topbar actions can crowd the viewport. | 320–430px layouts can overflow. | Define action priority: primary action visible; secondary actions collapse into drawer/sheet/menu recipe. |
-| Tables/charts need internal scroll contracts. | Body-level horizontal overflow breaks the app shell. | Keep page shell overflow controlled; only table/chart regions scroll internally. |
-
-### 2.3 Component system issues
-
-| Finding | Impact | Required action |
-|---|---|---|
-| Existing package API is mostly sufficient. | New components now would add API churn. | Prefer recipes and product adapters over new public exports. |
-| Drawer/sheet are public but not fully modal-accessible. | Production mobile navigation/utility overlays are not complete. | Phase 1a must harden focus trap, focus restore, and body scroll lock. |
-| Gauge and heatmap are still deferred. | Dashboard parity may require them later. | Do not add preemptively; add only when migration proves repeated usage. |
-| Wizard stepper is reusable-looking but not proven enough. | Premature public API risk. | Keep stepper as recipe until a third production flow reuses it. |
-| AI chat bubbles and streaming states are product-specific. | Bad fit for package public API today. | Keep in product; document recommended composition from primitives. |
+- local `design-system/` structure inside `getmetraly/metraly/ui/src`;
+- a compatibility adapter for old/brandbook names;
+- canonical component renames for the local app UI layer;
+- API changes for core surfaces;
+- naming/status taxonomy freeze;
+- AppShell/navigation cleanup;
+- accessibility hardening for tabs, focus, drag-and-drop, and board edit mode;
+- Storybook/visual/a11y conformance inside the app repo;
+- cleanup of mixed JS/TS entrypoints after migration.
 
 ---
 
-## 3. Updated migration principles
+## 2. Executive summary
 
-1. **Brandbook owns primitives, shells, recipes, visual contracts, and Storybook benchmarks.**
-2. **Metraly product owns data adapters, state machines, permissions, API calls, and business copy.**
-3. **Do not migrate screen-specific components into `packages/ui` unless they repeat across at least three product areas.**
-4. **Every migration phase must preserve functionality first, then improve visual parity.**
-5. **Mobile behavior is not a follow-up. It is part of the acceptance criteria for every screen.**
-6. **No body-level horizontal overflow is allowed at 320px, 375px, 390px, 430px, 768px, 1024px, 1280px, and 1440px.**
-7. **Storybook scenarios are migration benchmarks, not marketing demos.**
+The audit states that the main problem is not visual polish. The problem is the gap between the canonical design system and product UI:
 
----
+- navigation context is inconsistent;
+- status terminology is inconsistent;
+- component contracts are not explicit enough;
+- app UI has no local design-system layer;
+- dashboard/edit-mode accessibility risks are high;
+- app-level Storybook/typecheck/visual conformance maturity is behind brandbook.
 
-## 4. Canonical product IA proposal
-
-Use this as the migration target unless the product team decides otherwise.
-
-| Product area | Canonical role | Keep / rename / merge recommendation |
-|---|---|---|
-| Dashboard | Primary overview and saved operational boards. | Keep as the main landing experience. |
-| Board | If it duplicates dashboard, merge into Dashboard terminology. | Avoid a separate top-level nav item unless it has a different mental model. |
-| Dashboard Editor | Edit mode for an existing dashboard. | Keep as a mode/state, not necessarily a separate product destination. |
-| Dashboard Wizard | Guided dashboard creation. | Keep as onboarding/creation flow, not a competing dashboard screen. |
-| Metrics Explorer | Deep analysis and metric discovery. | Keep as a primary workflow connected to "Add to dashboard". |
-| Marketplace | Integration catalogue. | Keep as discovery/catalogue. |
-| Connectors | Active connection setup and health. | Add or document as a product scenario separate from Marketplace. |
-| AI Assistant | Contextual analysis helper. | Keep but ground it in selected metric/dashboard/incident context. |
-| Onboarding | First-run activation path. | Rework around connection, validation, and first dashboard creation. |
-| Settings | Workspace/account/integration configuration. | Add scenario if product already has settings-like screens. |
-
----
-
-## 5. Updated phase plan
-
-### Phase 0 — Documentation alignment and scenario audit
-
-**Status:** current phase.
-
-Work:
-
-- Update `docs/metraly-ui-to-brandbook-component-map.md`.
-- Update `docs/metraly-ui-to-brandbook-component-plan.md`.
-- Add `docs/metraly-ui-ux-scenario-audit.md`.
-- Explicitly document screen ownership, scenario gaps, and migration acceptance criteria.
-
-Acceptance:
-
-- Plan and map no longer describe only component coverage.
-- Each product area has an explicit migration stance.
-- Unresolved product scenarios are captured as phase inputs, not forgotten.
-
----
-
-### Phase 1 — Foundation hardening before product migration
-
-#### Phase 1a — Overlay accessibility hardening
-
-Work:
-
-- Add focus trap to `MetralyDrawer` and `MetralyBottomSheet`.
-- Restore focus to trigger/previous element on close.
-- Lock body scroll while open.
-- Preserve Escape, scrim close, and close button behavior.
-- Add interaction tests or Storybook play checks.
-
-Acceptance:
-
-- Drawer and bottom sheet keep current visuals.
-- Keyboard users cannot tab into the background.
-- Body scroll is locked while overlays are open.
-- No horizontal overflow at mobile widths.
-
-#### Phase 1b — Shell/mobile verification
-
-Work:
-
-- Verify `MetralyShell`, `MetralySidebar`, `MetralyTopbar`, `MetralyDrawer`, and `MetralyBottomSheet` together.
-- Add or update Storybook scenarios for desktop, tablet, and mobile app shell.
-- Confirm action collapse rules in topbar.
-
-Acceptance:
-
-- Mobile nav opens from topbar and behaves consistently.
-- Secondary actions do not cause overflow.
-- Sidebar, drawer, and topbar are documented as the canonical product shell.
-
----
-
-### Phase 2 — Dashboard and dashboard editor migration contract
-
-Work:
-
-- Treat `Scenarios/DashboardEditor` as the primary benchmark.
-- Define the product adapter boundary for `react-grid-layout`.
-- Keep widget data rendering in product.
-- Use package seams:
-  - `DashboardGrid`
-  - `DashboardWidget`
-  - `DashboardToolbar`
-  - `DashboardEmptyState`
-  - `DashboardDropZone`
-  - `DashboardResizeHandle`
-  - `WidgetPickerCard`
-  - cards, badges, tables, chart wrappers.
-
-Mobile requirements:
-
-- Widget library becomes a bottom sheet or drawer-backed surface.
-- Drag/reorder affordances must not rely only on hover.
-- Selected/resizing/drop states must be visible without decorative pulse.
-
-Acceptance:
-
-- Create, edit, remove, resize, and save widget flows are documented.
-- Empty dashboard and error states are documented.
-- Mobile widget library has a clear open/search/select/close path.
-- Product adapter remains outside `packages/ui`.
-
----
-
-### Phase 3 — Metrics Explorer scenario expansion
-
-Work:
-
-- Define the canonical flow:
-  1. Search/select metric.
-  2. Inspect chart and table.
-  3. Change time range/view.
-  4. Compare or filter.
-  5. Save as widget.
-  6. Add to dashboard.
-- Use:
-  - `MetralyNavigationTree`
-  - `MetralySegmentedControl`
-  - `MetralyInput`
-  - `MetralySelect`
-  - chart wrappers
-  - `MetralyTable`
-  - `MetralyMetricCard`
-  - `StateBadge`.
-
-Deferred:
-
-- `MetralyGauge`
-- `MetralyHeatmap`
-- `MetralyFilterPill`
-
-Acceptance:
-
-- Explorer has loading, empty, no-results, invalid-query, stale-data, and error states.
-- Mobile explorer prioritizes metric tree/search first, filters second.
-- "Save as widget" handoff to dashboard is explicitly documented.
-
----
-
-### Phase 4 — Connectors, marketplace, and integration health
-
-Work:
-
-- Split catalogue discovery from connection management.
-- Marketplace recipe covers:
-  - available integration;
-  - installed integration;
-  - setup required;
-  - error;
-  - loading;
-  - disabled/coming soon.
-- Connector health scenario covers:
-  - connected;
-  - syncing;
-  - delayed;
-  - failed auth;
-  - rate-limited;
-  - no data yet.
-
-Components:
-
-- `MetralyCard`
-- `MetralyButton`
-- `MetralyBadge`
-- `StateBadge`
-- `MetralyIcon`
-- `MetralyCodeBlock`
-- `MetralyTable`
-- `MetralyDrawer` / `MetralyBottomSheet` for setup details where needed.
-
-Acceptance:
-
-- Do not create public `PluginCard` yet.
-- Use recipe composition unless three or more product flows require the same card API.
-- Document retry/reconnect states.
-
----
-
-### Phase 5 — Onboarding and dashboard wizard
-
-Work:
-
-- Rework onboarding around activation:
-  1. Choose source.
-  2. Connect source.
-  3. Validate incoming data.
-  4. Pick first dashboard template.
-  5. Review and create dashboard.
-- Keep wizard state machine product-owned.
-- Use brandbook primitives and recipe layout only.
-
-Components:
-
-- `MetralyButton`
-- `MetralyInput`
-- `MetralySelect`
-- `MetralyCodeBlock`
-- `MetralyCard`
-- `StateBadge`
-- `MetralySegmentedControl`
-- `MetralyBottomSheet` for mobile step details if needed.
-
-Acceptance:
-
-- First-run empty state leads to onboarding.
-- User can skip and resume later if product supports it.
-- Failure/retry states are documented.
-- Stepper remains recipe-only.
-
----
-
-### Phase 6 — AI Assistant contextual UX
-
-Work:
-
-- Keep assistant UI product-owned.
-- Define context modes:
-  - no context;
-  - selected metric;
-  - selected dashboard;
-  - selected widget;
-  - incident/regression investigation;
-  - onboarding helper.
-- Define states:
-  - empty prompt suggestions;
-  - streaming;
-  - partial answer;
-  - failed answer;
-  - cited/linked insight;
-  - action suggestion.
-
-Components:
-
-- `MetralyPanel`
-- `MetralyCard`
-- `MetralyInput`
-- `MetralyButton`
-- `MetralyBadge`
-- `StateBadge`
-- `MetralyCodeBlock`
-- `MetralyTelemetryLine`.
-
-Acceptance:
-
-- No public chat bubble component yet.
-- Assistant never hides the selected data context.
-- Suggested actions use normal package buttons/links and remain product-owned.
-
----
-
-### Phase 7 — Product migration execution
-
-Work:
-
-- Add `@metraly/ui` to `getmetraly/metraly/ui`.
-- Bootstrap `ThemeProvider`.
-- Replace icons, buttons, inputs, badges, cards, panels, tables.
-- Replace shell with `MetralyShell` and associated seams.
-- Replace dashboard surfaces with dashboard package seams.
-- Migrate recipes screen by screen.
-
-Suggested order:
-
-1. Static primitives and tokens.
-2. Shell/navigation.
-3. Dashboard read-only view.
-4. Dashboard editor.
-5. Metrics Explorer.
-6. Marketplace/connectors.
-7. Onboarding/wizard.
-8. AI Assistant composition.
-9. Cleanup legacy UI components.
-
-Acceptance:
-
-- Product functionality is unchanged or intentionally documented.
-- Rollback is possible per screen.
-- Visual diffs are captured for each major screen.
-- Tests pass after each screen-level migration.
-
----
-
-## 6. Screen-by-screen acceptance checklist
-
-| Screen/scenario | Required states | Required mobile behavior | Public API changes allowed? |
-|---|---|---|---:|
-| Dashboard overview | loading, empty, populated, stale data, widget error | stacked cards, internal chart/table scroll | no |
-| Dashboard editor | edit, dragging, resizing, drop target, unsaved changes, save success/error | widget library in sheet/drawer | no |
-| Metrics Explorer | loading, no results, selected metric, compare/filter, data error | metric tree/search first, filters compact | only if repeated gap appears |
-| Marketplace | loading, installed, setup required, coming soon, error | card grid collapses cleanly | no |
-| Connectors | connected, syncing, delayed, auth failed, no data | setup detail in drawer/sheet | no |
-| Onboarding | first run, skipped, reconnect, validation failed, complete | one primary action per step | no |
-| Dashboard wizard | template select, source select, review, create error | step content stays linear | no |
-| AI Assistant | no context, selected context, streaming, failed, suggested action | panel or sheet, not full-screen by default | no |
-
----
-
-## 7. Verification commands
-
-Run in `getmetraly/brandbook`:
-
-```bash
-npm run ui:check
-npm run site:typecheck
-npm run site:test
-npm run build-storybook
-npm run test:e2e
-```
-
-Required Storybook smoke targets:
+The migration strategy is:
 
 ```text
-/scenarios-dashboard-editor--default
-/scenarios-component-state-board--default
-/story/metraly-shell--expanded
-/story/metraly-shell--mobile
-/story/metraly-drawer--default
-/story/metraly-bottom-sheet--default
-/story/metraly-navigation-tree--metric-tree
-/story/metraly-segmented-control--default
-/patterns-*
-/components-*
+brandbook = upstream authority
+metraly/ui = downstream app consumer with local adapters
 ```
 
-Required viewport matrix:
+Migration order:
+
+```text
+tokens + primitives
+→ local design-system structure
+→ component rename/API contracts
+→ app shell/navigation
+→ dashboard surfaces
+→ tables/data surfaces
+→ board edit mode
+→ wizards/connectors
+→ AI/plugins gated surfaces
+→ conformance and cleanup
+```
+
+---
+
+## 3. Non-negotiables from the audit
+
+| Area | Required decision |
+|---|---|
+| Brandbook authority | Brandbook remains canonical for visual language, tokens, component behavior, density, focus/hover states, and pulse-wave rules. |
+| Local app layer | `getmetraly/metraly/ui` must get a local `src/design-system/` layer instead of importing or copying primitives ad hoc inside feature code. |
+| Adapter layer | Add `src/design-system/compat/brandbook-legacy.ts` to preserve old names during phased migration. |
+| Component names | Local app names should become product-neutral and shorter: `Card`, `WidgetShell`, `BoardToolbar`, `DataTable`, etc. |
+| API contracts | Core surfaces need explicit slots and typed state contracts, not loose page-level composition. |
+| AppShell IA | Sidebar/title/top-tabs must never show conflicting role or dashboard context. |
+| Status taxonomy | One status vocabulary must be used across website/docs/app: preview, designed, planned, in progress, gated, benchmark pending, policy defined, live. |
+| AI and plugins | Planned/gated surfaces must be truthfully labeled in UI and must not look fully launched. |
+| DnD/edit mode | Board editing must have non-drag fallback, visible focus, clear edit/view mode, and no pulse-as-drag-handle. |
+| Reflow/mobile | Dashboard shell, headers, filters, tables, charts, and widget catalog must be verified at 320–1440px. |
+| App conformance | App repo needs typecheck/story/visual/a11y verification, not only brandbook. |
+
+---
+
+## 4. Required local structure in `getmetraly/metraly/ui`
+
+The migration must introduce this local layer. It should sit above existing `features/*`, not destroy feature ownership.
+
+```text
+ui/src/
+  app/
+    routing/
+    providers/
+    shell/
+      AppShell.tsx
+      Sidebar.tsx
+      HeaderBar.tsx
+      PageHeader.tsx
+
+  design-system/
+    tokens/
+      semantic.css
+      aliases.css
+      status-tokens.css
+    primitives/
+      Button/
+      IconButton/
+      Tabs/
+      Input/
+      Select/
+      Dialog/
+      Tooltip/
+    telemetry/
+      StatusBadge/
+      TrendBadge/
+      PulseMarker/
+      HealthPill/
+    surfaces/
+      Card/
+      Panel/
+      MetricCard/
+      WidgetShell/
+      WidgetCatalogCard/
+      DataTable/
+      EmptyState/
+      Skeleton/
+      FilterBar/
+    board/
+      BoardCanvas/
+      BoardDropZone/
+      BoardToolbar/
+      GripHandle/
+      MoveMenu/
+    wizard/
+      WizardLayout/
+      StepRail/
+      ReviewPanel/
+      StickyWizardFooter/
+    ai/
+      AIWorkspaceLayout/
+      EvidencePanel/
+      AnswerCard/
+      TraceDrawer/
+    plugins/
+      PluginCatalog/
+      PluginReviewDrawer/
+      PermissionBadge/
+      SigningBanner/
+    compat/
+      brandbook-legacy.ts
+
+  features/
+    dashboards/
+    dashboard-editor/
+    metrics-explorer/
+    connectors/
+    plugins/
+    ai-workspace/
+    setup/
+    notifications/
+
+  widgets/
+    metric-card/
+    sparkline-widget/
+    heatmap-widget/
+    risk-list-widget/
+    bar-chart-widget/
+
+  lib/
+    formatters/
+    a11y/
+    analytics/
+    feature-gates/
+
+  test/
+    visual/
+    interactions/
+    accessibility/
+```
+
+### Structure rules
+
+1. `design-system/*` owns reusable UI contracts.
+2. `features/*` owns product flows, data loading, routing, permissions, API calls, and copy.
+3. `widgets/*` owns widget renderers that plug into `WidgetShell`.
+4. `lib/a11y/*` owns keyboard/focus helpers that are not component-specific.
+5. `compat/*` is temporary and must be removed after migration.
+
+---
+
+## 5. Required component renames
+
+These are now plan items, not deferred ideas.
+
+| Current / brandbook name | Local app target name | Migration stance |
+|---|---|---|
+| `MetralyCard` | `Card` | Rename locally; keep compat export during transition. |
+| `MetralyMetricCard` | `MetricCard` | Rename locally; keep semantics aligned with brandbook. |
+| `DashboardWidget` | `WidgetShell` | Rename and split shell from renderer. |
+| `DashboardGrid` | `BoardCanvas` / dashboard layout adapter | Product app owns layout adapter; shell uses `WidgetShell`. |
+| `DashboardDropZone` | `BoardDropZone` | Rename and extend for keyboard/pointer fallback. |
+| `DashboardToolbar` | `BoardToolbar` | Rename and make edit/view mode explicit. |
+| `DashboardResizeHandle` | `GripHandle` / `ResizeHandle` | Use neutral grip/resize affordance; no pulse marker. |
+| `WidgetPickerCard` | `WidgetCatalogCard` | Rename and add category/compatibility/status contract. |
+| `MetralyTable` | `DataTable<Row>` | Rename locally and add typed table API. |
+| `MetralyBadge` | `StatusBadge` / `Badge` split | Use `StatusBadge` for operational state; generic `Badge` for labels. |
+| `StateBadge` | `HealthPill` or `StatusBadge` | Consolidate operational status vocabulary. |
+| `MetralyTabs` | `Tabs` | Must follow real tab semantics when used as tabs. |
+| route-like tabs | links/nav items | If control changes route/page, do not use pseudo-tabs. |
+| `AI Assistant` page | `AIWorkspace` | Assistant becomes capability inside workspace. |
+| `Connect Sources` | `Connectors` | Canonical product name. |
+| `Marketplace` | `Plugins` / `Plugin Marketplace` | Top-level is `Plugins`; marketplace is gated subset. |
+
+---
+
+## 6. Required API changes
+
+### 6.1 `Card`
+
+Target:
+
+```ts
+type CardProps = {
+  variant?: "default" | "elevated" | "outlined" | "interactive";
+  density?: "compact" | "default" | "comfortable";
+  tone?: "neutral" | "cyan" | "purple" | "success" | "warning" | "danger";
+  header?: React.ReactNode;
+  footer?: React.ReactNode;
+  actions?: React.ReactNode;
+  children: React.ReactNode;
+};
+```
+
+Rules:
+
+- no ad hoc card header/footer layouts in feature pages;
+- no hover layout jumps;
+- tokenized border/background/focus states only.
+
+### 6.2 `WidgetShell`
+
+Target:
+
+```ts
+type WidgetShellProps = {
+  title: string;
+  description?: string;
+  status?: StatusState;
+  actions?: React.ReactNode;
+  footer?: React.ReactNode;
+  loading?: boolean;
+  emptyState?: React.ReactNode;
+  errorState?: React.ReactNode;
+  selected?: boolean;
+  editMode?: boolean;
+  children: React.ReactNode;
+};
+```
+
+Rules:
+
+- widget shell owns title/status/actions/footer/loading/empty/error frame;
+- widget renderer owns chart/table/content only;
+- widget errors are contained inside the widget.
+
+### 6.3 `BoardToolbar`
+
+Target:
+
+```ts
+type BoardToolbarProps = {
+  mode: "view" | "edit";
+  status?: React.ReactNode;
+  viewControls?: React.ReactNode;
+  editControls?: React.ReactNode;
+  primaryActions?: React.ReactNode;
+  secondaryActions?: React.ReactNode;
+};
+```
+
+Rules:
+
+- view/edit mode must be visible;
+- unsaved changes must be visible;
+- primary action stays reachable on mobile;
+- secondary actions collapse on narrow widths.
+
+### 6.4 `BoardDropZone`
+
+Target:
+
+```ts
+type BoardDropZoneProps = {
+  active?: boolean;
+  intent?: "insert" | "replace" | "reorder";
+  keyboardTarget?: boolean;
+  pointerFallbackLabel?: string;
+  children?: React.ReactNode;
+};
+```
+
+Rules:
+
+- no pulse marker as drag handle;
+- must support keyboard/single-pointer alternative;
+- must expose clear drop intent.
+
+### 6.5 `DataTable<Row>`
+
+Target:
+
+```ts
+type DataTableProps<Row> = {
+  rows: Row[];
+  columns: Array<DataTableColumn<Row>>;
+  loadingState?: React.ReactNode;
+  emptyState?: React.ReactNode;
+  errorState?: React.ReactNode;
+  statusRow?: React.ReactNode;
+  summaryFooter?: React.ReactNode;
+  bulkActions?: React.ReactNode;
+  mobilePresentation?: "table" | "cards" | "stacked";
+  getRowId: (row: Row) => string;
+};
+```
+
+Rules:
+
+- metrics explorer and catalog/list pages use this table contract;
+- tables/charts scroll internally, never force body overflow;
+- footer/status row is first-class.
+
+### 6.6 `WidgetCatalogCard`
+
+Target:
+
+```ts
+type WidgetCatalogCardProps = {
+  title: string;
+  category: string;
+  compatibility?: string[];
+  density?: "compact" | "default";
+  preview?: React.ReactNode;
+  requiresPro?: boolean;
+  status?: "available" | "installed" | "gated" | "coming-soon";
+  onAdd?: () => void;
+};
+```
+
+Rules:
+
+- width must follow brandbook picker constraints;
+- card is catalog item, not full-page block;
+- disabled/gated state must be visible.
+
+### 6.7 `Tabs` / navigation
+
+Rules:
+
+- if the control is a tabbed interface, use `tablist`, `tab`, `tabpanel` semantics and keyboard behavior;
+- if the control changes route/page/scope, use navigation links;
+- role navigation must not exist simultaneously in sidebar and top tabs without different scopes.
+
+### 6.8 Wizard components
+
+Required local components:
+
+- `WizardLayout`
+- `StepRail`
+- `ReviewPanel`
+- `StickyWizardFooter`
+
+Rules:
+
+- setup, connectors, onboarding, and dashboard wizard use the same wizard pattern;
+- stepper is now part of local app design-system layer, not only a Storybook recipe.
+
+### 6.9 AI / evidence components
+
+Required local components:
+
+- `AIWorkspaceLayout`
+- `EvidencePanel`
+- `AnswerCard`
+- `TraceDrawer`
+
+Rules:
+
+- AI is evidence-backed workspace, not just chat;
+- every answer must show context/data/provenance state where applicable;
+- model/source mode must be visible if synthetic/local/BYO differs.
+
+### 6.10 Plugins / trust components
+
+Required local components:
+
+- `PluginCatalog`
+- `PluginReviewDrawer`
+- `PermissionBadge`
+- `SigningBanner`
+
+Rules:
+
+- plugin install must go through review;
+- signed/unsigned, permissions, publisher, version/update/revocation status must be visible;
+- marketplace remains gated until trust requirements are met.
+
+---
+
+## 7. Compatibility adapter
+
+Required temporary file:
+
+```ts
+// ui/src/design-system/compat/brandbook-legacy.ts
+export { Card as MetralyCard } from "../surfaces/Card";
+export { MetricCard as MetralyMetricCard } from "../surfaces/MetricCard";
+export { WidgetShell as DashboardWidget } from "../surfaces/WidgetShell";
+export { DataTable as MetralyTable } from "../surfaces/DataTable";
+export { BoardDropZone as DashboardDropZone } from "../board/BoardDropZone";
+export { BoardToolbar as DashboardToolbar } from "../board/BoardToolbar";
+export { WidgetCatalogCard as WidgetPickerCard } from "../surfaces/WidgetCatalogCard";
+export { StatusBadge as StateBadge } from "../telemetry/StatusBadge";
+```
+
+Rules:
+
+- app migration can use compat imports temporarily;
+- new code must import canonical local names;
+- final cleanup phase removes compat imports.
+
+---
+
+## 8. Canonical product naming
+
+| Domain | Canonical name | Deprecated names / notes |
+|---|---|---|
+| Dashboard | `Dashboard` | `Board` only if it has a distinct model; otherwise merge into Dashboard terminology. |
+| Dashboard edit mode | `Dashboard Editor` or `Edit mode` | Not a separate competing product destination. |
+| Dashboard creation | `Dashboard Wizard` | Guided creation flow. |
+| Metrics analysis | `Metrics Explorer` | Must hand off to Save as widget. |
+| Integrations setup/health | `Connectors` | Replace `Connect Sources` and inconsistent wizard naming. |
+| Plugin catalogue | `Plugins` | `Marketplace` becomes gated `Plugin Marketplace` subset. |
+| AI surface | `AI Workspace` | `AI Assistant` is a capability inside workspace. |
+| New dashboard action | `+ New Dashboard` | Opens Dashboard Wizard, not raw empty canvas by default. |
+
+---
+
+## 9. Canonical status taxonomy
+
+Use one status vocabulary across website, docs, app shell, cards, wizards, and trust surfaces.
+
+| Canonical status | Meaning | UI treatment |
+|---|---|---|
+| `Live` | Available and operational. | `StatusBadge` success/live. |
+| `Preview` | User-visible but not final. | Info/neutral badge with explicit copy. |
+| `Designed` | Design exists, not production-ready. | Gated/read-only preview. |
+| `Planned` | Roadmap item, not user-operable. | Disabled/gated surface. |
+| `In progress` | Implementation is active. | Non-clickable or limited CTA. |
+| `Gated` | Access depends on entitlement, pilot, or trust requirement. | Lock/permission state. |
+| `Policy defined` | Governance exists, implementation may not. | Trust/docs-only status. |
+| `Benchmark pending` | Claim not yet validated. | Must not be marketed as done. |
+| `Coming soon` | Optional marketing state; must map to Planned or Designed internally. | Disabled CTA only. |
+| `Error` | Operation failed. | Recoverable error with retry/details. |
+| `Delayed` | Sync/data not current. | Warning state with next retry/last update. |
+
+Deprecated unstructured terms:
+
+```text
+AI Soon
+AI direction
+Plugin ecosystem
+Connect Sources
+Next
+Then
+Later
+```
+
+These can appear in copy only if mapped to canonical statuses.
+
+---
+
+## 10. Updated migration phases
+
+### Phase 0 — Audit ingestion and plan rewrite
+
+**Status:** current documentation phase.
+
+Work:
+
+- Treat the attached UI/UX audit as source of truth.
+- Rewrite plan/map/scenario documents to include structure, rename, API, quality gates.
+- Add local UI layer architecture document.
+
+Acceptance:
+
+- Plan explicitly includes package structure, renames, API changes, testing, accessibility, and cleanup.
+- No “defer by default” language remains for audit-mandated changes.
+
+---
+
+### Phase 1 — Inventory, naming freeze, and status taxonomy
+
+Work:
+
+- Inventory existing `ui/src/api`, `components`, `context`, `features`, `hooks`, `types`, `utils`, `test`.
+- Identify duplicate `App.jsx`/`App.tsx` and `index.jsx`/`index.tsx` entrypoints.
+- Freeze canonical names for Dashboard, Board, AI Workspace, Plugins, Connectors, Wizards.
+- Freeze status taxonomy and map old terms to canonical statuses.
+- Fix shell context mismatch: title/sidebar/top-tabs must point to one scope.
+
+Acceptance:
+
+- One source file documents route names, nav names, status names, and deprecated names.
+- No role dashboard can render conflicting sidebar/title/top-tab state.
+- Planned/gated surfaces are visibly labeled.
+
+---
+
+### Phase 2 — Local design-system structure and token bridge
+
+Work:
+
+- Add `ui/src/design-system/` structure.
+- Add semantic token bridge:
+  - `tokens/semantic.css`
+  - `tokens/aliases.css`
+  - `tokens/status-tokens.css`
+- Add lint or grep guard against raw/ad hoc colors in feature code.
+- Add `compat/brandbook-legacy.ts`.
+- Add local app design-system barrel exports.
+- Add typecheck script if missing.
+- Add app-level Storybook/visual harness plan.
+
+Acceptance:
+
+- Feature code starts importing from `design-system/` or compat layer.
+- Raw color usage is forbidden outside token sources.
+- Typecheck path exists.
+- Storybook/visual conformance plan exists for app repo.
+
+---
+
+### Phase 3 — Component rename and API contract migration
+
+Work:
+
+- Implement/adapter-wrap:
+  - `Card`
+  - `MetricCard`
+  - `WidgetShell`
+  - `DataTable<Row>`
+  - `WidgetCatalogCard`
+  - `StatusBadge`
+  - `TrendBadge`
+  - `PulseMarker`
+  - `HealthPill`
+  - `Tabs`
+  - `BoardToolbar`
+  - `BoardDropZone`
+  - `GripHandle`
+  - `MoveMenu`
+- Keep legacy exports through compat layer.
+- Update docs and examples to canonical names.
+
+Acceptance:
+
+- New code uses canonical names.
+- Legacy names resolve through compat only.
+- Core components expose explicit loading/empty/error/disabled/gated/selected states.
+- No pulse marker is used as drag handle.
+
+---
+
+### Phase 4 — AppShell and role navigation cleanup
+
+Work:
+
+- Implement `app/shell/AppShell`, `Sidebar`, `HeaderBar`, `PageHeader`.
+- Remove ambiguous duplicate role navigation.
+- Decide whether top role controls are tabs, segmented control, or route links.
+- Ensure tabs follow tab semantics only when they really are tabs.
+- Add mobile nav behavior.
+
+Acceptance:
+
+- Sidebar/title/top controls never conflict.
+- Focus order is predictable.
+- Mobile shell does not overflow.
+- Planned AI/plugins/connectors surfaces are gated truthfully.
+
+---
+
+### Phase 5 — Dashboard surfaces migration
+
+Work:
+
+- Replace dashboard cards with `Card`, `MetricCard`, `WidgetShell`.
+- Move widget renderers into `widgets/*`.
+- Add explicit widget states:
+  - loading;
+  - empty;
+  - error;
+  - stale;
+  - permission-limited;
+  - gated;
+  - selected/edit.
+- Use `StatusBadge`/`HealthPill` consistently.
+
+Acceptance:
+
+- All dashboard widgets use `WidgetShell`.
+- Widget shell owns header/actions/footer/status/states.
+- Product renderer owns only data visualization/content.
+- Empty/error states do not break layout.
+
+---
+
+### Phase 6 — DataTable and Metrics Explorer migration
+
+Work:
+
+- Replace product tables with `DataTable<Row>`.
+- Add `SummaryFooter` and `statusRow`.
+- Define mobile table presentation.
+- Implement Metrics Explorer flow:
+  - select metric;
+  - inspect chart/table;
+  - change time range;
+  - filter/compare;
+  - save as widget;
+  - add to dashboard.
+
+Acceptance:
+
+- Tables scroll internally.
+- Explorer has loading/no-results/no-data/stale/error states.
+- Save-as-widget handoff is implemented or explicitly specified.
+
+---
+
+### Phase 7 — Board edit mode hardening
+
+Work:
+
+- Implement `BoardCanvas`, `BoardToolbar`, `BoardDropZone`, `GripHandle`, `MoveMenu`.
+- Add keyboard/single-pointer alternatives to DnD:
+  - move left/right/up/down;
+  - move to row/column if needed;
+  - selected widget state;
+  - cancel edit.
+- Keep `react-grid-layout`/`@dnd-kit` integration product-owned.
+- Add focus-visible and name/role/value verification.
+
+Acceptance:
+
+- User can complete key edit operations without drag.
+- Edit/view mode is unmistakable.
+- No hover-only affordance is required.
+- No pulse marker acts as drag handle.
+
+---
+
+### Phase 8 — Unified wizard pattern
+
+Work:
+
+- Implement:
+  - `WizardLayout`
+  - `StepRail`
+  - `ReviewPanel`
+  - `StickyWizardFooter`
+- Apply to:
+  - onboarding;
+  - connector wizard;
+  - dashboard wizard;
+  - setup/progress flows.
+- Add review step and recoverable failure states.
+
+Acceptance:
+
+- All wizard-like flows share one structure.
+- Dashboard Wizard can create a starter dashboard from goal + role + widget bundle.
+- Connector Wizard shows permissions, dry run, partial errors, and health handoff.
+- Sticky footer behavior works on mobile.
+
+---
+
+### Phase 9 — Trust-aware AI Workspace and Plugins
+
+Work:
+
+- Replace page-level `AI Assistant` naming with `AI Workspace`.
+- Implement:
+  - `AIWorkspaceLayout`
+  - `EvidencePanel`
+  - `AnswerCard`
+  - `TraceDrawer`
+- Implement plugin governance surfaces:
+  - `PluginCatalog`
+  - `PluginReviewDrawer`
+  - `PermissionBadge`
+  - `SigningBanner`
+- Gate planned/designed surfaces truthfully.
+
+Acceptance:
+
+- AI answers show context/data/provenance.
+- Synthetic/live/BYO provider state is visible where relevant.
+- Plugin install requires review.
+- Permissions/signing/revocation status is visible.
+- Gated surfaces do not look launched.
+
+---
+
+### Phase 10 — App-level conformance and cleanup
+
+Work:
+
+- Add app-level stories or preview harness for:
+  - AppShell;
+  - Dashboard;
+  - Dashboard Editor;
+  - Metrics Explorer;
+  - Connector Wizard;
+  - Dashboard Wizard;
+  - AI Workspace;
+  - Plugins;
+  - DataTable;
+  - WidgetShell.
+- Add visual regression checks.
+- Add accessibility interaction tests.
+- Remove mixed entrypoint duplication:
+  - resolve `App.jsx` vs `App.tsx`;
+  - resolve `index.jsx` vs `index.tsx`.
+- Remove compat imports after all screens migrate.
+- Reconcile README/package dependency drift, including charts/Recharts assumptions.
+
+Acceptance:
+
+- One runtime entrypoint path remains.
+- App typecheck passes.
+- Visual snapshots match accepted brandbook-derived contracts.
+- Compat barrel is empty or deleted.
+- Docs match actual dependencies.
+
+---
+
+## 11. Quality gates
+
+Migration is not complete until all gates pass.
+
+### Component state gate
+
+Every migrated component has:
+
+```text
+default
+hover
+focus-visible
+active/selected
+loading
+empty
+error
+disabled
+gated
+mobile
+```
+
+### Accessibility gate
+
+- real tabs use APG-style tab semantics;
+- route navigation uses links, not pseudo-tabs;
+- DnD has non-drag fallback;
+- focus-visible is always present;
+- meaningful non-text indicators meet contrast expectations;
+- target sizes and spacing are checked on mobile.
+
+### Responsive gate
+
+Check:
 
 ```text
 320px
@@ -413,44 +791,28 @@ Required viewport matrix:
 1440px
 ```
 
-Record:
-- body-level horizontal overflow;
-- internal scroll behavior;
-- focus-visible states;
-- overlay keyboard behavior;
-- topbar wrapping;
-- selected/hover/disabled/loading/error states;
-- chart and table clipping;
-- dashboard editor widget-library behavior.
+No body-level horizontal overflow is allowed except for intentionally scrollable data regions.
+
+### Trust/claim-safety gate
+
+- AI and plugins cannot appear as fully launched if they are designed/planned/gated.
+- Status labels in app must match website/docs/trust taxonomy.
+- Synthetic/live data state must be visible where relevant.
+
+### Design-system gate
+
+- feature code does not use raw colors;
+- pulse-wave is only brand/telemetry/status primitive;
+- no pulse-as-drag-handle;
+- no hover layout jump;
+- cyan is operational primary;
+- purple is secondary accent only.
 
 ---
 
-## 8. Risks and guardrails
+## 12. Immediate next steps
 
-| Risk | Guardrail |
-|---|---|
-| Package becomes product-screen library. | Keep screen-specific logic in product and document recipes only. |
-| Mobile migration regresses. | Include mobile acceptance criteria in every phase. |
-| AI Assistant becomes too generic or untrusted. | Always show selected context and keep assistant actions explicit. |
-| Marketplace/connectors remain ambiguous. | Separate catalogue from active connection health. |
-| Dashboard concepts overlap. | Resolve naming before migration, especially Dashboard vs Board vs Editor vs Wizard. |
-| Premature chart APIs. | Add gauge/heatmap only after repeated product need. |
-| Overlay semantics outpace behavior. | Harden drawer/sheet before production mobile migration. |
-
----
-
-## 9. Next recommended action
-
-Start with:
-
-```text
-Phase 1a — Overlay accessibility hardening
-```
-
-Then immediately run:
-
-```text
-Phase 1b — Shell/mobile verification
-```
-
-Reason: mobile shell, dashboard editor widget library, metrics explorer utilities, onboarding, and connector setup all depend on reliable drawer/sheet behavior.
+1. Merge this documentation rewrite or continue review on the PR.
+2. Start **Phase 1 — Inventory, naming freeze, and status taxonomy**.
+3. In parallel, prepare **Phase 2 — local design-system structure and token bridge**.
+4. Do not start screen-by-screen migration until the compat layer and canonical names exist.
