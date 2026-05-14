@@ -20,5 +20,8 @@
   "workspaces": [
     "packages/ui",
     "site"
-  ]
+  ],
+  "devDependencies": {
+    "playwright": "^1.60.0"
+  }
 }
