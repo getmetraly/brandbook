@@ -58,7 +58,7 @@
 
 .metraly-widget-shell-head {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 7px;
   min-width: 0;
   min-height: 36px;
@@ -97,7 +97,10 @@
 }
 
 .metraly-widget-shell-badge {
-  flex: 0 0 auto;
+  flex: 0 1 auto;
+  max-width: min(92px, 34%);
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .metraly-widget-shell-body {
@@ -155,16 +158,17 @@
 
 @media (max-width: 640px) {
   .metraly-widget-shell-head {
-    flex-wrap: wrap;
-    row-gap: 6px;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 8px;
   }
 
   .metraly-widget-shell-heading {
-    flex: 1 1 calc(100% - 28px);
+    flex: 1 1 auto;
   }
 
   .metraly-widget-shell-badge {
-    margin-left: 20px;
+    max-width: 78px;
   }
 
   .metraly-widget-shell-body {
