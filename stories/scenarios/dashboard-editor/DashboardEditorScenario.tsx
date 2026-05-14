@@ -222,7 +222,7 @@ function DoraOverviewBody() {
   ];
 
   return (
-    <div style={{ flex: 1, padding: 8, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6, minHeight: 0 }}>
+    <div style={{ flex: 1, padding: 8, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 6, minHeight: 0 }}>
       {cells.map((cell) => (
         <div key={cell.label} style={{ background: "var(--m-bg-1)", border: "1px solid var(--m-line-faint)", borderRadius: 6, padding: "7px 8px", display: "flex", flexDirection: "column", gap: 2 }}>
           <div style={{ fontFamily: "var(--m-font-mono)", fontSize: 9, color: "var(--m-fg-3)", letterSpacing: "0.04em", textTransform: "uppercase" }}>{cell.label}</div>
@@ -255,7 +255,7 @@ function CycleTimeBarsBody() {
       <div style={{ display: "flex", height: 12, borderRadius: 4, overflow: "hidden", border: "1px solid var(--m-line-faint)" }}>
         {segments.map((segment) => <div key={segment.name} style={{ flex: segment.hours, background: segment.color, opacity: 0.7 }} />)}
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 5 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: 5 }}>
         {segments.map((segment) => (
           <div key={segment.name} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 9, fontFamily: "var(--m-font-mono)", color: "var(--m-fg-2)" }}>
             <span style={{ width: 8, height: 8, background: segment.color, borderRadius: 2, opacity: 0.7, flexShrink: 0 }} />

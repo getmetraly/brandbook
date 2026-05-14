@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import {
   CartesianGrid,
   Line,
@@ -12,9 +11,9 @@ import {
 import { MetralyChartTooltip } from "./MetralyChartTooltip";
 import {
   chartStateFromData,
-  metralyAxisProps,
   metralyChartMargin,
   resolveChartTone,
+  useResponsiveChartAxisProps,
   type MetralyChartBaseProps,
   type MetralyChartDatum,
 } from "./types";
@@ -31,6 +30,7 @@ export function MetralyLineChart<TDatum extends MetralyChartDatum = MetralyChart
   className,
 }: MetralyChartBaseProps<TDatum>) {
   const resolvedState = chartStateFromData(state, data.length);
+  const { containerRef, xAxisProps, yAxisProps } = useResponsiveChartAxisProps(width);
   const classes = ["metraly-chart", "is-line", resolvedState !== "default" && `is-${resolvedState}`, className]
     .filter(Boolean)
     .join(" ");
@@ -55,8 +55,8 @@ export function MetralyLineChart<TDatum extends MetralyChartDatum = MetralyChart
   const chart = width ? (
     <LineChart width={width} height={height} data={data} margin={metralyChartMargin} title={ariaLabel}>
       <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
-      <XAxis dataKey={xKey} {...metralyAxisProps} />
-      <YAxis {...metralyAxisProps} />
+      <XAxis dataKey={xKey} {...xAxisProps} />
+      <YAxis {...yAxisProps} />
       <MetralyChartTooltip />
       {series.map((item) => (
         <Line
@@ -76,8 +76,8 @@ export function MetralyLineChart<TDatum extends MetralyChartDatum = MetralyChart
     <ResponsiveContainer width="100%" height={height}>
       <LineChart data={data} margin={metralyChartMargin} title={ariaLabel}>
         <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
-        <XAxis dataKey={xKey} {...metralyAxisProps} />
-        <YAxis {...metralyAxisProps} />
+        <XAxis dataKey={xKey} {...xAxisProps} />
+        <YAxis {...yAxisProps} />
         <MetralyChartTooltip />
         {series.map((item) => (
           <Line
@@ -97,7 +97,7 @@ export function MetralyLineChart<TDatum extends MetralyChartDatum = MetralyChart
   );
 
   return (
-    <div className={classes} role="img" aria-label={ariaLabel} {...chartProps}>
+    <div ref={containerRef} className={classes} role="img" aria-label={ariaLabel} {...chartProps}>
       {chart}
       <span className="metraly-chart-sr">{summary}</span>
     </div>

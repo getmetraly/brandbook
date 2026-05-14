@@ -31,10 +31,12 @@ export function DashboardGrid<TWidget extends { id: string }>({
           <div
             key={widget.id}
             className="metraly-dashboard-grid-item"
-            style={{
-              gridColumn: item ? `span ${Math.max(1, item.w)}` : undefined,
-              minHeight: item ? `${Math.max(1, item.h) * 96}px` : undefined,
-            }}
+            style={
+              {
+                ["--m-dashboard-grid-span" as const]: String(item ? Math.max(1, item.w) : 4),
+                minHeight: item ? `${Math.max(1, item.h) * 96}px` : undefined,
+              } as React.CSSProperties
+            }
           >
             {renderWidget(widget, item)}
           </div>

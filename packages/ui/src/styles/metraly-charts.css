@@ -65,6 +65,7 @@
 .metraly-chart-card-body {
   min-height: 220px;
   min-width: 0;
+  overflow: hidden;
 }
 
 .metraly-chart-tooltip {
@@ -149,9 +150,17 @@
   overflow: visible;
 }
 
-@media (max-width: 520px) {
+@media (max-width: 640px) {
+  .metraly-chart-card {
+    padding: 0.875rem;
+  }
+
   .metraly-chart-card-head {
     grid-template-columns: minmax(0, 1fr);
   }
-}
 
+  .metraly-chart-card-body,
+  .metraly-chart-state {
+    min-height: 180px;
+  }
+}

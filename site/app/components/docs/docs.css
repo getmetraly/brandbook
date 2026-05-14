@@ -71,6 +71,8 @@
 .docs-sidebar {
   position: sticky;
   top: 64px;
+  width: 100%;
+  min-width: 0;
   height: calc(100vh - 64px);
   overflow: auto;
   padding: 20px 16px 56px;
@@ -117,6 +119,7 @@
 
 .docs-content {
   width: min(100%, 1080px);
+  min-width: 0;
   padding: 28px 28px 88px;
 }
 
@@ -231,6 +234,10 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
+}
+.component-state-grid--forms {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
 }
 
 .component-row {
@@ -434,9 +441,20 @@
   font-size: var(--m-fs-10);
 }
 
+@media (max-width: 1024px) {
+  .component-state-grid--forms {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 900px) {
   .docs-topnav-links {
     display: none;
+  }
+
+  .docs-topnav {
+    gap: 12px;
+    padding: 0 16px;
   }
 
   .docs-layout {
@@ -445,9 +463,17 @@
 
   .docs-sidebar {
     position: static;
+    width: 100%;
+    max-width: 100%;
     height: auto;
+    padding: 16px 12px 32px;
     border-right: 0;
     border-bottom: 1px solid var(--m-line);
+  }
+
+  .docs-content {
+    width: 100%;
+    padding: 24px 16px 72px;
   }
 
   .component-preview,
@@ -456,6 +482,58 @@
   .docs-related-grid,
   .docs-dashboard-preview-grid,
   .dashboard-layout-demo {
+    grid-template-columns: 1fr;
+  }
+
+  .component-state-grid--forms {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .docs-topnav {
+    min-height: 56px;
+    padding: 0 12px;
+  }
+
+  .docs-brand {
+    min-width: 0;
+  }
+
+  .docs-brand span:last-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .docs-content {
+    padding-inline: 12px;
+  }
+
+  .docs-page-header h1 {
+    font-size: clamp(28px, 12vw, 40px);
+  }
+
+  .component-preview-stage,
+  .code,
+  .docs-route-card,
+  .docs-related-card,
+  .docs-prev-next a {
+    padding: 12px;
+  }
+
+  .docs-prev-next {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .docs-prev-next a,
+  .docs-prev-next a:last-child {
+    width: 100%;
+    text-align: left;
+  }
+
+  .component-state-grid--forms {
     grid-template-columns: 1fr;
   }
 }

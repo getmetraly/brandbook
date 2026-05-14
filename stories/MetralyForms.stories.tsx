@@ -13,7 +13,7 @@ const SECTION = (title: string) => (
 );
 
 const GRID = ({ children }: { children: React.ReactNode }) => (
-  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>{children}</div>
+  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12 }}>{children}</div>
 );
 
 const CELL = ({ label, children }: { label: string; children: React.ReactNode }) => (
@@ -27,7 +27,7 @@ function CheckboxMatrix() {
   const [val, setVal] = useState(false);
 
   return (
-    <div style={{ display: 'grid', gap: 16, maxWidth: 680 }}>
+    <div style={{ display: 'grid', gap: 16, maxWidth: 960 }}>
       {SECTION('MetralyCheckbox')}
       <GRID>
         <CELL label="Default"><MetralyCheckbox label="Stream metrics" /></CELL>
@@ -50,7 +50,7 @@ function RadioMatrix() {
   const [val, setVal] = useState('P99');
 
   return (
-    <div style={{ display: 'grid', gap: 16, maxWidth: 680 }}>
+    <div style={{ display: 'grid', gap: 16, maxWidth: 960 }}>
       {SECTION('MetralyRadio')}
       <GRID>
         <CELL label="Default"><MetralyRadio name="r1" value="p50" label="p50" /></CELL>
@@ -81,7 +81,7 @@ function SwitchMatrix() {
   const [on, setOn] = useState(true);
 
   return (
-    <div style={{ display: 'grid', gap: 16, maxWidth: 680 }}>
+    <div style={{ display: 'grid', gap: 16, maxWidth: 960 }}>
       {SECTION('MetralySwitch')}
       <GRID>
         <CELL label="Off"><MetralySwitch label="Live tail" /></CELL>
@@ -109,9 +109,9 @@ function SelectMatrix() {
   const [v, setV] = useState('1h');
 
   return (
-    <div style={{ display: 'grid', gap: 16, maxWidth: 680 }}>
+    <div style={{ display: 'grid', gap: 16, maxWidth: 960 }}>
       {SECTION('MetralySelect')}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 12 }}>
         <CELL label="Default"><MetralySelect label="Range" options={SELECT_OPTS} placeholder="Select range..." onChange={() => undefined} /></CELL>
         <CELL label="Value selected"><MetralySelect label="Range" options={SELECT_OPTS} value="24h" onChange={() => undefined} /></CELL>
         <CELL label="Open · selected"><MetralySelect label="Range" options={SELECT_OPTS} value="1h" open onChange={() => undefined} /></CELL>
@@ -147,7 +147,7 @@ function TabsMatrix() {
   const [v, setV] = useState('dora');
 
   return (
-    <div style={{ display: 'grid', gap: 16, maxWidth: 680 }}>
+    <div style={{ display: 'grid', gap: 16, maxWidth: 960 }}>
       {SECTION('MetralyTabs')}
       <CELL label="Default + Counts">
         <MetralyTabs items={TAB_ITEMS} defaultValue="dora" />
