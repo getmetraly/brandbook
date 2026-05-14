@@ -54,7 +54,7 @@ function AuthFormRecipe() {
                     Operators and engineering leads
                   </div>
                 </div>
-                <MetralyBadge variant="ok">live instance</MetralyBadge>
+                <MetralyBadge variant="success">live instance</MetralyBadge>
               </div>
 
               <MetralyInput
@@ -98,21 +98,9 @@ function AuthFormRecipe() {
                   paddingTop: 4,
                 }}
               >
-                <button
-                  type="button"
-                  style={{
-                    appearance: "none",
-                    border: 0,
-                    background: "transparent",
-                    color: "var(--m-cyan-500)",
-                    fontFamily: "var(--m-font-mono)",
-                    fontSize: "var(--m-fs-9)",
-                    padding: 0,
-                    cursor: "pointer",
-                  }}
-                >
+                <MetralyButton variant="neutral" size="sm">
                   Forgot password
-                </button>
+                </MetralyButton>
                 <div style={{ color: "var(--m-fg-3)", fontSize: "var(--m-fs-10)" }}>
                   Need help? Contact your workspace operator.
                 </div>
