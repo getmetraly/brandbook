@@ -1,455 +1,380 @@
 # Metraly UI → Brandbook Component Map
 
-**Status:** Phase 5 overlay seams complete (`MetralyButton`, `MetralyInput`, `MetralyIcon`, `MetralyShell`, `MetralySidebar`, `MetralyTopbar`, `MetralySegmentedControl`, `MetralyNavigationTree`, `MetralyCodeBlock`, `MetralyDrawer`, `MetralyBottomSheet` shipped).  
+**Status:** Review map updated after shipped seams audit.  
 **Last updated:** 2026-05-14  
 **Companion document:** `docs/metraly-ui-to-brandbook-component-plan.md`
 
-**Styling source rule:** `getmetraly/metraly/ui` is used only as a product inventory and composition reference. All new public `@metraly/ui` elements must derive palette, spacing, typography, radius, motion, and state treatment from brandbook tokens and contracts.
+**Source rule:** `getmetraly/metraly/ui` is a read-only product inventory. `@metraly/ui` must use brandbook tokens, contracts, Storybook/state-board behavior, and dense engineering-dashboard visual language.
 
 ---
 
-## Current `@metraly/ui` Public Exports
+## 1. Current public exports
 
-### Components
+### Foundation / primitives
 
-| Export | File | Category |
-|---|---|---|
-| `MetralyBadge` | `components/MetralyBadge.tsx` | Primitive |
-| `MetralyButton` | `components/MetralyButton.tsx` | Form |
-| `MetralyCard` | `components/MetralyCard.tsx` | Primitive |
-| `MetralyCheckbox` | `components/MetralyCheckbox.tsx` | Form |
-| `MetralyCodeBlock` | `components/MetralyCodeBlock.tsx` | Primitive |
-| `MetralyIcon` | `components/MetralyIcon.tsx` | Primitive |
-| `MetralyInput` | `components/MetralyInput.tsx` | Form |
-| `MetralyLogo` | `components/MetralyLogo.tsx` | Primitive |
-| `MetralyMetricCard` | `components/MetralyMetricCard.tsx` | Data Display |
-| `MetralyNavigationTree` | `components/MetralyNavigationTree.tsx` | Navigation |
-| `MetralyPanel` | `components/MetralyPanel.tsx` | Primitive |
-| `MetralyRadio` | `components/MetralyRadio.tsx` | Form |
-| `MetralySegmentedControl` | `components/MetralySegmentedControl.tsx` | Navigation |
-| `MetralySelect` | `components/MetralySelect.tsx` | Form |
-| `MetralySwitch` | `components/MetralySwitch.tsx` | Form |
-| `MetralyTable` | `components/MetralyTable.tsx` | Data Display |
-| `MetralyTabs` | `components/MetralyTabs.tsx` | Navigation |
-| `MetralyTelemetryLine` | `components/MetralyTelemetryLine.tsx` | Data Display |
-| `StateBadge` | `components/StateBadge.tsx` | Primitive |
-| `ThemeProvider` / `MetralyThemeProvider` | `components/ThemeProvider.tsx` | System |
-| `WidgetPickerCard` | `components/WidgetPickerCard.tsx` | Dashboard |
-
-### Shell
-
-| Export | File |
-|---|---|
-| `MetralyShell` | `shell/MetralyShell.tsx` |
-| `MetralySidebar`, `MetralySidebarSection`, `MetralySidebarItem` | `shell/MetralySidebar.tsx` |
-| `MetralyTopbar` | `shell/MetralyTopbar.tsx` |
-| `MetralyDrawer` | `shell/MetralyDrawer.tsx` |
-| `MetralyBottomSheet` | `shell/MetralyBottomSheet.tsx` |
-
-### Dashboard
-
-| Export | File |
-|---|---|
-| `DashboardGrid` | `dashboard/DashboardGrid.tsx` |
-| `DashboardWidget` | `dashboard/DashboardWidget.tsx` |
-| `DashboardToolbar` | `dashboard/DashboardToolbar.tsx` |
-| `DashboardEmptyState` | `dashboard/DashboardEmptyState.tsx` |
-| `DashboardDropZone` | `dashboard/DashboardDropZone.tsx` |
-| `DashboardResizeHandle` | `dashboard/DashboardResizeHandle.tsx` |
-| `defaultDashboardWidgetRegistry`, `findDashboardWidgetDefinition`, `createDashboardWidgetInstance` | `dashboard/WidgetRegistry.ts` |
-| Types: `DashboardLayoutItem`, `DashboardWidgetDefinition`, `DashboardWidgetInstance`, `DashboardWidgetSize` | `dashboard/types.ts` |
-
-### Charts
-
-| Export | File |
-|---|---|
-| `MetralyAreaChart` | `charts/MetralyAreaChart.tsx` |
-| `MetralyBarChart` | `charts/MetralyBarChart.tsx` |
-| `MetralyChartCard` | `charts/MetralyChartCard.tsx` |
-| `MetralyChartTooltip` | `charts/MetralyChartTooltip.tsx` |
-| `MetralyComposedChart` | `charts/MetralyComposedChart.tsx` |
-| `MetralyLineChart` | `charts/MetralyLineChart.tsx` |
-| `MetralySparkline` | `charts/MetralySparkline.tsx` |
-
----
-
-## Product UI Inventory (`getmetraly/metraly/ui`)
-
-### Layout components
-
-| Product component | File | Has brandbook equivalent? |
-|---|---|---|
-| `Sidebar` | `components/layout/Sidebar.tsx` | ✅ MetralySidebar + slots |
-| `Topbar` | `components/layout/Topbar.tsx` | ✅ MetralyTopbar |
-| `DraggableTweaksPanel` | `components/layout/DraggableTweaksPanel.tsx` | ❌ Product-only (intentional) |
-
-### Shared primitives
-
-| Product component | File | Has brandbook equivalent? |
-|---|---|---|
-| `Icon` | `components/shared/Icon.tsx` | ✅ MetralyIcon |
-
-### UI primitives
-
-| Product component | File | Has brandbook equivalent? |
-|---|---|---|
-| `Badge` | `components/ui/Badge.tsx` | ✅ MetralyBadge |
-| `DataTable` | `components/ui/DataTable.tsx` | ✅ MetralyTable |
-| `DORABadge` | `components/ui/DORABadge.tsx` | ✅ StateBadge |
-| `StatCard` | `components/ui/StatCard.tsx` | ✅ MetralyMetricCard |
-| `Widget` | `components/ui/Widget.tsx` | ✅ DashboardWidget |
-| `AIInsightCard` | `components/ui/AIInsightCard.tsx` | ❌ Product-only (MetralyCard + recipe) |
-| `InlineInsight` | `components/ui/InlineInsight.tsx` | ❌ Product-only (MetralyPanel + recipe) |
-| `Leaderboard` | `components/ui/Leaderboard.tsx` | ✅ MetralyTable (dense, ranked) |
-| `PlaceholderScreen` | `components/ui/PlaceholderScreen.tsx` | ✅ MetralyPanel (pattern recipe) |
-| `SH` | `components/ui/SH.tsx` | Likely DashboardWidget header slot |
-
-### Charts
-
-| Product component | File | Has brandbook equivalent? |
-|---|---|---|
-| `AreaChart` | `components/charts/AreaChart.tsx` | ✅ MetralyAreaChart |
-| `BarChart` | `components/charts/BarChart.tsx` | ✅ MetralyBarChart |
-| `Gauge` | `components/charts/Gauge.tsx` | ❌ Not in brandbook yet |
-| `Heatmap` | `components/charts/Heatmap.tsx` | ❌ Not in brandbook yet |
-| `Sparkline` | `components/charts/Sparkline.tsx` | ✅ MetralySparkline |
-
-### Dashboard
-
-| Product component | File | Has brandbook equivalent? |
-|---|---|---|
-| `DashboardRenderer` | `components/dashboard/DashboardRenderer.tsx` | ✅ DashboardGrid (adapter pattern) |
-| `DraggableDashboardRenderer` | `components/dashboard/DraggableDashboardRenderer.tsx` | ✅ DashboardGrid (adapter pattern) |
-| `widgetRegistry` | `components/dashboard/widgetRegistry.tsx` | ✅ WidgetRegistry + types |
-
-### Screens and features
-
-| Product screen | Files | Has brandbook equivalent? |
-|---|---|---|
-| Dashboard Screen | `features/dashboard/DashboardScreen.tsx` | ✅ Recipe composition (DashboardGrid + DashboardWidget etc.) |
-| Dashboard Wizard | `features/dashboardWizard/*` | ❌ Product-only (wizard logic) |
-| Board/Editor | `features/board/ui/*` | ✅ Board uses @metraly/ui primitives directly |
-| Metrics Explorer | `features/metricsExplorer/MetricsScreen.tsx` | ✅ Core seams shipped; full screen remains a recipe |
-| FilterPill | `features/metricsExplorer/components/FilterPill.tsx` | ⚠️ MetralySelect composition or future small extension |
-| TreeItem | `features/metricsExplorer/components/TreeItem.tsx` | ✅ MetralyNavigationTree |
-| DORAPanel | `features/metricsExplorer/components/DORAPanel.tsx` | ✅ MetralyMetricCard + StateBadge (recipe) |
-| BreakdownTable | `features/metricsExplorer/components/BreakdownTable.tsx` | ✅ MetralyTable |
-| ExportBar | `features/metricsExplorer/components/ExportBar.tsx` | ❌ MetralyButton + MetralySelect recipe |
-| AI Assistant | `features/aiAssistant/AIScreen.tsx` | ❌ Product-only |
-| Marketplace | `features/marketplace/PluginScreen.tsx` | ✅ MetralyCard + MetralyButton recipe |
-| Onboarding Wizard | `features/onboarding/WizardScreen.tsx` | ❌ Product-only |
-
----
-
-## Component Gap Matrix
-
-| Category | What exists in brandbook | What is missing | Priority |
+| Export | File | Category | Decision |
 |---|---|---|---|
-| **Buttons** | `MetralyButton` | No critical gap | ✅ Done |
-| **Text inputs** | `MetralyInput` | No critical gap | ✅ Done |
-| **Icon system** | `MetralyIcon` + typed names | Expand only when a real product icon is missing | ✅ Done |
-| **Segmented control** | `MetralySegmentedControl` | Recipe adoption only | ✅ Done |
-| **App shell** | `MetralyShell` | Main-area recipe coverage only | ✅ Done |
-| **Sidebar** | `MetralySidebar`, `MetralySidebarSection`, `MetralySidebarItem` | Mobile overlay recipe only | ✅ Done |
-| **Topbar** | `MetralyTopbar` | Search / notification recipes only | ✅ Done |
-| **Navigation tree** | `MetralyNavigationTree` | Metrics Explorer recipe adoption only | ✅ Done |
-| **Code block** | `MetralyCodeBlock` | Auth/onboarding recipe adoption only | ✅ Done |
-| **Overlays** | `MetralyDrawer`, `MetralyBottomSheet` | Popover still deferred | ✅ Done |
-| **Gauge chart** | Nothing | MetralyGauge (deferred) | ⚪ P3 |
-| **Heatmap chart** | Nothing | MetralyHeatmap (deferred) | ⚪ P3 |
+| `MetralyBadge` | `components/MetralyBadge.tsx` | Badge | Keep public |
+| `StateBadge` | `components/StateBadge.tsx` | Operational badge | Keep public |
+| `MetralyButton` | `components/MetralyButton.tsx` | Form/action primitive | Keep public |
+| `MetralyInput` | `components/MetralyInput.tsx` | Form primitive | Keep public |
+| `MetralyIcon`, `metralyIconPaths`, `metralyIconSizeMap` | `components/MetralyIcon.tsx` | Icon primitive | Keep public |
+| `MetralyCodeBlock` | `components/MetralyCodeBlock.tsx` | Code/data primitive | Keep public |
+| `MetralyLogo` | `components/MetralyLogo.tsx` | Brand primitive | Keep public |
+| `ThemeProvider`, `MetralyThemeProvider` | `components/ThemeProvider.tsx` | System | Keep public |
 
-Legend: ✅ Implemented · ⚪ Deferred
+### Surface / data display
+
+| Export | File | Category | Decision |
+|---|---|---|---|
+| `MetralyCard` | `components/MetralyCard.tsx` | Surface | Keep public |
+| `MetralyPanel` | `components/MetralyPanel.tsx` | Surface | Keep public |
+| `MetralyMetricCard` | `components/MetralyMetricCard.tsx` | Metric display | Keep public |
+| `MetralyTable` | `components/MetralyTable.tsx` | Table | Keep public |
+| `MetralyTelemetryLine` | `components/MetralyTelemetryLine.tsx` | Dense telemetry row | Keep public |
+| `WidgetPickerCard` | `components/WidgetPickerCard.tsx` | Dashboard/widget picker | Keep public |
+
+### Forms and navigation
+
+| Export | File | Category | Decision |
+|---|---|---|---|
+| `MetralyCheckbox` | `components/MetralyCheckbox.tsx` | Form | Keep public |
+| `MetralyRadio` | `components/MetralyRadio.tsx` | Form | Keep public |
+| `MetralySwitch` | `components/MetralySwitch.tsx` | Form | Keep public |
+| `MetralySelect` | `components/MetralySelect.tsx` | Form | Keep public |
+| `MetralyTabs` | `components/MetralyTabs.tsx` | Navigation | Keep public |
+| `MetralySegmentedControl` | `components/MetralySegmentedControl.tsx` | Navigation/form selector | Keep public |
+| `MetralyNavigationTree` | `components/MetralyNavigationTree.tsx` | Navigation tree | Keep public |
+
+### Shell / overlays
+
+| Export | File | Category | Decision |
+|---|---|---|---|
+| `MetralyShell` | `shell/MetralyShell.tsx` | Layout seam | Keep public |
+| `MetralySidebar` | `shell/MetralySidebar.tsx` | Navigation shell | Keep public |
+| `MetralySidebarSection` | `shell/MetralySidebar.tsx` | Navigation subcomponent | Keep public |
+| `MetralySidebarItem` | `shell/MetralySidebar.tsx` | Navigation subcomponent | Keep public |
+| `MetralyTopbar` | `shell/MetralyTopbar.tsx` | Header seam | Keep public |
+| `MetralyDrawer` | `shell/MetralyDrawer.tsx` | Overlay | Keep public; a11y hardening pending |
+| `MetralyBottomSheet` | `shell/MetralyBottomSheet.tsx` | Mobile overlay/tray | Keep public; a11y hardening pending |
+
+### Dashboard
+
+| Export | File | Decision |
+|---|---|---|
+| `DashboardGrid` | `dashboard/DashboardGrid.tsx` | Keep public |
+| `DashboardWidget` | `dashboard/DashboardWidget.tsx` | Keep public |
+| `DashboardToolbar` | `dashboard/DashboardToolbar.tsx` | Keep public |
+| `DashboardEmptyState` | `dashboard/DashboardEmptyState.tsx` | Keep public |
+| `DashboardDropZone` | `dashboard/DashboardDropZone.tsx` | Keep public |
+| `DashboardResizeHandle` | `dashboard/DashboardResizeHandle.tsx` | Keep public |
+| `defaultDashboardWidgetRegistry` | `dashboard/WidgetRegistry.ts` | Keep public |
+| `findDashboardWidgetDefinition` | `dashboard/WidgetRegistry.ts` | Keep public |
+| `createDashboardWidgetInstance` | `dashboard/WidgetRegistry.ts` | Keep public |
+| Dashboard types | `dashboard/types.ts` | Keep public |
+
+### Charts
+
+| Export | File | Decision |
+|---|---|---|
+| `MetralyAreaChart` | `charts/MetralyAreaChart.tsx` | Keep public |
+| `MetralyBarChart` | `charts/MetralyBarChart.tsx` | Keep public |
+| `MetralyChartCard` | `charts/MetralyChartCard.tsx` | Keep public |
+| `MetralyChartTooltip` | `charts/MetralyChartTooltip.tsx` | Keep public |
+| `MetralyComposedChart` | `charts/MetralyComposedChart.tsx` | Keep public |
+| `MetralyLineChart` | `charts/MetralyLineChart.tsx` | Keep public |
+| `MetralySparkline` | `charts/MetralySparkline.tsx` | Keep public |
 
 ---
 
-## Proposed Minimal Component Taxonomy (Post-Plan)
+## 2. Component coverage matrix
 
+| Need | Current coverage | Coverage | Notes |
+|---|---|---:|---|
+| Action buttons | `MetralyButton` | full | Covers primary, secondary, ghost, neutral, danger, dashed, loading, disabled, icon-only. |
+| Text/search/password fields | `MetralyInput` | full | Search icon, label, description, error, icon slots, full-width. |
+| Icons | `MetralyIcon` | full / evolving | Typed names cover current Storybook/product-known icon set. Add only when migration finds gaps. |
+| Code/CLI/formula blocks | `MetralyCodeBlock` | full | Public because auth, onboarding, and formula examples all reuse it. |
+| Inline badges | `MetralyBadge` | full | Actual variants: `primary`, `secondary`, `success`, `warning`, `error`, `info`. |
+| Operational status | `StateBadge` | full | Use for live/new/stale/error/delayed/no-data states. |
+| Cards/panels | `MetralyCard`, `MetralyPanel` | full | Product cards should compose these rather than create new public wrappers. |
+| Metric cards | `MetralyMetricCard` | full | Covers stat cards and DORA summary cards. |
+| Tables | `MetralyTable` | full | Keep real table semantics and internal scroll. |
+| Basic forms | checkbox/radio/switch/select | full | No new primitive needed. |
+| Tab navigation | `MetralyTabs` | full | Underline/tab-bar pattern. |
+| Segmented selectors | `MetralySegmentedControl` | full | Keep separate from tabs; pill selector for time/view toggles. |
+| Hierarchical navigation | `MetralyNavigationTree` | full for Metrics Explorer | Current group rows expand/collapse; selectable groups deferred. |
+| App shell | `MetralyShell` | full | Enforces full-height flex + overflow contract. |
+| Sidebar | `MetralySidebar` + sections/items | full | Product specifics remain slots/composition. |
+| Topbar | `MetralyTopbar` | full | Keep separate from dashboard toolbar. |
+| Mobile nav overlay | `MetralyDrawer` | partial | Visual/semantic coverage done; focus trap/body lock pending. |
+| Mobile utility tray | `MetralyBottomSheet` | partial | Visual/semantic coverage done; focus trap/body lock pending. |
+| Dashboard grid/widgets | dashboard exports | full | Renderer/adapters remain product-side. |
+| Chart cards/wrappers | chart exports | mostly full | Gauge and heatmap deferred. |
+| Widget library rows | `WidgetPickerCard` | full | Pulse-free selected state is intentional. |
+| Auth form | primitives + recipe | recipe | Do not add public `AuthCard`. |
+| Marketplace card | card/button/badge/icon + recipe | recipe | Do not add public `PluginCard`. |
+| Wizard stepper | recipe | partial | Keep recipe-only until third reusable flow appears. |
+| AI chat | primitives + product code | partial | Chat bubbles and streaming are product-specific. |
+
+---
+
+## 3. Product UI coverage matrix
+
+| Product UI area | Current brandbook coverage | Missing piece | Public component needed? | Recipe needed? | Migration readiness |
+|---|---|---|---:|---:|---:|
+| App shell | `MetralyShell`, `MetralySidebar`, `MetralyTopbar`, `MetralyDrawer` | Overlay focus management | no | yes | 8/10 |
+| Dashboard | `DashboardGrid`, `DashboardWidget`, `DashboardToolbar`, `DashboardDropZone`, `DashboardResizeHandle`, `WidgetPickerCard` | Product grid adapter only | no | yes | 9/10 |
+| Dashboard editor | Dashboard seams + shell + bottom sheet | Manual viewport verification | no | yes | 8/10 |
+| Metrics Explorer | `MetralyNavigationTree`, `MetralySegmentedControl`, `MetralyInput`, `MetralySelect`, chart wrappers, table | Gauge/heatmap wrappers deferred; filter pill composition | no now | yes | 8/10 |
+| Auth/login | `MetralyInput`, `MetralyButton`, `MetralyCodeBlock`, badges, cards/panels | Flow logic/product copy | no | yes | 8/10 |
+| Onboarding wizard | buttons/inputs/code/cards/badges + wizard recipe | Full stateful wizard logic | no | yes | 7/10 |
+| Marketplace/integrations | card/button/badge/icon recipes | Installed/loading/error recipe variants | no | yes | 8/10 |
+| AI Assistant | panel/card/input/button/icon/code pieces | Chat bubbles, streaming state, suggestion logic | no | optional | 6/10 |
+| Dev tweaks panel | none intentionally | Product/demo state utility | no | no | n/a |
+
+---
+
+## 4. Storybook coverage matrix
+
+| Story group | Coverage | Current role | Needed follow-up |
+|---|---|---|---|
+| `Components/MetralyButton` | enough | Variant/state reference | Manual viewport + keyboard smoke. |
+| `Components/MetralyInput` | enough | Field/search/error reference | Manual error/focus smoke. |
+| `Components/MetralyIcon` | enough | Icon inventory | Add icons only when product migration finds missing names. |
+| `Components/MetralyCodeBlock` | enough | CLI/code display | Confirm wrapping at 320px. |
+| `Components/MetralySegmentedControl` | enough | Time/view toggle | Confirm internal horizontal scroll at 320px. |
+| `Components/MetralyNavigationTree` | enough | Metric tree | Confirm arrow key behavior and truncation. |
+| `Components/MetralyDrawer` | enough visually | Overlay seam | Add focus-management tests/stories after Phase 1a. |
+| `Components/MetralyBottomSheet` | enough visually | Mobile tray seam | Add focus-management tests/stories after Phase 1a. |
+| `Patterns/MetralyShell` | strong | App shell recipe | Verify mobile drawer and topbar wrapping. |
+| `Patterns/MetricsExplorerRecipe` | strong | Explorer migration recipe | Add empty/loading/error recipe states later. |
+| `Patterns/AuthFormRecipe` | enough | Auth migration recipe | Keep recipe-only; no public `AuthCard`. |
+| `Patterns/IntegrationCardRecipe` | enough | Marketplace recipe | Add installed/error/loading examples later. |
+| `Patterns/WizardLayoutRecipe` | enough | Wizard recipe | Keep stepper recipe-only. |
+| `Scenarios/DashboardEditor` | critical | Visual benchmark | Run at 320, 375, 390, 430, 768, 1024, 1280, 1440px. |
+| `Scenarios/ComponentStateBoard` | critical | State benchmark | Ensure existing states do not regress. |
+
+---
+
+## 5. Token / visual conformance notes
+
+### Passes
+
+- New inspected CSS uses `--m-*` tokens, not legacy product tokens.
+- Shell background hierarchy follows the contract:
+  - canvas: `--m-bg-0`
+  - chrome/sidebar/topbar: `--m-bg-1`
+  - cards/controls: `--m-bg-2`
+  - hover: `--m-bg-3`
+- Controls use compact heights and tokenized radii.
+- Focus-visible states use tokenized focus glow.
+- Selected states use cyan background/border and do not resize components.
+- Navigation and control rows are dense and consistent with dashboard surfaces.
+- Storybook preview imports package CSS from `@metraly/ui/styles/*` instead of local restyling.
+
+### Notes / minor issues
+
+- `MetralyButton` CSS has a duplicated `white-space: nowrap`; harmless, can be cleaned opportunistically.
+- `MetralyDrawer` and `MetralyBottomSheet` are visually aligned but not yet fully modal-accessible.
+- `MetralyBadge` docs in older sections used outdated variant names. Current implementation uses `primary`, `secondary`, `success`, `warning`, `error`, `info`.
+- Some recipe stories use inline layout styles. This is acceptable if they are layout-only and do not restyle package primitives.
+
+### Required local grep before final sign-off
+
+```bash
+rg "--(bg|glass|glass2|border|border2|cyan|purple|success|warning|error|text|muted|muted2)" packages/ui/src
+rg "PulseWave|pulse" packages/ui/src stories
 ```
-primitives
-  ✅ MetralyBadge              — inline badge
-  ✅ MetralyCard               — content card shell
-  ✅ MetralyPanel              — panel container
-  ✅ MetralyMetricCard         — metric value + delta + spark
-  ✅ StateBadge                — 13-state operational badge
-  ✅ MetralyLogo               — logo mark
-  ✅ MetralyTelemetryLine      — telemetry row
-  ✅ ThemeProvider             — token injection
-  ✅ MetralyButton             — shipped
-  ✅ MetralyInput              — shipped
-  ✅ MetralyIcon               — shipped
-  ✅ MetralyCodeBlock          — shipped
 
-layout / shell
-  ✅ DashboardGrid             — 12-col grid (dashboard-specific)
-  ✅ MetralyShell              — shipped
-  ✅ MetralySidebar            — shipped
-  ✅ MetralyTopbar             — shipped
+Expected:
 
-navigation
-  ✅ MetralyTabs               — underline tab bar
-  ✅ DashboardToolbar          — dashboard tabs + actions
-  ✅ MetralySegmentedControl   — shipped
-  ✅ MetralyNavigationTree     — shipped
-
-forms / controls
-  ✅ MetralyCheckbox
-  ✅ MetralyRadio
-  ✅ MetralySwitch
-  ✅ MetralySelect
-  ✅ MetralyButton
-  ✅ MetralyInput
-  ✅ MetralySegmentedControl
-
-data display
-  ✅ MetralyTable
-  ✅ MetralyMetricCard
-  ✅ MetralyTelemetryLine
-  ✅ MetralyBadge
-  ✅ StateBadge
-  ✅ chart wrappers (Area/Bar/Line/Composed/Sparkline/ChartCard/Tooltip)
-  ✅ MetralyNavigationTree     — shipped
-  ⚪ MetralyGauge              — Deferred
-  ⚪ MetralyHeatmap            — Deferred
-
-dashboard / editor
-  ✅ DashboardGrid
-  ✅ DashboardWidget
-  ✅ DashboardToolbar
-  ✅ DashboardEmptyState
-  ✅ DashboardDropZone
-  ✅ DashboardResizeHandle
-  ✅ WidgetPickerCard
-  ✅ WidgetRegistry types + helpers
-  — all dashboard/editor primitives are complete
-
-icons
-  ✅ MetralyIcon               — shipped
-
-overlays
-  ✅ MetralyDrawer             — shipped
-  ✅ MetralyBottomSheet        — shipped
-  ⚪ MetralyPopover            — Deferred
-
-recipes / Storybook-only
-  ✅ DashboardEditorScenario   — full editor desktop
-  ✅ DashboardEditorResponsiveScenario — mobile/tablet
-  ✅ AppShellRecipe            — `stories/MetralyShell.stories.tsx`
-  ✅ MetricsExplorerRecipe     — `stories/MetricsExplorerRecipe.stories.tsx`
-  ✅ AuthFormRecipe            — `stories/AuthFormRecipe.stories.tsx`
-  ✅ IntegrationCardRecipe     — `stories/IntegrationCardRecipe.stories.tsx`
-  ✅ WizardLayoutRecipe        — `stories/WizardLayoutRecipe.stories.tsx`
-
-product-only compositions (stay in metraly/ui)
-  • DraggableTweaksPanel
-  • AIScreen (chat UI)
-  • WizardScreen (onboarding)
-  • DashboardWizardScreen
-  • DashboardRenderer / DraggableDashboardRenderer
-  • PluginScreen notification channel config
-  • First-run choice screen
-```
+- No legacy product token usage inside `packages/ui/src`.
+- Pulse appears only in allowed semantic status/logo/chart/telemetry places.
 
 ---
 
-## What to Implement Now
+## 6. API changes
 
-**Next minimal phase: responsive and migration follow-up**
+### Recommended now
 
-1. Migration-guide expansion for screen-by-screen `metraly/ui` replacement sequencing.
-2. Responsive polish pass for dashboard editor and explorer mobile layouts now that overlay seams are available.
-3. Optional chart-shell recipe refinement if `MetralyChartCard` needs a denser explorer example.
+No public API change is recommended in this pass.
 
-Shell, foundation, explorer seams, overlay seams, and the first recipe layer are now in place. Desktop, tablet, and narrow-width recipe variants now have canonical drawer/sheet options available; remaining work is recipe adoption and migration guidance rather than new primitive invention.
+### Deferred possible API changes
 
----
-
-## What to Document as Recipes
-
-The following are **not** public exports. They appear as Storybook recipe stories (Phase 6):
-
-- **AppShellRecipe** — how to assemble MetralyShell + MetralySidebar + MetralyTopbar
-- **AuthFormRecipe** — login form using MetralyInput + MetralyButton + MetralyCodeBlock
-- **IntegrationCardRecipe** — plugin card using MetralyCard + MetralyButton + MetralyIcon
-- **WizardLayoutRecipe** — multi-step wizard layout using MetralyPanel + MetralyButton
-- **MetricsExplorerRecipe** — full explorer assembly using MetralyNavigationTree + MetralySegmentedControl
-- **AIChatRecipe** — chat layout sketch (product-specific, minimal story)
+| Possible change | Component | Trigger required before implementation | Current decision |
+|---|---|---|---|
+| `as` / polymorphic link support | `MetralyButton` | Product migration needs button-styled links frequently | defer |
+| `size` prop | `MetralyInput` | Multiple product input heights appear during migration | defer |
+| `labelPrefix` or filter mode | `MetralySelect` | Metrics Explorer filter pill cannot be cleanly composed | defer |
+| selectable groups | `MetralyNavigationTree` | Future tree navigation needs group selection independent from expansion | defer |
+| focus trap / restore / body lock | `MetralyDrawer`, `MetralyBottomSheet` | Public overlay production readiness | implement next |
+| `MetralyGauge` | charts | Product dashboard migration requires canonical gauge wrapper | defer |
+| `MetralyHeatmap` | charts | Product dashboard migration requires canonical heatmap wrapper | defer |
 
 ---
 
-## What NOT to Add to `packages/ui`
+## 7. Rejected / deferred components
 
-These are explicitly **rejected from public API**:
+### Rejected from public API
 
 | Component | Reason | Alternative |
 |---|---|---|
-| `DraggableTweaksPanel` | Developer tool, mutates CSS vars, localStorage-dependent | Keep in metraly/ui |
-| `AIScreen` / `MessageBubble` | Product-specific chat UI | MetralyPanel + MetralyBadge + MetralyIcon (recipe) |
-| `WizardScreen` | Product-specific multi-screen onboarding flow | Keep in metraly/ui |
-| `DashboardWizardScreen` | Product-specific wizard with API integration | Keep in metraly/ui |
-| `DashboardRenderer` | react-grid-layout integration (product logic) | DashboardGrid + recipe adapter |
-| `MetricsExplorerSidebar` | Too narrow; one product screen | MetralySidebar + MetralyNavigationTree |
-| `ProductTopbar` | Duplicate of MetralyTopbar | MetralyTopbar with actions slot |
-| `DashboardEditorOnlySidebar` | Already covered by Storybook scenario | ScenarioWidgetLibrary recipe |
-| `AIOnlyCard` | Product-specific | MetralyCard composition |
-| `MarketplaceOnlyPanel` | Product-specific | MetralyCard + MetralyButton recipe |
-| `MetralyNotificationButton` | Too narrow; MetralyButton + badge covers it | MetralyButton + MetralyBadge |
-| `MetralyUserBlock` | Product-specific avatar block | Sidebar footer slot |
-| `MetralyCommandSearch` | Too narrow; MetralyInput covers it | MetralyInput with iconLeft + kbd slot |
-| `MetralyDrawer` | Now justified by shell + metrics mobile navigation | Implemented |
-| `MetralyBottomSheet` | Justified by widget-library style mobile workflows | Implemented |
+| `DraggableTweaksPanel` | Demo/developer utility with state/localStorage behavior | Product-only |
+| `AIOnlyCard` / `MessageBubble` | Product-specific chat UI | Product composition using panel/card/badge/icon/input/button |
+| `WizardStepIndicator` | Reused in too few flows today | Recipe-only; revisit after third flow |
+| `MetricsExplorerSidebar` | Too screen-specific | `MetralySidebar` + `MetralyNavigationTree` + `MetralyInput` |
+| `PluginCard` / `MarketplaceCard` | Card composition is enough | `MetralyCard` + `MetralyButton` + `MetralyBadge` + `MetralyIcon` |
+| `ProductTopbar` | Duplicates page header seam | `MetralyTopbar` with action slots |
+| `MetralyNotificationButton` | Too narrow | `MetralyButton` + badge/dot composition |
+| `MetralyUserBlock` | Product-specific sidebar footer | Sidebar footer slot |
+| `MetralyCommandSearch` | Too narrow | `MetralyInput` + trailing kbd/badge composition |
+| Product dashboard renderer | Data/layout integration, not UI primitive | Product adapter using `DashboardGrid`/`DashboardWidget` |
+
+### Deferred, not rejected
+
+| Component | Why deferred | Revisit when |
+|---|---|---|
+| `MetralyPopover` | Drawer/sheet cover current overlay needs | Repeated anchored overlay/picker pattern appears |
+| `MetralyGauge` | Product has gauge, but migration can initially keep product chart | Gauge must be canonicalized across screens |
+| `MetralyHeatmap` | Product has heatmap, but migration can initially keep product chart | Heatmap appears in multiple brandbook/product stories |
 
 ---
 
-## Token Migration Notes (Legacy → Brandbook)
+## 8. Migration readiness score per product area
 
-When migrating metraly/ui to use `@metraly/ui`, replace all legacy CSS variables:
+| Area | Score | Blocking issues | Next action |
+|---|---:|---|---|
+| App shell | 8/10 | Overlay focus management | Phase 1a overlay a11y hardening |
+| Dashboard | 9/10 | Manual viewport verification | Run dashboard editor + component state board smoke tests |
+| Dashboard editor | 8/10 | Mobile widget library/bottom sheet sign-off | Manual viewport checks and recipe polish |
+| Metrics Explorer | 8/10 | Gauge/heatmap deferred, filter pill composition | Keep recipe; defer new components |
+| Auth/login | 8/10 | Recipe verification | Keep recipe-only |
+| Onboarding | 7/10 | Wizard flow remains product-specific | Keep primitives inside product flow |
+| Marketplace | 8/10 | More recipe states | Add installed/loading/error recipe variants later |
+| AI Assistant | 6/10 | Product-specific chat UI | Keep chat surface product-side |
 
-```css
-/* Legacy → Brandbook */
---bg           → --m-bg-0
---glass        → --m-bg-1
---glass2       → --m-bg-2
---border       → --m-line
---border2      → --m-line-strong
---border-bright→ --m-line-strong
---cyan         → --m-cyan-500
---purple       → --m-purple-500
---success      → --m-ok
---warning      → --m-warn
---error        → --m-err
---text         → --m-fg-0
---muted        → --m-fg-3
---muted2       → --m-fg-2
---grad         → linear-gradient(135deg, var(--m-cyan-500), var(--m-purple-500))
---font-body    → --m-font-ui
---font-mono    → --m-font-mono
+---
+
+## 9. Migration path summary
+
+### Step 1 — token bootstrap
+
+- Add `@metraly/ui` and wrap the app in `ThemeProvider`.
+- Replace legacy tokens with `--m-*` equivalents.
+- Do not change screen structure yet.
+
+### Step 2 — icon swap
+
+- Replace product `Icon` with `MetralyIcon`.
+- Add missing typed icon paths only when TypeScript or visual review catches them.
+
+### Step 3 — controls and form primitives
+
+- Replace inline buttons with `MetralyButton`.
+- Replace text/search/password fields with `MetralyInput`.
+- Replace checkbox/radio/switch/select patterns with package components.
+- Replace time/view toggle groups with `MetralySegmentedControl`.
+
+### Step 4 — app shell
+
+- Replace product sidebar/topbar structure with `MetralyShell`, `MetralySidebar`, `MetralyTopbar`.
+- Use `MetralyDrawer` for mobile app navigation after focus management is complete.
+
+### Step 5 — dashboards and data
+
+- Replace dashboard shells with dashboard package seams.
+- Keep `react-grid-layout` adapter in product.
+- Replace stat cards, tables, badges, and chart cards with package components.
+
+### Step 6 — metrics explorer
+
+- Replace metric tree with `MetralyNavigationTree`.
+- Replace time-range selectors with `MetralySegmentedControl`.
+- Compose filters using `MetralySelect` or defer a small extension only if needed.
+
+### Step 7 — product-only flows
+
+Keep product-owned:
+
+- AI Assistant chat flow
+- Onboarding state machine
+- Dashboard wizard state machine
+- Marketplace notification setup logic
+- Dev tweaks panel
+
+Use package primitives inside those flows, but do not migrate them into `packages/ui`.
+
+---
+
+## 10. Verification matrix
+
+Run:
+
+```bash
+npm run ui:check
+npm run site:typecheck
+npm run site:test
+npm run build-storybook
+npm run test:e2e
 ```
 
-Note: `--font-head` (Space Grotesk) is not in brandbook tokens. Either add it to `metraly-theme.css` as `--m-font-head` or reference the font family directly in product code.
+Manual stories:
 
----
-
-## Icon Coverage / Missing Icons
-
-Product `Icon.tsx` currently defines these icons (must all appear in `MetralyIconName`):
-
+```text
+/scenarios-dashboard-editor--default
+/scenarios-component-state-board--default
+/components-*
+/patterns-*
+/story/metraly-button--all-variants
+/story/metraly-input--types
+/story/metraly-icon--gallery
+/story/metraly-shell--expanded
+/story/metraly-shell--mobile
+/story/metraly-segmented-control--default
+/story/metraly-navigation-tree--metric-tree
+/story/metraly-code-block--cli-block
+/story/metraly-drawer--default
+/story/metraly-bottom-sheet--default
 ```
-zap, home, bar2, gitPR, xCircle, alertTri, clock, brain, puzzle, settings,
-users, bell, search, star, download, check, github, jira, gitlab, linear,
-slack, pagerduty, arrowRight, chevronDown, chevronUp, activity, boxes, cpu,
-trendingUp, filter, layers, chart, plus, x, database, link, sparkles, rocket,
-alertCircle, lock, checkCircle, timer, gitMerge, gitPullRequest, gitCommit,
-heart, target, pin, pinFilled, square
+
+Viewport matrix:
+
+```text
+320px
+375px
+390px
+430px
+768px
+1024px
+1280px
+1440px
 ```
 
-Current scenario and shell stories use `MetralyIcon` names directly instead of private inline icon sets.
+Record:
+
+- body-level horizontal overflow
+- internal scroll vs page scroll
+- selected/focus/hover states
+- disabled/loading/error states
+- drawer/sheet keyboard behavior
+- topbar wrapping
+- sidebar collapsed and drawer behavior
+- dashboard editor mobile widget-library behavior
+- chart/table clipping
 
 ---
 
-## Responsive Shell Requirements
+## 11. Current conclusion
 
-From `docs/responsive-contract.md` and product code:
+The current `@metraly/ui` public API is sufficiently minimal and useful for future `getmetraly/metraly/ui` migration.
 
-| Element | Desktop | Tablet (768px) | Mobile (375px) |
-|---|---|---|---|
-| MetralySidebar | 228px expanded, 64px collapsed | Overlay drawer | Full-screen drawer |
-| MetralyTopbar | 48–64px height, density-driven | Same | Compact; search may hide behind action |
-| MetralyShell | `display: flex; overflow: hidden` | Same | `flex-direction: column` |
-| DashboardGrid | 12-col, 100px row, 16px gap | 10-col | 6-col |
-| DashboardWidget | Compact multi-col | Same | Full-width stacked |
-| MetralySegmentedControl | Inline row | Same | May wrap |
-| MetralyNavigationTree | 220px fixed left rail | Overlay | Full-screen drawer |
-| MetralyTabs / DashboardToolbar | Single row | Horizontal scroll | Horizontal scroll |
+Do not add more public components now.
 
-Current recipe proof state:
-- `MetralyShell.stories.tsx` has desktop, tablet, and mobile variants.
-- `MetricsExplorerRecipe.stories.tsx` has desktop, tablet, and mobile variants.
-- `WizardLayoutRecipe.stories.tsx` has desktop, tablet, and mobile variants.
-- `MetralyShell` mobile intentionally uses an app-navigation drawer pattern.
-- `MetricsExplorerRecipe` tablet/mobile now uses a lighter utility-switcher overlay pattern for quick metric changes.
-- `MetralyBottomSheet` is now formalized for widget-library and similar utility-panel flows.
+The next justified work is:
 
-### Current Overlay Decisions
-
-- `MetralyShell` mobile is app-level navigation. It should keep a stronger drawer/full-app-navigation presentation and should not be visually collapsed into the same quick-switcher pattern used for narrow utility tasks.
-- `MetricsExplorerRecipe` tablet/mobile uses a compact utility-switcher overlay. The goal is fast metric search and context switching, not full workspace navigation.
-- `MetralyBottomSheet` is the preferred narrow utility-panel pattern when the content feels closer to widget-library, picker, or tray behavior than to navigation.
-- `MetralyDrawer` remains valid for shell navigation and for utility overlays, but narrow stories may locally present it as a sheet-like popup when the interaction is “find and switch” rather than “navigate the whole app”.
-
----
-
-## Storybook Verification URLs
-
-After Phase 1 implementation:
-- `/story/metraly-button--all-variants`
-- `/story/metraly-input--types`
-- `/story/metraly-icon--gallery`
-
-After Phase 2:
-- `/story/metraly-shell--app-shell-recipe`
-- `/story/metraly-sidebar--expanded`
-- `/story/metraly-sidebar--collapsed`
-- `/story/metraly-topbar--density-variants`
-
-After Phase 3:
-- `/story/metraly-segmented-control--default`
-
-After Phase 4:
-- `/story/metraly-navigation-tree--metric-tree`
-- `/story/metraly-code-block--cli-block`
-
-Existing passing scenarios (do not regress):
-- `/story/scenarios-dashboard-editor--desktop`
-- `/story/scenarios-dashboard-editor--mobile-1`
-- `/story/scenarios-dashboard-editor--mobile-2`
-- `/story/dashboard-widget--component-state-board`
-
----
-
-## Migration Path for Future Rewrite of `metraly/ui`
-
-### Step 1: Token bootstrap (no UI changes)
-- Add `@metraly/ui` as dependency
-- Wrap `App.jsx` in `<ThemeProvider>`
-- Replace all `--bg`, `--glass`, `--border`, etc. with `--m-*` equivalents in `index.css`
-- Verify: app renders identically
-
-### Step 2: Icon swap (no visual changes)
-- Replace `Icon.tsx` import with `MetralyIcon` from `@metraly/ui`
-- TypeScript catches any unknown icon names
-- Verify: all icons render
-
-### Step 3: Form controls (progressive)
-- Replace inline `<input type="checkbox">` with `MetralyCheckbox`
-- Replace inline `<input type="radio">` with `MetralyRadio`
-- Replace toggle buttons with `MetralySwitch`
-- Replace `<select>` with `MetralySelect`
-
-### Step 4: Buttons and inputs (Phase 1 prerequisite)
-- Requires Phase 1 to ship first
-- Replace all inline-styled `<button>` with `MetralyButton`
-- Replace all inline-styled `<input>` with `MetralyInput`
-- This is the highest-volume change — 200+ instances
-
-### Step 5: Layout (Phase 2 prerequisite)
-- Requires Phase 2 to ship first
-- Replace `Sidebar.tsx` with `MetralySidebar`
-- Replace `Topbar.tsx` with `MetralyTopbar`
-- Wrap in `MetralyShell`
-- Remove `DraggableTweaksPanel` from production path (keep for demo only)
-
-### Step 6: Metric displays
-- Replace `StatCard` with `MetralyMetricCard`
-- Replace `DORABadge` with `StateBadge`
-- Replace `Badge` with `MetralyBadge`
-- Replace `Leaderboard` with `MetralyTable` (dense, ranked variant)
-- Replace `DataTable` with `MetralyTable`
-
-### Step 7: Metrics Explorer (Phase 4 prerequisite)
-- Requires `MetralyNavigationTree` and `MetralySegmentedControl`
-- Replace `TreeItem` with `MetralyNavigationTree`
-- Replace inline time-range controls with `MetralySegmentedControl`
-- Replace `FilterPill` with `MetralySelect` (labelPrefix variant)
-
-### Step 8: Product-specific (never migrate to brandbook)
-- Keep `DraggableTweaksPanel`, `AIScreen`, `WizardScreen`, `DashboardWizardScreen`, `DashboardRenderer`, `DraggableDashboardRenderer`, and screen-specific product compositions in `metraly/ui`
+```text
+1. Run verification locally.
+2. Harden MetralyDrawer and MetralyBottomSheet focus/body-scroll behavior.
+3. Polish recipes only after viewport findings prove a real UX issue.
+```
