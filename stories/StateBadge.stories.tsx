@@ -76,7 +76,16 @@ export const PulseDisabled: Story = {
 };
 
 export const CanonicalMatrix = () => (
-  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, padding: 24 }}>
+  <div
+    style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(3, minmax(160px, max-content))',
+      gap: 24,
+      padding: 24,
+      background: 'var(--m-bg-0)',
+      color: 'var(--m-fg-1)',
+    }}
+  >
     {([
       ['LIVE',         { state: 'live' as const }],
       ['OK',           { state: 'ok' as const, label: 'Healthy' }],
@@ -92,7 +101,7 @@ export const CanonicalMatrix = () => (
       ['PURPLE',       { state: 'purple' as const, label: 'Beta' }],
       ['DISABLED',     { state: 'disabled' as const, label: 'N/A' }],
     ] as const).map(([label, props]) => (
-      <div key={label} style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      <div key={label} style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'flex-start', gap: 8 }}>
         <span style={{ fontSize: 10, letterSpacing: '0.06em', color: 'var(--m-fg-3)', fontFamily: 'var(--m-font-mono)', textTransform: 'uppercase' }}>{label}</span>
         <StateBadge {...(props as any)} />
       </div>
