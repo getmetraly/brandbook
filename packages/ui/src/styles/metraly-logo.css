@@ -21,12 +21,5 @@
 .metraly-pulse-line {
   stroke-dasharray: 148;
   stroke-dashoffset: 148;
-  animation: metraly-pulse-draw 1400ms var(--m-ease) forwards;
+  animation: m-stroke-draw 1400ms var(--m-ease) forwards;
 }
-
-@keyframes metraly-pulse-draw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
