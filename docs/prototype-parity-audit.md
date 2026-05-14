@@ -10,6 +10,7 @@ The prototype remains the source of truth. Existing markdown notes are supportin
 - Close gaps in spacing, colors, borders, state behavior, and responsive behavior.
 - Ensure Storybook and site routes demonstrate realistic product usage rather than isolated decorative demos.
 - Keep all production rules in `packages/ui` and documented contracts, not in preview-only CSS layers.
+- Make each future implementation PR executable, reviewable, and screenshot-backed.
 
 ## Non-goals
 
@@ -17,6 +18,7 @@ The prototype remains the source of truth. Existing markdown notes are supportin
 - Do not introduce a second mobile-specific visual language.
 - Do not edit `getmetraly/docs`, `getmetraly/metraly`, or `getmetraly/website` from this repo.
 - Do not reintroduce legacy preview-hardening or temporary compatibility layers.
+- Do not chase pixel-perfect sameness when an intentional divergence is documented in `docs/prototype-visual-spec.md`.
 
 ## Reference documents
 
@@ -60,6 +62,20 @@ Use these as the comparison set:
 | Storybook | `stories/*` | `state-board.jsx` | State boards cover realistic states and viewport-safe layouts. |
 | Site routes | `site/app/*` | `app.jsx`, `docs.jsx` | Routes demonstrate real composition and inherit production UI package language. |
 
+## Traceability table template
+
+Each implementation PR must update or attach a table like this for every component it touches:
+
+| Prototype file | Prototype surface | Production file | Storybook story | Site route | Status |
+| --- | --- | --- | --- | --- | --- |
+| `widgets.jsx` | `TableBoard` / dashboard table examples | `packages/ui/src/components/MetralyTable.tsx` | `stories/MetralyTable.stories.tsx` | `/components/dashboard`, `/components/previews` | `needs audit` |
+| `widgets.jsx` | `WidgetPickerCard` / widget library | `packages/ui/src/components/WidgetPickerCard.tsx` | `stories/WidgetPickerCard.stories.tsx` | `/components/dashboard`, `/editor` | `needs audit` |
+| `dashboard-editor.jsx` | dashboard widget shell | `packages/ui/src/dashboard/DashboardWidget.tsx` | `stories/DashboardWidget.stories.tsx` | `/editor`, `/components/dashboard` | `needs audit` |
+| `dashboard-editor.jsx` | toolbar/top operational chrome | `packages/ui/src/dashboard/DashboardToolbar.tsx` | `stories/DashboardToolbar.stories.tsx` | `/editor`, `/patterns/widget-editor` | `needs audit` |
+| `form-controls.jsx` | select/dropdown | `packages/ui/src/components/MetralySelect.tsx` | form/control stories | `/components/forms` | `needs audit` |
+| `primitives.jsx` | state badge / operational chip | `packages/ui/src/components/StateBadge.tsx` | state badge stories | all component routes | `needs audit` |
+| `dashboard-editor.jsx` | chart cards and chart widgets | `packages/ui/src/charts/*` | chart stories | `/components/charts`, `/editor` | `needs audit` |
+
 ## Required states per component family
 
 ### Controls
@@ -102,6 +118,114 @@ Use these as the comparison set:
 - library closed;
 - narrow stacked editor layout.
 
+## Known current gaps to verify first
+
+These are not final bug reports until confirmed visually, but they are the first areas to inspect.
+
+### `MetralyTable`
+
+Confirmed strengths:
+
+- real `<table>` semantics already exist;
+- `metraly-table-frame` exists;
+- `stickyHeader`, `dense`, loading, empty, footer and row markers already exist.
+
+Likely gaps to verify:
+
+- column contract may need `mono`, `truncate`, and `status` hints;
+- table-level error/disconnected state may be missing;
+- sticky header and horizontal scroll must be visually verified;
+- status/footer rows must stay compact at narrow widths;
+- row hover must not shift height.
+
+### `WidgetPickerCard`
+
+Confirmed strengths:
+
+- selected, new, loading, dragging and disabled visual states exist;
+- selected state is already pulse-free in component markup;
+- compact operational icon set exists.
+
+Likely gaps to verify:
+
+- right-rail width contract around 300-320px;
+- selected/dragging CSS must not change height;
+- badge/meta slots must not overflow;
+- disabled/loading rows must remain readable and compact.
+
+### `DashboardWidget`
+
+Confirmed strengths:
+
+- grip-dot drag handle exists;
+- selected/dragging/resizing/loading/error/empty classes exist;
+- resize handles are scoped to selected/resizing widgets;
+- state badge slot exists.
+
+Likely gaps to verify:
+
+- loading/error/empty bodies use inline styles and may need production CSS classes;
+- root `role=button` can conflict with interactive children;
+- long title/subtitle + badge wrapping must be tested;
+- widget body internal scroll must be verified for dense content.
+
+### `DashboardToolbar`
+
+Confirmed strengths:
+
+- two-row toolbar structure exists;
+- tabs/search/sync/actions are present;
+- sync state uses `StateBadge`.
+
+Likely gaps to verify:
+
+- explicit time range/filter slot may be needed;
+- narrow-width wrapping must preserve reachability;
+- tabs must horizontal-scroll without body overflow;
+- sync badge must not stretch the controls row.
+
+### `MetralySelect`
+
+Confirmed strengths:
+
+- custom trigger/listbox exists;
+- controlled and uncontrolled value modes exist;
+- loading/error/disabled/empty states exist.
+
+Likely gaps to verify:
+
+- text glyph chevron may not match prototype icon language;
+- keyboard listbox behavior may be incomplete;
+- click-outside/Escape close behavior may be incomplete;
+- long labels/options need truncation and viewport-safe scrolling;
+- ARIA active option handling should be checked.
+
+### `StateBadge`
+
+Confirmed strengths:
+
+- semantic state list exists;
+- `sm`/`md` sizes exist;
+- `subtle`/`solid` tones exist;
+- default pulse is limited to `live` and `new`.
+
+Likely gaps to verify:
+
+- default `role=status` may be too noisy for table-heavy screens;
+- truncation in constrained slots should be tested;
+- warning/error/stale tones must stay muted;
+- indicator/pulse must remain semantic only.
+
+### Chart wrappers
+
+Likely gaps to verify:
+
+- header and badge slots need constrained layout;
+- all charts must use responsive containers;
+- tooltip/legend/SVG must not escape shell;
+- tick density should reduce on narrow widths;
+- loading/empty/error chart states should preserve card dimensions.
+
 ## Component findings checklist
 
 For each audited component, record:
@@ -139,6 +263,120 @@ For each audited component, record:
 - Fix plan:
 - Tests/snapshots:
 ```
+
+## Per-component acceptance criteria
+
+### `MetralyTable`
+
+Done when:
+
+- table keeps real `<table>` semantics;
+- header remains sticky inside `.metraly-table-frame` when enabled;
+- horizontal overflow is contained inside the table frame;
+- body never causes page-level horizontal overflow;
+- numeric telemetry columns use mono font and right alignment where applicable;
+- status cells use canonical `StateBadge` or equivalent semantic chip;
+- loading, empty and error/disconnected states preserve table shell dimensions;
+- row hover does not change row height;
+- footer/status row remains compact at 320px and 375px.
+
+### `WidgetPickerCard`
+
+Done when:
+
+- default, hover, selected, disabled, loading, dragging and new states are represented;
+- desktop rail usage is compact at 300-320px;
+- mobile usage becomes a full-width dense row without changing visual language;
+- selected state is border + background + optional glow only;
+- no `PulseWave` appears in picker rows;
+- long titles/descriptions truncate or wrap without rail overflow;
+- loading/disabled rows remain readable.
+
+### `DashboardWidget`
+
+Done when:
+
+- header keeps drag grip, title/subtitle, badge and action slots stable;
+- drag handle remains neutral grip dots only;
+- selected and resizing states show resize handles only when appropriate;
+- loading, empty, stale, disconnected and error states preserve shell dimensions;
+- dense content scrolls inside widget body when needed;
+- long title/subtitle + badge layout does not break;
+- root selection behavior does not conflict with nested buttons/links.
+
+### `DashboardToolbar`
+
+Done when:
+
+- tabs, search, sync state, time range/filter slot and actions are reachable;
+- tabs horizontal-scroll on narrow widths;
+- toolbar wraps into multiple rows without body overflow;
+- sync live indicator may pulse only as semantic live state;
+- buttons stay compact and do not jump on hover;
+- 320px and 375px layouts remain usable.
+
+### `MetralySelect`
+
+Done when:
+
+- trigger is full-width inside container;
+- long selected labels truncate before overflow;
+- popover is raised, dark, bordered and viewport-safe;
+- long option lists scroll internally;
+- disabled/loading/error/empty states are represented;
+- Escape/click-outside close behavior works;
+- ArrowUp/ArrowDown/Enter/Space keyboard behavior works or limitation is documented;
+- focus-visible state is clear and dimension-stable;
+- icon treatment matches prototype stroke/icon language.
+
+### `StateBadge`
+
+Done when:
+
+- badge stays compact inline-flex;
+- badge never stretches to full width;
+- constrained slots truncate before layout distortion;
+- `live` and `new` pulse by default;
+- stale/warning/error states do not use aggressive glow;
+- table-heavy usage does not create excessive screen-reader live regions;
+- `sm` badge height aligns with dense table rows and widget headers.
+
+### Chart wrappers
+
+Done when:
+
+- charts render inside responsive containers;
+- chart cards constrain title/subtitle/badge/action slots;
+- badge overflow cannot widen the card;
+- tooltip/legend/SVG remain clipped to the shell;
+- X-axis tick density reduces on narrow widths;
+- loading/empty/error states preserve shell dimensions;
+- cyan is primary series and purple is secondary series.
+
+## Screenshot and visual regression protocol
+
+Every implementation PR that changes visual behavior must include before/after screenshots or Storybook references for the relevant surfaces.
+
+Required screenshot set when applicable:
+
+| Surface | Desktop | Tablet | Mobile |
+| --- | --- | --- | --- |
+| Forms state board | 1440px | 768px | 375px |
+| Table dense state | 1440px | 768px | 375px |
+| Dashboard editor | 1440px | 1024px | 390px |
+| Widget picker rail | 1440px | 768px | 375px |
+| Dashboard widget states | 1440px | 768px | 375px |
+| Charts/card wrappers | 1440px | 768px | 390px |
+
+Minimum required screenshots for first implementation PR:
+
+- table dense/default state at 1440px;
+- table narrow scroll state at 375px;
+- widget picker rail at 1440px;
+- widget picker narrow stacked state at 375px;
+- dashboard editor at 1440px and 390px.
+
+Do not merge visual parity PRs with only unit/type checks when the changed component has visible UI impact.
 
 ## Priority phases
 
@@ -251,7 +489,8 @@ A component is prototype-aligned only when:
 - hover/focus/selected/disabled states match prototype tone;
 - compact and comfortable density remain usable;
 - mobile behavior preserves the same design language;
-- any intentional divergence is documented in `docs/prototype-visual-spec.md` or adjacent contract docs.
+- any intentional divergence is documented in `docs/prototype-visual-spec.md` or adjacent contract docs;
+- before/after screenshots or Storybook references exist for visible changes.
 
 ## First implementation candidates
 
@@ -265,12 +504,25 @@ Start with these because they define the most visible mismatch risk:
 6. `StateBadge`
 7. chart card wrappers
 
+## Recommended first implementation PR scope
+
+Keep the first implementation PR focused:
+
+- audit and harden `MetralyTable`;
+- audit and harden `WidgetPickerCard`;
+- update or add the minimum Storybook examples for these two components;
+- attach desktop and mobile screenshots;
+- run the full verification checklist.
+
+Do not mix chart, toolbar and select behavior into the first implementation PR unless they are blocking the table/picker screenshots.
+
 ## PR expectations
 
 Every implementation PR should include:
 
 - summary of prototype references checked;
 - component list touched;
-- screenshots or Storybook references when possible;
+- screenshots or Storybook references;
 - tests run;
-- explicit note for any intentional divergence.
+- explicit note for any intentional divergence;
+- clear statement of what was intentionally not changed.
