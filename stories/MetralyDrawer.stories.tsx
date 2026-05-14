@@ -159,9 +159,9 @@ function MobileDrawerPreview() {
                     </span>
                   </div>
                   {item.badge ? (
-                    <MetralyBadge variant={item.id === "ci" ? "warn" : "cyan"}>{item.badge}</MetralyBadge>
+                    <MetralyBadge variant={item.id === "ci" ? "warning" : "primary"}>{item.badge}</MetralyBadge>
                   ) : item.state === "active" ? (
-                    <MetralyBadge variant="cyan">Current</MetralyBadge>
+                    <MetralyBadge variant="primary">Current</MetralyBadge>
                   ) : null}
                 </button>
               ))}
