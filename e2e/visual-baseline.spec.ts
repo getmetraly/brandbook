@@ -4,7 +4,7 @@ const coreRoutes = [
   {
     path: '/components',
     heading: /Components/i,
-    label: 'protected components baseline',
+    label: 'component catalog surface',
   },
   {
     path: '/editor',

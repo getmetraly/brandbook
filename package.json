@@ -12,7 +12,7 @@
     "ui:check": "npm --prefix packages/ui run typecheck",
     "check": "npm run ui:check && npm run site:typecheck && npm run site:test",
     "e2e:install": "playwright install chromium",
-    "test:e2e": "playwright test",
+    "test:e2e": "playwright test --config=playwright.config.ts",
     "storybook": "npm --prefix site run storybook",
     "build-storybook": "npm --prefix site run build-storybook",
     "clean:legacy": "bash scripts/clean-legacy.sh"
@@ -22,6 +22,6 @@
     "site"
   ],
   "devDependencies": {
-    "playwright": "^1.60.0"
+    "@playwright/test": "1.59.1"
   }
 }
