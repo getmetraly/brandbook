@@ -20,9 +20,11 @@ function BoardSection({ title, children }: { title: string; children: React.Reac
   return (
     <section
       style={{
+        alignSelf: "start",
         display: "grid",
         gap: 10,
         minWidth: 0,
+        maxWidth: "100%",
         padding: 12,
         border: "1px solid var(--m-line)",
         borderRadius: "var(--m-r-4)",
@@ -54,7 +56,7 @@ function NewComponentStateBoard() {
 
   return (
     <ThemeProvider>
-      <div style={{ minHeight: "100dvh", display: "grid", gap: 16, padding: 16, background: "var(--m-bg-0)", color: "var(--m-fg-1)" }}>
+      <div style={{ minHeight: "100dvh", display: "grid", gap: 14, padding: 16, background: "var(--m-bg-0)", color: "var(--m-fg-1)", alignContent: "start", overflowX: "hidden" }}>
         <div style={{ display: "grid", gap: 4 }}>
           <div style={{ color: "var(--m-fg-0)", fontSize: "var(--m-fs-18)", fontWeight: 600 }}>New component state board</div>
           <div style={{ color: "var(--m-fg-3)", fontFamily: "var(--m-font-mono)", fontSize: "var(--m-fs-10)" }}>
@@ -62,7 +64,7 @@ function NewComponentStateBoard() {
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: 12 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12, alignItems: "start" }}>
           <BoardSection title="1. MetralyButton">
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
               <MetralyButton variant="primary">Primary</MetralyButton>
