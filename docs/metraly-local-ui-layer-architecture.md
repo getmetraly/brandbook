@@ -2,7 +2,7 @@
 
 **Status:** Required architecture document for migration from brandbook into `getmetraly/metraly/ui`.  
 **Last updated:** 2026-05-15  
-**Source:** `UI UX аудит миграции Metraly из Brandbook в локальный UI слой приложения`
+**Source:** `Metraly UI/UX migration audit from Brandbook into the local application UI layer`
 
 ---
 
