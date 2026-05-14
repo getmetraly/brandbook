@@ -70,7 +70,7 @@ function WizardProgressBlock() {
       </div>
 
       <div style={{ display: "grid", gap: 8, paddingTop: 4 }}>
-        <MetralyBadge variant="cyan">recipe only</MetralyBadge>
+        <MetralyBadge variant="primary">recipe only</MetralyBadge>
         <div style={{ color: "var(--m-fg-3)", fontSize: "var(--m-fs-10)" }}>
           The structure remains compositional until a third product wizard needs the same abstraction.
         </div>
@@ -124,7 +124,7 @@ function WizardLayoutRecipe({ mode = "desktop" }: { mode?: WizardMode }) {
                   }}
                 >
                   <div style={{ minWidth: 0, display: "flex", alignItems: "center", gap: 8 }}>
-                    <MetralyBadge variant="cyan">2/{steps.length}</MetralyBadge>
+                    <MetralyBadge variant="primary">2/{steps.length}</MetralyBadge>
                     <div style={{ minWidth: 0, display: "grid", gap: 1 }}>
                       <div
                         style={{
@@ -211,7 +211,7 @@ function WizardLayoutRecipe({ mode = "desktop" }: { mode?: WizardMode }) {
               <div style={{ display: "grid", gap: 10 }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
                   <div style={{ color: "var(--m-fg-0)", fontSize: "var(--m-fs-12)", fontWeight: 600 }}>CLI authentication</div>
-                  <MetralyBadge variant="ok">current step</MetralyBadge>
+                  <MetralyBadge variant="success">current step</MetralyBadge>
                 </div>
                 <MetralyCodeBlock accent="cyan">
                   {`metraly auth connect \
