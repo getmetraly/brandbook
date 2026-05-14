@@ -93,6 +93,41 @@
   border-color: var(--m-line);
 }
 
+.metraly-state-badge.is-ok {
+  color: var(--m-ok);
+  background: var(--m-ok-bg);
+  border-color: oklch(0.78 0.14 155 / 0.2);
+}
+
+.metraly-state-badge.is-info {
+  color: var(--m-fg-2);
+  background: var(--m-bg-3);
+  border-color: var(--m-line);
+}
+
+.metraly-state-badge.is-disabled {
+  border-style: dashed;
+}
+
+.metraly-state-badge.is-pulsing .metraly-state-pulse {
+  animation: m-pulse-dot 1.5s ease-in-out infinite;
+}
+
+.metraly-state-badge.is-static .metraly-state-pulse {
+  animation: none;
+}
+
+[data-pulse="off"] .metraly-state-pulse {
+  animation: none !important;
+  opacity: 0.7 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .metraly-state-pulse {
+    animation: none !important;
+  }
+}
+
 .metraly-state-badge--tone-solid {
   color: var(--m-bg-0);
 }

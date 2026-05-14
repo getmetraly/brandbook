@@ -28,3 +28,20 @@ It must not be used as:
 - drag affordance;
 - repeated sidebar ornament;
 - generic decoration.
+
+## Intentional divergence from prototype pulse usage
+
+The prototype's `WidgetPickerCard` renders a `PulseWave` in selected state and its widget library rows can pulse. The production brandbook intentionally removes this:
+
+- `WidgetPickerCard` selected state uses border + background + glow only. No `PulseWave`.
+- Widget library rows do not pulse.
+- `DashboardDropZone` is pulse-free in idle, hover, and default active states.
+- Drag handles never pulse.
+
+**Rationale**: Pulse in picker rows and dropzones at the prototype level was exploratory. The signal is too noisy for a dense engineering workspace where pulse is reserved for live telemetry and status badges.
+
+Allowed semantic pulse usages in production:
+- Logo mark
+- `live` and `new` StateBadge dot (`m-pulse-dot`)
+- Toolbar sync chip
+- Chart/telemetry accent where explicitly annotated

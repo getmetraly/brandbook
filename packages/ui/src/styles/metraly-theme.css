@@ -113,6 +113,21 @@
   --metraly-pulse-marker-path: polygon(0 52%, 20% 52%, 26% 25%, 36% 82%, 47% 8%, 58% 52%, 100% 52%, 100% 66%, 52% 66%, 47% 48%, 37% 100%, 27% 55%, 23% 66%, 0 66%);
 }
 
+[data-density="compact"] {
+  --m-row-h: 28px;
+  --m-control-h: 26px;
+  --m-pad-x: 10px;
+}
+
+[data-glow="0"] {
+  --m-cyan-glow: oklch(0.78 0.13 200 / 0);
+  --m-purple-glow: oklch(0.66 0.14 295 / 0);
+}
+[data-glow="2"] {
+  --m-cyan-glow: oklch(0.78 0.13 200 / 0.34);
+  --m-purple-glow: oklch(0.66 0.14 295 / 0.34);
+}
+
 [data-theme="light"] {
   color-scheme: light;
   --m-bg-0: oklch(0.97 0.006 250);
@@ -144,6 +159,29 @@
 .m-focusable:focus-visible {
   outline: none;
   box-shadow: var(--m-glow-focus);
+}
+
+@keyframes m-pulse {
+  0%   { opacity: 0.35; transform: scaleX(0.92); }
+  50%  { opacity: 1;    transform: scaleX(1);    }
+  100% { opacity: 0.35; transform: scaleX(0.92); }
+}
+@keyframes m-pulse-dot {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1; }
+}
+@keyframes m-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+@keyframes m-spin {
+  to { transform: rotate(360deg); }
+}
+
+[data-pulse="off"] .m-pulse,
+[data-pulse="off"] .m-pulse-dot {
+  animation: none !important;
+  opacity: 0.7 !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
