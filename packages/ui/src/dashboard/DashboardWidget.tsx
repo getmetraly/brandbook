@@ -54,6 +54,56 @@ function DragHandle({ canDrag, id, onDragStart }: { canDrag: boolean; id?: strin
   );
 }
 
+function LoadingSkeleton() {
+  const bar = (w: string) => (
+    <div
+      style={{
+        height: 10,
+        width: w,
+        background: "linear-gradient(90deg, var(--m-bg-3) 0%, var(--m-bg-4) 50%, var(--m-bg-3) 100%)",
+        backgroundSize: "200% 100%",
+        animation: "m-shimmer 1.4s linear infinite",
+        borderRadius: 4,
+      }}
+    />
+  );
+
+  return (
+    <div style={{ padding: 14, display: "flex", flexDirection: "column", gap: 10, flex: 1 }}>
+      {bar("60%")}
+      {bar("85%")}
+      {bar("45%")}
+      <div style={{ flex: 1 }} />
+      {bar("70%")}
+    </div>
+  );
+}
+
+function ErrorBody() {
+  return (
+    <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, padding: 16 }}>
+      <div style={{ width: 28, height: 28, borderRadius: "50%", background: "var(--m-err-bg)", color: "var(--m-err)", display: "inline-flex", alignItems: "center", justifyContent: "center", border: "1px solid var(--m-err)" }}>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"><path d="M4 4 L10 10 M10 4 L4 10" /></svg>
+      </div>
+      <div style={{ fontSize: "var(--m-fs-12)", color: "var(--m-fg-1)" }}>Source disconnected</div>
+      <div style={{ fontSize: "var(--m-fs-10)", color: "var(--m-fg-3)", fontFamily: "var(--m-font-mono)" }}>last sync 12m ago · retrying...</div>
+      <button className="metraly-focus-ring" type="button" style={{ marginTop: 4, background: "transparent", color: "var(--m-cyan-500)", border: "1px solid var(--m-cyan-500)", padding: "4px 10px", borderRadius: "var(--m-r-2)", fontSize: "var(--m-fs-11)", fontFamily: "var(--m-font-ui)", cursor: "pointer" }}>
+        Reconnect
+      </button>
+    </div>
+  );
+}
+
+function EmptyBody() {
+  return (
+    <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 6, padding: 16, color: "var(--m-fg-3)" }}>
+      <svg width="20" height="20" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M3 11 V8 M6 11 V5 M9 11 V7 M12 11 V3" strokeLinecap="round" /></svg>
+      <div style={{ fontSize: "var(--m-fs-11)" }}>No telemetry in this range</div>
+      <div style={{ fontSize: "var(--m-fs-10)", fontFamily: "var(--m-font-mono)" }}>0 events · widen the time window</div>
+    </div>
+  );
+}
+
 export function DashboardWidget({
   id,
   title,
@@ -132,7 +182,15 @@ export function DashboardWidget({
           )}
         </header>
         <div className="metraly-widget-shell-body">
-          <div className="metraly-dashboard-widget-content">{children}</div>
+          {loading && !children ? (
+            <LoadingSkeleton />
+          ) : (state === "error" || state === "disconnected") && !children ? (
+            <ErrorBody />
+          ) : state === "noData" && !children ? (
+            <EmptyBody />
+          ) : (
+            <div className="metraly-dashboard-widget-content">{children}</div>
+          )}
           {(footer || canRemove) ? (
             <div className="metraly-dashboard-widget-footer">
               {footer}

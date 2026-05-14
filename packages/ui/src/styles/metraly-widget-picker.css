@@ -20,15 +20,32 @@
 .metraly-widget-picker-card.is-selected {
   border-color: var(--m-cyan-500);
   background: var(--m-cyan-bg);
+  box-shadow: var(--m-glow-selected);
 }
 
 .metraly-widget-picker-card.is-dragging {
-  opacity: 0.7;
-  transform: scale(0.985);
+  opacity: 0.6;
+  transform: scale(0.97) rotate(-1deg);
+  outline: 1px dashed var(--m-cyan-500);
+  cursor: grabbing;
 }
 
 .metraly-widget-picker-card.is-disabled {
   opacity: 0.55;
+}
+
+button.metraly-widget-picker-card {
+  cursor: grab;
+}
+
+button.metraly-widget-picker-card:active {
+  cursor: grabbing;
+}
+
+.metraly-widget-picker-card.is-selected .metraly-widget-picker-icon {
+  background: var(--m-cyan-500);
+  border-color: var(--m-cyan-500);
+  color: var(--m-bg-0);
 }
 
 .metraly-widget-picker-head {
@@ -105,7 +122,6 @@
 button.metraly-widget-picker-card {
   width: 100%;
   border: 1px solid var(--m-line);
-  cursor: pointer;
 }
 
 button.metraly-widget-picker-card:disabled {
