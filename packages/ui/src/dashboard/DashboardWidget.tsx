@@ -10,7 +10,9 @@ export interface DashboardWidgetProps {
   stateLabel?: string;
   selected?: boolean;
   dragging?: boolean;
+  resizing?: boolean;
   resizable?: boolean;
+  loading?: boolean;
   fullWidth?: boolean;
   children?: React.ReactNode;
   footer?: React.ReactNode;
@@ -60,7 +62,9 @@ export function DashboardWidget({
   stateLabel,
   selected = false,
   dragging = false,
+  resizing = false,
   resizable = true,
+  loading = false,
   fullWidth = false,
   children,
   footer,
@@ -99,6 +103,8 @@ export function DashboardWidget({
           "metraly-widget-shell",
           selected && "is-selected",
           dragging && "is-dragging",
+          resizing && "is-resizing",
+          loading && "is-loading",
           (state === "error" || state === "disconnected") && "is-error",
           (state === "stale" || state === "delayed") && "is-stale",
           state === "noData" && "is-empty",
@@ -145,14 +151,14 @@ export function DashboardWidget({
             </div>
           ) : null}
         </div>
-        {resizable && selected ? (
+        {resizable && (selected || resizing) ? (
           <div className="metraly-widget-shell-resize-handles" aria-hidden={false}>
             {dashboardResizeHandleDirections.map((direction) => (
               <DashboardResizeHandle
                 key={direction}
                 className="metraly-widget-shell-resize-handle"
                 direction={direction}
-                active={selected}
+                active={selected || resizing}
               />
             ))}
           </div>

@@ -250,3 +250,16 @@
   border: 1px solid var(--m-cyan-500);
   background: var(--m-bg-0);
 }
+
+.metraly-dashboard-resize-handle.is-active {
+  box-shadow: 0 0 6px -1px var(--m-cyan-glow);
+}
+
+.metraly-dashboard-resize-handle.is-northwest { top: -4px; left: -4px; cursor: nwse-resize; }
+.metraly-dashboard-resize-handle.is-north     { top: -4px; left: calc(50% - 4px); cursor: ns-resize; }
+.metraly-dashboard-resize-handle.is-northeast { top: -4px; right: -4px; cursor: nesw-resize; }
+.metraly-dashboard-resize-handle.is-east      { top: calc(50% - 4px); right: -4px; cursor: ew-resize; }
+.metraly-dashboard-resize-handle.is-southeast { bottom: -4px; right: -4px; cursor: nwse-resize; }
+.metraly-dashboard-resize-handle.is-south     { bottom: -4px; left: calc(50% - 4px); cursor: ns-resize; }
+.metraly-dashboard-resize-handle.is-southwest { bottom: -4px; left: -4px; cursor: nesw-resize; }
+.metraly-dashboard-resize-handle.is-west      { top: calc(50% - 4px); left: -4px; cursor: ew-resize; }

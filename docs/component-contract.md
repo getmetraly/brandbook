@@ -37,3 +37,17 @@ The rebuilt primitive surface includes:
 - Default drop zones stay pulse-free.
 - Drag affordance is always grip dots.
 - Resize handles appear only in the correct states.
+
+## Intentional no-pulse divergence
+
+`WidgetPickerCard` does not render `PulseWave`. Selected state uses `border-color: var(--m-cyan-500)` + `box-shadow: var(--m-glow-selected)` + `background: var(--m-cyan-bg)` only.
+
+`DashboardDropZone` remains pulse-free in the production brandbook implementation. Active state uses border + background color change only.
+
+Do not reintroduce `PulseWave` in:
+- `WidgetPickerCard` (any state)
+- Widget library rows
+- `DashboardDropZone` idle/active/default
+- Drag handles
+
+See `docs/design-principles.md` for the full rationale.

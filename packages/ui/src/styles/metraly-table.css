@@ -52,7 +52,7 @@
 }
 
 .metraly-table[data-density="dense"] {
-  --m-table-row-height: 26px;
+  --m-table-row-height: 28px;
 }
 
 .metraly-table-row {
@@ -79,17 +79,17 @@
   vertical-align: middle;
   border-radius: 999px;
   background: var(--m-cyan-500);
-  box-shadow: 0 0 0 1px var(--m-bg-0), 0 0 10px rgba(0,229,204,0.24);
+  box-shadow: 0 0 0 1px var(--m-bg-0), 0 0 10px var(--m-cyan-glow);
 }
 
 .metraly-table-row-marker[data-marker='stale'] {
   background: var(--m-warn);
-  box-shadow: 0 0 0 1px var(--m-bg-0), 0 0 10px rgba(245,158,11,0.24);
+  box-shadow: 0 0 0 1px var(--m-bg-0), 0 0 10px var(--m-warn-bg);
 }
 
 .metraly-table-row-marker[data-marker='error'] {
   background: var(--m-err);
-  box-shadow: 0 0 0 1px var(--m-bg-0), 0 0 10px rgba(239,68,68,0.24);
+  box-shadow: 0 0 0 1px var(--m-bg-0), 0 0 10px var(--m-err-bg);
 }
 
 .metraly-table-skeleton-bar {
@@ -98,12 +98,7 @@
   border-radius: 999px;
   background: linear-gradient(90deg, var(--m-bg-3), var(--m-bg-4), var(--m-bg-3));
   background-size: 200% 100%;
-  animation: metraly-table-skeleton 1.2s ease-in-out infinite;
-}
-
-@keyframes metraly-table-skeleton {
-  0% { background-position: 0 0; }
-  100% { background-position: 200% 0; }
+  animation: m-shimmer 1.4s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -116,9 +111,11 @@
 }
 
 .metraly-table-empty td {
-  padding: 2rem 1rem;
+  padding: 1.5rem 1rem;
   text-align: center;
   color: var(--m-fg-3);
-  font-style: italic;
+  font-family: var(--m-font-mono);
+  font-size: var(--m-fs-10);
+  letter-spacing: 0.04em;
   white-space: normal;
 }
