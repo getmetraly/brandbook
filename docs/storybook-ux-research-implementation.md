@@ -112,3 +112,30 @@ Reason: Playwright Chromium is not installed in the sandbox and browser download
 ## Files to delete
 
 None.
+
+## Follow-up: recipe density and mobile QA
+
+After the package-level overflow fixes and dashboard mobile pass, the remaining recipes were tightened so they no longer create oversized demo surfaces or rely on desktop spacing at narrow widths.
+
+### AuthFormRecipe
+
+- Uses `100dvh` instead of fixed `820px` height.
+- Uses clamped viewport padding and a narrower auth card width.
+- Keeps the same canonical composition but reduces header/icon/panel spacing.
+- Preserves loading, invalid credentials, SSO, and mobile stories.
+
+### IntegrationCardRecipe
+
+- Uses real filter/search state instead of a visual-only toolbar.
+- Uses compact card density and tighter card copy.
+- Keeps installed, available, needs-auth, syncing, optional, and error states.
+- Adds an empty result state for filtered searches.
+
+### WizardLayoutRecipe
+
+- Replaces the mobile steps drawer with `MetralyBottomSheet`, matching the overlay rule for mobile utility trays.
+- Keeps the step indicator recipe-only, but makes the progress rows more compact.
+- Adds a review snapshot state so the wizard shows the next-step summary instead of stopping at source selection.
+- Uses canonical `MetralyCodeBlock accent="primary"`.
+
+These changes keep recipes as migration references while avoiding large blank areas, oversized containers, and desktop-only spacing assumptions.

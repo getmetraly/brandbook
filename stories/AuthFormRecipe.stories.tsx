@@ -22,21 +22,22 @@ function AuthFormRecipe({ state = "default" }: { state?: AuthState }) {
     <ThemeProvider>
       <div
         style={{
-          minHeight: 820,
+          minHeight: "100dvh",
           background:
-            "radial-gradient(circle at top, color-mix(in oklab, var(--m-cyan-500) 10%, transparent), transparent 34%), var(--m-bg-0)",
+            "radial-gradient(circle at top, color-mix(in oklab, var(--m-cyan-500) 8%, transparent), transparent 32%), var(--m-bg-0)",
           display: "grid",
           placeItems: "center",
-          padding: 24,
+          padding: "clamp(12px, 4vw, 24px)",
+          overflowX: "hidden",
         }}
       >
-        <div style={{ width: "100%", maxWidth: 460, display: "grid", gap: 14 }}>
+        <div style={{ width: "min(100%, 430px)", display: "grid", gap: 12 }}>
           <div style={{ display: "grid", gap: 6, justifyItems: "center", textAlign: "center" }}>
             <div
               style={{
-                width: 44,
-                height: 44,
-                borderRadius: "var(--m-r-4)",
+                width: 40,
+                height: 40,
+                borderRadius: "var(--m-r-3)",
                 border: "1px solid var(--m-line)",
                 background: "linear-gradient(180deg, var(--m-bg-2), var(--m-bg-3))",
                 display: "grid",
@@ -44,18 +45,18 @@ function AuthFormRecipe({ state = "default" }: { state?: AuthState }) {
                 color: "var(--m-cyan-500)",
               }}
             >
-              <MetralyIcon name="lock" size="lg" />
+              <MetralyIcon name="lock" size="md" />
             </div>
-            <div style={{ color: "var(--m-fg-0)", fontSize: "var(--m-fs-18)", fontWeight: 600 }}>Sign in to Metraly</div>
-            <div style={{ color: "var(--m-fg-3)", maxWidth: 360 }}>
+            <div style={{ color: "var(--m-fg-0)", fontSize: "var(--m-fs-16)", fontWeight: 600 }}>Sign in to Metraly</div>
+            <div style={{ color: "var(--m-fg-3)", maxWidth: 340, fontSize: "var(--m-fs-11)", lineHeight: 1.4 }}>
               Canonical auth recipe using existing panel, input, button and code seams only.
             </div>
           </div>
 
-          <MetralyPanel padding="lg">
-            <div style={{ display: "grid", gap: 14 }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
-                <div style={{ display: "grid", gap: 4 }}>
+          <MetralyPanel padding="md">
+            <div style={{ display: "grid", gap: 12, minWidth: 0 }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, flexWrap: "wrap" }}>
+                <div style={{ display: "grid", gap: 3, minWidth: 0 }}>
                   <div style={{ color: "var(--m-fg-0)", fontSize: "var(--m-fs-12)", fontWeight: 600 }}>Workspace login</div>
                   <div style={{ color: "var(--m-fg-3)", fontFamily: "var(--m-font-mono)", fontSize: "var(--m-fs-9)" }}>
                     Operators and engineering leads
@@ -76,7 +77,7 @@ function AuthFormRecipe({ state = "default" }: { state?: AuthState }) {
               />
 
               {method === "sso" ? (
-                <div style={{ display: "grid", gap: 10 }}>
+                <div style={{ display: "grid", gap: 10, minWidth: 0 }}>
                   <MetralyButton variant="primary" fullWidth iconLeft={<MetralyIcon name="lock" size="sm" />} loading={isLoading}>
                     Continue with SSO
                   </MetralyButton>
@@ -85,7 +86,7 @@ function AuthFormRecipe({ state = "default" }: { state?: AuthState }) {
                   </div>
                 </div>
               ) : (
-                <>
+                <div style={{ display: "grid", gap: 10, minWidth: 0 }}>
                   <MetralyInput
                     fullWidth
                     label="Email"
@@ -101,16 +102,16 @@ function AuthFormRecipe({ state = "default" }: { state?: AuthState }) {
                     placeholder="••••••••••••"
                     iconLeft={<MetralyIcon name="lock" size="sm" />}
                     error={isError ? "Password did not match" : undefined}
-                    description={!isError ? "Use SSO or a workspace-local account. No auth-only component needed here." : undefined}
+                    description={!isError ? "Use SSO or a workspace-local account." : undefined}
                   />
 
                   <MetralyButton variant="primary" fullWidth loading={isLoading}>
                     Sign in
                   </MetralyButton>
-                </>
+                </div>
               )}
 
-              <div style={{ display: "grid", gap: 8 }}>
+              <div style={{ display: "grid", gap: 6, minWidth: 0 }}>
                 <div style={{ color: "var(--m-fg-2)", fontSize: "var(--m-fs-10)", fontWeight: 500 }}>
                   Self-host bootstrap
                 </div>
@@ -126,15 +127,15 @@ function AuthFormRecipe({ state = "default" }: { state?: AuthState }) {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  gap: 12,
+                  gap: 10,
                   flexWrap: "wrap",
-                  paddingTop: 4,
+                  paddingTop: 2,
                 }}
               >
                 <MetralyButton variant="neutral" size="sm">
                   Forgot password
                 </MetralyButton>
-                <div style={{ color: "var(--m-fg-3)", fontSize: "var(--m-fs-10)" }}>
+                <div style={{ color: "var(--m-fg-3)", fontSize: "var(--m-fs-10)", lineHeight: 1.4 }}>
                   Need help? Contact your workspace operator.
                 </div>
               </div>
