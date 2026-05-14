@@ -189,6 +189,9 @@
 @keyframes m-spin {
   to { transform: rotate(360deg); }
 }
+@keyframes m-stroke-draw {
+  to { stroke-dashoffset: 0; }
+}
 
 [data-pulse="off"] .m-pulse,
 [data-pulse="off"] .m-pulse-dot {
