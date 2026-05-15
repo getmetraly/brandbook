@@ -2,9 +2,17 @@ import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import {
   MetralyBadge,
+  MetralyBottomSheet,
   MetralyButton,
   MetralyIcon,
+  MetralyInput,
   MetralyLogo,
+  MetralyShell,
+  MetralySidebar,
+  MetralySidebarItem,
+  MetralySidebarSection,
+  MetralyTopbar,
+  StatusBadge,
 } from "@metraly/ui";
 
 type WizardStage = "goal" | "role" | "review" | "error" | "success";
@@ -148,54 +156,47 @@ function MiniStepper({ stage }: { stage: WizardStage }) {
   );
 }
 
-function AppSideNav() {
+function appSidebarHeader() {
   return (
-    <aside className="metraly-dashboard-wizard-app__side" aria-label="Demo app navigation">
-      <div className="metraly-dashboard-wizard-app__brand">
-        <div className="metraly-dashboard-wizard-app__brand-row">
-          <MetralyLogo variant="mark" />
-          <span className="metraly-dashboard-wizard-app__brand-copy">
-            <strong>METRALY</strong>
-            <small>engineering intelligence</small>
-          </span>
+    <div style={{ display: "flex", flexDirection: "column", gap: 10, padding: "16px 12px 14px", borderBottom: "1px solid var(--m-line-faint)" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <MetralyLogo variant="mark" />
+        <div style={{ minWidth: 0, display: "grid", gap: 2 }}>
+          <span style={{ color: "var(--m-fg-0)", fontSize: "var(--m-fs-11)", fontWeight: 600, letterSpacing: "0.04em" }}>METRALY</span>
+          <span style={{ color: "var(--m-fg-3)", fontFamily: "var(--m-font-mono)", fontSize: "var(--m-fs-9)" }}>engineering intelligence</span>
         </div>
-        <MetralyBadge variant="success">Demo environment</MetralyBadge>
       </div>
+      <StatusBadge status="Live" />
+    </div>
+  );
+}
 
-      <nav className="metraly-dashboard-wizard-app__nav">
-        <div className="metraly-dashboard-wizard-app__nav-section">
-          <span className="metraly-dashboard-wizard-app__nav-label">Pinned</span>
-          <button className="metraly-dashboard-wizard-app__nav-item" type="button"><MetralyIcon name="trendingUp" size="sm" /> CTO</button>
-          <button className="metraly-dashboard-wizard-app__nav-item" type="button"><MetralyIcon name="settings" size="sm" /> DevOps / SRE</button>
-        </div>
-        <div className="metraly-dashboard-wizard-app__nav-section">
-          <span className="metraly-dashboard-wizard-app__nav-label">Dashboards</span>
-          <button className="metraly-dashboard-wizard-app__nav-item" type="button"><MetralyIcon name="home" size="sm" /> Overview</button>
-          <button className="metraly-dashboard-wizard-app__nav-item" type="button"><MetralyIcon name="users" size="sm" /> VP Engineering</button>
-          <button className="metraly-dashboard-wizard-app__nav-item" type="button"><MetralyIcon name="gitPullRequest" size="sm" /> Tech Lead</button>
-          <button className="metraly-dashboard-wizard-app__nav-item" type="button"><MetralyIcon name="activity" size="sm" /> My View</button>
-          <button className="metraly-dashboard-wizard-app__nav-item is-active" type="button"><MetralyIcon name="plus" size="sm" /> Dashboard Preview</button>
-        </div>
-        <div className="metraly-dashboard-wizard-app__nav-section">
-          <span className="metraly-dashboard-wizard-app__nav-label">Analytics</span>
-          <button className="metraly-dashboard-wizard-app__nav-item" type="button"><MetralyIcon name="bar2" size="sm" /> Metrics Explorer</button>
-          <button className="metraly-dashboard-wizard-app__nav-item" type="button"><MetralyIcon name="brain" size="sm" /> AI Preview <MetralyBadge variant="secondary">Demo</MetralyBadge></button>
-        </div>
-        <div className="metraly-dashboard-wizard-app__nav-section">
-          <span className="metraly-dashboard-wizard-app__nav-label">Configure</span>
-          <button className="metraly-dashboard-wizard-app__nav-item" type="button"><MetralyIcon name="puzzle" size="sm" /> Plugin Preview</button>
-          <button className="metraly-dashboard-wizard-app__nav-item" type="button"><MetralyIcon name="link" size="sm" /> Connector Preview</button>
-        </div>
-      </nav>
-
-      <div className="metraly-dashboard-wizard-app__user">
-        <span className="metraly-dashboard-wizard-app__avatar" aria-hidden="true">JD</span>
-        <span className="metraly-dashboard-wizard-app__brand-copy">
-          <strong>Jamie Dev</strong>
-          <small>Demo admin</small>
-        </span>
-      </div>
-    </aside>
+function AppShellSidebar() {
+  return (
+    <MetralySidebar header={appSidebarHeader()} aria-label="Primary navigation">
+      <MetralySidebarSection label="Dashboards">
+        <MetralySidebarItem href="/dashboard/overview" icon={<MetralyIcon name="home" size={14} />} label="Overview" />
+        <MetralySidebarItem href="/dashboard/vp" icon={<MetralyIcon name="users" size={14} />} label="VP Engineering" />
+        <MetralySidebarItem href="/dashboard/tech-lead" icon={<MetralyIcon name="gitPR" size={14} />} label="Tech Lead" />
+        <MetralySidebarItem active href="/dashboard/preview" icon={<MetralyIcon name="plus" size={14} />} label="Dashboard Preview" />
+      </MetralySidebarSection>
+      <MetralySidebarSection label="Analytics">
+        <MetralySidebarItem href="/metrics" icon={<MetralyIcon name="bar2" size={14} />} label="Metrics Explorer" />
+        <MetralySidebarItem
+          href="/ai"
+          icon={<MetralyIcon name="brain" size={14} />}
+          label="AI Preview"
+          meta={<StatusBadge status="Preview" size="sm" />}
+        />
+      </MetralySidebarSection>
+      <MetralySidebarSection label="Configure">
+        <MetralySidebarItem href="/plugins" icon={<MetralyIcon name="puzzle" size={14} />} label="Plugin Preview" />
+        <MetralySidebarItem href="/connectors" icon={<MetralyIcon name="link" size={14} />} label="Connector Preview" />
+      </MetralySidebarSection>
+      <MetralySidebarSection label="System">
+        <MetralySidebarItem href="/settings" icon={<MetralyIcon name="settings" size={14} />} label="Settings" />
+      </MetralySidebarSection>
+    </MetralySidebar>
   );
 }
 
@@ -377,47 +378,80 @@ function MetricPreview({ title, value, unit, warning = false }: { title: string;
   );
 }
 
-function DashboardWizardScenario({ stage = "goal" }: { stage?: WizardStage }) {
+function BuilderPanel({ stage, className }: { stage: WizardStage; className?: string }) {
   const copy = stageCopy(stage);
 
   return (
-    <div className="metraly-dashboard-wizard-app">
-      <AppSideNav />
-      <main className="metraly-dashboard-wizard-recipe">
-        <header className="metraly-dashboard-wizard-recipe__topbar">
-          <div className="metraly-dashboard-wizard-recipe__topbar-copy">
-            <div className="metraly-dashboard-wizard-recipe__topbar-title">Dashboard Preview</div>
-            <div className="metraly-dashboard-wizard-recipe__topbar-subtitle">Synthetic dashboard builder preview</div>
-          </div>
-          <div className="metraly-dashboard-wizard-recipe__search"><MetralyIcon name="search" size="sm" /> Quick search…</div>
-        </header>
-        <div className="metraly-dashboard-wizard-recipe__workspace">
-          <aside className="metraly-dashboard-wizard-recipe__panel" aria-label="Dashboard wizard controls">
-            <div className="metraly-dashboard-wizard-recipe__panel-head">
-              <div className="metraly-dashboard-wizard-recipe__notice">
-                <strong style={{ color: "var(--m-cyan-500)" }}>Synthetic dashboard builder preview.</strong>{" "}
-                Templates, widgets, AI summaries, anomaly indicators, and saved layouts are scripted demo content only.
-              </div>
-              <MiniStepper stage={stage} />
-            </div>
-            <div className="metraly-dashboard-wizard-recipe__panel-body">
-              <div className="metraly-dashboard-wizard-recipe__panel-copy">
-                <div className="metraly-dashboard-wizard-recipe__panel-title">{copy.panelTitle}</div>
-                <div className="metraly-dashboard-wizard-recipe__panel-subtitle">{copy.panelDescription}</div>
-              </div>
-              {stage === "goal" || stage === "role" ? <TemplateStage stage={stage} /> : null}
-              {stage === "review" || stage === "error" ? <WidgetStage /> : null}
-              {stage === "success" ? <SettingsStage /> : null}
-              {stage === "error" ? <div className="metraly-dashboard-wizard-recipe__warning">Workspace policy blocks the incident widget until PagerDuty preview is approved.</div> : null}
-            </div>
-            <div className="metraly-dashboard-wizard-recipe__panel-footer">
-              <MetralyButton variant="ghost">{stage === "goal" ? "Cancel" : "Back"}</MetralyButton>
-              <MetralyButton variant={stage === "success" ? "secondary" : "primary"}>{copy.primary}</MetralyButton>
-            </div>
-          </aside>
-          <PreviewPane stage={stage} />
+    <section className={["metraly-dashboard-wizard-recipe__panel", className].filter(Boolean).join(" ")} aria-label="Dashboard wizard controls">
+      <div className="metraly-dashboard-wizard-recipe__panel-head">
+        <div className="metraly-dashboard-wizard-recipe__notice">
+          <strong style={{ color: "var(--m-cyan-500)" }}>Synthetic dashboard builder preview.</strong>{" "}
+          Templates, widgets, AI summaries, anomaly indicators, and saved layouts are scripted demo content only.
         </div>
-      </main>
+        <MiniStepper stage={stage} />
+      </div>
+      <div className="metraly-dashboard-wizard-recipe__panel-body">
+        <div className="metraly-dashboard-wizard-recipe__panel-copy">
+          <div className="metraly-dashboard-wizard-recipe__panel-title">{copy.panelTitle}</div>
+          <div className="metraly-dashboard-wizard-recipe__panel-subtitle">{copy.panelDescription}</div>
+        </div>
+        {stage === "goal" || stage === "role" ? <TemplateStage stage={stage} /> : null}
+        {stage === "review" || stage === "error" ? <WidgetStage /> : null}
+        {stage === "success" ? <SettingsStage /> : null}
+        {stage === "error" ? <div className="metraly-dashboard-wizard-recipe__warning">Workspace policy blocks the incident widget until PagerDuty preview is approved.</div> : null}
+      </div>
+      <div className="metraly-dashboard-wizard-recipe__panel-footer">
+        <MetralyButton variant="ghost">{stage === "goal" ? "Cancel" : "Back"}</MetralyButton>
+        <MetralyButton variant={stage === "success" ? "secondary" : "primary"}>{copy.primary}</MetralyButton>
+      </div>
+    </section>
+  );
+}
+
+function DashboardWizardScenario({ stage = "goal" }: { stage?: WizardStage }) {
+  const [builderOpen, setBuilderOpen] = React.useState(false);
+
+  return (
+    <div className="metraly-dashboard-wizard-app">
+      <MetralyShell className="metraly-dashboard-wizard-app__shell">
+        <AppShellSidebar />
+        <main className="metraly-dashboard-wizard-recipe">
+          <MetralyTopbar
+            breadcrumb="Workspace / Dashboards / Preview"
+            title="Dashboard Preview"
+            subtitle="Synthetic dashboard builder preview"
+            actions={(
+              <>
+                <MetralyButton
+                  variant="ghost"
+                  className="metraly-dashboard-wizard-recipe__builder-trigger"
+                  iconLeft={<MetralyIcon name="menu" size="sm" />}
+                  onClick={() => setBuilderOpen(true)}
+                >
+                  Builder
+                </MetralyButton>
+                <div className="metraly-dashboard-wizard-recipe__topbar-search">
+                  <MetralyInput fullWidth search placeholder="Quick search…" />
+                </div>
+              </>
+            )}
+          />
+          <div className="metraly-dashboard-wizard-recipe__workspace">
+            <BuilderPanel stage={stage} className="is-inline" />
+            <PreviewPane stage={stage} />
+          </div>
+        </main>
+      </MetralyShell>
+      <MetralyBottomSheet
+        open={builderOpen}
+        onOpenChange={setBuilderOpen}
+        title="Dashboard builder"
+        description="Template, widget bundle, and settings"
+      >
+        <div className="metraly-dashboard-wizard-recipe__builder-sheet">
+          <BuilderPanel stage={stage} className="is-sheet" />
+        </div>
+      </MetralyBottomSheet>
     </div>
   );
 }

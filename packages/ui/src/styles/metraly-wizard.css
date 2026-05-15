@@ -1054,3 +1054,114 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Dashboard wizard refinements: reuse AppShell sidebar/topbar and disclose builder controls on mobile. */
+.metraly-wizard-stepper {
+  width: min(640px, calc(100% - 56px));
+}
+
+.metraly-dashboard-wizard-app {
+  min-height: 100dvh;
+  display: block;
+  background: var(--m-bg-0);
+  color: var(--m-fg-0);
+}
+
+.metraly-dashboard-wizard-app__shell {
+  min-height: 100dvh;
+}
+
+.metraly-dashboard-wizard-app .metraly-sidebar {
+  flex: 0 0 var(--m-sidebar-expanded-width, 228px);
+}
+
+.metraly-dashboard-wizard-recipe {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.metraly-dashboard-wizard-recipe__topbar-search {
+  width: min(260px, 30vw);
+}
+
+.metraly-dashboard-wizard-recipe__builder-trigger {
+  display: none;
+}
+
+.metraly-dashboard-wizard-recipe__workspace {
+  min-height: calc(100dvh - 84px);
+}
+
+.metraly-dashboard-wizard-recipe__panel {
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.metraly-dashboard-wizard-recipe__panel.is-sheet {
+  min-height: auto;
+  border-right: 0;
+  border-bottom: 0;
+  border-radius: var(--m-radius-md);
+  background: transparent;
+}
+
+.metraly-dashboard-wizard-recipe__builder-sheet {
+  padding: 12px;
+}
+
+@media (max-width: 960px) {
+  .metraly-wizard-stepper {
+    width: 100%;
+  }
+
+  .metraly-dashboard-wizard-app .metraly-sidebar {
+    display: none;
+  }
+
+  .metraly-dashboard-wizard-recipe__builder-trigger {
+    display: inline-flex;
+  }
+
+  .metraly-dashboard-wizard-recipe__topbar-search {
+    width: min(220px, 44vw);
+  }
+
+  .metraly-dashboard-wizard-recipe__workspace {
+    grid-template-columns: 1fr;
+    min-height: calc(100dvh - 84px);
+  }
+
+  .metraly-dashboard-wizard-recipe__panel.is-inline {
+    display: none;
+  }
+
+  .metraly-dashboard-wizard-recipe__panel.is-sheet {
+    display: grid;
+    max-height: min(76dvh, 700px);
+    overflow: hidden;
+  }
+
+  .metraly-dashboard-wizard-recipe__panel.is-sheet .metraly-dashboard-wizard-recipe__panel-body {
+    max-height: calc(min(76dvh, 700px) - 196px);
+    overflow: auto;
+  }
+
+  .metraly-dashboard-wizard-recipe__panel.is-sheet .metraly-dashboard-wizard-recipe__panel-footer {
+    padding-inline: 0;
+    padding-bottom: 0;
+  }
+
+  .metraly-dashboard-wizard-recipe__preview {
+    min-height: calc(100dvh - 84px);
+  }
+}
+
+@media (max-width: 560px) {
+  .metraly-dashboard-wizard-recipe__topbar-search {
+    width: 100%;
+  }
+
+  .metraly-dashboard-wizard-recipe__panel.is-sheet .metraly-dashboard-wizard-recipe__panel-head,
+  .metraly-dashboard-wizard-recipe__panel.is-sheet .metraly-dashboard-wizard-recipe__panel-body {
+    padding-inline: 8px;
+  }
+}
