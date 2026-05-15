@@ -231,3 +231,38 @@ Next:
 - Continue `WidgetPickerCard` → `WidgetCatalogCard` semantic work (listbox/option ARIA roles).
 - Continue `MetralyTable` bulk-actions story and internal-scroll improvements.
 - Start P2-2 types deduplication and P2-3 DraggableTweaksPanel gating in app.
+
+## 2026-05-15 — Phase 2 stabilization gate review
+
+Status: Phase 2 stabilization gate reviewed after app Storybook setup, wizard viewport QA, ConnectorWizard split, WidgetCatalogCard alias/test, and AI/Plugin spec creation.
+
+Done:
+
+- App repo now has a local visual harness:
+  - `app/ui/.storybook/main.ts`
+  - `app/ui/.storybook/preview.ts`
+  - `app/ui/src/stories/AppShell.stories.tsx`
+  - `app/ui/src/stories/DashboardScreen.stories.tsx`
+  - `app/ui/src/stories/MetricsScreen.stories.tsx`
+  - `npm run build-storybook` passes in `app/ui`
+- Wizard responsive/story split follow-up is closed:
+  - `stories/WizardLayout.stories.tsx` now includes Desktop1024 + Desktop1280
+  - `stories/DashboardWizard.stories.tsx` now includes Mobile390 + Tablet768 + Desktop1024
+  - `stories/ConnectorWizard.stories.tsx` exists as the dedicated connector/setup scenario
+- `WidgetCatalogCard` / `WidgetCatalogList` semantic aliases exported from `@metraly/ui`
+- `site/__tests__/WidgetCatalogCard.test.tsx` verifies listbox/option ARIA contract
+- `docs/migration/ai-plugin-component-spec.md` freezes the deferred Phase 9 AI/Plugins contracts
+
+Gate decision:
+
+- Phase 3 compat-import migration is now unblocked.
+- Remaining non-blocking risks:
+  - no app-level visual regression automation yet;
+  - no app-level accessibility automation yet;
+  - raw-color cleanup remains in product feature screens (`App.tsx`, `PluginScreen.tsx`);
+  - AI/Plugins component implementation remains deferred to Phase 9.
+
+Next:
+
+- Install `@metraly/ui` into `app/ui` and start replacing compat exports with real imports.
+- Keep Phase 9 AI/Plugins surfaces out of the first compat-import wave.

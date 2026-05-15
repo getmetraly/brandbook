@@ -253,13 +253,25 @@ function ConnectorWizardScenario({ initialStage = 'sources' }: { initialStage?: 
         description="Confirm before connecting. You can change settings later in Connectors."
         items={[
           {
-            icon: 'github',
+            icon: <MetralyIcon name="github" size="md" aria-hidden />,
             label: 'Sources',
             value: [...selected].map((id) => SOURCES.find((s) => s.id === id)?.label).join(', '),
           },
-          { icon: 'lock', label: 'Auth method', value: 'OAuth 2.0 (synthetic)' },
-          { icon: 'folder', label: 'Repo filter', value: repoFilter },
-          { icon: 'clock', label: 'Sync interval', value: refreshRate },
+          {
+            icon: <MetralyIcon name="lock" size="md" aria-hidden />,
+            label: 'Auth method',
+            value: 'OAuth 2.0 (synthetic)',
+          },
+          {
+            icon: <MetralyIcon name="filter" size="md" aria-hidden />,
+            label: 'Repo filter',
+            value: repoFilter,
+          },
+          {
+            icon: <MetralyIcon name="clock" size="md" aria-hidden />,
+            label: 'Sync interval',
+            value: refreshRate,
+          },
         ]}
       />
     );

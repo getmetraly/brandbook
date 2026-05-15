@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import * as React from 'react';
-import { StateBlock, MetralyFilterBar, StateBadge } from '@metraly/ui';
+import { MetralyFilterBar, MetralySegmentedControl, StateBadge, StateBlock } from '@metraly/ui';
 
 // ---------------------------------------------------------------------------
 // Shared fixture data
@@ -38,7 +38,7 @@ function PluginCatalogPlaceholder({
   empty?: boolean;
 }) {
   const [filter, setFilter] = React.useState('All');
-  const items = ['All', 'Sources', 'AI', 'Alerts', 'Exporters'].map((label) => ({
+  const categoryOptions = ['All', 'Sources', 'AI', 'Alerts', 'Exporters'].map((label) => ({
     label,
     value: label,
   }));
@@ -75,11 +75,24 @@ function PluginCatalogPlaceholder({
         </span>
       </div>
 
-      {/* Filter bar */}
       <MetralyFilterBar
-        items={items}
-        selected={filter}
-        onSelect={(v) => setFilter(v)}
+        filters={[
+          {
+            id: 'category',
+            label: 'Category',
+            control: (
+              <MetralySegmentedControl
+                ariaLabel="Plugin category"
+                options={categoryOptions}
+                value={filter}
+                onValueChange={setFilter}
+                fullWidth
+                size="sm"
+              />
+            ),
+            meta: `${visible.length} shown`,
+          },
+        ]}
       />
 
       {empty || visible.length === 0 ? (
