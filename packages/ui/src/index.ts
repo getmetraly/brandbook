@@ -203,3 +203,22 @@ export type {
   DashboardWidgetInstance,
   DashboardWidgetSize,
 } from "./dashboard/types";
+
+// ── AI Workspace (Phase 9) ────────────────────────────────────────────────────
+export type { EvidenceCitation, AnswerCardProps } from "./components/AnswerCard";
+export { AnswerCard } from "./components/AnswerCard";
+export type { EvidencePanelProps } from "./components/EvidencePanel";
+export { EvidencePanel } from "./components/EvidencePanel";
+export type { TraceStep, TraceStepStatus, TraceDrawerProps } from "./components/TraceDrawer";
+export { TraceDrawer } from "./components/TraceDrawer";
+export type { ChatMessage, AIWorkspaceLayoutProps } from "./components/AIWorkspaceLayout";
+export { AIWorkspaceLayout } from "./components/AIWorkspaceLayout";
+// ── Plugins (Phase 9) ─────────────────────────────────────────────────────────
+export type { PermissionLevel, PermissionBadgeProps } from "./components/PermissionBadge";
+export { PermissionBadge } from "./components/PermissionBadge";
+export type { SigningStatus, SigningBannerProps } from "./components/SigningBanner";
+export { SigningBanner } from "./components/SigningBanner";
+export type { Plugin, PluginCatalogProps } from "./components/PluginCatalog";
+export { PluginCatalog } from "./components/PluginCatalog";
+export type { PluginPermission, PluginReviewDrawerProps } from "./components/PluginReviewDrawer";
+export { PluginReviewDrawer } from "./components/PluginReviewDrawer";
