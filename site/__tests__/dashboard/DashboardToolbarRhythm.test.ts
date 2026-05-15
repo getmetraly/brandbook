@@ -8,8 +8,10 @@ describe("DashboardToolbar responsive rhythm", () => {
       "utf8",
     );
 
+    expect(css).toMatch(/\.metraly-dashboard-toolbar-controls\s*\{[^}]*flex:\s*1 1 auto/s);
+    expect(css).toMatch(/\.metraly-dashboard-toolbar-sync,\s*\n\s*\.metraly-dashboard-toolbar-sync\.metraly-state-badge\s*\{[^}]*margin-left:\s*auto/s);
     expect(css).toMatch(/@media \(max-width: 640px\) \{[\s\S]*\.metraly-dashboard-toolbar-controls \{[\s\S]*display:\s*contents/s);
-    expect(css).toMatch(/\.metraly-dashboard-toolbar-actions \{[\s\S]*order:\s*2/s);
-    expect(css).toMatch(/\.metraly-dashboard-toolbar-sync,\s*\n\s*\.metraly-dashboard-toolbar-sync\.metraly-state-badge \{[\s\S]*order:\s*3[\s\S]*margin-left:\s*auto/s);
+    expect(css).toMatch(/\.metraly-dashboard-toolbar-actions \{[\s\S]*order:\s*2[\s\S]*width:\s*auto/s);
+    expect(css).toMatch(/\.metraly-dashboard-toolbar-sync,\s*\n\s*\.metraly-dashboard-toolbar-sync\.metraly-state-badge \{[\s\S]*order:\s*3[\s\S]*flex:\s*0 0 auto[\s\S]*margin-left:\s*auto/s);
   });
 });

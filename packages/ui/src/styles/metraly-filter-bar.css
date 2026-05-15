@@ -21,7 +21,7 @@
 
 .metraly-filter-bar__item {
   display: inline-flex;
-  align-items: center;
+  align-items: baseline;
   gap: 8px;
   min-height: 28px;
   padding: 0 10px;
@@ -44,9 +44,16 @@
 
 .metraly-filter-bar__control {
   display: inline-flex;
-  align-items: center;
+  align-items: baseline;
   gap: 6px;
   min-width: 0;
+  line-height: 1;
+  transform: translateY(-1px);
+}
+
+.metraly-filter-bar__control > :where(span, strong, em) {
+  display: inline-flex;
+  align-items: baseline;
   line-height: 1;
 }
 
