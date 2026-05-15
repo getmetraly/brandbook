@@ -34,6 +34,10 @@ const PLUGIN_CATALOG_STYLES = `
   min-height: 400px;
 }
 
+.plugin-catalog-story--focused {
+  width: min(100%, 820px);
+}
+
 .plugin-catalog-story__phase {
   display: flex;
   justify-content: flex-end;
@@ -131,7 +135,7 @@ const PLUGIN_CATALOG_STYLES = `
 
 .plugin-catalog-story__grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
   gap: 12px;
 }
 
@@ -222,8 +226,8 @@ const PLUGIN_CATALOG_STYLES = `
     width: min(100%, 920px);
   }
 
-  .plugin-catalog-story__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .plugin-catalog-story--focused {
+    width: min(100%, 820px);
   }
 }
 
@@ -272,11 +276,15 @@ interface PluginItem {
 function PluginCatalogPlaceholder({
   plugins = PLUGIN_FIXTURES,
   empty = false,
+  initialFilter = 'All',
+  focused = false,
 }: {
   plugins?: PluginItem[];
   empty?: boolean;
+  initialFilter?: string;
+  focused?: boolean;
 }) {
-  const [filter, setFilter] = React.useState('All');
+  const [filter, setFilter] = React.useState(initialFilter);
   const [search, setSearch] = React.useState('');
 
   const visible = React.useMemo(() => {
@@ -295,9 +303,15 @@ function PluginCatalogPlaceholder({
   }, [filter, plugins, search]);
 
   const isEmpty = empty || visible.length === 0;
+  const sectionClassName = [
+    'plugin-catalog-story',
+    focused ? 'plugin-catalog-story--focused' : null,
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
-    <section className="plugin-catalog-story" aria-label="Plugin catalog scenario">
+    <section className={sectionClassName} aria-label="Plugin catalog scenario">
       <style>{PLUGIN_CATALOG_STYLES}</style>
 
       <div className="plugin-catalog-story__phase" aria-hidden="true">
@@ -403,9 +417,9 @@ export const Default: StoryObj = {
   render: () => <PluginCatalogPlaceholder />,
 };
 
-/** AI category filtered: shows only AI plugins. */
+/** AI category filtered: opens the same catalog with the AI chip selected. */
 export const AIPlugins: StoryObj = {
-  render: () => <PluginCatalogPlaceholder plugins={PLUGIN_FIXTURES.filter((p) => p.category === 'AI')} />,
+  render: () => <PluginCatalogPlaceholder initialFilter="AI" focused />,
 };
 
 /** Empty results: no plugins match the active filter. */
