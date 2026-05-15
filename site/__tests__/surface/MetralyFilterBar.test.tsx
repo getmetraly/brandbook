@@ -26,6 +26,17 @@ describe("MetralyFilterBar", () => {
     expect(css).toMatch(/\.metraly-filter-bar__control > :where\(span, strong, em\)\s*\{[^}]*align-items:\s*baseline/s);
   });
 
+  it("centers the mobile filter bar content instead of pinning actions to the right", () => {
+    const css = readFileSync(
+      join(__dirname, "../../../packages/ui/src/styles/metraly-filter-bar.css"),
+      "utf8",
+    );
+
+    expect(css).toMatch(/@media \(max-width:\s*767px\)\s*\{[\s\S]*\.metraly-filter-bar\s*\{[^}]*justify-content:\s*center/s);
+    expect(css).toMatch(/@media \(max-width:\s*767px\)\s*\{[\s\S]*\.metraly-filter-bar__items\s*\{[^}]*justify-content:\s*center/s);
+    expect(css).toMatch(/@media \(max-width:\s*767px\)\s*\{[\s\S]*\.metraly-filter-bar__actions\s*\{[^}]*justify-content:\s*center/s);
+  });
+
   it("fires reset action", () => {
     const onReset = jest.fn();
     render(<MetralyFilterBar filters={[]} onReset={onReset} />);
