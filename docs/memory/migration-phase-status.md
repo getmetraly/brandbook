@@ -266,3 +266,20 @@ Next:
 
 - Install `@metraly/ui` into `app/ui` and start replacing compat exports with real imports.
 - Keep Phase 9 AI/Plugins surfaces out of the first compat-import wave.
+
+## 2026-05-15 — Phase 3 kickoff: first live compat import
+
+Status: Started in `getmetraly/metraly/app/ui` after the stabilization gate passed.
+
+Done:
+
+- `@metraly/ui` is installed in `app/ui` as a local file dependency.
+- `recharts` was added in `app/ui` to satisfy the brandbook package peer contract.
+- `app/ui/src/design-system/compat/brandbook-legacy.ts` now routes `PlaceholderScreenCompat` to the real `MetralyEmptyState` export from `@metraly/ui`.
+- `app/ui/src/App.tsx` now consumes the compat barrel instead of importing `components/ui/PlaceholderScreen` directly.
+- `app/ui/src/index.tsx` and `app/ui/.storybook/preview.ts` now load `@metraly/ui` theme + empty-state styles so the first imported primitive renders correctly in both the app and app Storybook.
+
+Next:
+
+- Continue swapping low-risk compat aliases to real `@metraly/ui` exports.
+- Keep Phase 9 AI/Plugins surfaces out of the early compat-import wave.
