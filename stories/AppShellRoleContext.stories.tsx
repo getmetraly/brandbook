@@ -24,6 +24,7 @@ export default meta;
 type Story = StoryObj;
 
 function AppShellRoleContextPreview() {
+  const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const activeRoute = "dashboard-cto";
   const pageTitle = "CTO Dashboard";
   const pageSubtitle = "Strategic health, DORA trends, and team velocity";
@@ -44,8 +45,8 @@ function AppShellRoleContextPreview() {
   return (
     <ThemeProvider>
       <div style={{ minHeight: "100dvh", background: "var(--m-bg-0)" }}>
-        <MetralyShell>
-          <MetralySidebar header={header}>
+        <MetralyShell className={`metraly-shell--mobile-drawer ${sidebarOpen ? "is-sidebar-open" : ""}`}>
+          <MetralySidebar id="metraly-mobile-primary-navigation" header={header} aria-label="Primary navigation">
             <MetralySidebarSection label="Dashboards">
               <MetralySidebarItem
                 active={activeRoute === "dashboard-cto"}
@@ -75,6 +76,12 @@ function AppShellRoleContextPreview() {
               <MetralySidebarItem href="/connectors" icon={<MetralyIcon name="link" size={14} />} label="Connectors" />
             </MetralySidebarSection>
           </MetralySidebar>
+          <button
+            type="button"
+            className="metraly-shell__sidebar-scrim"
+            aria-label="Close navigation"
+            onClick={() => setSidebarOpen(false)}
+          />
 
           <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0 }}>
             <MetralyTopbar
@@ -83,6 +90,16 @@ function AppShellRoleContextPreview() {
               subtitle={pageSubtitle}
               actions={(
                 <>
+                  <button
+                    type="button"
+                    className="metraly-shell-mobile-trigger"
+                    aria-controls="metraly-mobile-primary-navigation"
+                    aria-expanded={sidebarOpen}
+                    onClick={() => setSidebarOpen(true)}
+                  >
+                    <MetralyIcon name="menu" size={13} />
+                    Menu
+                  </button>
                   <div style={{ width: 220 }}>
                     <MetralyInput fullWidth placeholder="Quick search…" iconLeft={<MetralyIcon name="search" size={12} />} />
                   </div>

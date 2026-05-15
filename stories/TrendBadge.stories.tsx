@@ -35,7 +35,7 @@ export const TableCell: Story = {
 export const CanonicalMatrix: Story = {
   render: () => (
     <div style={stageStyle}>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 16 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, max-content))", justifyItems: "start", alignItems: "start", gap: 16 }}>
         <TrendBadge direction="up" sentiment="positive" value="18%" />
         <TrendBadge direction="down" sentiment="negative" value="7%" />
         <TrendBadge direction="flat" sentiment="neutral" value="0.0%" />

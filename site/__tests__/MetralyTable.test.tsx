@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MetralyTable } from '@metraly/ui';
@@ -87,6 +89,17 @@ describe('MetralyTable', () => {
     expect(table).toHaveAttribute('data-mobile-presentation', 'cards');
     expect(table).toHaveClass('is-mobile-cards');
     expect(container.querySelector('td')).toHaveAttribute('data-column-label', 'Name');
+  });
+
+  it('uses calmer card rhythm for mobile stacked presentation', () => {
+    const css = readFileSync(
+      join(__dirname, '../../packages/ui/src/styles/metraly-table.css'),
+      'utf8',
+    );
+
+    expect(css).toMatch(/@media \(max-width: 640px\) \{[\s\S]*\.metraly-table-frame \{[\s\S]*background:\s*transparent/s);
+    expect(css).toMatch(/\.metraly-table\.is-mobile-stacked \.metraly-table-row \{[\s\S]*border-radius:\s*var\(--m-r-4\)/s);
+    expect(css).toMatch(/\.metraly-table\.is-mobile-stacked td \{[\s\S]*border-bottom:\s*1px solid var\(--m-line-faint\)/s);
   });
 
   it('exposes mobile stacked presentation through table metadata', () => {
