@@ -82,6 +82,21 @@
   flex-wrap: wrap;
 }
 
+.metraly-dashboard-toolbar-controls {
+  flex: 1 1 auto;
+}
+
+.metraly-dashboard-toolbar-actions {
+  flex: 0 0 auto;
+  justify-content: flex-end;
+}
+
+.metraly-dashboard-toolbar-sync,
+.metraly-dashboard-toolbar-sync.metraly-state-badge {
+  margin-left: auto;
+  align-self: center;
+}
+
 .metraly-dashboard-toolbar-search {
   position: relative;
   display: inline-flex;
@@ -385,6 +400,7 @@
   }
 
   .metraly-dashboard-toolbar-actions {
+    width: auto;
     justify-content: flex-start;
   }
 
@@ -486,13 +502,16 @@
 
   .metraly-dashboard-toolbar-actions {
     order: 2;
-    flex: 1 1 auto;
+    flex: 0 0 auto;
+    width: auto;
     align-items: center;
+    justify-content: flex-start;
   }
 
   .metraly-dashboard-toolbar-sync,
   .metraly-dashboard-toolbar-sync.metraly-state-badge {
     order: 3;
+    flex: 0 0 auto;
     margin-left: auto;
     align-self: center;
   }
