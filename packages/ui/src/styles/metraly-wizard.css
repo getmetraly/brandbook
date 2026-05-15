@@ -147,6 +147,13 @@
   width: min(calc(var(--m-wizard-content-width) - 40px), 100%);
   margin: 0 auto clamp(26px, 4vw, 40px);
   color: var(--m-fg-2);
+  /* Always scrollable when steps overflow — no-op when stepper fits its container. */
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.metraly-wizard-stepper::-webkit-scrollbar {
+  display: none;
 }
 
 .metraly-wizard-stepper-list {
@@ -157,6 +164,10 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  /* Prevents steps from being squashed narrower than glyph+lines can fit.
+     Each step needs 140px (28px line + 84px node + 28px line). When the
+     stepper is narrower, it scrolls rather than overlapping elements. */
+  min-width: calc(var(--m-wizard-step-count, 4) * 140px);
 }
 
 .metraly-wizard-stepper-item {
@@ -272,6 +283,11 @@
 
 .metraly-step-rail {
   min-width: 0;
+  /* Container queries in @container step-rail blocks below respond to
+     this element's own width — not the viewport — so StepRail behaves
+     correctly both in Storybook viewport stories and on real devices. */
+  container-type: inline-size;
+  container-name: step-rail;
 }
 
 /* ─── ReviewPanel ───────────────────────────────────────────────────────────── */
@@ -1141,18 +1157,9 @@
     display: block;
   }
 
+  /* margin-bottom is managed by the base clamp; on mobile flatten to 22px. */
   .metraly-wizard-stepper {
     margin-bottom: 22px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  .metraly-wizard-stepper::-webkit-scrollbar {
-    display: none;
-  }
-
-  .metraly-wizard-stepper-list {
-    min-width: 560px;
   }
 
   .metraly-dashboard-wizard-recipe__workspace {
