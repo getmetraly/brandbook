@@ -510,3 +510,24 @@ export const CreateError: Story = {
 export const SuccessState: Story = {
   render: () => <DashboardWizardScenario stage="success" />,
 };
+ 
+ export const Mobile390: Story = {
+   name: 'Mobile / 390px',
+   parameters: {
+     viewport: { defaultViewport: 'mobile1' },
+   },
+   render: () => <DashboardWizardScenario stage="goal" />,
+ };
+ 
+ export const Tablet768: Story = {
+   name: 'Tablet / 768px',
+   parameters: {
+     viewport: { defaultViewport: 'tablet' },
+   },
+   render: () => <DashboardWizardScenario stage="role" />,
+ };
+ 
+ export const Desktop1024: Story = {
+   name: 'Desktop / 1024px',
+   render: () => <DashboardWizardScenario stage="review" />,
+ };

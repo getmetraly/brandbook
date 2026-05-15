@@ -141,6 +141,10 @@ export type { OverlayShellPlacement, OverlayShellProps } from "./shell/OverlaySh
 
 export { WidgetPickerCard, WidgetPickerList } from "./components/WidgetPickerCard";
 export type { WidgetPickerCardProps, WidgetPickerListProps } from "./components/WidgetPickerCard";
+ 
+ // Semantic alias — preferred name when building catalog UIs
+ export { WidgetPickerCard as WidgetCatalogCard, WidgetPickerList as WidgetCatalogList } from "./components/WidgetPickerCard";
+ export type { WidgetPickerCardProps as WidgetCatalogCardProps, WidgetPickerListProps as WidgetCatalogListProps } from "./components/WidgetPickerCard";
 
 export { DashboardGrid } from "./dashboard/DashboardGrid";
 export type { DashboardGridProps } from "./dashboard/DashboardGrid";
