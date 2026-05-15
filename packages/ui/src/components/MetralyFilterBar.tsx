@@ -41,6 +41,7 @@ export function MetralyFilterBar({
             layout="filter-chip"
             label={filter.label}
             className="metraly-filter-bar__item"
+            data-filter-id={filter.id}
           >
             <span className="metraly-filter-bar__label">{filter.label}</span>
             {filter.control ? <div className="metraly-filter-bar__control">{filter.control}</div> : null}
