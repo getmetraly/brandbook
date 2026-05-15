@@ -171,7 +171,12 @@ export { HandlePrimitive } from "./dashboard/HandlePrimitive";
 export type { HandlePrimitiveKind, HandlePrimitiveProps, HandlePrimitiveState } from "./dashboard/HandlePrimitive";
 
 export { WizardLayout } from "./wizard/WizardLayout";
-export type { WizardLayoutProps, WizardLayoutStep, WizardLayoutStepStatus } from "./wizard/WizardLayout";
+export type {
+  WizardLayoutProgressPlacement,
+  WizardLayoutProps,
+  WizardLayoutStep,
+  WizardLayoutStepStatus,
+} from "./wizard/WizardLayout";
 
 export { defaultDashboardWidgetRegistry, findDashboardWidgetDefinition, createDashboardWidgetInstance } from "./dashboard/WidgetRegistry";
 export type {

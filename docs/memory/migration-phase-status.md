@@ -164,3 +164,30 @@ Next:
 - Use these foundations when migrating `getmetraly/metraly/ui` local `design-system/` adapters.
 - Add richer Storybook pages for each foundation if design QA needs visual matrix coverage.
 - Continue DataTable and WidgetCatalogCard migration on top of these foundations.
+
+## 2026-05-15 — WizardLayout app rhythm alignment
+
+Updated `WizardLayout` after foundation consolidation so Storybook product scenarios match the current demo app wizard direction more closely:
+
+- default progress placement changed to horizontal top stepper;
+- centered content width introduced through `contentWidth`;
+- wizard header/body/review are now grouped in one canonical card surface;
+- footer actions sit below the card;
+- side rail remains available through `progressPlacement="side"` for documentation-only layouts.
+
+Next visual QA targets: DashboardWizard stories, Connector Wizard app parity, mobile stepper overflow, footer safe-area behavior.
+
+## 2026-05-15 — Wizard scenario split correction
+
+Status: Wizard visual alignment refined after comparing mixed Connector Setup Preview and Dashboard Preview screenshots.
+
+Done:
+
+- `Components/WizardLayout/Default` now represents the connector/setup style with top progress and a centered card.
+- `Components/WizardLayout/SideRailReference` keeps the rail variant as documentation-only.
+- `Scenarios/DashboardWizard/*` now represents the dashboard builder style with a left builder rail and right preview canvas.
+
+Next:
+
+- Validate both stories at 320, 390, 768, 1024 and 1280px.
+- When migrating to `getmetraly/metraly/ui`, map connector flows to `WizardLayout` and dashboard creation to a feature-owned `DashboardWizardShell` recipe.

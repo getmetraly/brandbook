@@ -870,3 +870,39 @@ Compose the foundation primitive and keep the semantic component API small.
 ```
 
 This does not remove the planned local canonical names (`Card`, `MetricCard`, `WidgetShell`, `BoardCanvas`, `DataTable<Row>`). It gives the brandbook upstream a cleaner foundation that the downstream local design-system layer can map to.
+
+### 6.8.1 Wizard shell alignment update — 2026-05-15
+
+The upstream brandbook `WizardLayout` has been aligned closer to the current demo app wizard structure:
+
+```text
+horizontal progress stepper
+→ centered wizard card
+→ header/body/review inside one surface
+→ footer actions below the card
+```
+
+Migration rule:
+
+- app-like product flows use the default top stepper;
+- side rail is kept only for dense documentation or explicit rail stories;
+- Dashboard Wizard, Connector Wizard and onboarding/setup flows must not fork their own wizard shell;
+- local app migration can rename the pieces to `WizardLayout`, `StepRail`, `ReviewPanel`, and `StickyWizardFooter`, but the composition contract stays aligned with brandbook.
+
+### 6.8.2 Wizard scenario correction — 2026-05-15
+
+The previous wizard alignment pass treated Dashboard Wizard and Connector Wizard too similarly. The visual contract is now split:
+
+- Connector/setup/onboarding flows use the canonical `WizardLayout` default: horizontal top stepper, centered card, alert/source/review content, footer actions below.
+- Dashboard Wizard uses an app-recipe split layout: left builder rail for template/widgets/settings and right dashboard preview canvas.
+- The split builder recipe is a scenario proof, not a new low-level component replacement for `WizardLayout`.
+
+Migration consequence for `getmetraly/metraly/ui`:
+
+```text
+Connectors route -> WizardLayout pattern
+Dashboard creation route -> DashboardWizardShell feature recipe
+Shared wizard pieces -> StepRail / ReviewPanel / StickyWizardFooter where useful
+```
+
+Agents must not collapse these two flows into a single generic centered card.

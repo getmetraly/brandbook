@@ -702,3 +702,13 @@ Before migrating additional app screens, agents must account for the new brandbo
 - use `HandlePrimitive` for drag/resize/move/drop controls.
 
 This should be reflected in the app `design-system/compat` layer so legacy names map to canonical names without duplicating layout code.
+
+## WizardLayout follow-up — 2026-05-15
+
+After foundation iterations 1–6, the next app-alignment change is the wizard shell:
+
+1. Validate `Scenarios/DashboardWizard/*` with the default top stepper at 390, 768, 1024, 1280 and 1440px.
+2. Port the same contract to Connector Wizard / onboarding stories.
+3. Keep `progressPlacement="side"` only for primitive documentation.
+4. Do not introduce one-off sidebar wizard shells in product scenarios.
+5. When migrating into `getmetraly/metraly/ui`, map this foundation to local `WizardLayout`, `StepRail`, `ReviewPanel`, and `StickyWizardFooter` without changing the visual rhythm.
