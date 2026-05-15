@@ -46,6 +46,7 @@ const PLUGIN_CATALOG_STYLES = `
 .plugin-catalog-story__phase-badge {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: 24px;
   padding: 0 10px;
   border: 1px solid var(--m-line-faint);
@@ -55,6 +56,20 @@ const PLUGIN_CATALOG_STYLES = `
   font-family: var(--m-font-mono);
   font-size: var(--m-fs-10);
   line-height: 1;
+  white-space: nowrap;
+}
+
+/* AI Plugins is a focused catalog slice. Keep the phase pill identical to the
+   other catalog stories, but tighten only this story's vertical rhythm so the
+   badge does not feel detached from the search/category row. */
+.plugin-catalog-story--focused .plugin-catalog-story__phase {
+  min-height: 24px;
+  margin-bottom: -6px;
+}
+
+.plugin-catalog-story--focused .plugin-catalog-story__phase-badge {
+  min-height: 24px;
+  padding: 0 10px;
 }
 
 .plugin-catalog-story__toolbar {
@@ -235,6 +250,10 @@ const PLUGIN_CATALOG_STYLES = `
   .plugin-catalog-story {
     width: 100%;
     padding: 12px;
+  }
+
+  .plugin-catalog-story--focused .plugin-catalog-story__phase {
+    margin-bottom: 0;
   }
 
   .plugin-catalog-story__toolbar {
