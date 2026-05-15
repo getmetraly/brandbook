@@ -14,6 +14,7 @@ The rebuilt primitive surface includes:
 
 - `StateBadge`
 - `MetralyBadge`
+- `CardShell`
 - `MetralyCard`
 - `MetralyPanel`
 - `MetralyMetricCard`
@@ -29,6 +30,21 @@ The rebuilt primitive surface includes:
 - `DashboardDropZone`
 - `DashboardResizeHandle`
 - chart wrappers from `@metraly/ui/charts`
+
+## Surface layering rules
+
+Card-like components must follow this hierarchy:
+
+```text
+MetralyPanel = surface primitive
+CardShell = layout foundation
+MetralyCard = generic content card
+MetralyMetricCard = metric summary card
+DashboardWidget = editable widget shell/chrome
+DashboardGrid / BoardCanvas = layout layer
+```
+
+Do not collapse semantic components into one overloaded public `Card`. Reuse the shared foundation instead.
 
 ## State rules
 
@@ -101,10 +117,13 @@ The rebuilt primitive surface includes:
 - Mobile usage assumes full-width stacked widgets.
 - Header content may wrap by row, but drag grip, title hierarchy, and state badge remain intact.
 
-### MetralyCard / MetralyPanel / MetralyMetricCard
+### CardShell / MetralyCard / MetralyPanel / MetralyMetricCard
 
-- These shells own visual rhythm and spacing.
-- Consumers may change layout around them, not the shell language inside them.
+- `MetralyPanel` owns the low-level surface.
+- `CardShell` owns the shared card layout foundation: header/body/footer/overlay slots, equal-height behavior, footer pinning, overflow, density, tone, and state metadata.
+- `MetralyCard` composes `CardShell` for generic content cards.
+- `MetralyMetricCard` composes `CardShell` for KPI/scalar metric summaries.
+- Consumers may change layout around these shells, not the shell language inside them.
 - On narrow widths they should widen or stack before their internals become unreadable.
 
 ### Chart wrappers
@@ -127,3 +146,86 @@ Do not reintroduce `PulseWave` in:
 - Drag handles
 
 See `docs/design-principles.md` for the full rationale.
+
+
+## Foundation consolidation update — 2026-05-15
+
+The card-shell refactor is now extended into the rest of the reusable component system. Brandbook components must compose foundation primitives before adding local layout/state CSS.
+
+| Foundation | Canonical responsibility | Current consumers |
+|---|---|---|
+| `CardShell` | card/widget header, body, footer and overlay layout | `MetralyCard`, `MetralyMetricCard`, `DashboardWidget` |
+| `FieldShell` | shared control ids, label/helper/error structure, disabled/loading/error rhythm | `MetralyInput`, `MetralySelect`, `MetralyCheckbox`, `MetralyRadio`, `MetralySwitch`, `MetralyFilterBar` chips |
+| `OverlayShell` | dialog shell, scrim, focus trap, body lock, Escape close | `MetralyDrawer`, `MetralyBottomSheet` |
+| `StateBlock` | empty/error/gated/no-results/loading placeholder content | `MetralyEmptyState`, `DashboardEmptyState`, widget empty/error bodies |
+| `NavigationItemFrame` | visual nav row, icon/label/meta/marker/accent overflow contract | `MetralySidebarItem`, `MetralyNavigationTree` rows |
+| `useRovingSelection` | controlled/uncontrolled value and arrow/Home/End focus movement | `MetralyTabs`, `MetralySegmentedControl` |
+| `HandlePrimitive` | drag/resize/move/drop affordance style and focus contract | `DashboardResizeHandle`, `MoveMenu`, `DashboardWidget` drag handle, `DashboardDropZone` line |
+
+Semantic components remain public. Foundations own structure and interaction glue; feature/product components own product copy, routing, data loading and domain-specific actions.
+
+## WizardLayout app-aligned rhythm update — 2026-05-15
+
+`WizardLayout` now defaults to an app-aligned wizard composition:
+
+- horizontal top stepper first;
+- centered content column controlled by `contentWidth`;
+- one canonical wizard card containing header, body and review content;
+- footer actions below the card, not forced into a full-width panel;
+- optional `progressPlacement="side"` is reserved for documentation-dense layouts only.
+
+Rules:
+
+- Use the default top progress layout for product-like scenarios, Dashboard Wizard, Connector Wizard and onboarding previews.
+- Use side progress only when the story is explicitly documenting the rail primitive or when dense docs require it.
+- Do not create custom one-off wizard shells inside stories. Compose `WizardLayout` and tune content with slots.
+- Wizard cards should feel like the demo app shell while keeping brandbook tokens, cyan operational accent, dark surfaces, focus rings and canonical status badges.
+
+## Wizard scenario split update — 2026-05-15
+
+Two wizard families are now explicit in Storybook:
+
+| Story family | Required layout | Notes |
+|---|---|---|
+| `Components/WizardLayout` / Connector setup | `WizardLayout` default top stepper + centered setup card | Mirrors the Connector Setup Preview app flow: progress first, one focused card, source tiles, preview command, footer actions below. |
+| `Scenarios/DashboardWizard` | App-recipe split layout: left builder rail + right live preview | Mirrors the Dashboard Preview app flow. Do not force this into the generic centered connector wizard card. |
+
+Rule: `WizardLayout` remains the canonical primitive for connector/setup/onboarding flows. Dashboard Wizard is a product scenario that may compose a compact stepper and builder panel because the preview canvas is the primary surface.
+
+
+### Wizard and dashboard-builder story contract
+
+`WizardLayout` owns the connector/setup wizard foundation. Its top progress stepper must be visually bounded by the centered card width and must not extend past the card's imaginary left/right rails. Additional connector stages should be represented as separate Storybook stories: source selection, connection preview, configuration, and review.
+
+`DashboardWizard` is not a generic wizard card. It is an app-shell recipe: sidebar and header rhythm follow `Scenarios/AppShellRoleContext`, the left rail owns template/widget/settings controls, and the right pane owns dashboard preview. Widget selection lists must expose a quick search input before category chips.
+
+## Wizard sub-primitive layer — 2026-05-15
+
+Three wizard sub-primitives are now importable from `@metraly/ui`:
+
+| Primitive | Responsibility | Composed by |
+|---|---|---|
+| `StepRail` | Progress stepper (horizontal) and side rail (vertical) | `WizardLayout` internally; also importable standalone |
+| `ReviewPanel` | Key/value review list with icon, badge, loading, and empty state | `WizardLayout` `review` slot; standalone connector/dashboard review surfaces |
+| `StickyWizardFooter` | Canonical Back / Primary / Status footer rhythm | `WizardLayout` `footer` slot; standalone wizard shells |
+
+### StepRail contract
+
+- `orientation="horizontal"` → horizontal top stepper (default, matches app wizard).
+- `orientation="vertical"` → sidebar rail (documentation only; use `progressPlacement="side"` in WizardLayout).
+- `aria-current="step"` is set on the active step item.
+- `WizardLayoutStep` and `WizardLayoutStepStatus` remain as backward-compat type aliases.
+
+### ReviewPanel contract
+
+- Items: `{ id, icon?, label, value?, badgeState?, badgeLabel? }`.
+- Empty state: rendered when `items.length === 0` and `loading` is false.
+- Loading state: renders `loadingRows` skeleton rows via `MetralySkeleton`.
+- No raw colors; `badgeState` delegates to `StateBadge`.
+
+### StickyWizardFooter contract
+
+- `back?` left slot, `primary` right slot, `status?` center slot.
+- `position: sticky; bottom: max(14px, env(safe-area-inset-bottom))` — inherits safe-area at all widths.
+- On ≤560px: `position: static` + `flex-wrap: wrap` so both buttons remain accessible.
+- When `back` is absent, adds `--no-back` modifier class; primary does not shift left — it stays at the right edge.

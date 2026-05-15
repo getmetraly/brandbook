@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import { useRovingSelection } from "./useRovingSelection";
 
 export interface MetralyTabItem {
   value: string;
@@ -15,6 +16,7 @@ export interface MetralyTabsProps {
   value?: string;
   defaultValue?: string;
   ariaLabel?: string;
+  idBase?: string;
   className?: string;
   /** Prototype-compatible selected-tab telemetry marker. */
   livePulse?: boolean;
@@ -27,84 +29,45 @@ export function MetralyTabs({
   value,
   defaultValue,
   ariaLabel = "Tabs",
+  idBase,
   className,
   livePulse = false,
   onValueChange,
   onChange,
 }: MetralyTabsProps) {
-  const isControlled = value !== undefined;
-  const [uncontrolledValue, setUncontrolledValue] = React.useState(() => defaultValue ?? items[0]?.value);
-  const activeValue = isControlled ? value : uncontrolledValue;
   const classes = ["metraly-tabs", livePulse && "has-live-pulse", className].filter(Boolean).join(" ");
-  const refs = React.useRef<(HTMLButtonElement | null)[]>([]);
-
-  React.useEffect(() => {
-    if (isControlled) return;
-    if (uncontrolledValue === undefined && items[0]?.value !== undefined) {
-      setUncontrolledValue(items[0].value);
-    }
-  }, [isControlled, items, uncontrolledValue]);
-
-  function handleSelect(nextValue: string) {
-    if (!isControlled) {
-      setUncontrolledValue(nextValue);
-    }
-    onValueChange?.(nextValue);
-    onChange?.(nextValue);
-  }
-
-  function handleKeyDown(event: React.KeyboardEvent<HTMLButtonElement>, index: number) {
-    const count = items.length;
-    let next = index;
-
-    if (event.key === "ArrowRight") {
-      event.preventDefault();
-      next = (index + 1) % count;
-      while (items[next].disabled && next !== index) next = (next + 1) % count;
-    } else if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      next = (index - 1 + count) % count;
-      while (items[next].disabled && next !== index) next = (next - 1 + count) % count;
-    } else if (event.key === "Home") {
-      event.preventDefault();
-      next = items.findIndex((item) => !item.disabled);
-      if (next === -1) return;
-    } else if (event.key === "End") {
-      event.preventDefault();
-      for (let i = count - 1; i >= 0; i -= 1) {
-        if (!items[i].disabled) {
-          next = i;
-          break;
-        }
-      }
-    } else {
-      return;
-    }
-
-    refs.current[next]?.focus();
-    if (!items[next].disabled) handleSelect(items[next].value);
-  }
+  const { selectedValue, selectValue, getItemProps } = useRovingSelection({
+    items,
+    value,
+    defaultValue,
+    mode: "select-on-focus",
+    onValueChange,
+    onChange,
+  });
 
   return (
     <div className={classes} role="tablist" aria-label={ariaLabel} data-live-pulse={livePulse ? "on" : "off"}>
       {items.map((item, index) => {
-        const selected = item.value === activeValue;
+        const selected = item.value === selectedValue;
+        const tabId = idBase ? `${idBase}-tab-${item.value}` : undefined;
+        const panelId = idBase ? `${idBase}-panel-${item.value}` : undefined;
+        const rovingProps = getItemProps(index);
         return (
           <button
             key={item.value}
-            ref={(el) => {
-              refs.current[index] = el;
-            }}
+            ref={rovingProps.ref}
             type="button"
             role="tab"
+            id={tabId}
             className={selected ? "metraly-tab is-active" : "metraly-tab"}
             aria-selected={selected}
+            aria-controls={panelId}
             data-state={item.disabled ? "disabled" : selected ? "selected" : "default"}
             data-live-pulse={selected && livePulse ? "on" : "off"}
-            tabIndex={selected ? 0 : -1}
+            tabIndex={rovingProps.tabIndex}
             disabled={item.disabled}
-            onClick={!item.disabled ? () => handleSelect(item.value) : undefined}
-            onKeyDown={(e) => handleKeyDown(e, index)}
+            onClick={!item.disabled ? () => selectValue(item.value) : undefined}
+            onKeyDown={rovingProps.onKeyDown}
           >
             <span className="metraly-tab-content">
               {item.icon ? <span className="metraly-tab-icon" aria-hidden="true">{item.icon}</span> : null}

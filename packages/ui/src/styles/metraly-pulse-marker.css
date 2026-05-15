@@ -1,0 +1,63 @@
+.metraly-pulse-marker {
+  display: inline-block;
+  flex: 0 0 auto;
+  color: var(--m-cyan-500);
+}
+
+.metraly-pulse-marker.is-live {
+  color: var(--m-ok);
+}
+
+.metraly-pulse-marker.is-new {
+  color: var(--m-cyan-500);
+}
+
+.metraly-pulse-marker.is-info {
+  color: var(--m-fg-2);
+}
+
+.metraly-pulse-marker.is-warning {
+  color: var(--m-warn);
+}
+
+.metraly-pulse-marker.is-error {
+  color: var(--m-err);
+}
+
+.metraly-pulse-marker.is-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.metraly-pulse-marker.is-wave {
+  width: 28px;
+  height: 12px;
+  background: currentColor;
+  clip-path: var(--metraly-pulse-marker-path);
+}
+
+.metraly-pulse-marker.is-sm.is-dot {
+  width: 4px;
+  height: 4px;
+}
+
+.metraly-pulse-marker.is-sm.is-wave {
+  width: 20px;
+  height: 8px;
+}
+
+.metraly-pulse-marker.is-pulsing.is-dot {
+  animation: m-pulse-dot 1.5s ease-in-out infinite;
+}
+
+.metraly-pulse-marker.is-pulsing.is-wave {
+  transform-origin: center;
+  animation: m-pulse 1.6s var(--m-ease) infinite;
+}
+
+.metraly-pulse-marker.is-static {
+  animation: none;
+  opacity: 0.75;
+}

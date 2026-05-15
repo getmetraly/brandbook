@@ -1,40 +1,32 @@
-# Metraly final Storybook conformance full files
+# Metraly PluginCatalog Storybook filter refinement
 
-Commit name:
+Commit message:
 
 ```bash
-fix(storybook): finalize prototype conformance frames
+fix(storybook): align plugin catalog filters with app preview
 ```
 
-This archive contains full files to overwrite in the repository.
-
-Copy from the extracted archive root into `getmetraly/brandbook`:
+Copy from the extracted archive root into `getmetraly/brandbook` on branch `docs/metraly-ui-ux-migration-plan`:
 
 ```bash
 cp -R stories/* ./stories/
-git rm docs/superpowers/plans/2026-05-14-prototype-pixel-perfect-parity.md
 
 npm run ui:check
 npm run site:typecheck
 npm run site:test
 npm run build-storybook
-npm run test:e2e
 ```
 
 Files included:
 
-- stories/DashboardWidget.stories.tsx
-- stories/MetralyCard.stories.tsx
-- stories/DashboardDropZone.stories.tsx
-- stories/DashboardToolbar.stories.tsx
-- stories/MetralyTable.stories.tsx
-- stories/WidgetPickerCard.stories.tsx
-- DELETE_FILES.md
+- `stories/PluginCatalog.stories.tsx`
+- `DELETE_FILES.md`
 
-Why:
+What changed:
 
-- DashboardWidget and Cards stories were rendering full-width strips instead of prototype-sized surfaces.
-- DropZone and Toolbar stories lacked a constrained prototype frame.
-- WidgetPickerCard was too wide for the right-rail/reference picker contract.
-- MetralyTable stories were missing the footer/status row examples.
-- The transient execution plan should not remain in the production branch.
+- Removed the FilterBar/Category/Search wrapper from the PluginCatalog scenario.
+- Replaced it with an app-like toolbar: long search input first, compact category chips after it.
+- Removed visible `Search` and `Category` labels.
+- Removed the heavy outer catalog border/container so the story feels like the app preview surface.
+- Constrained the scenario width to keep fullscreen Storybook compact.
+- Kept mobile behavior readable: search stacks above horizontally scrollable category chips.

@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MetralyMetricCard, StateBadge } from '@metraly/ui';
@@ -27,6 +29,17 @@ describe('MetralyMetricCard', () => {
   it('renders optional badge', () => {
     render(<MetralyMetricCard title="Sync" value="Live" badge={<StateBadge state="live" size="sm" />} />);
     expect(screen.getByRole('status', { name: 'Live' })).toBeInTheDocument();
+  });
+
+  it('anchors the footer to the bottom for equal-height metric grids', () => {
+    const css = readFileSync(
+      join(__dirname, '../../../packages/ui/src/styles/metraly-metric-card.css'),
+      'utf8',
+    );
+
+    expect(css).toMatch(/\.metraly-metric-card\s*\{[^}]*height:\s*100%/s);
+    expect(css).toMatch(/\.metraly-metric-card-header\s*\{[^}]*flex:\s*1 1 auto/s);
+    expect(css).toMatch(/\.metraly-metric-card-footer\s*\{[^}]*margin-top:\s*auto/s);
   });
 
   it('omits footer when not provided', () => {

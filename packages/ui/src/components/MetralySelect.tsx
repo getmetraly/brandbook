@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { FieldShell } from "./FieldShell";
 
 export interface MetralySelectOption {
   value: string;
@@ -68,13 +69,8 @@ export function MetralySelect({
   className,
   onChange,
 }: MetralySelectProps) {
-  const helperText = description ?? hint;
   const generatedId = React.useId();
   const resolvedId = id ?? generatedId;
-  const buttonId = `${resolvedId}-button`;
-  const listboxId = `${resolvedId}-listbox`;
-  const descriptionId = helperText ? `${resolvedId}-description` : undefined;
-  const optionId = (optionValue: string) => `${resolvedId}-option-${optionValue}`;
   const isDisabled = disabled || loading;
   const isEmpty = options.length === 0;
   const isControlled = value !== undefined;
@@ -131,142 +127,150 @@ export function MetralySelect({
     optionRefs.current[index]?.focus({ preventScroll: true });
   }
 
-  const classes = [
-    "metraly-select-field",
-    isDisabled && "is-disabled",
-    loading && "is-loading",
-    isEmpty && "is-empty",
-    error && "is-error",
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
-
   return (
-    <div
-      ref={rootRef}
-      className={classes}
-      data-state={loading ? "loading" : error ? "error" : isDisabled ? "disabled" : isEmpty ? "empty" : selectedValue ? "selected" : "default"}
+    <FieldShell
+      as="div"
+      ref={rootRef as React.Ref<HTMLElement>}
+      layout="field"
+      inputId={resolvedId}
+      label={label}
+      description={description}
+      hint={hint}
+      error={error}
+      disabled={isDisabled}
+      loading={loading}
+      state={loading ? "loading" : error ? "error" : isDisabled ? "disabled" : isEmpty ? "empty" : selectedValue ? "selected" : "default"}
+      className={["metraly-select-field", isEmpty && "is-empty", className].filter(Boolean).join(" ")}
     >
-      <span className="metraly-control-label">{label}</span>
-      <div className="metraly-select-shell">
-        <button
-          id={buttonId}
-          ref={buttonRef}
-          type="button"
-          className="metraly-select-button"
-          aria-haspopup="listbox"
-          aria-expanded={open}
-          aria-controls={open ? listboxId : undefined}
-          aria-activedescendant={open && activeOption ? optionId(activeOption.value) : undefined}
-          aria-label={typeof label === "string" ? label : undefined}
-          aria-invalid={error || undefined}
-          aria-describedby={descriptionId}
-          disabled={isDisabled}
-          onClick={() => (open ? setOpen(false) : openAndFocus())}
-          onKeyDown={(event) => {
-            if (event.key === "ArrowDown") {
-              event.preventDefault();
-              if (!open) {
-                openAndFocus();
-              } else {
-                focusOption(nextEnabledIndex(options, activeIndex, 1));
-              }
-            } else if (event.key === "ArrowUp") {
-              event.preventDefault();
-              if (!open) {
-                openAndFocus(selectedIndex(options, selectedValue));
-              } else {
-                focusOption(nextEnabledIndex(options, activeIndex, -1));
-              }
-            } else if (event.key === "Enter" || event.key === " ") {
-              event.preventDefault();
-              open ? activeOption && selectOption(activeOption) : openAndFocus();
-            } else if (event.key === "Escape" && open) {
-              event.preventDefault();
-              setOpen(false);
-            }
-          }}
-        >
-          <span className="metraly-select-button-label">{loading ? "Loading…" : resolvedLabel}</span>
-          <span className="metraly-select-button-icon" aria-hidden="true">▾</span>
-        </button>
-        {open && !isDisabled ? (
-          <div
-            id={listboxId}
-            className="metraly-select-list"
-            role="listbox"
-            aria-labelledby={buttonId}
-            tabIndex={-1}
-          >
-            {isEmpty ? (
-              <div className="metraly-select-empty">No options</div>
-            ) : (
-              options.map((option, index) => {
-                const selected = option.value === selectedValue;
-                const active = index === activeIndex;
-                return (
-                  <button
-                    id={optionId(option.value)}
-                    key={option.value}
-                    ref={(node) => {
-                      optionRefs.current[index] = node;
-                    }}
-                    type="button"
-                    role="option"
-                    aria-selected={selected}
-                    className={[
-                      "metraly-select-option",
-                      selected && "is-selected",
-                      active && "is-active",
-                    ]
-                      .filter(Boolean)
-                      .join(" ")}
-                    disabled={option.disabled}
-                    onClick={() => selectOption(option)}
-                    onFocus={() => setActiveIndex(index)}
-                    onKeyDown={(event) => {
-                      if (event.key === "ArrowDown") {
-                        event.preventDefault();
-                        focusOption(nextEnabledIndex(options, index, 1));
-                      } else if (event.key === "ArrowUp") {
-                        event.preventDefault();
-                        focusOption(nextEnabledIndex(options, index, -1));
-                      } else if (event.key === "Home") {
-                        event.preventDefault();
-                        focusOption(firstEnabledIndex(options));
-                      } else if (event.key === "End") {
-                        event.preventDefault();
-                        for (let next = options.length - 1; next >= 0; next -= 1) {
-                          if (!options[next].disabled) {
-                            focusOption(next);
-                            break;
-                          }
-                        }
-                      } else if (event.key === "Enter" || event.key === " ") {
-                        event.preventDefault();
-                        selectOption(option);
-                      } else if (event.key === "Escape") {
-                        event.preventDefault();
-                        setOpen(false);
-                        buttonRef.current?.focus({ preventScroll: true });
-                      } else if (event.key === "Tab") {
-                        setOpen(false);
-                      }
-                    }}
-                  >
-                    <span>{option.label}</span>
-                    {selected ? <span aria-hidden="true">✓</span> : null}
-                  </button>
-                );
-              })
-            )}
-          </div>
-        ) : null}
-      </div>
-      {helperText ? <span id={descriptionId} className="metraly-control-description">{helperText}</span> : null}
-      {name && selectedValue ? <input type="hidden" name={name} value={selectedValue} /> : null}
-    </div>
+      {({ controlId, descriptionId, helperText, hasError }) => {
+        const buttonId = `${controlId}-button`;
+        const listboxId = `${controlId}-listbox`;
+        const optionId = (optionValue: string) => `${controlId}-option-${optionValue}`;
+        return (
+          <>
+            <span className="metraly-control-label">{label}</span>
+            <div className="metraly-select-shell">
+              <button
+                id={buttonId}
+                ref={buttonRef}
+                type="button"
+                className="metraly-select-button"
+                aria-haspopup="listbox"
+                aria-expanded={open}
+                aria-controls={open ? listboxId : undefined}
+                aria-activedescendant={open && activeOption ? optionId(activeOption.value) : undefined}
+                aria-label={typeof label === "string" ? label : undefined}
+                aria-invalid={hasError || undefined}
+                aria-describedby={descriptionId}
+                disabled={isDisabled}
+                onClick={() => (open ? setOpen(false) : openAndFocus())}
+                onKeyDown={(event) => {
+                  if (event.key === "ArrowDown") {
+                    event.preventDefault();
+                    if (!open) {
+                      openAndFocus();
+                    } else {
+                      focusOption(nextEnabledIndex(options, activeIndex, 1));
+                    }
+                  } else if (event.key === "ArrowUp") {
+                    event.preventDefault();
+                    if (!open) {
+                      openAndFocus(selectedIndex(options, selectedValue));
+                    } else {
+                      focusOption(nextEnabledIndex(options, activeIndex, -1));
+                    }
+                  } else if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    open ? activeOption && selectOption(activeOption) : openAndFocus();
+                  } else if (event.key === "Escape" && open) {
+                    event.preventDefault();
+                    setOpen(false);
+                  }
+                }}
+              >
+                <span className="metraly-select-button-label">{loading ? "Loading…" : resolvedLabel}</span>
+                <span className="metraly-select-button-icon" aria-hidden="true">▾</span>
+              </button>
+              {open && !isDisabled ? (
+                <div
+                  id={listboxId}
+                  className="metraly-select-list"
+                  role="listbox"
+                  aria-labelledby={buttonId}
+                  aria-label={typeof label === "string" ? label : undefined}
+                  tabIndex={-1}
+                >
+                  {isEmpty ? (
+                    <div className="metraly-select-empty">No options</div>
+                  ) : (
+                    options.map((option, index) => {
+                      const selected = option.value === selectedValue;
+                      const active = index === activeIndex;
+                      return (
+                        <button
+                          id={optionId(option.value)}
+                          key={option.value}
+                          ref={(node) => {
+                            optionRefs.current[index] = node;
+                          }}
+                          type="button"
+                          role="option"
+                          aria-selected={selected}
+                          className={[
+                            "metraly-select-option",
+                            selected && "is-selected",
+                            active && "is-active",
+                          ]
+                            .filter(Boolean)
+                            .join(" ")}
+                          disabled={option.disabled}
+                          onClick={() => selectOption(option)}
+                          onFocus={() => setActiveIndex(index)}
+                          onKeyDown={(event) => {
+                            if (event.key === "ArrowDown") {
+                              event.preventDefault();
+                              focusOption(nextEnabledIndex(options, index, 1));
+                            } else if (event.key === "ArrowUp") {
+                              event.preventDefault();
+                              focusOption(nextEnabledIndex(options, index, -1));
+                            } else if (event.key === "Home") {
+                              event.preventDefault();
+                              focusOption(firstEnabledIndex(options));
+                            } else if (event.key === "End") {
+                              event.preventDefault();
+                              for (let next = options.length - 1; next >= 0; next -= 1) {
+                                if (!options[next].disabled) {
+                                  focusOption(next);
+                                  break;
+                                }
+                              }
+                            } else if (event.key === "Enter" || event.key === " ") {
+                              event.preventDefault();
+                              selectOption(option);
+                            } else if (event.key === "Escape") {
+                              event.preventDefault();
+                              setOpen(false);
+                              buttonRef.current?.focus({ preventScroll: true });
+                            } else if (event.key === "Tab") {
+                              setOpen(false);
+                            }
+                          }}
+                        >
+                          <span>{option.label}</span>
+                          {selected ? <span aria-hidden="true">✓</span> : null}
+                        </button>
+                      );
+                    })
+                  )}
+                </div>
+              ) : null}
+            </div>
+            {helperText ? <span id={descriptionId} className="metraly-control-description">{helperText}</span> : null}
+            {name && selectedValue ? <input type="hidden" name={name} value={selectedValue} /> : null}
+          </>
+        );
+      }}
+    </FieldShell>
   );
 }
 

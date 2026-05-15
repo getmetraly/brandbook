@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { MetralyTable } from '@metraly/ui';
+import * as React from 'react';
+import { MetralyButton, MetralyTable } from '@metraly/ui';
 
 interface Row {
   name: string;
@@ -81,6 +82,15 @@ export const Loading: Story = {
   },
 };
 
+export const Error: Story = {
+  args: {
+    data: [],
+    error: true,
+    errorText: 'Could not load telemetry — check your connector health.',
+    footer: <span>last attempt failed</span>,
+  },
+};
+
 export const SelectedRow: Story = {
   args: {
     selectedRowKeys: ['Beta'],
@@ -122,4 +132,162 @@ export const PRReviewBoard: StoryObj<typeof MetralyTable<PRReviewRow>> = {
       </div>
     </div>
   ),
+};
+
+export const MobileCards: StoryObj<typeof MetralyTable<PRReviewRow>> = {
+  parameters: {
+    layout: 'fullscreen',
+    viewport: { defaultViewport: 'mobile2' },
+  },
+  render: () => (
+    <div style={stageStyle}>
+      <div style={{ width: 'min(420px, 100%)', minHeight: 280 }}>
+        <MetralyTable<PRReviewRow>
+          columns={prReviewColumns}
+          data={prReviewData}
+          rowKey={(row) => row.team}
+          ariaLabel="PR review latency by team"
+          dense
+          mobilePresentation="cards"
+          footer={<span>mobile cards mode</span>}
+        />
+      </div>
+    </div>
+  ),
+};
+
+export const MobileStacked: StoryObj<typeof MetralyTable<PRReviewRow>> = {
+  parameters: {
+    layout: 'fullscreen',
+    viewport: { defaultViewport: 'mobile1' },
+  },
+  render: () => (
+    <div style={stageStyle}>
+      <div style={{ width: 'min(390px, 100%)', minHeight: 280 }}>
+        <MetralyTable<PRReviewRow>
+          columns={prReviewColumns}
+          data={prReviewData}
+          rowKey={(row) => row.team}
+          ariaLabel="PR review latency by team"
+          dense
+          mobilePresentation="stacked"
+          footer={<span>stacked mobile mode</span>}
+        />
+      </div>
+    </div>
+  ),
+};
+
+export const BulkActions: StoryObj<typeof MetralyTable<PRReviewRow>> = {
+  name: 'Bulk Actions / Multi-row selection with toolbar',
+  render: () => {
+    const [selected, setSelected] = React.useState<string[]>(['platform', 'billing']);
+    const toggleRow = (key: string) =>
+      setSelected((prev) =>
+        prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key],
+      );
+    const allKeys = prReviewData.map((r) => r.team);
+    const allSelected = selected.length === allKeys.length;
+
+    return (
+      <div style={stageStyle}>
+        <div style={{ width: 'min(920px, 100%)', display: 'grid', gap: 0 }}>
+          {/* Bulk-action toolbar — shown only when rows are selected */}
+          {selected.length > 0 && (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 12,
+                padding: '8px 12px',
+                borderRadius: 'var(--m-radius-md) var(--m-radius-md) 0 0',
+                background: 'color-mix(in oklab, var(--m-cyan-500) 10%, var(--m-bg-1))',
+                border: '1px solid var(--m-cyan-500)',
+                borderBottom: 'none',
+              }}
+            >
+              <span style={{ color: 'var(--m-cyan-500)', fontSize: 'var(--m-fs-11)', fontWeight: 600 }}>
+                {selected.length} selected
+              </span>
+              <MetralyButton variant="ghost" size="sm" onClick={() => setSelected([])}>
+                Clear
+              </MetralyButton>
+              <MetralyButton variant="secondary" size="sm">
+                Export selected
+              </MetralyButton>
+              <MetralyButton variant="ghost" size="sm" style={{ marginLeft: 'auto', color: 'var(--m-err)' }}>
+                Archive
+              </MetralyButton>
+            </div>
+          )}
+          <MetralyTable<PRReviewRow>
+            columns={[
+              /* Checkbox-style click-to-toggle via row click — real implementation would
+                 use a dedicated checkbox column; here we demonstrate selectedRowKeys only. */
+              ...prReviewColumns,
+            ]}
+            data={prReviewData}
+            rowKey={(row) => row.team}
+            selectedRowKeys={selected}
+            ariaLabel="PR review latency by team (multi-select)"
+            dense
+            footer={
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <span>
+                  {prReviewData.length} rows · {selected.length} selected
+                </span>
+                <MetralyButton
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSelected(allSelected ? [] : allKeys)}
+                >
+                  {allSelected ? 'Deselect all' : 'Select all'}
+                </MetralyButton>
+              </div>
+            }
+          />
+        </div>
+      </div>
+    );
+  },
+};
+
+const manyRows: Row[] = Array.from({ length: 24 }, (_, i) => ({
+  name: `Row ${i + 1}`,
+  value: Math.round(Math.random() * 999),
+}));
+
+/**
+ * When `maxHeight` is set the frame caps at that height and scrolls
+ * internally. Scroll shadows appear at the top edge once the user scrolls
+ * down, and disappear when they reach the bottom — no JavaScript required.
+ */
+export const InternalScroll: StoryObj<typeof MetralyTable<Row>> = {
+  render() {
+    return (
+      <div style={{ ...stageStyle, display: 'grid', gap: 24 }}>
+        <div>
+          <p style={{ color: 'var(--m-fg-3)', fontSize: 12, marginBottom: 8 }}>
+            maxHeight="280px" — 24 rows, internal scroll with shadows
+          </p>
+          <MetralyTable
+            columns={columns}
+            data={manyRows}
+            ariaLabel="Internal scroll demo"
+            maxHeight="280px"
+          />
+        </div>
+        <div>
+          <p style={{ color: 'var(--m-fg-3)', fontSize: 12, marginBottom: 8 }}>
+            No maxHeight — expands to full content height (default)
+          </p>
+          <MetralyTable
+            columns={columns}
+            data={data}
+            ariaLabel="No max-height demo"
+          />
+        </div>
+      </div>
+    );
+  },
 };

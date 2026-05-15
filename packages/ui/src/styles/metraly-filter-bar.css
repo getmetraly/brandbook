@@ -1,0 +1,169 @@
+.metraly-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--m-line);
+  border-radius: var(--m-r-4);
+  background: var(--m-bg-2);
+}
+
+.metraly-filter-bar__items {
+  display: flex;
+  flex: 1 1 520px;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.metraly-filter-bar__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 30px;
+  max-width: 100%;
+  padding: 0 10px;
+  line-height: 1.2;
+  border: 1px solid var(--m-line);
+  border-radius: var(--m-r-3);
+  background: var(--m-bg-1);
+  color: var(--m-fg-1);
+}
+
+.metraly-filter-bar__item:has(.metraly-input) {
+  flex: 1 1 260px;
+}
+
+.metraly-filter-bar__item:has(.metraly-segmented-control),
+.metraly-filter-bar__item[data-filter-id="category"] {
+  flex: 2 1 520px;
+}
+
+.metraly-filter-bar__item[data-filter-id="category"] .metraly-filter-bar__control {
+  flex: 1 1 380px;
+}
+
+.metraly-filter-bar__label {
+  flex: 0 0 auto;
+  font-size: var(--m-fs-10);
+  font-family: var(--m-font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  color: var(--m-fg-3);
+}
+
+.metraly-filter-bar__control {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  max-width: 100%;
+  line-height: 1.2;
+  transform: none;
+}
+
+.metraly-filter-bar__control > :where(span, strong, em) {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1.2;
+}
+
+.metraly-filter-bar__control > :where(.metraly-input, .metraly-segmented-control) {
+  width: 100%;
+}
+
+.metraly-filter-bar__meta {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--m-fg-2);
+  font-size: var(--m-fs-11);
+  line-height: 1.2;
+}
+
+.metraly-filter-bar__actions {
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.metraly-filter-bar__reset {
+  appearance: none;
+  border: 1px solid var(--m-line);
+  background: var(--m-bg-1);
+  color: var(--m-fg-1);
+  border-radius: var(--m-r-3);
+  height: 26px;
+  padding: 0 var(--m-2);
+  font-family: var(--m-font-ui);
+  font-size: var(--m-fs-10);
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.metraly-filter-bar__reset:hover {
+  border-color: var(--m-line-strong);
+  background: var(--m-bg-3);
+}
+
+.metraly-filter-bar.is-collapsed .metraly-filter-bar__items {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .metraly-filter-bar {
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .metraly-filter-bar__items {
+    flex: 0 1 100%;
+    flex-basis: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .metraly-filter-bar__item {
+    min-height: 30px;
+    width: 100%;
+  }
+
+  .metraly-filter-bar__item:has(.metraly-input),
+  .metraly-filter-bar__item:has(.metraly-segmented-control),
+  .metraly-filter-bar__item[data-filter-id="category"] {
+    flex: 1 1 100%;
+  }
+
+  .metraly-filter-bar__item[data-filter-id="category"] {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    row-gap: 8px;
+  }
+
+  .metraly-filter-bar__item[data-filter-id="category"] .metraly-filter-bar__control {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .metraly-filter-bar__item[data-filter-id="category"] .metraly-filter-bar__meta {
+    justify-self: end;
+  }
+
+  .metraly-filter-bar__actions {
+    width: 100%;
+    justify-content: center;
+    margin-left: 0;
+  }
+}

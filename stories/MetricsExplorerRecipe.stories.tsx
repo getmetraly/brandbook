@@ -296,12 +296,12 @@ function MetricsExplorerRecipe({ mode = "desktop" }: { mode?: RecipeMode }) {
                   style={{
                     display: "flex",
                     gap: 10,
-                    alignItems: "center",
+                    alignItems: "flex-end",
                     justifyContent: "space-between",
                     flexWrap: "wrap",
                   }}
                 >
-                  <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+                  <div style={{ display: "flex", gap: 10, alignItems: "flex-end", flexWrap: "wrap" }}>
                     <MetralySegmentedControl
                       ariaLabel="Time range"
                       value={range}
@@ -364,8 +364,8 @@ function MetricsExplorerRecipe({ mode = "desktop" }: { mode?: RecipeMode }) {
               <div style={{ display: "grid", gap: 12, gridTemplateColumns: contentColumns }}>
                 <MetralyPanel padding="md">
                   <div style={{ display: "grid", gap: 10 }}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-                      <div>
+                    <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+                      <div style={{ minWidth: 0, flex: "1 1 260px" }}>
                         <div style={{ color: "var(--m-fg-0)", fontSize: "var(--m-fs-12)", fontWeight: 600 }}>
                           Deployment frequency trend
                         </div>
@@ -373,7 +373,7 @@ function MetricsExplorerRecipe({ mode = "desktop" }: { mode?: RecipeMode }) {
                           `MetralyChartCard` can replace this placeholder later without changing recipe structure.
                         </div>
                       </div>
-                      <MetralyBadge variant="primary">selected: {selectedMetric}</MetralyBadge>
+                      <MetralyBadge variant="primary" style={{ maxWidth: "100%" }}>selected: {selectedMetric}</MetralyBadge>
                     </div>
                     <div
                       style={{
