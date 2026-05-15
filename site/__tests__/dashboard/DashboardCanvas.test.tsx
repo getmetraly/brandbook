@@ -156,14 +156,14 @@ describe('DashboardDropZone all states (4.3)', () => {
     unmount();
   });
 
-  it('rejected state shows ! icon', () => {
+  it('rejected state shows an svg icon', () => {
     const { container } = render(<DashboardDropZone state="rejected" />);
-    expect(container.querySelector('.metraly-dashboard-drop-zone-icon')).toHaveTextContent('×');
+    expect(container.querySelector('.metraly-dashboard-drop-zone-icon svg')).toBeInTheDocument();
   });
 
-  it('non-rejected states show + icon', () => {
+  it('non-rejected states show an svg icon', () => {
     const { container } = render(<DashboardDropZone state="idle" />);
-    expect(container.querySelector('.metraly-dashboard-drop-zone-icon')).toHaveTextContent('+');
+    expect(container.querySelector('.metraly-dashboard-drop-zone-icon svg')).toBeInTheDocument();
   });
 
   it('custom label overrides default', () => {

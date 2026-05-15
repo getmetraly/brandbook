@@ -1,0 +1,43 @@
+.metraly-trend-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: var(--m-r-5);
+  border: 1px solid transparent;
+  font-family: var(--m-font-mono);
+  font-size: var(--m-fs-10);
+  font-weight: 650;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.metraly-trend-badge--sm {
+  padding: 2px 7px;
+  font-size: var(--m-fs-9);
+}
+
+.metraly-trend-badge__glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 8px;
+}
+
+.metraly-trend-badge.is-positive {
+  color: var(--m-ok);
+  background: var(--m-ok-bg);
+  border-color: oklch(0.78 0.14 155 / 0.2);
+}
+
+.metraly-trend-badge.is-negative {
+  color: var(--m-err);
+  background: var(--m-err-bg);
+  border-color: oklch(0.72 0.18 25 / 0.24);
+}
+
+.metraly-trend-badge.is-neutral {
+  color: var(--m-fg-2);
+  background: var(--m-bg-3);
+  border-color: var(--m-line);
+}

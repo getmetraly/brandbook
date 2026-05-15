@@ -133,6 +133,37 @@ function MobileDrawerPreview() {
   );
 }
 
+function FocusRestorePreview() {
+  const [open, setOpen] = React.useState(false);
+
+  return (
+    <ThemeProvider>
+      <div style={{ minHeight: 720, background: "var(--m-bg-0)", padding: 24, display: "grid", gap: 12 }}>
+        <div style={{ color: "var(--m-fg-3)", fontSize: "var(--m-fs-10)" }}>
+          Open the drawer, then close it with the close button or `Escape`. Focus should return to the trigger.
+        </div>
+        <MetralyButton variant="primary" onClick={() => setOpen(true)}>
+          Open drawer focus test
+        </MetralyButton>
+        <div style={{ height: 1200, border: "1px dashed var(--m-line)", borderRadius: "var(--m-r-2)", padding: 12, color: "var(--m-fg-3)" }}>
+          Long page content to expose body scroll lock behavior while the drawer is open.
+        </div>
+        <MetralyDrawer
+          open={open}
+          onOpenChange={setOpen}
+          title="Focus restore verification"
+          description="Drawer should lock body scroll and restore focus to the trigger when dismissed."
+        >
+          <div style={{ padding: 16, display: "grid", gap: 10 }}>
+            <MetralyInput fullWidth placeholder="Focusable input inside drawer" />
+            <MetralyButton variant="secondary">Secondary action</MetralyButton>
+          </div>
+        </MetralyDrawer>
+      </div>
+    </ThemeProvider>
+  );
+}
+
 const meta: Meta<typeof DrawerPreview> = {
   title: "Patterns/MetralyDrawer",
   component: DrawerPreview,
@@ -158,4 +189,8 @@ export const Mobile: Story = {
     viewport: { defaultViewport: "mobile2" },
   },
   render: () => <MobileDrawerPreview />,
+};
+
+export const FocusRestore: Story = {
+  render: () => <FocusRestorePreview />,
 };

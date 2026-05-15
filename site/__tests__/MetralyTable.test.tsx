@@ -66,4 +66,47 @@ describe('MetralyTable', () => {
     expect(screen.getByText('Bob').closest('tr')).toHaveAttribute('aria-selected', 'true');
     expect(screen.getByText('Bob').closest('tr')).toHaveClass('is-selected');
   });
+
+  it('exposes mobile cards presentation through table metadata', () => {
+    const columns = [
+      { key: 'name' as const, header: 'Name' },
+      { key: 'status' as const, header: 'Status' },
+    ];
+    const data = [{ name: 'Alice', status: 'Live' }];
+
+    const { container } = render(
+      <MetralyTable
+        columns={columns}
+        data={data}
+        mobilePresentation="cards"
+        ariaLabel="Mobile cards table"
+      />,
+    );
+
+    const table = screen.getByRole('table', { name: 'Mobile cards table' });
+    expect(table).toHaveAttribute('data-mobile-presentation', 'cards');
+    expect(table).toHaveClass('is-mobile-cards');
+    expect(container.querySelector('td')).toHaveAttribute('data-column-label', 'Name');
+  });
+
+  it('exposes mobile stacked presentation through table metadata', () => {
+    const columns = [
+      { key: 'name' as const, header: 'Name' },
+      { key: 'status' as const, header: 'Status' },
+    ];
+    const data = [{ name: 'Alice', status: 'Live' }];
+
+    render(
+      <MetralyTable
+        columns={columns}
+        data={data}
+        mobilePresentation="stacked"
+        ariaLabel="Mobile stacked table"
+      />,
+    );
+
+    const table = screen.getByRole('table', { name: 'Mobile stacked table' });
+    expect(table).toHaveAttribute('data-mobile-presentation', 'stacked');
+    expect(table).toHaveClass('is-mobile-stacked');
+  });
 });

@@ -123,3 +123,47 @@ export const PRReviewBoard: StoryObj<typeof MetralyTable<PRReviewRow>> = {
     </div>
   ),
 };
+
+export const MobileCards: StoryObj<typeof MetralyTable<PRReviewRow>> = {
+  parameters: {
+    layout: 'fullscreen',
+    viewport: { defaultViewport: 'mobile2' },
+  },
+  render: () => (
+    <div style={stageStyle}>
+      <div style={{ width: 'min(420px, 100%)', minHeight: 280 }}>
+        <MetralyTable<PRReviewRow>
+          columns={prReviewColumns}
+          data={prReviewData}
+          rowKey={(row) => row.team}
+          ariaLabel="PR review latency by team"
+          dense
+          mobilePresentation="cards"
+          footer={<span>mobile cards mode</span>}
+        />
+      </div>
+    </div>
+  ),
+};
+
+export const MobileStacked: StoryObj<typeof MetralyTable<PRReviewRow>> = {
+  parameters: {
+    layout: 'fullscreen',
+    viewport: { defaultViewport: 'mobile1' },
+  },
+  render: () => (
+    <div style={stageStyle}>
+      <div style={{ width: 'min(390px, 100%)', minHeight: 280 }}>
+        <MetralyTable<PRReviewRow>
+          columns={prReviewColumns}
+          data={prReviewData}
+          rowKey={(row) => row.team}
+          ariaLabel="PR review latency by team"
+          dense
+          mobilePresentation="stacked"
+          footer={<span>stacked mobile mode</span>}
+        />
+      </div>
+    </div>
+  ),
+};

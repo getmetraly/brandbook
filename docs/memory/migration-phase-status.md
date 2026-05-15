@@ -31,42 +31,97 @@ Created 5 deliverable documents on `docs/metraly-ui-ux-migration-plan` branch, c
 
 ### 🔄 Phase 2: Stabilization Planning (COMPLETED)
 Planning document created. Identified pre-migration blockers:
-- Missing Brandbook components: TrendBadge, PulseMarker, Skeleton, FilterBar, MoveMenu, WizardLayout (as component), StepRail, ReviewPanel, StickyWizardFooter, all AI/Plugin components
+- Missing Brandbook components: StepRail, ReviewPanel, StickyWizardFooter, and AI/Plugin-specific surfaces
 - Existing components need Storybook responsive variants
 
 ### 🔄 Phase 2 P0: Foundation Work (IN PROGRESS)
 
-**P0-3 (IN PROGRESS)**: Typecheck script + app type safety
-- Status: 1 error remaining in WizardScreen.tsx line 211
-- Fix known, not yet applied
-- Blocks: Cannot verify other P0 fixes without passing typecheck
+**P0-3 (COMPLETED, 2026-05-15)**: Typecheck script + app type safety
+- `WizardScreen.tsx` select-row narrowing bug fixed
+- `npm run typecheck` passes with zero errors
+- Follow-up validation also confirmed `npm run build`
 
-**P0-1 (PENDING)**: Naming fixes in app code
-- Sidebar.tsx: "AI Assistant" → "AI Workspace", "Marketplace" → "Plugins", "Connect Sources" → "Connectors"
-- App.jsx: Folder renames (aiAssistant → aiWorkspace, marketplace → plugins, connectSources → connectors)
-- Risk: Low (search & rename)
-- Unblocks: Verification that naming taxonomy is applied in code
+**P0-1 (COMPLETED, 2026-05-15)**: Naming fixes in app code
+- `Sidebar.tsx`: "AI Assistant" → "AI Workspace", "Marketplace" → "Plugins", "Connect Sources" → "Connectors"
+- `App.tsx`: titles updated to AI Workspace / Plugins / Connectors
+- Feature folders renamed: `aiAssistant` → `ai-workspace`, `marketplace` → `plugins`
+- Validation: `npm run test`, `npm run typecheck`, `npm run build` all pass
 
-**P0-5 (PENDING)**: StatusBadge in Brandbook
-- Create canonical status badge component in Brandbook with all 12 statuses from taxonomy
-- Risk: Low (new component, isolated)
-- Unblocks: App can use canonical StatusBadge instead of Badge.tsx
+**P0-4 (COMPLETED, 2026-05-15)**: Remove board experiment and collapse to a single app entrypoint
+- Deleted `src/features/board/` and the parallel board-only `App.tsx`/`index.tsx` bootstrap
+- Renamed the product app from `App.jsx` → `App.tsx`
+- Renamed the product bootstrap from `index.jsx` → `index.tsx`
+- Validation: `npm run test`, `npm run typecheck`, `npm run build` all pass
+
+**P0-5 (COMPLETED, 2026-05-15)**: StatusBadge in Brandbook
+- Added `packages/ui/src/components/StatusBadge.tsx` as a canonical wrapper over `StateBadge`
+- Added `stories/StatusBadge.stories.tsx` covering all 12 frozen statuses
+- Validation: `npm run ui:check`, `npm run site:typecheck`, `npm run site:test`, `npm run build-storybook` all pass
+
+**P0-2 (COMPLETED, 2026-05-15)**: Clean raw colors out of app `Badge.tsx`
+- Replaced hardcoded hex and `rgba()` values with token-driven `color-mix(...)` usage
+- Preserved existing app-facing status strings for compatibility
+- Validation: `rg` confirms no raw color literals remain in `src/components/ui/Badge.tsx`
+- Validation: `npm run test`, `npm run typecheck`, `npm run build` all pass
+
+**P0-6 / P0-7 / P0-8 / P0-9 (COMPLETED, 2026-05-15)**: Add core Brandbook migration primitives
+- Added `TrendBadge`, `MetralySkeleton`, `MetralyFilterBar`, and `MetralyEmptyState`
+- Added CSS, Storybook stories, package exports, and site tests for all four primitives
+- Validation: `npm run ui:check`, `npm run site:typecheck`, `npm run site:test`, `npm run build-storybook` all pass
+
+**P0-10 / P0-11 / P1-1 / P1-2 / P1-3 / P1-4 (COMPLETED, 2026-05-15)**: Brandbook navigation, board a11y fallback, and wizard stabilization
+- Added `MetralyTabs` keyboard/a11y story and test coverage for tab-to-tabpanel wiring
+- Added `AppShellRoleContext` scenario story to confirm shell context alignment
+- Added `MoveMenu` as the non-drag board movement fallback
+- Hardened `DashboardDropZone` with SVG icon contract and optional keyboard-safe action button
+- Added `GripHandle.stories.tsx` for `DashboardResizeHandle`
+- Added `WizardLayout` as an importable public component, replaced the recipe story, and added site test coverage
+- Validation: `npm run ui:check`, `npm run site:typecheck`, `npm run site:test`, `npm run build-storybook` all pass
+
+**P1-5 / BoardCanvas coverage / overlay verification (COMPLETED, 2026-05-15)**: Wizard scenario, board canvas story, and overlay focus contracts
+- Added `DashboardWizard.stories.tsx` to cover goal, role template, widget bundle review, create error, and success states
+- Added `BoardCanvas.stories.tsx` for populated, empty, and narrow viewport coverage on top of `DashboardGrid`
+- Expanded `MetralyDrawer.stories.tsx` and `MetralyBottomSheet.stories.tsx` with focus-restore/body-scroll verification stories
+- Added `site/__tests__/shell/MetralyOverlayFocus.test.tsx` to verify focus restore and body scroll lock for both overlays
+- Validation: `npm run ui:check`, `npm run site:typecheck`, `npm run site:test`, `npm run build-storybook` all pass
+
+**P1-6 / P1-7 (COMPLETED, 2026-05-15)**: Metric card state matrix and mobile table presentation
+- Added `stories/MetralyMetricCard.stories.tsx` with positive delta, negative delta, loading, empty, error, stale, and compact overflow states
+- Extended `MetralyTable` with `mobilePresentation?: "table" | "cards" | "stacked"`
+- Added mobile cards and mobile stacked stories to `stories/MetralyTable.stories.tsx`
+- Added site tests to verify the new table presentation metadata contract
+- Validation: `npm run ui:check`, `npm run site:typecheck`, `npm run site:test`, `npm run build-storybook` all pass
+
+**P1-9 / P1-10 (COMPLETED, 2026-05-15)**: App sidebar semantics and PulseMarker primitive
+- Replaced sidebar pin/unpin `<span role="button">` affordances with native `<button type="button">` controls in `app/ui/src/components/layout/Sidebar.tsx`
+- Added `PulseMarker` to `@metraly/ui` as an explicit semantic pulse primitive with dot and heartbeat-wave variants
+- Added `stories/PulseMarker.stories.tsx` and `site/__tests__/PulseMarker.test.tsx`
+- Validation: app `npm run test`, `npm run typecheck`, `npm run build` and brandbook `npm run ui:check`, `npm run site:typecheck`, `npm run site:test`, `npm run build-storybook` all pass
+
+**P1-8 (COMPLETED, 2026-05-15)**: Create the app-side `design-system/` skeleton
+- Added `app/ui/src/design-system/index.ts` as the local app-facing barrel
+- Added `app/ui/src/design-system/compat/brandbook-legacy.ts` as the inert Phase 1 / Phase 2 compat placeholder
+- Added token bridge placeholders:
+  - `app/ui/src/design-system/tokens/semantic.css`
+  - `app/ui/src/design-system/tokens/aliases.css`
+  - `app/ui/src/design-system/tokens/status-tokens.css`
+- Validation: app `npm run typecheck` and `npm run build` both pass
 
 ## Task Ordering
 
-1. **P0-3** (5 min fix + test): Fix WizardScreen.tsx line 211, pass typecheck
-2. **P0-1** (30 min): Sidebar + App.jsx naming fixes, re-run typecheck, verify no regressions
-3. **P0-5** (1–2 hours): Create StatusBadge in Brandbook, write Storybook story with all 12 statuses
+1. **P1-11**: Extract `StepRail` from `WizardLayout`
+2. **P1-12**: Extract `ReviewPanel` and `StickyWizardFooter`
+3. **P1-13**: Start app-side compat imports only after the wizard sub-primitives exist
 
 After P0 complete: Move to P1 (component stabilization in Brandbook).
 
 ## Key Files
 
 **App structure**:
-- `app/ui/src/App.jsx` — Main product app (manual state router, all screens)
-- `app/ui/src/App.tsx` — Isolated board experiment (React Router, excluded from typecheck)
-- `app/ui/src/components/layout/Sidebar.tsx` — Main sidebar with deprecated labels
-- `app/ui/src/features/onboarding/WizardScreen.tsx` — Settings wizard (has remaining typecheck error)
+- `app/ui/src/App.tsx` — Main product app (manual state router, all screens)
+- `app/ui/src/index.tsx` — Canonical app bootstrap
+- `app/ui/src/components/layout/Sidebar.tsx` — Main sidebar with canonical labels applied
+- `app/ui/src/features/onboarding/WizardScreen.tsx` — Settings wizard, typecheck regression fixed
 
 **Brandbook**:
 - `packages/ui/src/` — Component library (Phase 6 + 7 responsive stories done)

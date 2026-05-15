@@ -49,3 +49,19 @@ export const Rejected: Story = {
     description: undefined,
   },
 };
+
+export const EmptyWithKeyboardFallback: Story = {
+  args: {
+    state: "empty",
+    label: "Add the first widget",
+    description: "Use the action button when drag and drop is unavailable.",
+    actionLabel: "Add widget",
+  },
+  render: (args) => (
+    <div style={stageStyle}>
+      <div style={frameStyle}>
+        <DashboardDropZone {...args} onAction={() => undefined} />
+      </div>
+    </div>
+  ),
+};

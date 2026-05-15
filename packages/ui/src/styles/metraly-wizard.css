@@ -1,0 +1,193 @@
+.metraly-wizard-layout {
+  min-height: 100dvh;
+  background: var(--m-bg-0);
+  padding: clamp(12px, 3vw, 24px);
+  overflow-x: hidden;
+}
+
+.metraly-wizard-layout-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 300px minmax(0, 1fr);
+  min-width: 0;
+}
+
+.metraly-wizard-layout-aside,
+.metraly-wizard-layout-main,
+.metraly-wizard-layout-body,
+.metraly-wizard-layout-review {
+  min-width: 0;
+}
+
+.metraly-wizard-layout-main {
+  display: grid;
+  gap: 12px;
+}
+
+.metraly-wizard-layout-mobile-summary {
+  display: none;
+}
+
+.metraly-wizard-mobile-summary-row,
+.metraly-wizard-mobile-summary-copy,
+.metraly-wizard-layout-head,
+.metraly-wizard-layout-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.metraly-wizard-mobile-summary-row,
+.metraly-wizard-layout-head {
+  justify-content: space-between;
+}
+
+.metraly-wizard-mobile-summary-copy {
+  flex: 1 1 auto;
+}
+
+.metraly-wizard-mobile-summary-text,
+.metraly-wizard-layout-head-copy,
+.metraly-wizard-progress,
+.metraly-wizard-progress-copy,
+.metraly-wizard-progress-list,
+.metraly-wizard-progress-item,
+.metraly-wizard-progress-text {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.metraly-wizard-mobile-summary-eyebrow,
+.metraly-wizard-layout-eyebrow {
+  color: var(--m-fg-3);
+  font-family: var(--m-font-mono);
+  font-size: var(--m-fs-9);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.metraly-wizard-mobile-summary-title,
+.metraly-wizard-layout-title,
+.metraly-wizard-progress-title {
+  color: var(--m-fg-0);
+  font-weight: 600;
+}
+
+.metraly-wizard-mobile-summary-title {
+  font-size: var(--m-fs-11);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.metraly-wizard-layout-title,
+.metraly-wizard-progress-title {
+  font-size: var(--m-fs-13);
+}
+
+.metraly-wizard-layout-description,
+.metraly-wizard-progress-description {
+  color: var(--m-fg-3);
+  font-size: var(--m-fs-10);
+  line-height: 1.45;
+}
+
+.metraly-wizard-layout-head {
+  flex-wrap: wrap;
+}
+
+.metraly-wizard-layout-head-copy,
+.metraly-wizard-layout-head-actions {
+  flex: 1 1 auto;
+}
+
+.metraly-wizard-layout-head-actions {
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.metraly-wizard-progress-list {
+  gap: 9px;
+}
+
+.metraly-wizard-progress-item {
+  gap: 8px;
+}
+
+.metraly-wizard-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.metraly-wizard-progress-bullet {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  border: 1px solid var(--m-line);
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+}
+
+.metraly-wizard-progress-index,
+.metraly-wizard-progress-detail {
+  font-family: var(--m-font-mono);
+  font-size: var(--m-fs-9);
+}
+
+.metraly-wizard-progress-label {
+  color: var(--m-fg-2);
+  font-size: var(--m-fs-11);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metraly-wizard-progress-detail {
+  color: var(--m-fg-3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metraly-wizard-progress-line {
+  margin-left: 10px;
+  width: 1px;
+  height: 14px;
+  background: var(--m-line-faint);
+}
+
+.metraly-wizard-progress-footnote {
+  padding-top: 2px;
+}
+
+.metraly-wizard-layout-footer {
+  position: sticky;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  z-index: 8;
+}
+
+.metraly-wizard-layout-sheet {
+  padding: 12px;
+}
+
+@media (max-width: 960px) {
+  .metraly-wizard-layout-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .metraly-wizard-layout-aside {
+    display: none;
+  }
+
+  .metraly-wizard-layout-mobile-summary {
+    display: block;
+  }
+}

@@ -265,6 +265,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
+  flex-wrap: wrap;
   height: 96px;
   padding: 0 12px;
   border: 1.5px dashed var(--m-line);
@@ -292,18 +293,52 @@
 
 .metraly-dashboard-drop-zone-icon {
   width: 14px;
+  height: 14px;
   display: inline-grid;
   place-items: center;
 }
 
 .metraly-dashboard-drop-zone-copy {
-  display: inline-flex;
-  align-items: center;
+  display: inline-grid;
   gap: 6px;
 }
 
+.metraly-dashboard-drop-zone-copy strong {
+  color: inherit;
+}
+
+.metraly-dashboard-drop-zone-copy small {
+  color: inherit;
+  opacity: 0.82;
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--m-font-sans);
+}
+
 .metraly-dashboard-drop-zone-line {
-  display: none;
+  display: inline-flex;
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.4;
+}
+
+.metraly-dashboard-drop-zone-action {
+  min-height: 26px;
+  padding: 0 8px;
+  border: 1px solid currentColor;
+  border-radius: var(--m-r-2);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: var(--m-fs-9);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.metraly-dashboard-drop-zone-action:hover {
+  background: color-mix(in oklab, currentColor 12%, transparent);
 }
 
 .metraly-dashboard-resize-handle {
@@ -397,9 +432,12 @@
   }
 
   .metraly-dashboard-drop-zone-copy {
-    flex-wrap: wrap;
     justify-content: center;
     text-align: center;
+  }
+
+  .metraly-dashboard-drop-zone-action {
+    width: 100%;
   }
 }
 

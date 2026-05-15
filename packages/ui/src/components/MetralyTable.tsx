@@ -42,6 +42,8 @@ export interface MetralyTableProps<T extends Record<string, any>> {
   stickyHeader?: boolean;
   /** Dense dashboard container mode. */
   dense?: boolean;
+  /** Narrow-viewport rendering mode for mobile surfaces. */
+  mobilePresentation?: "table" | "cards" | "stacked";
 }
 
 /**
@@ -65,11 +67,13 @@ export function MetralyTable<T extends Record<string, any>>({
   rowMarker,
   stickyHeader = false,
   dense = false,
+  mobilePresentation = "table",
 }: MetralyTableProps<T>) {
   const classes = [
     "metraly-table",
     stickyHeader && "has-sticky-header",
     dense && "is-dense",
+    mobilePresentation !== "table" && `is-mobile-${mobilePresentation}`,
     className,
   ]
     .filter(Boolean)
@@ -106,6 +110,7 @@ export function MetralyTable<T extends Record<string, any>>({
         aria-busy={isBusy}
         data-sticky-header={stickyHeader ? "on" : "off"}
         data-density={dense ? "dense" : "default"}
+        data-mobile-presentation={mobilePresentation}
         style={tableStyle}
       >
         <thead>
@@ -157,6 +162,7 @@ export function MetralyTable<T extends Record<string, any>>({
                       key={String(col.key)}
                       style={{ width: col.width, textAlign: col.align || "left" }}
                       role="cell"
+                      data-column-label={typeof col.header === "string" ? col.header : String(col.key)}
                     >
                       {colIndex === 0 && marker ? (
                         <span className="metraly-table-row-marker" data-marker={marker} aria-hidden="true" />

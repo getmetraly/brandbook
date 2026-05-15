@@ -1,0 +1,43 @@
+.metraly-skeleton {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+}
+
+.metraly-skeleton__line,
+.metraly-skeleton__block {
+  display: block;
+  width: 100%;
+  border-radius: var(--m-r-2);
+  background: linear-gradient(90deg, var(--m-bg-2) 0%, var(--m-bg-4) 50%, var(--m-bg-2) 100%);
+  background-size: 200% 100%;
+  animation: m-shimmer 1.4s linear infinite;
+}
+
+.metraly-skeleton__line {
+  height: 12px;
+}
+
+.metraly-skeleton__line:nth-child(3n) {
+  width: 78%;
+}
+
+.metraly-skeleton.is-card .metraly-skeleton__block {
+  min-height: 116px;
+}
+
+.metraly-skeleton.is-table .metraly-skeleton__block {
+  min-height: 172px;
+}
+
+.metraly-skeleton.is-widget .metraly-skeleton__block {
+  min-height: 184px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .metraly-skeleton__line,
+  .metraly-skeleton__block {
+    animation: none;
+    background-position: 50% 0;
+  }
+}

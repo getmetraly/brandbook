@@ -13,13 +13,13 @@ Commands run against `getmetraly/brandbook`:
 
 | Command | Status | Notes |
 |---|---|---|
-| `npm run ui:check` | Not verified in this pass | Run manually to confirm TypeScript clean. |
-| `npm run site:typecheck` | Not verified in this pass | Run manually. |
-| `npm run site:test` | Not verified in this pass | Run manually. |
-| `npm run build-storybook` | Not verified in this pass — known to pass per session obs 163 | Verify is still green after responsive story changes. |
+| `npm run ui:check` | Pass | Verified after adding `StatusBadge`. |
+| `npm run site:typecheck` | Pass | Verified after adding `StatusBadge`. |
+| `npm run site:test` | Pass | Verified after adding `StatusBadge` tests. |
+| `npm run build-storybook` | Pass | Verified after adding `StatusBadge` story. |
 | `npm run test:e2e` | Not verified in this pass | Run manually. |
 
-Automated checks were not run in this pass. Visual stability is not claimed.
+Automated checks were run in this pass. Visual stability is still not claimed beyond a successful Storybook build.
 
 ---
 
@@ -29,10 +29,10 @@ Commands available and status:
 
 | Command | Available | Status | Notes |
 |---|---|---|---|
-| `npm run test` | Yes | Not run in this pass | `vitest run` — unit tests only |
-| `npm run build` | Yes | Not run in this pass | `vite build` |
+| `npm run test` | Yes | Pass | `vitest run` — unit tests only |
+| `npm run build` | Yes | Pass | `vite build` |
 | `npm run lint` | Yes | Not run in this pass | ESLint |
-| `typecheck` | **Missing** | — | No `tsc --noEmit` script exists |
+| `npm run typecheck` | Yes | Pass | `tsc --noEmit` script added and verified |
 | `build-storybook` | **Missing** | — | No Storybook configured in app repo |
 | `test:a11y` | **Missing** | — | No Playwright/axe accessibility testing |
 | `test:visual` | **Missing** | — | No visual regression configured |
@@ -65,9 +65,9 @@ Raw color violations confirmed by code inspection:
 
 | File | Violations |
 |---|---|
-| `components/ui/Badge.tsx` | `#00C853`, `#FF9100`, `#FF1744`, multiple `rgba()` values hardcoded in component body |
-| `App.jsx` | Multiple `rgba()` and hex values throughout login screen and first-run screen (inline `style={}`) |
-| `features/marketplace/PluginScreen.tsx` | Per-plugin brand colors hardcoded: `#E8EDF5`, `#2684FF`, `#B44CFF`, `#4A154B`, `#06AC38`, `#FF9100`, `#5E6AD2`, `#FF6B35`, `#00E5FF` |
+| `components/ui/Badge.tsx` | Cleaned on 2026-05-15. Uses token-driven `color-mix(...)`; status taxonomy is still legacy and should migrate to `StatusBadge` later. |
+| `App.tsx` | Multiple `rgba()` and hex values throughout login screen and first-run screen (inline `style={}`) |
+| `features/plugins/PluginScreen.tsx` | Per-plugin brand colors hardcoded: `#E8EDF5`, `#2684FF`, `#B44CFF`, `#4A154B`, `#06AC38`, `#FF9100`, `#5E6AD2`, `#FF6B35`, `#00E5FF` |
 
 These are confirmed blockers for the design-system gate.
 
@@ -85,26 +85,26 @@ Components required by the migration plan, assessed against what exists in `pack
 | `MetralyTabs` → `Tabs` | Yes | None found | All states — keyboard nav, overflow, route-link alternative | High | **High** — tab semantics unverified | Medium | **Yes** |
 | `MetralyCard` → `Card` | Yes | Yes (`MetralyCard.stories.tsx`) | Tone variants, interactive selected, error, hover/focus states | Medium | Low | Low | No |
 | `MetralyPanel` → `Panel` | Yes | None found (in `NewComponentStateBoard`?) | All states | Medium | Low | Medium | No |
-| `MetralyMetricCard` → `MetricCard` | Yes | Partial (`DashboardWidget.stories.tsx` context) | Loading, empty, error, stale, long label/value, compact | **High** | Low | Medium | **Yes** |
+| `MetralyMetricCard` → `MetricCard` | Yes | Yes (`MetralyMetricCard.stories.tsx`) | richer dashboard recipes | Medium | Low | Low | No |
 | `DashboardWidget` → `WidgetShell` | Yes | Yes (`DashboardWidget.stories.tsx`) | editMode, gated, stale | Medium | Low | Medium | **Yes** |
 | `WidgetPickerCard` → `WidgetCatalogCard` | Yes | Yes (`WidgetPickerCard.stories.tsx`) | Gated, coming-soon, requiresPro, long text | Medium | Low | **High** — full-width layout seen | **Yes** |
-| `MetralyTable` → `DataTable<Row>` | Yes | Yes (`MetralyTable.stories.tsx`) | Loading, empty, error, status row, summary footer, bulk actions, mobile cards mode | **High** | Low | **High** | **Yes** |
-| `EmptyState` / `DashboardEmptyState` | Partial (DashboardEmptyState exists) | None found | All states | High | Low | Medium | **Yes** |
-| `MetralyBadge` → `Badge`/`StatusBadge` split | `MetralyBadge` exists; no `StatusBadge` | Partial (`StateBadge.stories.tsx`) | All canonical taxonomy states | **High** | Low | Low | **Yes** |
+| `MetralyTable` → `DataTable<Row>` | Yes | Yes (`MetralyTable.stories.tsx`) | error, bulk actions, richer responsive datasets | Medium | Low | Medium | No |
+| `EmptyState` / `DashboardEmptyState` | Partial (`MetralyEmptyState` + `DashboardEmptyState`) | Yes (`MetralyEmptyState.stories.tsx`) | Dashboard-specific integration still missing | Medium | Low | Medium | No |
+| `MetralyBadge` → `Badge`/`StatusBadge` split | `MetralyBadge` and `StatusBadge` exist | Partial (`StatusBadge.stories.tsx`, `StateBadge.stories.tsx`) | Sidebar/app integration still missing | Medium | Low | Low | **Yes** |
 | `StateBadge` → `HealthPill` | `StateBadge` exists | Yes (`StateBadge.stories.tsx`) | Connector-specific states (rate-limited, failed auth) | Medium | Low | Low | **Yes** |
-| `TrendBadge` | **Missing** | **Missing** | All | High | Low | Low | **Yes** |
-| `PulseMarker` | **Missing** | **Missing** | Telemetry heartbeat, reduced-motion, anti-pattern doc | **High** | **High** | Low | **Yes** |
+| `TrendBadge` | Yes | Yes (`TrendBadge.stories.tsx`) | Screen-level integration into cards/tables | Medium | Low | Low | No |
+| `PulseMarker` | Yes | Yes (`PulseMarker.stories.tsx`) | broader product integrations | Medium | Low | Low | No |
 | `HealthPill` | Only as `StateBadge` | Partial | Connector-specific health states | Medium | Low | Low | **Yes** |
-| `Skeleton` | **Missing** | **Missing** | Card, table, widget skeletons, reduced-motion | High | Low | Low | **Yes** |
-| `FilterBar` | **Missing** | **Missing** | Compact, overflow, reset, mobile | High | Low | **High** | **Yes** |
-| `BoardCanvas` → exists as `DashboardGrid` | `DashboardGrid` exists | None found | Empty layout, narrow viewport | Medium | Low | **High** | **Yes** |
+| `Skeleton` | Yes | Yes (`MetralySkeleton.stories.tsx`) | Screen-level loading recipes | Medium | Low | Low | No |
+| `FilterBar` | Yes | Yes (`MetralyFilterBar.stories.tsx`) | Product-specific control compositions | Medium | Low | Medium | No |
+| `BoardCanvas` → exists as `DashboardGrid` | `DashboardGrid` exists | Yes (`BoardCanvas.stories.tsx`) | drag/edit state matrix, full-width widget mix | Medium | Low | Medium | No |
 | `DashboardToolbar` → `BoardToolbar` | Yes | Yes (`DashboardToolbar.stories.tsx`) | unsaved changes, save error, mobile collapse | Medium | Low | **High** | **Yes** |
-| `DashboardDropZone` → `BoardDropZone` | Yes | Yes (`DashboardDropZone.stories.tsx`) | keyboard target, invalid drop | Medium | **High** — keyboard alt unconfirmed | Medium | **Yes** |
-| `GripHandle` / `DashboardResizeHandle` | `DashboardResizeHandle` exists | None found | Focus, disabled, keyboard label, touch target | Medium | **High** | Medium | **Yes** |
-| `MoveMenu` | **Missing** | **Missing** | move directions, cancel, boundary states | **High** | **High** | Low | **Yes** |
-| `MetralyDrawer` → `Drawer` | Yes | Yes (`MetralyDrawer.stories.tsx`) | Focus restore, body scroll lock | Medium | **High** | Medium | **Yes** |
-| `MetralyBottomSheet` → `BottomSheet` | Yes | Yes (`MetralyBottomSheet.stories.tsx`) | Long content scroll, focus restore | Medium | **High** | **High** | **Yes** |
-| `WizardLayout` | **Missing** (only `WizardLayoutRecipe`) | Yes (recipe) | first/middle/last/error/review step, mobile | **High** | Medium | **High** | **Yes** |
+| `DashboardDropZone` → `BoardDropZone` | Yes | Yes (`DashboardDropZone.stories.tsx`) | pointer-only placement still product-side | Medium | Medium | Medium | No |
+| `GripHandle` / `DashboardResizeHandle` | `DashboardResizeHandle` exists | Yes (`GripHandle.stories.tsx`) | disabled, touch target | Medium | Medium | Medium | No |
+| `MoveMenu` | Yes | Yes (`MoveMenu.stories.tsx`) | boundary states | Medium | Medium | Low | No |
+| `MetralyDrawer` → `Drawer` | Yes | Yes (`MetralyDrawer.stories.tsx`) | stacked workflow variants | Medium | Medium | Medium | No |
+| `MetralyBottomSheet` → `BottomSheet` | Yes | Yes (`MetralyBottomSheet.stories.tsx`) | product-specific catalog variants | Medium | Medium | Medium | No |
+| `WizardLayout` | Yes (`WizardLayout`) | Yes (`WizardLayout.stories.tsx`) | first/last/error step variants, dedicated `StepRail`/`ReviewPanel` primitives | Medium | Medium | Medium | No |
 | `StepRail` | **Missing** | **Missing** | current, completed, invalid, locked | High | Low | Medium | **Yes** |
 | `ReviewPanel` | **Missing** | **Missing** | connector, dashboard, plugin review | High | Low | Medium | **Yes** |
 | `StickyWizardFooter` | **Missing** | **Missing** | disabled next, loading submit, mobile safe-area | High | Low | **High** | **Yes** |
@@ -124,12 +124,6 @@ Components required by the migration plan, assessed against what exists in `pack
 Components that do not yet exist in `packages/ui/src/`:
 
 ```
-TrendBadge
-PulseMarker (as standalone component — pulse animation exists but not as named component)
-Skeleton
-FilterBar
-MoveMenu
-WizardLayout (exists as recipe story, not as component)
 StepRail
 ReviewPanel
 StickyWizardFooter
@@ -152,11 +146,11 @@ These are Phase 1 Brandbook work before any app consumption.
 | Component | Risk | Specific concern |
 |---|---|---|
 | `MetralyTabs` | **High** | Tab keyboard semantics (Arrow key navigation) not verified in stories. Pseudo-tabs for route nav are a known risk. |
-| `DashboardDropZone` → `BoardDropZone` | **High** | No keyboard/pointer fallback found. `data-pulse="off"` hardcoded. Uses text "+" not SVG. |
-| `DashboardResizeHandle` | **High** | No story confirms keyboard label or focus-visible state. |
-| `MoveMenu` | **High** | Component does not exist — entire non-drag fallback is missing. |
-| `MetralyDrawer` | **Medium-High** | Focus trap and focus restore behavior not confirmed by story. |
-| `MetralyBottomSheet` | **Medium-High** | Same as Drawer. |
+| `DashboardDropZone` → `BoardDropZone` | Medium | Story now covers the action-button fallback; product placement logic still needs real keyboard wiring later. |
+| `DashboardResizeHandle` | Medium | Story confirms label and visible focus; touch-target validation is still manual. |
+| `MoveMenu` | Medium | Primitive exists, but editor integration is still pending. |
+| `MetralyDrawer` | Medium | Focus restore and body scroll lock are covered by story plus site tests; remaining risk is composition-specific misuse. |
+| `MetralyBottomSheet` | Medium | Focus restore and long-content behavior are covered by story plus site tests; remaining risk is product-specific content density. |
 | Board editing overall | **High** | Without `MoveMenu`, board editing is drag-only. WCAG 2.1 SC 2.5.1 at risk. |
 
 ---
@@ -168,7 +162,7 @@ These are Phase 1 Brandbook work before any app consumption.
 | `WidgetPickerCard` | **High** | Prior audit found full-width block layout instead of constrained card width in brandbook. |
 | `DataTable`/`MetralyTable` | **High** | No mobile card/stacked presentation. No internal scroll verified. |
 | `BoardToolbar` | **High** | Secondary action collapse on narrow widths not verified. |
-| `WizardLayout` | **High** | Wizard sticky footer + mobile safe-area not verified. |
+| `WizardLayout` | Medium | Base layout exists and storybook build passes; dedicated first/last/error step variants are still missing. |
 | `AIWorkspaceLayout` | **High** | Does not exist — responsive behavior entirely unspecified. |
 | `PluginCatalog` | **High** | Does not exist. |
 | `BottomSheet` | **Medium-High** | Long content internal scroll not confirmed at 320px. |
@@ -185,9 +179,9 @@ These infrastructure items are required before screen migration can start:
 | Storybook | **Missing** | Install Storybook or equivalent visual harness |
 | Visual regression | **Missing** | Choose tool (Chromatic, Playwright screenshots, or similar) |
 | Accessibility testing | **Missing** | Choose tool (axe-playwright, jest-axe, or similar) |
-| `design-system/` folder | **Missing** | Create per architecture plan before migration |
-| `compat/` barrel | **Missing** | Create before migrating any component import |
-| Token bridge CSS | **Missing** | Create `design-system/tokens/semantic.css` before using any brandbook token in app |
+| `design-system/` folder | **Present** | Skeleton created in `app/ui/src/design-system/`; keep it inert until Phase 3 imports are ready |
+| `compat/` barrel | **Present** | `app/ui/src/design-system/compat/brandbook-legacy.ts` exists as an empty placeholder |
+| Token bridge CSS | **Present** | `app/ui/src/design-system/tokens/*.css` exists as inert bridge placeholders |
 
 ---
 
@@ -197,15 +191,15 @@ Assessed against the gate from `metraly-ui-pre-migration-stabilization-checklist
 
 | Gate item | Status |
 |---|---|
-| P0 component stories exist and pass visual review | **Not ready** — StatusBadge/TrendBadge/PulseMarker/Skeleton/FilterBar/MoveMenu missing |
+| P0 component stories exist and pass visual review | **Partial** — PulseMarker and MoveMenu now exist; Tabs and some panel stories still need broader review |
 | P0 scenario stories exist and pass responsive review | **Not ready** — AppShell, AppShellRoleContext, DashboardOverview missing; DashboardEditor exists |
-| Drawer/BottomSheet/Dialog focus behavior is production-safe | **Unknown** — not verified in this pass |
-| `DataTable<Row>` validated for mobile and dense data | **Not ready** — mobile presentation missing |
+| Drawer/BottomSheet/Dialog focus behavior is production-safe | **Partial** — `Drawer` and `BottomSheet` verified by story + site test; dialog-specific checks still absent |
+| `DataTable<Row>` validated for mobile and dense data | **Ready at component level** — `mobilePresentation` added; screen-level adoption still pending |
 | `WidgetShell` validated across all states | **Partial** — editMode, gated, stale states missing |
-| Board editing has non-drag fallback | **Not ready** — MoveMenu does not exist |
-| StatusBadge/HealthPill canonical taxonomy represented | **Partial** — StateBadge story exists but canonical statuses incomplete |
+| Board editing has non-drag fallback | **Partial** — `MoveMenu` exists; editor wiring still pending |
+| StatusBadge/HealthPill canonical taxonomy represented | **Partial** — `StatusBadge` now exists and has a canonical story; HealthPill and downstream integrations remain incomplete |
 | AppShell stories prove route/nav/title alignment | **Not ready** — AppShell and AppShellRoleContext stories missing |
 | Token/CSS drift checks clean | **Unknown** — not run in this pass; app has known raw color violations |
-| App repo has typecheck/visual/a11y strategy ready | **Not ready** — all three missing |
+| App repo has typecheck/visual/a11y strategy ready | **Partial** — typecheck exists; visual/a11y strategy still missing |
 
 **Conclusion: migration to `metraly/app/ui` screens is blocked. Brandbook stabilization must proceed first.**
