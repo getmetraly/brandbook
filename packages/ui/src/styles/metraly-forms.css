@@ -331,6 +331,7 @@
   display: flex;
   align-items: flex-end;
   gap: 0;
+  border-top: 1px solid var(--m-line-faint);
   border-bottom: 1px solid var(--m-line);
   min-width: 0;
   overflow-x: auto;
@@ -342,7 +343,7 @@
 
 .metraly-tab {
   position: relative;
-  padding: 8px 12px;
+  padding: 9px 12px;
   background: transparent;
   border: none;
   color: var(--m-fg-2);
@@ -370,6 +371,18 @@
 
 .metraly-tab.is-active {
   color: var(--m-fg-0);
+}
+
+.metraly-tab.is-active::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: -1px;
+  height: 2px;
+  background: var(--m-cyan-500);
+  border-radius: 1px;
+  box-shadow: 0 0 8px -1px var(--m-cyan-glow);
 }
 
 .metraly-tab.is-active::after {

@@ -21,6 +21,12 @@
   min-width: 0;
 }
 
+.metraly-wizard-layout-body {
+  display: grid;
+  gap: var(--m-4);
+  align-content: start;
+}
+
 .metraly-wizard-layout-main {
   display: grid;
   gap: 12px;

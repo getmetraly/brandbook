@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MetralyBadge, StateBadge } from '@metraly/ui';
@@ -84,5 +86,16 @@ describe('MetralyBadge', () => {
     expect(badge).toHaveClass('is-warning');
     expect(badge).toHaveAttribute('data-variant', 'warning');
     expect(badge).toHaveTextContent('Chart wrapper');
+    expect(container.querySelector('.metraly-badge__label')).toHaveTextContent('Chart wrapper');
+  });
+
+  it('constrains long badge labels instead of overflowing narrow cards', () => {
+    const css = readFileSync(
+      join(__dirname, '../../packages/ui/src/styles/metraly-badge.css'),
+      'utf8',
+    );
+
+    expect(css).toMatch(/\.metraly-badge\s*\{[^}]*overflow:\s*hidden/s);
+    expect(css).toMatch(/\.metraly-badge__label\s*\{[^}]*text-overflow:\s*ellipsis/s);
   });
 });

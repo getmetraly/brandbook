@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MetralyCard } from '@metraly/ui';
@@ -45,6 +47,17 @@ describe('MetralyCard', () => {
     const { container } = render(<MetralyCard title="Error card" state="error">Content</MetralyCard>);
     expect(container.querySelector('.metraly-card.is-error')).toBeInTheDocument();
     expect(screen.getByText('Content')).toBeInTheDocument();
+  });
+
+  it('anchors the footer to the bottom for equal-height choice cards', () => {
+    const css = readFileSync(
+      join(__dirname, '../../packages/ui/src/styles/metraly-card.css'),
+      'utf8',
+    );
+
+    expect(css).toMatch(/\.metraly-card\s*\{[^}]*height:\s*100%/s);
+    expect(css).toMatch(/\.metraly-card-body\s*\{[^}]*flex:\s*1 1 auto/s);
+    expect(css).toMatch(/\.metraly-card-footer\s*\{[^}]*margin-top:\s*auto/s);
   });
 
   it('supports compact density for dense dashboard surfaces', () => {

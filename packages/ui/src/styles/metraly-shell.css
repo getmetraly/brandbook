@@ -178,25 +178,22 @@
   min-width: 0;
   border-bottom: 1px solid var(--m-line);
   background: var(--m-bg-1);
-  padding: 0 var(--m-6);
+  padding: var(--m-3) var(--m-6);
 }
 
 .metraly-topbar--compact {
-  min-height: 48px;
-  padding-left: var(--m-4);
-  padding-right: var(--m-4);
+  min-height: 56px;
+  padding: var(--m-3) var(--m-4);
 }
 
 .metraly-topbar--comfortable {
-  min-height: 56px;
-  padding-left: var(--m-6);
-  padding-right: var(--m-6);
+  min-height: 68px;
+  padding: var(--m-3) var(--m-6);
 }
 
 .metraly-topbar--spacious {
-  min-height: 64px;
-  padding-left: var(--m-7);
-  padding-right: var(--m-7);
+  min-height: 76px;
+  padding: var(--m-4) var(--m-7);
 }
 
 .metraly-topbar__copy {
