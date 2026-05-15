@@ -144,8 +144,8 @@
 }
 
 .metraly-wizard-stepper {
-  width: min(calc(var(--m-wizard-content-width) + 260px), 100%);
-  margin: 0 auto clamp(28px, 4vw, 44px);
+  width: min(calc(var(--m-wizard-content-width) - 40px), 100%);
+  margin: 0 auto clamp(26px, 4vw, 40px);
   color: var(--m-fg-2);
 }
 
@@ -285,11 +285,147 @@
   padding: 12px;
 }
 
+.metraly-wizard-demo-notice {
+  border: 1px solid color-mix(in oklab, var(--m-cyan-500) 40%, var(--m-line));
+  border-radius: var(--m-radius-md);
+  padding: 14px;
+  color: var(--m-fg-2);
+  background: color-mix(in oklab, var(--m-cyan-500) 10%, var(--m-bg-1));
+  font-size: var(--m-fs-10);
+  line-height: 1.45;
+}
+
+.metraly-wizard-demo-notice strong {
+  color: var(--m-cyan-500);
+}
+
+.metraly-wizard-demo-source-list,
+.metraly-wizard-demo-settings,
+.metraly-wizard-demo-review-list {
+  display: grid;
+  gap: 10px;
+}
+
+.metraly-wizard-demo-source-row,
+.metraly-wizard-demo-setting-row,
+.metraly-wizard-demo-review-row {
+  min-width: 0;
+  border: 1px solid var(--m-line-faint);
+  border-radius: var(--m-radius-md);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: color-mix(in oklab, var(--m-bg-2) 60%, var(--m-bg-1));
+}
+
+.metraly-wizard-demo-source-row,
+.metraly-wizard-demo-review-row {
+  border-color: color-mix(in oklab, var(--m-cyan-500) 25%, var(--m-line-faint));
+  background: color-mix(in oklab, var(--m-cyan-500) 9%, var(--m-bg-2));
+}
+
+.metraly-wizard-demo-source-row strong,
+.metraly-wizard-demo-setting-row span:first-child,
+.metraly-wizard-demo-review-row span:first-child {
+  color: var(--m-fg-0);
+  font-size: var(--m-fs-11);
+  font-weight: 700;
+}
+
+.metraly-wizard-demo-source-row small,
+.metraly-wizard-demo-review p {
+  color: var(--m-fg-3);
+  font-size: var(--m-fs-10);
+  line-height: 1.45;
+}
+
+.metraly-wizard-demo-source-icon,
+.metraly-wizard-demo-review-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--m-radius-sm);
+  display: inline-grid;
+  place-items: center;
+  color: var(--m-cyan-500);
+  background: color-mix(in oklab, var(--m-cyan-500) 12%, var(--m-bg-2));
+}
+
+.metraly-wizard-demo-setting-row {
+  min-height: 54px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  border-width: 0 0 1px;
+  border-radius: 0;
+  padding: 10px 0;
+  background: transparent;
+}
+
+.metraly-wizard-demo-setting-row button {
+  min-height: 28px;
+  border: 1px solid var(--m-line);
+  border-radius: var(--m-radius-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+  color: var(--m-cyan-500);
+  background: color-mix(in oklab, var(--m-cyan-500) 8%, var(--m-bg-1));
+  font-family: var(--m-font-mono);
+  font-size: var(--m-fs-10);
+}
+
+.metraly-wizard-demo-switch {
+  width: 34px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--m-line-strong);
+  position: relative;
+}
+
+.metraly-wizard-demo-switch::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--m-fg-0);
+}
+
+.metraly-wizard-demo-review {
+  min-height: 260px;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.metraly-wizard-demo-review-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  color: var(--m-ok);
+  background: var(--m-ok-bg);
+  border: 1px solid color-mix(in oklab, var(--m-ok) 35%, var(--m-line));
+}
+
+.metraly-wizard-demo-review > strong {
+  color: var(--m-fg-0);
+  font-size: var(--m-fs-16);
+}
+
+.metraly-wizard-demo-review-list {
+  width: min(420px, 100%);
+}
+
 /* Storybook app-aligned dashboard wizard recipe. */
 .metraly-dashboard-wizard-app {
   min-height: 100dvh;
   display: grid;
-  grid-template-columns: 292px minmax(0, 1fr);
+  grid-template-columns: 248px minmax(0, 1fr);
   background: var(--m-bg-0);
   color: var(--m-fg-0);
 }
@@ -300,31 +436,45 @@
   display: grid;
   grid-template-rows: auto 1fr auto;
   border-right: 1px solid var(--m-line-faint);
-  background: color-mix(in oklab, var(--m-bg-1) 72%, var(--m-bg-0));
+  background: color-mix(in oklab, var(--m-bg-1) 68%, var(--m-bg-0));
 }
 
 .metraly-dashboard-wizard-app__brand,
 .metraly-dashboard-wizard-app__user {
-  display: flex;
-  align-items: center;
+  display: grid;
   gap: 10px;
-  padding: 18px 20px;
+  padding: 16px 14px 14px;
   border-bottom: 1px solid var(--m-line-faint);
 }
 
-.metraly-dashboard-wizard-app__logo {
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
+.metraly-dashboard-wizard-app__brand-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.metraly-dashboard-wizard-app__brand-copy {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.metraly-dashboard-wizard-app__avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
   display: inline-grid;
   place-items: center;
   color: var(--m-fg-0);
-  background: linear-gradient(135deg, var(--m-cyan-500), var(--m-purple-500));
-  box-shadow: 0 0 24px color-mix(in oklab, var(--m-cyan-500) 18%, transparent);
+  background: color-mix(in oklab, var(--m-cyan-500) 18%, var(--m-bg-2));
+  font-size: var(--m-fs-9);
+  font-weight: 700;
 }
 
 .metraly-dashboard-wizard-app__brand strong {
-  font-size: var(--m-fs-13);
+  font-size: var(--m-fs-11);
+  letter-spacing: 0.04em;
 }
 
 .metraly-dashboard-wizard-app__brand small,
@@ -341,7 +491,7 @@
   display: grid;
   align-content: start;
   gap: 16px;
-  padding: 16px 20px;
+  padding: 14px;
 }
 
 .metraly-dashboard-wizard-app__nav-section {
@@ -380,6 +530,8 @@
 .metraly-dashboard-wizard-app__user {
   border-top: 1px solid var(--m-line-faint);
   border-bottom: 0;
+  display: flex;
+  align-items: center;
 }
 
 .metraly-dashboard-wizard-recipe {
@@ -443,7 +595,7 @@
 .metraly-dashboard-wizard-recipe__workspace {
   min-width: 0;
   display: grid;
-  grid-template-columns: 340px minmax(0, 1fr);
+  grid-template-columns: 360px minmax(0, 1fr);
 }
 
 .metraly-dashboard-wizard-recipe__panel {
@@ -473,44 +625,34 @@
 
 .metraly-dashboard-wizard-recipe__mini-stepper {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: auto minmax(34px, 1fr) auto minmax(34px, 1fr) auto;
   align-items: start;
-  gap: 0;
+  gap: 10px;
 }
 
 .metraly-dashboard-wizard-recipe__mini-step {
   display: grid;
-  grid-template-columns: minmax(14px, 1fr) auto minmax(14px, 1fr);
   justify-items: center;
-  gap: 6px;
+  gap: 7px;
+  min-width: 54px;
   color: var(--m-fg-3);
   font-size: var(--m-fs-9);
   font-weight: 600;
   text-align: center;
 }
 
-.metraly-dashboard-wizard-recipe__mini-step::before,
-.metraly-dashboard-wizard-recipe__mini-step::after {
-  content: "";
-  width: 100%;
+.metraly-dashboard-wizard-recipe__mini-line {
   height: 2px;
   margin-top: 13px;
+  border-radius: 999px;
   background: var(--m-line);
 }
 
-.metraly-dashboard-wizard-recipe__mini-step:first-child::before,
-.metraly-dashboard-wizard-recipe__mini-step:last-child::after {
-  opacity: 0;
-}
-
-.metraly-dashboard-wizard-recipe__mini-step.is-done::before,
-.metraly-dashboard-wizard-recipe__mini-step.is-done::after,
-.metraly-dashboard-wizard-recipe__mini-step.is-current::before {
+.metraly-dashboard-wizard-recipe__mini-line.is-complete {
   background: var(--m-cyan-500);
 }
 
 .metraly-dashboard-wizard-recipe__mini-dot {
-  grid-column: 2;
   width: 26px;
   height: 26px;
   border: 1px solid var(--m-line);
@@ -530,7 +672,10 @@
 }
 
 .metraly-dashboard-wizard-recipe__mini-label {
-  grid-column: 1 / -1;
+  max-width: 76px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .metraly-dashboard-wizard-recipe__panel-body {
@@ -614,6 +759,29 @@
   color: var(--m-bg-0);
   border-color: var(--m-cyan-500);
   background: var(--m-cyan-500);
+}
+
+.metraly-dashboard-wizard-recipe__filter {
+  min-height: 34px;
+  border: 1px solid var(--m-line);
+  border-radius: var(--m-radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+  color: var(--m-fg-3);
+  background: var(--m-bg-1);
+}
+
+.metraly-dashboard-wizard-recipe__filter input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  color: var(--m-fg-0);
+  background: transparent;
+  font: inherit;
+  font-size: var(--m-fs-10);
 }
 
 .metraly-dashboard-wizard-recipe__tag-row {

@@ -4,10 +4,10 @@ import {
   MetralyBadge,
   MetralyButton,
   MetralyIcon,
+  MetralyLogo,
 } from "@metraly/ui";
 
 type WizardStage = "goal" | "role" | "review" | "error" | "success";
-
 type MiniStepStatus = "done" | "current" | "next";
 
 const templates = [
@@ -56,15 +56,16 @@ const templates = [
 ];
 
 const widgets = [
-  { id: "dora", title: "DORA Overview", description: "Synthetic overview of the 4 key metrics", icon: "zap" as const, selected: false },
-  { id: "deploy", title: "Deploy Frequency", description: "Synthetic chart and current sample value", icon: "zap" as const, selected: true },
-  { id: "lead", title: "Lead Time", description: "Synthetic commit-to-deploy timing example", icon: "clock" as const, selected: false },
-  { id: "mttr", title: "MTTR Trend", description: "Synthetic incident recovery timing preview", icon: "activity" as const, selected: true },
-  { id: "build", title: "Failing Builds", description: "Synthetic failure list preview", icon: "alertTri" as const, selected: true, warning: true },
-  { id: "review", title: "PR Review Queue", description: "Synthetic open PR review queue", icon: "users" as const, selected: false },
-  { id: "cycle", title: "PR Cycle Time", description: "Synthetic time-to-merge trend", icon: "gitPullRequest" as const, selected: false },
-  { id: "sprint", title: "Sprint Burndown", description: "Synthetic points remaining vs ideal", icon: "chart" as const, selected: false, warning: true },
-  { id: "blocked", title: "Blocked Tasks", description: "Synthetic blocked task examples", icon: "alertTri" as const, selected: false, warning: true },
+  { id: "dora", title: "DORA Overview", description: "Synthetic overview of the 4 key metrics", icon: "zap" as const, selected: false, tags: ["dora", "metrics"] },
+  { id: "deploy", title: "Deploy Frequency", description: "Synthetic chart and current sample value", icon: "zap" as const, selected: true, tags: ["dora", "deploy"] },
+  { id: "lead", title: "Lead Time", description: "Synthetic commit-to-deploy timing example", icon: "clock" as const, selected: false, tags: ["dora", "cycle"] },
+  { id: "mttr", title: "MTTR Trend", description: "Synthetic incident recovery timing preview", icon: "activity" as const, selected: true, tags: ["ops", "incident"] },
+  { id: "build", title: "Failing Builds", description: "Synthetic failure list preview", icon: "alertTri" as const, selected: true, warning: true, tags: ["ci", "failure"] },
+  { id: "review", title: "PR Review Queue", description: "Synthetic open PR review queue", icon: "users" as const, selected: false, tags: ["pr", "review"] },
+  { id: "cycle", title: "PR Cycle Time", description: "Synthetic time-to-merge trend", icon: "gitPullRequest" as const, selected: false, tags: ["pr", "flow"] },
+  { id: "sprint", title: "Sprint Burndown", description: "Synthetic points remaining vs ideal", icon: "chart" as const, selected: false, warning: true, tags: ["sprint"] },
+  { id: "blocked", title: "Blocked Tasks", description: "Synthetic blocked task examples", icon: "alertTri" as const, selected: false, warning: true, tags: ["team", "blockers"] },
+  { id: "activity", title: "Team Activity Map", description: "Synthetic commit heatmap preview", icon: "sparkles" as const, selected: false, tags: ["team", "activity"] },
 ];
 
 const selectedWidgets = widgets.filter((widget) => widget.selected);
@@ -73,11 +74,13 @@ function stepStatus(stage: WizardStage, step: "template" | "widgets" | "settings
   if (stage === "goal" || stage === "role") {
     return step === "template" ? "current" : "next";
   }
+
   if (stage === "review" || stage === "error") {
     if (step === "template") return "done";
     if (step === "widgets") return "current";
     return "next";
   }
+
   if (step === "settings") return "current";
   return "done";
 }
@@ -118,16 +121,28 @@ function MiniStepper({ stage }: { stage: WizardStage }) {
     { id: "widgets", label: "Widgets", status: stepStatus(stage, "widgets") },
     { id: "settings", label: "Settings", status: stepStatus(stage, "settings") },
   ];
+  const currentIndex = Math.max(0, steps.findIndex((step) => step.status === "current"));
 
   return (
     <div className="metraly-dashboard-wizard-recipe__mini-stepper" aria-label="Dashboard wizard progress">
       {steps.map((step, index) => (
-        <div key={step.id} className={`metraly-dashboard-wizard-recipe__mini-step is-${step.status}`} aria-current={step.status === "current" ? "step" : undefined}>
-          <span className="metraly-dashboard-wizard-recipe__mini-dot">
-            {step.status === "done" ? <MetralyIcon name="check" size="xs" /> : index + 1}
-          </span>
-          <span className="metraly-dashboard-wizard-recipe__mini-label">{step.label}</span>
-        </div>
+        <React.Fragment key={step.id}>
+          <div
+            className={`metraly-dashboard-wizard-recipe__mini-step is-${step.status}`}
+            aria-current={step.status === "current" ? "step" : undefined}
+          >
+            <span className="metraly-dashboard-wizard-recipe__mini-dot">
+              {step.status === "done" ? <MetralyIcon name="check" size="xs" /> : index + 1}
+            </span>
+            <span className="metraly-dashboard-wizard-recipe__mini-label">{step.label}</span>
+          </div>
+          {index < steps.length - 1 ? (
+            <span
+              className={`metraly-dashboard-wizard-recipe__mini-line${index < currentIndex ? " is-complete" : ""}`}
+              aria-hidden="true"
+            />
+          ) : null}
+        </React.Fragment>
       ))}
     </div>
   );
@@ -137,14 +152,16 @@ function AppSideNav() {
   return (
     <aside className="metraly-dashboard-wizard-app__side" aria-label="Demo app navigation">
       <div className="metraly-dashboard-wizard-app__brand">
-        <span className="metraly-dashboard-wizard-app__logo" aria-hidden="true">
-          <MetralyIcon name="activity" size="sm" />
-        </span>
-        <span style={{ display: "grid", gap: 2 }}>
-          <strong>Metraly</strong>
-          <MetralyBadge variant="success">Demo environment</MetralyBadge>
-        </span>
+        <div className="metraly-dashboard-wizard-app__brand-row">
+          <MetralyLogo variant="mark" />
+          <span className="metraly-dashboard-wizard-app__brand-copy">
+            <strong>METRALY</strong>
+            <small>engineering intelligence</small>
+          </span>
+        </div>
+        <MetralyBadge variant="success">Demo environment</MetralyBadge>
       </div>
+
       <nav className="metraly-dashboard-wizard-app__nav">
         <div className="metraly-dashboard-wizard-app__nav-section">
           <span className="metraly-dashboard-wizard-app__nav-label">Pinned</span>
@@ -156,18 +173,25 @@ function AppSideNav() {
           <button className="metraly-dashboard-wizard-app__nav-item" type="button"><MetralyIcon name="home" size="sm" /> Overview</button>
           <button className="metraly-dashboard-wizard-app__nav-item" type="button"><MetralyIcon name="users" size="sm" /> VP Engineering</button>
           <button className="metraly-dashboard-wizard-app__nav-item" type="button"><MetralyIcon name="gitPullRequest" size="sm" /> Tech Lead</button>
+          <button className="metraly-dashboard-wizard-app__nav-item" type="button"><MetralyIcon name="activity" size="sm" /> My View</button>
           <button className="metraly-dashboard-wizard-app__nav-item is-active" type="button"><MetralyIcon name="plus" size="sm" /> Dashboard Preview</button>
         </div>
         <div className="metraly-dashboard-wizard-app__nav-section">
           <span className="metraly-dashboard-wizard-app__nav-label">Analytics</span>
-          <button className="metraly-dashboard-wizard-app__nav-item" type="button"><MetralyIcon name="chart" size="sm" /> Metrics Explorer</button>
-          <button className="metraly-dashboard-wizard-app__nav-item" type="button"><MetralyIcon name="sparkles" size="sm" /> AI Preview</button>
+          <button className="metraly-dashboard-wizard-app__nav-item" type="button"><MetralyIcon name="bar2" size="sm" /> Metrics Explorer</button>
+          <button className="metraly-dashboard-wizard-app__nav-item" type="button"><MetralyIcon name="brain" size="sm" /> AI Preview <MetralyBadge variant="secondary">Demo</MetralyBadge></button>
+        </div>
+        <div className="metraly-dashboard-wizard-app__nav-section">
+          <span className="metraly-dashboard-wizard-app__nav-label">Configure</span>
+          <button className="metraly-dashboard-wizard-app__nav-item" type="button"><MetralyIcon name="puzzle" size="sm" /> Plugin Preview</button>
+          <button className="metraly-dashboard-wizard-app__nav-item" type="button"><MetralyIcon name="link" size="sm" /> Connector Preview</button>
         </div>
       </nav>
+
       <div className="metraly-dashboard-wizard-app__user">
-        <span className="metraly-dashboard-wizard-app__logo" style={{ width: 24, height: 24 }} aria-hidden="true">JD</span>
-        <span style={{ display: "grid", gap: 1 }}>
-          <strong style={{ fontSize: "var(--m-fs-10)" }}>Jamie Dev</strong>
+        <span className="metraly-dashboard-wizard-app__avatar" aria-hidden="true">JD</span>
+        <span className="metraly-dashboard-wizard-app__brand-copy">
+          <strong>Jamie Dev</strong>
           <small>Demo admin</small>
         </span>
       </div>
@@ -210,15 +234,30 @@ function TemplateStage({ stage }: { stage: WizardStage }) {
 }
 
 function WidgetStage() {
+  const [query, setQuery] = React.useState("");
+  const normalizedQuery = query.trim().toLowerCase();
+  const filteredWidgets = normalizedQuery
+    ? widgets.filter((widget) => `${widget.title} ${widget.description} ${widget.tags.join(" ")}`.toLowerCase().includes(normalizedQuery))
+    : widgets;
+
   return (
     <>
+      <label className="metraly-dashboard-wizard-recipe__filter">
+        <MetralyIcon name="search" size="sm" />
+        <span className="metraly-visually-hidden">Search widgets</span>
+        <input
+          value={query}
+          placeholder="Search widgets…"
+          onChange={(event) => setQuery(event.target.value)}
+        />
+      </label>
       <div className="metraly-dashboard-wizard-recipe__tag-row" aria-label="Widget categories">
         {['All', 'DORA', 'CI/CD', 'PR', 'Sprint', 'Team', 'AI'].map((tag, index) => (
           <button key={tag} type="button" className={`metraly-dashboard-wizard-recipe__tag${index === 0 ? ' is-active' : ''}`}>{tag}</button>
         ))}
       </div>
       <div className="metraly-dashboard-wizard-recipe__widget-list">
-        {widgets.map((widget) => (
+        {filteredWidgets.map((widget) => (
           <button
             key={widget.id}
             type="button"

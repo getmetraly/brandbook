@@ -227,3 +227,9 @@ Any future visual bugfix that touches one semantic component must check whether 
 | `Components/WizardLayout/Default` | Connector Setup Preview style: top progress, centered card, source tiles, footer actions | Compare with `/demo-app#/wizard` select-sources flow; no side rail by default. |
 | `Components/WizardLayout/SideRailReference` | Documentation-only rail example | Ensure it is clearly not the default product wizard. |
 | `Scenarios/DashboardWizard/*` | Dashboard Preview style: left builder panel and right dashboard preview | Compare with `/demo-app#/dash-wizard`; verify Template, Widgets, Settings stages. |
+
+
+### Wizard Storybook gap update
+
+- `Components/WizardLayout`: now expected to expose source selection, preview connection, configure, and review stories.
+- `Scenarios/DashboardWizard`: now expected to use AppShellRoleContext-like sidebar/header rhythm and include widget search in the review bundle step.

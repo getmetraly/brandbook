@@ -335,3 +335,10 @@ Migration target: app-side `WizardLayout`, `StepRail`, `ReviewPanel` and `Sticky
 | Dense rail docs | `WizardLayout progressPlacement="side"` | Documentation-only or narrow component docs; not the default product experience. |
 
 This keeps the common wizard primitive aligned with connector/setup flows while allowing the dashboard builder to match the current app UI where the preview canvas is visible throughout the flow.
+
+
+### Wizard parity update
+
+- `WizardLayout` maps to the connector setup flow from `getmetraly/metraly/ui`: top stepper, centered card, source tiles, preview connection, configure settings, and review state.
+- `DashboardWizard` maps to the dashboard builder flow: AppShell-like sidebar/topbar plus left builder rail and right preview canvas.
+- Dashboard builder should reuse the AppShell navigation rhythm rather than inventing a new sidebar size or typography.
