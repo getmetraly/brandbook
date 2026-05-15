@@ -416,3 +416,16 @@ export const Narrow320: Story = {
 export const SideRailReference: Story = {
   render: () => <SideRailReferenceStory />,
 };
+ 
+ export const Desktop1024: Story = {
+   name: 'Desktop / 1024px',
+   parameters: {
+     viewport: { defaultViewport: 'tablet' },
+   },
+   render: () => <WizardLayoutStory stage="configure" />,
+ };
+ 
+ export const Desktop1280: Story = {
+   name: 'Desktop / 1280px',
+   render: () => <WizardLayoutStory stage="review" />,
+ };
