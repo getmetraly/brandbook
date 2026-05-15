@@ -154,3 +154,72 @@
   color: inherit;
   opacity: 0.78;
 }
+
+/* Foundation: NavigationItemFrame shared by sidebar and tree items. */
+.metraly-navigation-item-frame {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--m-2);
+  min-width: 0;
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+}
+
+.metraly-navigation-item-frame__accent {
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.metraly-navigation-item-frame__icon,
+.metraly-navigation-item-frame__marker,
+.metraly-navigation-item-frame__meta {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.metraly-navigation-item-frame__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metraly-sidebar-item.metraly-navigation-item-frame {
+  width: 100%;
+}
+
+.metraly-sidebar-item .metraly-navigation-item-frame__accent,
+.metraly-sidebar-item__accent {
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.metraly-sidebar-item .metraly-navigation-item-frame__icon,
+.metraly-sidebar-item .metraly-navigation-item-frame__meta {
+  flex-shrink: 0;
+}
+
+.metraly-sidebar-item .metraly-navigation-item-frame__label {
+  flex: 1 1 auto;
+}
+
+.metraly-navigation-tree__frame {
+  flex: 1 1 auto;
+  min-width: 0;
+}

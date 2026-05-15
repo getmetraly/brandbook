@@ -521,3 +521,54 @@
     align-self: center;
   }
 }
+
+/* Foundation: HandlePrimitive shared by drag, resize, move and drop affordances. */
+.metraly-handle-primitive {
+  box-sizing: border-box;
+  display: inline-grid;
+  place-items: center;
+  min-width: 0;
+  color: inherit;
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.metraly-handle-primitive:focus-visible {
+  outline: none;
+  box-shadow: var(--m-glow-focus);
+}
+
+.metraly-handle-primitive__grip-dots {
+  display: grid;
+  grid-template-columns: repeat(2, 3px);
+  grid-auto-rows: 3px;
+  gap: 2px;
+}
+
+.metraly-handle-primitive__grip-dots > span {
+  width: 3px;
+  height: 3px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.72;
+}
+
+.metraly-handle-primitive__mark {
+  width: 8px;
+  height: 8px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+}
+
+.metraly-handle-primitive__drop-line {
+  display: block;
+  width: 100%;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.metraly-dashboard-drop-zone-line.metraly-handle-primitive {
+  width: 100%;
+}

@@ -204,3 +204,20 @@ Assessed against the gate from `metraly-ui-pre-migration-stabilization-checklist
 | App repo has typecheck/visual/a11y strategy ready | **Partial** — typecheck exists; visual/a11y strategy still missing |
 
 **Conclusion: migration to `metraly/app/ui` screens is blocked. Brandbook stabilization must proceed first.**
+
+
+## Stabilization delta — foundation primitives available
+
+The brandbook now exposes shared foundations that reduce the previous stabilization risk from duplicated component shells:
+
+| Previous risk | Foundation mitigation |
+|---|---|
+| repeated card/widget footer/header fixes | `CardShell` |
+| repeated form label/value/helper alignment fixes | `FieldShell` |
+| divergent drawer/bottom-sheet focus and body-lock behavior | `OverlayShell` |
+| one-off empty/error/loading blocks | `StateBlock` |
+| sidebar/tree visual drift | `NavigationItemFrame` |
+| duplicated roving keyboard behavior | `useRovingSelection` |
+| pulse/handle/drag affordance drift | `HandlePrimitive` |
+
+Remaining stabilization work is app-level adoption, visual regression coverage, and final replacement of feature-local raw shells.

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { FieldCopy, FieldShell } from "./FieldShell";
 
 export interface MetralyRadioProps {
   id?: string;
@@ -30,45 +31,40 @@ export function MetralyRadio({
   className,
   onChange,
 }: MetralyRadioProps) {
-  const helperText = description ?? hint;
-  const generatedId = React.useId();
-  const descriptionId = helperText ? `${id ?? generatedId}-description` : undefined;
-  const classes = [
-    "metraly-control-row",
-    "metraly-radio",
-    disabled && "is-disabled",
-    error && "is-error",
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
-
   return (
-    <label className={classes} data-state={error ? "error" : disabled ? "disabled" : checked ? "checked" : "default"}>
-      <input
-        id={id}
-        name={name}
-        value={value}
-        type="radio"
-        className="metraly-control-input"
-        checked={checked}
-        defaultChecked={defaultChecked}
-        disabled={disabled}
-        aria-invalid={error || undefined}
-        aria-describedby={descriptionId}
-        onChange={onChange}
-        readOnly={checked !== undefined && !onChange ? true : undefined}
-      />
-      <span className="metraly-radio-dot" aria-hidden="true" />
-      <span className="metraly-control-copy">
-        <span className="metraly-control-label">{label}</span>
-        {helperText ? (
-          <span id={descriptionId} className="metraly-control-description">
-            {helperText}
-          </span>
-        ) : null}
-      </span>
-    </label>
+    <FieldShell
+      as="label"
+      layout="control-row"
+      inputId={id}
+      label={label}
+      description={description}
+      hint={hint}
+      error={error}
+      disabled={disabled}
+      state={error ? "error" : disabled ? "disabled" : checked ? "checked" : "default"}
+      className={["metraly-radio", className].filter(Boolean).join(" ")}
+    >
+      {({ controlId, descriptionId, helperText, hasError }) => (
+        <>
+          <input
+            id={controlId}
+            name={name}
+            value={value}
+            type="radio"
+            className="metraly-control-input"
+            checked={checked}
+            defaultChecked={defaultChecked}
+            disabled={disabled}
+            aria-invalid={hasError || undefined}
+            aria-describedby={descriptionId}
+            onChange={onChange}
+            readOnly={checked !== undefined && !onChange ? true : undefined}
+          />
+          <span className="metraly-radio-dot" aria-hidden="true" />
+          <FieldCopy label={label} helperText={helperText} descriptionId={descriptionId} error={hasError} />
+        </>
+      )}
+    </FieldShell>
   );
 }
 

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { FieldCopy, FieldShell } from "./FieldShell";
 
 export interface MetralyCheckboxProps {
   id?: string;
@@ -35,52 +36,45 @@ export function MetralyCheckbox({
   className,
   onChange,
 }: MetralyCheckboxProps) {
-  const helperText = description ?? hint;
-  const generatedId = React.useId();
-  const descriptionId = helperText ? `${id ?? generatedId}-description` : undefined;
-  const isDisabled = disabled || loading;
-  const classes = [
-    "metraly-control-row",
-    "metraly-checkbox",
-    indeterminate && "is-indeterminate",
-    isDisabled && "is-disabled",
-    loading && "is-loading",
-    error && "is-error",
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
-
   return (
-    <label className={classes} data-state={loading ? "loading" : error ? "error" : isDisabled ? "disabled" : checked || indeterminate ? "checked" : "default"}>
-      <input
-        id={id}
-        name={name}
-        value={value}
-        type="checkbox"
-        className="metraly-control-input"
-        checked={checked}
-        defaultChecked={defaultChecked}
-        disabled={isDisabled}
-        aria-checked={indeterminate ? "mixed" : undefined}
-        aria-invalid={error || undefined}
-        aria-describedby={descriptionId}
-        aria-busy={loading || undefined}
-        onChange={loading ? undefined : onChange}
-        readOnly={(checked !== undefined || indeterminate || loading) && !onChange ? true : undefined}
-      />
-      <span className="metraly-checkbox-box" aria-hidden="true">
-        {loading ? <span className="metraly-control-spinner" /> : null}
-      </span>
-      <span className="metraly-control-copy">
-        <span className="metraly-control-label">{label}</span>
-        {helperText ? (
-          <span id={descriptionId} className="metraly-control-description">
-            {helperText}
+    <FieldShell
+      as="label"
+      layout="control-row"
+      inputId={id}
+      label={label}
+      description={description}
+      hint={hint}
+      error={error}
+      disabled={disabled}
+      loading={loading}
+      state={loading ? "loading" : error ? "error" : disabled ? "disabled" : checked || indeterminate ? "checked" : "default"}
+      className={["metraly-checkbox", indeterminate && "is-indeterminate", className].filter(Boolean).join(" ")}
+    >
+      {({ controlId, descriptionId, helperText, hasError, isDisabled }) => (
+        <>
+          <input
+            id={controlId}
+            name={name}
+            value={value}
+            type="checkbox"
+            className="metraly-control-input"
+            checked={checked}
+            defaultChecked={defaultChecked}
+            disabled={isDisabled}
+            aria-checked={indeterminate ? "mixed" : undefined}
+            aria-invalid={hasError || undefined}
+            aria-describedby={descriptionId}
+            aria-busy={loading || undefined}
+            onChange={loading ? undefined : onChange}
+            readOnly={(checked !== undefined || indeterminate || loading) && !onChange ? true : undefined}
+          />
+          <span className="metraly-checkbox-box" aria-hidden="true">
+            {loading ? <span className="metraly-control-spinner" /> : null}
           </span>
-        ) : null}
-      </span>
-    </label>
+          <FieldCopy label={label} helperText={helperText} descriptionId={descriptionId} error={hasError} />
+        </>
+      )}
+    </FieldShell>
   );
 }
 

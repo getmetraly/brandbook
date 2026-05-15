@@ -97,3 +97,20 @@ S26 Metraly UI Migration Phase 1 Execution — Inventory, naming freeze, stabili
 
 Access 1371k tokens of past work via get_observations([IDs]) or mem-search skill.
 </claude-mem-context>
+## Foundation consolidation rule
+
+Agents must follow `docs/migration/metraly-ui-foundation-agent-rules.md` before changing reusable UI components.
+
+Foundation primitives now own shared layout, spacing, state rhythm, aria glue, overflow behavior, and responsive contracts:
+
+```text
+MetralyPanel -> CardShell -> semantic surfaces
+FieldShell -> form controls and filter chips
+OverlayShell -> Drawer / BottomSheet / future review and trace drawers
+StateBlock -> empty / error / gated / loading placeholders
+NavigationItemFrame -> sidebar and tree visual rows
+useRovingSelection -> tabs and segmented controls
+HandlePrimitive -> drag / resize / move / drop affordances
+```
+
+Do not merge semantic components into one large API. Compose the shared foundations and keep public components meaningful for their product role.

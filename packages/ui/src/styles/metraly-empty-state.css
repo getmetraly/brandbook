@@ -59,3 +59,66 @@
 .metraly-empty-state.is-no-results .metraly-empty-state__copy strong {
   color: var(--m-cyan-400);
 }
+
+/* Foundation: StateBlock shared by EmptyState, dashboard empty, widget empty/error. */
+.metraly-state-block {
+  box-sizing: border-box;
+  min-width: 0;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: var(--m-3);
+  padding: var(--m-5);
+  color: var(--m-fg-2);
+  text-align: center;
+}
+
+.metraly-state-block--compact {
+  gap: var(--m-2);
+  padding: var(--m-3);
+}
+
+.metraly-state-block.is-align-start {
+  justify-items: start;
+  text-align: left;
+}
+
+.metraly-state-block__icon {
+  display: inline-grid;
+  place-items: center;
+  color: var(--m-fg-3);
+}
+
+.metraly-state-block__copy {
+  display: grid;
+  gap: var(--m-1);
+  min-width: 0;
+}
+
+.metraly-state-block__copy > strong {
+  color: var(--m-fg-0);
+  font-size: var(--m-fs-12);
+  line-height: 1.25;
+}
+
+.metraly-state-block__copy > p {
+  margin: 0;
+  color: var(--m-fg-3);
+  font-size: var(--m-fs-10);
+  line-height: 1.45;
+}
+
+.metraly-state-block__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.metraly-state-block.is-error,
+.metraly-state-block.is-disconnected {
+  color: var(--m-err);
+}
+
+.metraly-state-block.is-gated {
+  color: var(--m-purple-500);
+}

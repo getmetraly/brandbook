@@ -78,3 +78,24 @@ Not allowed:
 - legacy preview token overrides
 - compatibility layers that restyle production primitives after render
 - PulseWave reintroduction in picker rows, drop zones, or drag handles
+
+
+## Foundation composition pattern — 2026-05-15
+
+When a component has shared layout/state behavior and distinct product semantics, split it into:
+
+```text
+foundation primitive -> semantic component -> product adapter -> screen
+```
+
+Examples:
+
+```text
+FieldShell -> MetralySelect -> metric-range selector -> Metrics Explorer
+OverlayShell -> MetralyDrawer -> PluginReviewDrawer -> Plugins flow
+StateBlock -> MetralyEmptyState -> DashboardEmptyState -> Dashboard canvas
+useRovingSelection -> MetralyTabs -> dashboard section tabs
+HandlePrimitive -> DashboardResizeHandle -> editable board widget
+```
+
+Foundations should not contain product copy, route decisions, API calls, or feature permissions. Semantic components should not fork spacing, overflow, focus, or state rhythm already owned by a foundation.

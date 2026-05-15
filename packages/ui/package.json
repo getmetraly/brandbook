@@ -14,6 +14,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./components/*": "./src/components/*.tsx",
+    "./components/useRovingSelection": "./src/components/useRovingSelection.ts",
     "./styles/*": "./src/styles/*",
     "./assets/*": "./assets/*",
     "./charts": "./src/charts/index.ts",
@@ -25,6 +26,7 @@
     "./dashboard/DashboardEmptyState": "./src/dashboard/DashboardEmptyState.tsx",
     "./dashboard/DashboardDropZone": "./src/dashboard/DashboardDropZone.tsx",
     "./dashboard/DashboardResizeHandle": "./src/dashboard/DashboardResizeHandle.tsx",
+    "./dashboard/HandlePrimitive": "./src/dashboard/HandlePrimitive.tsx",
     "./dashboard/WidgetRegistry": "./src/dashboard/WidgetRegistry.ts"
   },
   "scripts": {

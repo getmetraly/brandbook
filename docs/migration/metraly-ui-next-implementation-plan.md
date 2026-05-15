@@ -687,3 +687,18 @@ P1-5  DashboardWizard scenario     — 2 hr (brandbook)
 ```
 
 After P0 and P1 are complete, re-evaluate the stabilization checklist gate before starting Phase 3 (component rename and API contract migration in the app).
+
+
+## Brandbook foundation dependency — 2026-05-15
+
+Before migrating additional app screens, agents must account for the new brandbook foundation layer:
+
+- use `CardShell` for generic cards, metric cards, and widget shells;
+- use `FieldShell` for local form control wrappers and filter chips;
+- use `OverlayShell` for mobile navigation, review drawers, trace drawers, and bottom sheets;
+- use `StateBlock` for empty/error/gated/loading states;
+- use `NavigationItemFrame` for route nav and tree-row visual consistency;
+- use `useRovingSelection` for tabs/segmented selectors;
+- use `HandlePrimitive` for drag/resize/move/drop controls.
+
+This should be reflected in the app `design-system/compat` layer so legacy names map to canonical names without duplicating layout code.

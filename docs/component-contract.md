@@ -146,3 +146,20 @@ Do not reintroduce `PulseWave` in:
 - Drag handles
 
 See `docs/design-principles.md` for the full rationale.
+
+
+## Foundation consolidation update — 2026-05-15
+
+The card-shell refactor is now extended into the rest of the reusable component system. Brandbook components must compose foundation primitives before adding local layout/state CSS.
+
+| Foundation | Canonical responsibility | Current consumers |
+|---|---|---|
+| `CardShell` | card/widget header, body, footer and overlay layout | `MetralyCard`, `MetralyMetricCard`, `DashboardWidget` |
+| `FieldShell` | shared control ids, label/helper/error structure, disabled/loading/error rhythm | `MetralyInput`, `MetralySelect`, `MetralyCheckbox`, `MetralyRadio`, `MetralySwitch`, `MetralyFilterBar` chips |
+| `OverlayShell` | dialog shell, scrim, focus trap, body lock, Escape close | `MetralyDrawer`, `MetralyBottomSheet` |
+| `StateBlock` | empty/error/gated/no-results/loading placeholder content | `MetralyEmptyState`, `DashboardEmptyState`, widget empty/error bodies |
+| `NavigationItemFrame` | visual nav row, icon/label/meta/marker/accent overflow contract | `MetralySidebarItem`, `MetralyNavigationTree` rows |
+| `useRovingSelection` | controlled/uncontrolled value and arrow/Home/End focus movement | `MetralyTabs`, `MetralySegmentedControl` |
+| `HandlePrimitive` | drag/resize/move/drop affordance style and focus contract | `DashboardResizeHandle`, `MoveMenu`, `DashboardWidget` drag handle, `DashboardDropZone` line |
+
+Semantic components remain public. Foundations own structure and interaction glue; feature/product components own product copy, routing, data loading and domain-specific actions.
