@@ -288,3 +288,20 @@ Final migration is not complete until:
 - raw colors are removed from feature code;
 - Storybook/visual/a11y checks pass for migrated screens;
 - README/package dependency drift is corrected.
+
+
+## Foundation primitive alignment — 2026-05-15
+
+The downstream local `design-system/` layer should mirror brandbook foundation primitives before screen migration begins:
+
+```text
+design-system/primitives/FieldShell
+design-system/primitives/useRovingSelection
+design-system/surfaces/CardShell
+design-system/surfaces/StateBlock
+design-system/overlays/OverlayShell
+design-system/navigation/NavigationItemFrame
+design-system/board/HandlePrimitive
+```
+
+Local canonical components (`Card`, `MetricCard`, `WidgetShell`, `BoardToolbar`, `BoardDropZone`, `DataTable<Row>`) should compose these foundations. The product app should not fork visual shells inside feature routes.

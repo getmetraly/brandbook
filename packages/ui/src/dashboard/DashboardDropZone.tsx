@@ -1,5 +1,6 @@
 import * as React from "react";
 import { MetralyIcon } from "../components/MetralyIcon";
+import { HandlePrimitive } from "./HandlePrimitive";
 
 export type DashboardDropZoneState = "idle" | "hover" | "active" | "rejected" | "empty";
 
@@ -65,7 +66,7 @@ export function DashboardDropZone({
       <span className="metraly-dashboard-drop-zone-icon" aria-hidden="true">
         <MetralyIcon name={resolvedState === "rejected" ? "x" : "plus"} size="sm" />
       </span>
-      {showLine ? <span className="metraly-dashboard-drop-zone-line" aria-hidden="true" /> : null}
+      {showLine ? <HandlePrimitive kind="drop" label={ariaLabel} active className="metraly-dashboard-drop-zone-line" /> : null}
       <span className="metraly-dashboard-drop-zone-copy">
         <strong>{resolvedLabel}</strong>
         {description ? <small>{description}</small> : null}

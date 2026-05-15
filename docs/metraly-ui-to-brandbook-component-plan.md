@@ -847,3 +847,26 @@ No body-level horizontal overflow is allowed except for intentionally scrollable
 2. Treat brandbook `CardShell` as the upstream proof for app-side `CardFrame`.
 3. Continue Phase 3 surface migration by adapting local `Card`, `MetricCard`, and `WidgetShell` to the shared foundation.
 4. Do not start screen-by-screen migration until the compat layer, canonical names, and shared surface foundation exist.
+
+
+## 13. Brandbook foundation consolidation completed — 2026-05-15
+
+A foundation consolidation pass has been applied inside `getmetraly/brandbook` to unblock Phase 3 component-contract migration and reduce one-off visual fixes.
+
+Completed iterations:
+
+1. **Forms foundation** — `FieldShell` now owns control label/helper/error/id/state structure for input, select, checkbox, radio, switch, and filter chips.
+2. **Overlay foundation** — `OverlayShell` now owns shared dialog shell behavior for drawer and bottom sheet: scrim, focus trap, body scroll lock, Escape close, header/body slots.
+3. **State foundation** — `StateBlock` now owns empty/error/gated/no-results/loading placeholder rhythm and is used by empty states and widget built-in states.
+4. **Navigation item foundation** — `NavigationItemFrame` now owns the visual navigation row contract for sidebar/tree rows while preserving separate ARIA roles.
+5. **Roving selection foundation** — `useRovingSelection` now centralizes value/focus logic for tabs and segmented controls.
+6. **Board interaction foundation** — `HandlePrimitive` now owns drag/resize/move/drop affordance visual/focus contracts.
+
+Migration consequence:
+
+```text
+Do not add more one-off shells for cards, controls, overlays, state placeholders, nav rows, tabs/selectors, or board handles.
+Compose the foundation primitive and keep the semantic component API small.
+```
+
+This does not remove the planned local canonical names (`Card`, `MetricCard`, `WidgetShell`, `BoardCanvas`, `DataTable<Row>`). It gives the brandbook upstream a cleaner foundation that the downstream local design-system layer can map to.

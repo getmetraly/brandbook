@@ -1,4 +1,5 @@
 import * as React from "react";
+import { StateBlock, type StateBlockVariant } from "./StateBlock";
 
 export type MetralyEmptyStateVariant = "default" | "gated" | "error" | "no-results";
 
@@ -10,6 +11,10 @@ export interface MetralyEmptyStateProps extends Omit<React.HTMLAttributes<HTMLEl
   variant?: MetralyEmptyStateVariant;
 }
 
+function toStateBlockVariant(variant: MetralyEmptyStateVariant): StateBlockVariant {
+  return variant === "default" ? "empty" : variant;
+}
+
 export function MetralyEmptyState({
   title,
   description,
@@ -19,28 +24,17 @@ export function MetralyEmptyState({
   className,
   ...rest
 }: MetralyEmptyStateProps) {
-  const classes = [
-    "metraly-empty-state",
-    `is-${variant}`,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
-
   return (
-    <section
+    <StateBlock
       {...rest}
-      className={classes}
+      className={["metraly-empty-state", className].filter(Boolean).join(" ")}
+      variant={toStateBlockVariant(variant)}
+      title={title}
+      description={description}
+      action={action}
+      icon={icon}
       data-variant={variant}
-      aria-label={typeof title === "string" ? title : "Empty state"}
-    >
-      {icon ? <div className="metraly-empty-state__icon" aria-hidden="true">{icon}</div> : null}
-      <div className="metraly-empty-state__copy">
-        <strong>{title}</strong>
-        {description ? <p>{description}</p> : null}
-      </div>
-      {action ? <div className="metraly-empty-state__action">{action}</div> : null}
-    </section>
+    />
   );
 }
 

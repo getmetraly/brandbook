@@ -143,3 +143,24 @@ After P0 complete: Move to P1 (component stabilization in Brandbook).
 ## Canonical Status Taxonomy (Frozen)
 
 Live, Preview, Designed, Planned, In progress, Gated, Policy defined, Benchmark pending, Coming soon, Error, Delayed, No data
+
+
+## 2026-05-15 — Foundation consolidation pass
+
+Status: Phase 3 foundation refactor completed in brandbook upstream.
+
+Done:
+
+- `FieldShell` introduced and composed by form controls plus filter chips.
+- `OverlayShell` introduced and composed by `MetralyDrawer` and `MetralyBottomSheet`.
+- `StateBlock` introduced and composed by empty/dashboard/widget states.
+- `NavigationItemFrame` introduced for sidebar/tree visual row consistency.
+- `useRovingSelection` introduced for tabs/segmented control keyboard/value management.
+- `HandlePrimitive` introduced for drag/resize/move/drop affordances.
+- Agent rules added in `docs/migration/metraly-ui-foundation-agent-rules.md` and linked from `AGENTS.md`.
+
+Next:
+
+- Use these foundations when migrating `getmetraly/metraly/ui` local `design-system/` adapters.
+- Add richer Storybook pages for each foundation if design QA needs visual matrix coverage.
+- Continue DataTable and WidgetCatalogCard migration on top of these foundations.

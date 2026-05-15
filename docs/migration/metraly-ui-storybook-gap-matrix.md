@@ -195,3 +195,19 @@ New or updated stories needed:
 - `Scenarios/AIWorkspace` — new
 - `Scenarios/Plugins` — new
 - `Scenarios/Settings` — new
+
+
+## Storybook foundation coverage update — 2026-05-15
+
+Storybook coverage should now verify not only semantic components, but also the shared foundations behind them:
+
+| Foundation | Stories/checks that must remain covered |
+|---|---|
+| `FieldShell` | input/select/checkbox/radio/switch/filter bar label, helper, error, loading, disabled, mobile alignment |
+| `OverlayShell` | drawer, bottom sheet, mobile sidebar, Escape close, focus trap, body lock |
+| `StateBlock` | empty, error, gated, no-results, loading inside cards/widgets/tables |
+| `NavigationItemFrame` | sidebar collapsed/expanded, tree rows, meta overflow, selected/accent state |
+| `useRovingSelection` | tabs and segmented control keyboard behavior |
+| `HandlePrimitive` | drag handle, resize handles, move menu, drop zone active/rejected states |
+
+Any future visual bugfix that touches one semantic component must check whether the fix belongs in the foundation instead.

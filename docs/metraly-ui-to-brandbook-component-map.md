@@ -296,3 +296,20 @@ Rules:
 | Dashboard Wizard | goal + role + widgets + review + generated dashboard. |
 | AI Workspace | evidence panel, source/provider/status context. |
 | Plugins | review drawer, permissions, signing, revocation/update state. |
+
+
+## 11. Foundation consolidation map — 2026-05-15
+
+Brandbook now contains a reusable foundation layer for surfaces, controls, overlays, state placeholders, navigation rows, roving selection, and board handles.
+
+| Existing/current component family | New shared foundation | Migration intent |
+|---|---|---|
+| `MetralyCard`, `MetralyMetricCard`, `DashboardWidget` | `CardShell` | Shared card/widget frame, semantic components remain separate. |
+| `MetralyInput`, `MetralySelect`, `MetralyCheckbox`, `MetralyRadio`, `MetralySwitch`, filter chips | `FieldShell` | Shared label/helper/error/id/state layout while preserving native/ARIA semantics. |
+| `MetralyDrawer`, `MetralyBottomSheet`, future plugin/AI drawers | `OverlayShell` | Shared dialog/scrim/focus/body-lock behavior; placements remain separate UX components. |
+| `MetralyEmptyState`, `DashboardEmptyState`, widget empty/error states | `StateBlock` | Unified empty/error/gated/loading copy rhythm. |
+| `MetralySidebarItem`, `MetralyNavigationTree` | `NavigationItemFrame` | Shared visual nav row only; keep link/tree roles separate. |
+| `MetralyTabs`, `MetralySegmentedControl` | `useRovingSelection` | Shared roving keyboard/value management; keep tab/radio semantics separate. |
+| `DashboardResizeHandle`, widget drag handle, `MoveMenu`, drop line | `HandlePrimitive` | Shared board affordance style/focus contract; no pulse-as-drag-handle. |
+
+The downstream `getmetraly/metraly/ui` local layer should mirror these foundations in `design-system/primitives`, `design-system/surfaces`, `design-system/board`, and `design-system/telemetry` rather than copying one-off page-level layouts.

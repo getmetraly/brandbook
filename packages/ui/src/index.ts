@@ -11,6 +11,18 @@ export { MetralyIcon, metralyIconPaths } from "./components/MetralyIcon";
 export { metralyIconSizeMap } from "./components/MetralyIcon";
 export type { MetralyIconName, MetralyIconProps, MetralyIconSize } from "./components/MetralyIcon";
 
+export { FieldShell, FieldCopy } from "./components/FieldShell";
+export type { FieldCopyProps, FieldShellContext, FieldShellElement, FieldShellLayout, FieldShellProps, FieldShellState } from "./components/FieldShell";
+
+export { StateBlock } from "./components/StateBlock";
+export type { StateBlockAlign, StateBlockDensity, StateBlockProps, StateBlockVariant } from "./components/StateBlock";
+
+export { NavigationItemFrame } from "./components/NavigationItemFrame";
+export type { NavigationItemFrameAs, NavigationItemFrameProps, NavigationItemFrameTone } from "./components/NavigationItemFrame";
+
+export { useRovingSelection } from "./components/useRovingSelection";
+export type { RovingSelectionItem, RovingSelectionMode, UseRovingSelectionOptions } from "./components/useRovingSelection";
+
 export { CardShell } from "./components/CardShell";
 export type { CardShellDensity, CardShellProps, CardShellState, CardShellTone } from "./components/CardShell";
 
@@ -124,6 +136,9 @@ export type { MetralyDrawerProps, MetralyDrawerSide } from "./shell/MetralyDrawe
 export { MetralyBottomSheet } from "./shell/MetralyBottomSheet";
 export type { MetralyBottomSheetProps } from "./shell/MetralyBottomSheet";
 
+export { OverlayShell } from "./shell/OverlayShell";
+export type { OverlayShellPlacement, OverlayShellProps } from "./shell/OverlayShell";
+
 export { WidgetPickerCard } from "./components/WidgetPickerCard";
 export type { WidgetPickerCardProps } from "./components/WidgetPickerCard";
 
@@ -151,6 +166,9 @@ export type {
 
 export { MoveMenu } from "./dashboard/MoveMenu";
 export type { MoveMenuDirection, MoveMenuProps } from "./dashboard/MoveMenu";
+
+export { HandlePrimitive } from "./dashboard/HandlePrimitive";
+export type { HandlePrimitiveKind, HandlePrimitiveProps, HandlePrimitiveState } from "./dashboard/HandlePrimitive";
 
 export { WizardLayout } from "./wizard/WizardLayout";
 export type { WizardLayoutProps, WizardLayoutStep, WizardLayoutStepStatus } from "./wizard/WizardLayout";

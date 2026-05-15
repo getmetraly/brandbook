@@ -1,4 +1,5 @@
 import * as React from "react";
+import { HandlePrimitive } from "./HandlePrimitive";
 
 export type MoveMenuDirection = "up" | "down" | "left" | "right";
 
@@ -30,17 +31,19 @@ export function MoveMenu({
         {directions.map(({ direction, label, glyph }) => {
           const disabled = disabledDirections.includes(direction);
           return (
-            <button
+            <HandlePrimitive
               key={direction}
-              type="button"
-              className="metraly-move-menu__button metraly-focus-ring"
-              aria-label={label}
+              as="button"
+              kind="move"
+              label={label}
+              direction={direction}
               disabled={disabled}
+              className="metraly-move-menu__button"
               onClick={() => onMove(direction)}
             >
               <span aria-hidden="true">{glyph}</span>
               <span>{label}</span>
-            </button>
+            </HandlePrimitive>
           );
         })}
       </div>

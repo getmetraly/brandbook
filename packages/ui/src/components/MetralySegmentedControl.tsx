@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useRovingSelection } from "./useRovingSelection";
 
 export interface MetralySegmentedControlOption {
   value: string;
@@ -40,46 +41,14 @@ export function MetralySegmentedControl({
   onValueChange,
   onChange,
 }: MetralySegmentedControlProps) {
-  const isControlled = value !== undefined;
-  const [uncontrolledValue, setUncontrolledValue] = React.useState(
-    () => defaultValue ?? options.find((option) => !option.disabled)?.value,
-  );
-  const selectedValue = isControlled ? value : uncontrolledValue;
-  const refs = React.useRef<(HTMLButtonElement | null)[]>([]);
-
-  React.useEffect(() => {
-    if (isControlled) return;
-    if (uncontrolledValue !== undefined) return;
-    const next = options.find((option) => !option.disabled)?.value;
-    if (next !== undefined) setUncontrolledValue(next);
-  }, [isControlled, options, uncontrolledValue]);
-
-  function selectValue(nextValue: string) {
-    if (!isControlled) setUncontrolledValue(nextValue);
-    onValueChange?.(nextValue);
-    onChange?.(nextValue);
-  }
-
-  function moveFocus(index: number, direction: 1 | -1) {
-    const count = options.length;
-    let next = index;
-
-    do {
-      next = (next + direction + count) % count;
-    } while (options[next]?.disabled && next !== index);
-
-    refs.current[next]?.focus();
-    if (interactionMode === "radio" && !options[next]?.disabled) {
-      selectValue(options[next].value);
-    }
-  }
-
-  function focusByIndex(index: number) {
-    if (index < 0 || options[index]?.disabled) return;
-    refs.current[index]?.focus();
-    if (interactionMode === "radio") selectValue(options[index].value);
-  }
-
+  const { selectedValue, selectValue, getItemProps } = useRovingSelection({
+    items: options,
+    value,
+    defaultValue,
+    mode: interactionMode === "radio" ? "select-on-focus" : "focus-only",
+    onValueChange,
+    onChange,
+  });
   const classes = [
     "metraly-segmented-control",
     `metraly-segmented-control--${size}`,
@@ -93,45 +62,22 @@ export function MetralySegmentedControl({
     <div className={classes} role="radiogroup" aria-label={ariaLabel} data-interaction-mode={interactionMode}>
       {options.map((option, index) => {
         const selected = option.value === selectedValue;
+        const rovingProps = getItemProps(index, { selectOnArrow: interactionMode === "radio" });
         return (
           <button
             key={option.value}
-            ref={(node) => {
-              refs.current[index] = node;
-            }}
+            ref={rovingProps.ref}
             type="button"
             className={selected ? "metraly-segmented-control__option is-selected" : "metraly-segmented-control__option"}
             role="radio"
             aria-checked={selected}
             data-state={option.disabled ? "disabled" : selected ? "selected" : "default"}
             disabled={option.disabled}
-            tabIndex={selected || (!selectedValue && index === 0) ? 0 : -1}
+            tabIndex={rovingProps.tabIndex}
             onClick={() => {
               if (!option.disabled) selectValue(option.value);
             }}
-            onKeyDown={(event) => {
-              if (event.key === "ArrowRight") {
-                event.preventDefault();
-                moveFocus(index, 1);
-              } else if (event.key === "ArrowLeft") {
-                event.preventDefault();
-                moveFocus(index, -1);
-              } else if (event.key === "Home") {
-                event.preventDefault();
-                focusByIndex(options.findIndex((item) => !item.disabled));
-              } else if (event.key === "End") {
-                event.preventDefault();
-                for (let next = options.length - 1; next >= 0; next -= 1) {
-                  if (!options[next].disabled) {
-                    focusByIndex(next);
-                    break;
-                  }
-                }
-              } else if ((event.key === "Enter" || event.key === " ") && !option.disabled) {
-                event.preventDefault();
-                selectValue(option.value);
-              }
-            }}
+            onKeyDown={rovingProps.onKeyDown}
           >
             <span className="metraly-segmented-control__label">{option.label}</span>
           </button>

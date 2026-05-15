@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { NavigationItemFrame } from "./NavigationItemFrame";
 
 export type MetralyNavigationTreeTone =
   | "default"
@@ -292,24 +293,17 @@ export function MetralyNavigationTree({
             }}
           >
             <span className="metraly-navigation-tree__indent" aria-hidden="true" />
-            {isGroup ? (
-              <span className="metraly-navigation-tree__chevron" aria-hidden="true">
-                {expanded ? "▾" : "▸"}
-              </span>
-            ) : (
-              <span className="metraly-navigation-tree__marker" aria-hidden="true">
-                {item.marker ?? <span className="metraly-navigation-tree__dot" />}
-              </span>
-            )}
-            {item.icon ? (
-              <span className="metraly-navigation-tree__icon" aria-hidden="true">
-                {item.icon}
-              </span>
-            ) : null}
-            <span className="metraly-navigation-tree__label">{item.label}</span>
-            {item.meta !== undefined ? (
-              <span className="metraly-navigation-tree__meta">{item.meta}</span>
-            ) : null}
+            <NavigationItemFrame
+              as="span"
+              className="metraly-navigation-tree__frame"
+              active={selected}
+              disabled={item.disabled}
+              tone={normalizedTone as any}
+              marker={isGroup ? (expanded ? "▾" : "▸") : item.marker ?? <span className="metraly-navigation-tree__dot" />}
+              icon={item.icon}
+              label={item.label}
+              meta={item.meta}
+            />
           </button>
         );
       })}
