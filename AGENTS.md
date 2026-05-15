@@ -114,3 +114,11 @@ HandlePrimitive -> drag / resize / move / drop affordances
 ```
 
 Do not merge semantic components into one large API. Compose the shared foundations and keep public components meaningful for their product role.
+
+### Wizard layout rule
+
+For wizard scenarios, prefer the app-aligned `WizardLayout` default: horizontal progress stepper above a centered card, card header/body/review inside one surface, and footer actions below the card. Use `progressPlacement="side"` only for rail documentation, not product-like flows.
+
+### Wizard scenario split rule
+
+Connector/setup/onboarding wizard stories should use `WizardLayout` default top progress. Dashboard creation/builder stories should use the app-like split builder recipe: compact left rail for template/widgets/settings and a right preview canvas. Do not force Dashboard Wizard into the connector setup card layout, and do not use the side rail variant for product-like wizard flows unless explicitly documenting the rail primitive.

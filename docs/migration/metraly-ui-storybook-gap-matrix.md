@@ -211,3 +211,19 @@ Storybook coverage should now verify not only semantic components, but also the 
 | `HandlePrimitive` | drag handle, resize handles, move menu, drop zone active/rejected states |
 
 Any future visual bugfix that touches one semantic component must check whether the fix belongs in the foundation instead.
+
+## WizardLayout visual rhythm update — 2026-05-15
+
+| Storybook surface | Previous risk | Updated direction | QA notes |
+|---|---|---|---|
+| `Scenarios/DashboardWizard/*` | Side rail made product flows feel unlike the demo app wizard. | Default `WizardLayout` now uses a horizontal top stepper and centered wizard card. | Verify desktop, tablet and mobile widths; check step labels, card width, footer placement. |
+| `WizardLayout` primitive stories | Rail and product flow were visually conflated. | `progressPlacement="side"` remains available for rail documentation only. | Add explicit side-rail story if needed. |
+| Connector/onboarding wizard scenarios | Could fork local shells. | Use the same top-stepper composition and card/body/footer slot contract. | No one-off wizard shell CSS in future stories. |
+
+## Dashboard/Connector wizard split update — 2026-05-15
+
+| Storybook surface | Required visual target | QA checklist |
+|---|---|---|
+| `Components/WizardLayout/Default` | Connector Setup Preview style: top progress, centered card, source tiles, footer actions | Compare with `/demo-app#/wizard` select-sources flow; no side rail by default. |
+| `Components/WizardLayout/SideRailReference` | Documentation-only rail example | Ensure it is clearly not the default product wizard. |
+| `Scenarios/DashboardWizard/*` | Dashboard Preview style: left builder panel and right dashboard preview | Compare with `/demo-app#/dash-wizard`; verify Template, Widgets, Settings stages. |

@@ -163,3 +163,31 @@ The card-shell refactor is now extended into the rest of the reusable component 
 | `HandlePrimitive` | drag/resize/move/drop affordance style and focus contract | `DashboardResizeHandle`, `MoveMenu`, `DashboardWidget` drag handle, `DashboardDropZone` line |
 
 Semantic components remain public. Foundations own structure and interaction glue; feature/product components own product copy, routing, data loading and domain-specific actions.
+
+## WizardLayout app-aligned rhythm update — 2026-05-15
+
+`WizardLayout` now defaults to an app-aligned wizard composition:
+
+- horizontal top stepper first;
+- centered content column controlled by `contentWidth`;
+- one canonical wizard card containing header, body and review content;
+- footer actions below the card, not forced into a full-width panel;
+- optional `progressPlacement="side"` is reserved for documentation-dense layouts only.
+
+Rules:
+
+- Use the default top progress layout for product-like scenarios, Dashboard Wizard, Connector Wizard and onboarding previews.
+- Use side progress only when the story is explicitly documenting the rail primitive or when dense docs require it.
+- Do not create custom one-off wizard shells inside stories. Compose `WizardLayout` and tune content with slots.
+- Wizard cards should feel like the demo app shell while keeping brandbook tokens, cyan operational accent, dark surfaces, focus rings and canonical status badges.
+
+## Wizard scenario split update — 2026-05-15
+
+Two wizard families are now explicit in Storybook:
+
+| Story family | Required layout | Notes |
+|---|---|---|
+| `Components/WizardLayout` / Connector setup | `WizardLayout` default top stepper + centered setup card | Mirrors the Connector Setup Preview app flow: progress first, one focused card, source tiles, preview command, footer actions below. |
+| `Scenarios/DashboardWizard` | App-recipe split layout: left builder rail + right live preview | Mirrors the Dashboard Preview app flow. Do not force this into the generic centered connector wizard card. |
+
+Rule: `WizardLayout` remains the canonical primitive for connector/setup/onboarding flows. Dashboard Wizard is a product scenario that may compose a compact stepper and builder panel because the preview canvas is the primary surface.

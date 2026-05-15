@@ -6,6 +6,7 @@ import { MetralyIcon } from "../components/MetralyIcon";
 import { MetralyPanel } from "../components/MetralyPanel";
 
 export type WizardLayoutStepStatus = "done" | "current" | "next" | "warning";
+export type WizardLayoutProgressPlacement = "top" | "side";
 
 export interface WizardLayoutStep {
   id: string;
@@ -25,23 +26,38 @@ export interface WizardLayoutProps extends Omit<React.HTMLAttributes<HTMLDivElem
   footer?: React.ReactNode;
   mobileSheetTitle?: string;
   mobileSheetDescription?: string;
+  /**
+   * `top` matches the current app wizard shell: centered horizontal progress,
+   * focused setup card, and a separated action row.
+   * `side` keeps the docs/prototype side rail for dense component examples.
+   */
+  progressPlacement?: WizardLayoutProgressPlacement;
+  /** Comfortable content width for the centered app-like wizard card. */
+  contentWidth?: number | string;
   children?: React.ReactNode;
+}
+
+function toCssLength(value: number | string | undefined, fallback: string) {
+  if (value === undefined) return fallback;
+  return typeof value === "number" ? `${value}px` : value;
 }
 
 function stepTone(status: WizardLayoutStepStatus) {
   if (status === "done") {
     return {
-      color: "var(--m-ok)",
-      background: "var(--m-ok-bg)",
-      border: "var(--m-ok)",
+      color: "var(--m-bg-0)",
+      background: "var(--m-cyan-500)",
+      border: "var(--m-cyan-500)",
+      line: "var(--m-cyan-500)",
     };
   }
 
   if (status === "current") {
     return {
       color: "var(--m-cyan-500)",
-      background: "color-mix(in oklab, var(--m-cyan-500) 14%, var(--m-bg-2))",
+      background: "color-mix(in oklab, var(--m-cyan-500) 14%, var(--m-bg-1))",
       border: "var(--m-cyan-500)",
+      line: "var(--m-line)",
     };
   }
 
@@ -50,6 +66,7 @@ function stepTone(status: WizardLayoutStepStatus) {
       color: "var(--m-warn)",
       background: "var(--m-warn-bg)",
       border: "var(--m-warn)",
+      line: "var(--m-warn)",
     };
   }
 
@@ -57,6 +74,7 @@ function stepTone(status: WizardLayoutStepStatus) {
     color: "var(--m-fg-3)",
     background: "var(--m-bg-1)",
     border: "var(--m-line)",
+    line: "var(--m-line)",
   };
 }
 
@@ -65,6 +83,73 @@ function statusLabel(status: WizardLayoutStepStatus) {
   if (status === "current") return "in progress";
   if (status === "warning") return "needs review";
   return "pending";
+}
+
+function WizardStepGlyph({ step, index }: { step: WizardLayoutStep; index: number }) {
+  const tone = stepTone(step.status);
+  const isDone = step.status === "done";
+
+  return (
+    <span
+      className="metraly-wizard-step-glyph"
+      style={{
+        borderColor: tone.border,
+        background: tone.background,
+        color: tone.color,
+      }}
+      data-step-status={step.status}
+      aria-hidden="true"
+    >
+      {isDone ? <MetralyIcon name="check" size="xs" /> : <span>{index + 1}</span>}
+    </span>
+  );
+}
+
+function WizardProgressStepper({ steps }: { steps: WizardLayoutStep[] }) {
+  return (
+    <nav className="metraly-wizard-stepper" aria-label="Wizard progress">
+      <ol
+        className="metraly-wizard-stepper-list"
+        style={{ ["--m-wizard-step-count" as const]: String(steps.length) } as React.CSSProperties}
+      >
+        {steps.map((step, index) => {
+          const tone = stepTone(step.status);
+          const nextStep = steps[index + 1];
+          const afterLine = step.status === "done" && nextStep?.status !== "next"
+            ? "var(--m-cyan-500)"
+            : "var(--m-line)";
+
+          return (
+            <li
+              key={step.id}
+              className="metraly-wizard-stepper-item"
+              data-step-status={step.status}
+              aria-current={step.status === "current" ? "step" : undefined}
+            >
+              {index > 0 ? (
+                <span
+                  className="metraly-wizard-stepper-line metraly-wizard-stepper-line--before"
+                  style={{ background: tone.line }}
+                  aria-hidden="true"
+                />
+              ) : null}
+              <div className="metraly-wizard-stepper-node">
+                <WizardStepGlyph step={step} index={index} />
+                <span className="metraly-wizard-stepper-label">{step.label}</span>
+              </div>
+              {index < steps.length - 1 ? (
+                <span
+                  className="metraly-wizard-stepper-line metraly-wizard-stepper-line--after"
+                  style={{ background: afterLine }}
+                  aria-hidden="true"
+                />
+              ) : null}
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+  );
 }
 
 function WizardProgressRail({ steps }: { steps: WizardLayoutStep[] }) {
@@ -78,43 +163,24 @@ function WizardProgressRail({ steps }: { steps: WizardLayoutStep[] }) {
       </div>
 
       <div className="metraly-wizard-progress-list">
-        {steps.map((step, index) => {
-          const tone = stepTone(step.status);
-          const isDone = step.status === "done";
-
-          return (
-            <div className="metraly-wizard-progress-item" key={step.id}>
-              <div className="metraly-wizard-progress-row">
-                <div
-                  className="metraly-wizard-progress-bullet"
-                  style={{
-                    borderColor: tone.border,
-                    background: tone.background,
-                    color: tone.color,
-                  }}
-                  aria-hidden="true"
-                >
-                  {isDone ? (
-                    <MetralyIcon name="check" size="xs" />
-                  ) : (
-                    <span className="metraly-wizard-progress-index">{index + 1}</span>
-                  )}
-                </div>
-                <div className="metraly-wizard-progress-text">
-                  <span className="metraly-wizard-progress-label">{step.label}</span>
-                  {step.detail ? (
-                    <span className="metraly-wizard-progress-detail">
-                      {statusLabel(step.status)} · {step.detail}
-                    </span>
-                  ) : (
-                    <span className="metraly-wizard-progress-detail">{statusLabel(step.status)}</span>
-                  )}
-                </div>
+        {steps.map((step, index) => (
+          <div className="metraly-wizard-progress-item" key={step.id} data-step-status={step.status}>
+            <div className="metraly-wizard-progress-row">
+              <WizardStepGlyph step={step} index={index} />
+              <div className="metraly-wizard-progress-text">
+                <span className="metraly-wizard-progress-label">{step.label}</span>
+                {step.detail ? (
+                  <span className="metraly-wizard-progress-detail">
+                    {statusLabel(step.status)} · {step.detail}
+                  </span>
+                ) : (
+                  <span className="metraly-wizard-progress-detail">{statusLabel(step.status)}</span>
+                )}
               </div>
-              {index < steps.length - 1 ? <div className="metraly-wizard-progress-line" aria-hidden="true" /> : null}
             </div>
-          );
-        })}
+            {index < steps.length - 1 ? <div className="metraly-wizard-progress-line" aria-hidden="true" /> : null}
+          </div>
+        ))}
       </div>
 
       <div className="metraly-wizard-progress-footnote">
@@ -135,8 +201,11 @@ export function WizardLayout({
   footer,
   mobileSheetTitle = "Wizard progress",
   mobileSheetDescription = "Current step, completed steps, and onboarding context.",
+  progressPlacement = "top",
+  contentWidth = 760,
   children,
   className,
+  style,
   ...rest
 }: WizardLayoutProps) {
   const [stepsOpen, setStepsOpen] = React.useState(false);
@@ -146,15 +215,29 @@ export function WizardLayout({
     steps.findIndex((step) => step.id === currentStep?.id),
   );
   const classes = ["metraly-wizard-layout", className].filter(Boolean).join(" ");
+  const layoutStyle = {
+    ...style,
+    "--m-wizard-content-width": toCssLength(contentWidth, "760px"),
+  } as React.CSSProperties;
+  const hasBody = Boolean(children || review);
 
   return (
-    <div className={classes} {...rest}>
+    <div
+      className={classes}
+      data-progress-placement={progressPlacement}
+      style={layoutStyle}
+      {...rest}
+    >
+      {progressPlacement === "top" ? <WizardProgressStepper steps={steps} /> : null}
+
       <div className="metraly-wizard-layout-inner">
-        <aside className="metraly-wizard-layout-aside">
-          <MetralyPanel padding="md">
-            <WizardProgressRail steps={steps} />
-          </MetralyPanel>
-        </aside>
+        {progressPlacement === "side" ? (
+          <aside className="metraly-wizard-layout-aside">
+            <MetralyPanel padding="md">
+              <WizardProgressRail steps={steps} />
+            </MetralyPanel>
+          </aside>
+        ) : null}
 
         <div className="metraly-wizard-layout-main">
           <div className="metraly-wizard-layout-mobile-summary">
@@ -179,7 +262,7 @@ export function WizardLayout({
             </MetralyPanel>
           </div>
 
-          <MetralyPanel padding="md">
+          <MetralyPanel padding="none" className="metraly-wizard-layout-card">
             <div className="metraly-wizard-layout-head">
               <div className="metraly-wizard-layout-head-copy">
                 <div className="metraly-wizard-layout-eyebrow">{eyebrow}</div>
@@ -191,10 +274,15 @@ export function WizardLayout({
                 {headerActions}
               </div>
             </div>
+
+            {hasBody ? (
+              <div className="metraly-wizard-layout-body">
+                {children}
+                {review ? <div className="metraly-wizard-layout-review">{review}</div> : null}
+              </div>
+            ) : null}
           </MetralyPanel>
 
-          <div className="metraly-wizard-layout-body">{children}</div>
-          {review ? <div className="metraly-wizard-layout-review">{review}</div> : null}
           {footer ? <div className="metraly-wizard-layout-footer">{footer}</div> : null}
         </div>
       </div>

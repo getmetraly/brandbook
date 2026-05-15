@@ -313,3 +313,25 @@ Brandbook now contains a reusable foundation layer for surfaces, controls, overl
 | `DashboardResizeHandle`, widget drag handle, `MoveMenu`, drop line | `HandlePrimitive` | Shared board affordance style/focus contract; no pulse-as-drag-handle. |
 
 The downstream `getmetraly/metraly/ui` local layer should mirror these foundations in `design-system/primitives`, `design-system/surfaces`, `design-system/board`, and `design-system/telemetry` rather than copying one-off page-level layouts.
+
+## 12. Wizard shell alignment update — 2026-05-15
+
+`WizardLayout` now acts as the upstream proof for app-like wizard composition:
+
+| Surface | Foundation | Rule |
+|---|---|---|
+| Dashboard Wizard | `WizardLayout` default top progress | Goal, role, widget bundle and review flows should use a horizontal stepper over a centered card. |
+| Connector Wizard | `WizardLayout` default top progress | Align with demo app flow: progress first, focused setup card, footer actions below. |
+| Rail documentation | `WizardLayout progressPlacement="side"` | Side rail is a documentation/dense variant, not the default product layout. |
+
+Migration target: app-side `WizardLayout`, `StepRail`, `ReviewPanel` and `StickyWizardFooter` should preserve the same slot model while using local canonical names.
+
+## 13. Dashboard Wizard vs Connector Wizard layout split — 2026-05-15
+
+| Flow | Brandbook proof | Downstream app migration target |
+|---|---|---|
+| Connector Wizard / setup | `WizardLayout` default top progress | `WizardLayout` + source cards + review/command states. |
+| Dashboard Wizard | `Scenarios/DashboardWizard` split builder recipe | `DashboardWizardShell` or feature-owned recipe: left template/widget/settings builder, right dashboard preview canvas. |
+| Dense rail docs | `WizardLayout progressPlacement="side"` | Documentation-only or narrow component docs; not the default product experience. |
+
+This keeps the common wizard primitive aligned with connector/setup flows while allowing the dashboard builder to match the current app UI where the preview canvas is visible throughout the flow.

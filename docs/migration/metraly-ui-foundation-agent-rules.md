@@ -77,3 +77,39 @@ The following foundation iterations are now represented in brandbook code:
 ```
 
 The next migration work should use these foundations instead of introducing new one-off shells.
+
+## 9. Wizard alignment rule
+
+Agents must not fork wizard layout structure inside scenarios. Product-like wizard stories must use `WizardLayout` with the default top progress placement:
+
+```tsx
+<WizardLayout steps={steps} contentWidth={840} footer={actions}>...</WizardLayout>
+```
+
+Allowed variants:
+
+- default `progressPlacement="top"` for app-like product flows;
+- `progressPlacement="side"` only when documenting the rail pattern itself.
+
+Do not wrap footer actions in a full-width panel unless the product design explicitly calls for a footer surface. Footer actions should align with the centered wizard card and preserve the Back/primary action rhythm used in the demo app.
+
+## 10. Dashboard Wizard vs Connector Wizard rule
+
+Do not treat every wizard as the same centered card.
+
+Use this split:
+
+```text
+Connector/setup/onboarding wizard
+  -> WizardLayout default top progress
+  -> one focused card
+  -> footer actions below the card
+
+Dashboard wizard / dashboard builder
+  -> feature-owned split recipe
+  -> compact builder rail on the left
+  -> dashboard preview canvas on the right
+  -> local compact stepper for template/widgets/settings
+```
+
+The dashboard builder recipe can compose wizard foundation pieces, but it must preserve the app mental model: the user is configuring a dashboard while seeing the preview, not stepping through an isolated modal-like setup card.
