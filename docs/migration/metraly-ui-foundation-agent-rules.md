@@ -118,3 +118,16 @@ The dashboard builder recipe can compose wizard foundation pieces, but it must p
 ### Wizard parity rule
 
 When changing wizard stories, first identify whether the target is connector setup or dashboard builder. Connector setup uses `WizardLayout`; dashboard builder uses the AppShell-like scenario composition. Keep the top stepper bounded to the wizard card width. Add search/filter affordances to any dashboard-builder list that can exceed visible rows.
+
+## 11. Wizard sub-primitive composition rule
+
+`StepRail`, `ReviewPanel`, and `StickyWizardFooter` are now standalone primitives.
+
+Rules:
+
+- Do not re-implement progress stepper or footer action rows inside wizard stories. Compose `StepRail` and `StickyWizardFooter` instead.
+- `WizardLayout` already composes `StepRail` internally. Product code that uses `WizardLayout` does not need to import `StepRail` separately.
+- Import `StepRail` standalone only when building a non-`WizardLayout` wizard shell (e.g. dashboard builder step tracker).
+- Use `ReviewPanel` for connector, dashboard, and plugin review confirmation surfaces. Do not build one-off review row layouts.
+- Use `StickyWizardFooter` in the `WizardLayout` `footer` slot. Do not pass a raw flex div unless the design explicitly diverges.
+- `WizardLayoutStep` / `WizardLayoutStepStatus` remain as backward-compat aliases. New code should import `StepRailStep` / `StepRailStepStatus` from `StepRail`.

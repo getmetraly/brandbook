@@ -268,6 +268,148 @@
   padding-top: 2px;
 }
 
+/* ─── StepRail standalone wrapper ──────────────────────────────────────────── */
+
+.metraly-step-rail {
+  min-width: 0;
+}
+
+/* ─── ReviewPanel ───────────────────────────────────────────────────────────── */
+
+.metraly-review-panel {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
+.metraly-review-panel__head {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.metraly-review-panel__title {
+  color: var(--m-fg-0);
+  font-size: var(--m-fs-13);
+  font-weight: 700;
+}
+
+.metraly-review-panel__description {
+  color: var(--m-fg-3);
+  font-size: var(--m-fs-11);
+  line-height: 1.45;
+}
+
+.metraly-review-panel__list {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.metraly-review-panel__item {
+  min-width: 0;
+  border: 1px solid var(--m-line-faint);
+  border-radius: var(--m-radius-md);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: color-mix(in oklab, var(--m-bg-2) 60%, var(--m-bg-1));
+}
+
+.metraly-review-panel__item--loading {
+  grid-template-columns: 1fr;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.metraly-review-panel__item-icon {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  border-radius: var(--m-radius-sm);
+  display: inline-grid;
+  place-items: center;
+  color: var(--m-cyan-500);
+  background: color-mix(in oklab, var(--m-cyan-500) 12%, var(--m-bg-2));
+}
+
+.metraly-review-panel__item-copy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.metraly-review-panel__item-label {
+  color: var(--m-fg-0);
+  font-size: var(--m-fs-11);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metraly-review-panel__item-value {
+  color: var(--m-fg-3);
+  font-size: var(--m-fs-10);
+  line-height: 1.45;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metraly-review-panel__empty {
+  color: var(--m-fg-3);
+  font-size: var(--m-fs-11);
+  padding: 16px 0;
+  text-align: center;
+}
+
+/* ─── StickyWizardFooter ────────────────────────────────────────────────────── */
+
+.metraly-sticky-wizard-footer {
+  position: sticky;
+  bottom: max(14px, env(safe-area-inset-bottom));
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.metraly-sticky-wizard-footer__back {
+  flex: 0 0 auto;
+}
+
+.metraly-sticky-wizard-footer__status {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.metraly-sticky-wizard-footer__primary {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+.metraly-sticky-wizard-footer--no-back .metraly-sticky-wizard-footer__primary {
+  margin-left: 0;
+}
+
+@media (max-width: 560px) {
+  .metraly-sticky-wizard-footer {
+    position: static;
+    flex-wrap: wrap;
+  }
+
+  .metraly-sticky-wizard-footer__back,
+  .metraly-sticky-wizard-footer__primary {
+    flex: 1 1 auto;
+  }
+}
+
 .metraly-wizard-layout-footer {
   position: sticky;
   bottom: max(14px, env(safe-area-inset-bottom));

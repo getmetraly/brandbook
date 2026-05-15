@@ -63,7 +63,7 @@ describe('MetralyCard', () => {
   it('supports compact density for dense dashboard surfaces', () => {
     const { container } = render(<MetralyCard title="Compact" density="compact">Content</MetralyCard>);
     const card = container.querySelector('.metraly-card');
-    expect(card).toHaveClass('metraly-card--compact');
+    expect(card).toHaveClass('metraly-card-shell--compact');
     expect(card).toHaveAttribute('data-density', 'compact');
   });
 });

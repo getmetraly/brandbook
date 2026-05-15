@@ -197,3 +197,37 @@ Next:
 
 - Connector wizard: split into source, preview connection, configure, and review stories.
 - Dashboard wizard: sidebar/header rhythm aligned toward AppShellRoleContext; review bundle has search before category chips; mini-stepper no longer renders stray connector lines.
+
+## 2026-05-15 — Wizard sub-primitives extracted (P1-11, P1-12)
+
+Status: `StepRail`, `ReviewPanel`, and `StickyWizardFooter` extracted from `WizardLayout` into standalone importable primitives.
+
+Done:
+
+- `StepRail` extracted as a public component with `orientation: 'horizontal' | 'vertical'` prop.
+  - `WizardLayout` now composes `StepRail` internally; no behavior change.
+  - Backward compat: `WizardLayoutStep` / `WizardLayoutStepStatus` re-exported as aliases.
+  - Story: `Components/StepRail/*` (9 stories: horizontal mid/first/last/warning/two/mobile + vertical rail/no-footnote/warning)
+  - Test: `site/__tests__/wizard/StepRail.test.tsx` (14 assertions)
+- `ReviewPanel` introduced as a structured key/value review list for wizard confirmation steps.
+  - Accepts title, description, items with icon/label/value/badge, loading skeleton, empty state.
+  - Story: `Components/ReviewPanel/*` (6 stories)
+  - Test: `site/__tests__/wizard/ReviewPanel.test.tsx` (9 assertions)
+- `StickyWizardFooter` introduced as the canonical back/primary/status footer primitive.
+  - Sticky by default; static on ≤560px via media query.
+  - Story: `Components/StickyWizardFooter/*` (6 stories)
+  - Test: `site/__tests__/wizard/StickyWizardFooter.test.tsx` (9 assertions)
+- `MetralyTable` gains `error` and `errorText` props for explicit error state rendering.
+  - Story: `Components/MetralyTable/Error`
+- `WidgetPickerCard` stories expanded with `Gated`, `ComingSoon`, `InProgress`, `LongText`, `NarrowRail`, and `GridLayout` scenarios.
+- `site/tsconfig.json` target upgraded from ES2017 → ES2018 (unblocks `s` regex flag in existing tests).
+- Two pre-existing test regressions fixed: `MetralyCard` compact density class name + wizard body gap token assertion.
+- All 247 site tests pass. `npm run ui:check` and `npm run site:typecheck` pass.
+
+Next:
+
+- Validate all wizard stories at 320, 390, 768, 1024, 1280px.
+- Port connector wizard story to use `ReviewPanel` in the review step and `StickyWizardFooter` in the footer slot.
+- Continue `WidgetPickerCard` → `WidgetCatalogCard` semantic work (listbox/option ARIA roles).
+- Continue `MetralyTable` bulk-actions story and internal-scroll improvements.
+- Start P2-2 types deduplication and P2-3 DraggableTweaksPanel gating in app.

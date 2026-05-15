@@ -48,8 +48,8 @@
 | `Components/Panel` | None found | **Missing** | default, nested sections, scrollable, mobile stacked | P0 | `MetralyPanel` exists but no story |
 | `Components/MetricCard` | `MetralyMetricCard.stories.tsx` | **Partial** | richer dashboard recipes | **P0** | Composes CardShell; canonical state matrix now covered |
 | `Components/WidgetShell` | `DashboardWidget.stories.tsx` | **Partial** | editMode, gated, stale, with footer, mobile stacked | **P0** | Composes CardShell; widget chrome remains separate |
-| `Components/WidgetCatalogCard` | `WidgetPickerCard.stories.tsx` | **Partial** | gated, coming-soon, requiresPro, long text, preview pane | **P0** | Full-width layout risk confirmed |
-| `Components/DataTable` | `MetralyTable.stories.tsx` | **Partial** | error, bulk actions, richer internal-scroll scenarios | **P0** | mobile cards/stacked now covered |
+| `Components/WidgetCatalogCard` | `WidgetPickerCard.stories.tsx` | **Partial** | listbox/option ARIA roles, preview pane | **P0** | Gated/ComingSoon/InProgress/LongText/NarrowRail/GridLayout stories added |
+| `Components/DataTable` | `MetralyTable.stories.tsx` | **Partial** | bulk actions, richer internal-scroll scenarios | **P0** | Error state added; mobile cards/stacked covered |
 | `Components/EmptyState` | None found | **Missing** | dashboard empty, connector empty, no results, permission-gated | **P0** | `DashboardEmptyState` in code but no story |
 | `Components/Skeleton` | None found | **Missing** | card skeleton, table skeleton, widget skeleton, reduced-motion | **P0** | Component does not exist |
 | `Components/FilterBar` | None found | **Missing** | compact, overflow, reset, mobile collapsed | **P0** | Component does not exist |
@@ -77,10 +77,10 @@
 
 | Story target | Current story file | Status | Required states missing | Priority | Notes |
 |---|---|---|---|---|---|
-| `Components/WizardLayout` | `WizardLayout.stories.tsx` | **Partial** | first/last/error step variants | P1 | Public component exists; dedicated sub-primitives still not extracted |
-| `Components/StepRail` | None found | **Missing** | current, completed, invalid, locked/gated | P1 | Component does not exist |
-| `Components/ReviewPanel` | None found | **Missing** | connector review, dashboard review, plugin review | P1 | Component does not exist |
-| `Components/StickyWizardFooter` | None found | **Missing** | disabled next, loading submit, mobile safe-area | P1 | Component does not exist |
+| `Components/WizardLayout` | `WizardLayout.stories.tsx` | **Partial** | first/last/error step variants | P1 | Composes StepRail internally; sub-primitives now extracted |
+| `Components/StepRail` | `StepRail.stories.tsx` | **Implemented** | — | P1 | Horizontal + vertical orientations; 9 stories; site test coverage |
+| `Components/ReviewPanel` | `ReviewPanel.stories.tsx` | **Implemented** | plugin review variant (P2) | P1 | Connector + dashboard reviews; loading; empty; long text; 6 stories + site test |
+| `Components/StickyWizardFooter` | `StickyWizardFooter.stories.tsx` | **Implemented** | — | P1 | Back/primary/status slots; mobile static; 6 stories + site test |
 
 ### AI and plugins
 

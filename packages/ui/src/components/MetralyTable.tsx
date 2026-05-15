@@ -44,8 +44,14 @@ export interface MetralyTableProps<T extends Record<string, any>> {
   dense?: boolean;
   /** Narrow-viewport rendering mode for mobile surfaces. */
   mobilePresentation?: "table" | "cards" | "stacked";
+  /**
+   * When true, the table body renders an error state row instead of data.
+   * Use together with `errorText` to provide an actionable message.
+   */
+  error?: boolean;
+  /** Message or node displayed in the error state row. Defaults to "Failed to load data". */
+  errorText?: React.ReactNode;
 }
-
 /**
  * A simple table component consistent with Metraly’s design system. Supports
  * loading and empty states, visual row markers and basic cell alignment. For
@@ -68,6 +74,8 @@ export function MetralyTable<T extends Record<string, any>>({
   stickyHeader = false,
   dense = false,
   mobilePresentation = "table",
+  error = false,
+  errorText = "Failed to load data",
 }: MetralyTableProps<T>) {
   const classes = [
     "metraly-table",
@@ -128,7 +136,12 @@ export function MetralyTable<T extends Record<string, any>>({
         </thead>
         <tbody>
           {loading && renderSkeletonRows()}
-          {!loading && data.length === 0 && (
+          {!loading && error && (
+            <tr className="metraly-table-error" role="row" data-state="error">
+              <td colSpan={columns.length}>{errorText}</td>
+            </tr>
+          )}
+          {!loading && !error && data.length === 0 && (
             <tr className="metraly-table-empty" role="row" data-state="empty">
               <td colSpan={columns.length}>{emptyText}</td>
             </tr>

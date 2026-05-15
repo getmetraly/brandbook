@@ -120,6 +120,16 @@
   white-space: normal;
 }
 
+.metraly-table-error td {
+  padding: 1.5rem 1rem;
+  text-align: center;
+  color: var(--m-err);
+  font-family: var(--m-font-mono);
+  font-size: var(--m-fs-10);
+  letter-spacing: 0.04em;
+  white-space: normal;
+}
+
 .metraly-table-footer {
   display: flex;
   align-items: center;
