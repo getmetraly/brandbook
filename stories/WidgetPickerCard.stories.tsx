@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { WidgetPickerCard } from '@metraly/ui';
+import * as React from 'react';
+import { WidgetPickerCard, WidgetPickerList } from '@metraly/ui';
 
 const stageStyle = {
   display: 'grid',
@@ -94,7 +95,7 @@ export const Gated: Story = {
     description: 'Requires AI Workspace policy approval before activation.',
     kind: 'ai/insights',
     iconLabel: 'sparkles',
-    state: 'gated',
+    state: 'disabled',
     stateLabel: 'Gated',
   },
 };
@@ -108,7 +109,7 @@ export const ComingSoon: Story = {
     description: 'Compare your metrics against anonymised industry benchmarks.',
     kind: 'benchmark/compare',
     iconLabel: 'chart',
-    state: 'planned',
+    state: 'disabled',
     stateLabel: 'Coming soon',
   },
 };
@@ -121,7 +122,7 @@ export const InProgress: Story = {
     description: 'Services affected per deployment, predicted from dependency graph.',
     kind: 'risk/blast-radius',
     iconLabel: 'lightning',
-    state: 'preview',
+    state: 'purple',
     stateLabel: 'In progress',
   },
 };
@@ -164,14 +165,59 @@ export const GridLayout: Story = {
   name: 'Grid / Multiple cards (selection state matrix)',
   render: () => (
     <div style={{ ...stageStyle, minHeight: 'auto' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 10, width: 'min(960px, 100%)' }}>
+      <WidgetPickerList
+        ariaLabel="Widget catalog state matrix"
+        style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 10, width: 'min(960px, 100%)' }}
+      >
         <WidgetPickerCard title="Deploy frequency" description="Deploys per day." selected iconLabel="lightning" state="live" kind="dora/deploy-freq" />
         <WidgetPickerCard title="Change failure rate" description="Rollback ratio." selected={false} iconLabel="chart" state="live" kind="dora/cfr" />
         <WidgetPickerCard title="MTTR" description="Mean time to restore." selected iconLabel="metric" state="live" kind="dora/mttr" />
         <WidgetPickerCard title="Lead time" description="Commit to deploy." selected={false} iconLabel="metric" state="stale" kind="dora/lead" />
-        <WidgetPickerCard title="AI Insights" description="Requires policy approval." selected={false} disabled iconLabel="sparkles" state="gated" stateLabel="Gated" kind="ai/insights" />
-        <WidgetPickerCard title="Benchmark" description="Industry benchmarks." selected={false} disabled iconLabel="chart" state="planned" stateLabel="Coming soon" kind="benchmark/compare" />
-      </div>
+        <WidgetPickerCard title="AI Insights" description="Requires policy approval." selected={false} disabled iconLabel="sparkles" state="disabled" stateLabel="Gated" kind="ai/insights" />
+        <WidgetPickerCard title="Benchmark" description="Industry benchmarks." selected={false} disabled iconLabel="chart" state="disabled" stateLabel="Coming soon" kind="benchmark/compare" />
+      </WidgetPickerList>
     </div>
   ),
+};
+
+/** Interactive multi-select with WidgetPickerList + aria-multiselectable. */
+export const WithListbox: Story = {
+  name: 'With listbox / Interactive multi-select',
+  render: () => {
+    const [selected, setSelected] = React.useState<string[]>(['deploy', 'mttr']);
+    const widgets = [
+      { id: 'deploy', title: 'Deploy Frequency', description: 'Deploys per day.', iconLabel: 'lightning', state: 'live' as const, kind: 'dora/deploy-freq' },
+      { id: 'lead', title: 'Lead Time', description: 'Commit to deploy.', iconLabel: 'metric', state: 'live' as const, kind: 'dora/lead' },
+      { id: 'mttr', title: 'MTTR', description: 'Mean time to restore.', iconLabel: 'metric', state: 'live' as const, kind: 'dora/mttr' },
+      { id: 'insights', title: 'AI Insights', description: 'Requires policy approval.', iconLabel: 'sparkles', state: 'gated' as const, stateLabel: 'Gated', kind: 'ai/insights' },
+    ];
+    const toggle = (id: string) =>
+      setSelected((prev) => prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]);
+
+    return (
+      <div style={{ ...stageStyle, minHeight: 'auto' }}>
+        <div style={{ width: 'min(640px, 100%)', display: 'grid', gap: 12 }}>
+          <div style={{ color: 'var(--m-fg-3)', fontSize: 'var(--m-fs-10)' }}>
+            {selected.length} of {widgets.length} selected — WidgetPickerList provides role="listbox"
+          </div>
+          <WidgetPickerList ariaLabel="Choose widgets for your dashboard" multiSelect>
+            {widgets.map((w) => (
+              <WidgetPickerCard
+                key={w.id}
+                title={w.title}
+                description={w.description}
+                iconLabel={w.iconLabel}
+                state={w.state}
+                stateLabel={'stateLabel' in w ? w.stateLabel : undefined}
+                kind={w.kind}
+                selected={selected.includes(w.id)}
+                disabled={w.state === 'gated'}
+                onSelect={() => toggle(w.id)}
+              />
+            ))}
+          </WidgetPickerList>
+        </div>
+      </div>
+    );
+  },
 };

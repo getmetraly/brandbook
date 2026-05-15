@@ -6,7 +6,8 @@ import {
   MetralyCard,
   MetralyCodeBlock,
   MetralyIcon,
-  MetralyPanel,
+  ReviewPanel,
+  StickyWizardFooter,
   WizardLayout,
 } from "@metraly/ui";
 
@@ -54,71 +55,48 @@ function SourceTile({
   selected,
   onSelect,
 }: {
-  source: (typeof sourceCatalog)[number];
+  source: typeof sourceCatalog[number];
   selected: boolean;
   onSelect: () => void;
 }) {
   return (
     <button
       type="button"
+      className={["metraly-wizard-demo-source-row", selected && "is-selected"].filter(Boolean).join(" ")}
       onClick={onSelect}
-      className="metraly-focus-ring"
-      style={{
-        minHeight: 112,
-        border: selected ? "1px solid var(--m-cyan-500)" : "1px solid var(--m-line-faint)",
-        borderRadius: "var(--m-radius-md)",
-        display: "grid",
-        gridTemplateColumns: "minmax(0, 1fr) auto",
-        alignItems: "start",
-        gap: 10,
-        padding: 14,
-        color: "var(--m-fg-2)",
-        background: selected
-          ? "color-mix(in oklab, var(--m-cyan-500) 10%, var(--m-bg-2))"
-          : "color-mix(in oklab, var(--m-bg-2) 70%, var(--m-bg-1))",
-        boxShadow: selected ? "inset 0 0 0 1px color-mix(in oklab, var(--m-cyan-500) 35%, transparent)" : undefined,
-        textAlign: "left",
-      }}
       aria-pressed={selected}
+      style={{
+        border: `1px solid ${selected ? "var(--m-cyan-500)" : "var(--m-line-faint)"}`,
+        borderRadius: "var(--m-radius-md)",
+        background: selected
+          ? "color-mix(in oklab, var(--m-cyan-500) 9%, var(--m-bg-2))"
+          : "color-mix(in oklab, var(--m-bg-2) 60%, var(--m-bg-1))",
+        padding: "12px",
+        cursor: "pointer",
+        display: "grid",
+        gridTemplateColumns: "auto minmax(0, 1fr) auto",
+        alignItems: "center",
+        gap: 12,
+        textAlign: "left",
+        color: "inherit",
+        width: "100%",
+      }}
     >
-      <span style={{ display: "grid", gap: 8, minWidth: 0 }}>
-        <span
-          style={{
-            width: 32,
-            height: 32,
-            borderRadius: "var(--m-radius-sm)",
-            display: "inline-grid",
-            placeItems: "center",
-            color: selected ? "var(--m-cyan-500)" : "var(--m-fg-3)",
-            background: selected
-              ? "color-mix(in oklab, var(--m-cyan-500) 12%, var(--m-bg-2))"
-              : "var(--m-bg-2)",
-          }}
-          aria-hidden="true"
-        >
-          <MetralyIcon name={source.icon} size="sm" />
-        </span>
-        <span style={{ display: "grid", gap: 3, minWidth: 0 }}>
-          <strong style={{ color: "var(--m-fg-0)", fontSize: "var(--m-fs-12)" }}>{source.label}</strong>
-          <span style={{ color: "var(--m-fg-3)", fontSize: "var(--m-fs-10)", lineHeight: 1.35 }}>{source.note}</span>
-        </span>
+      <span
+        className="metraly-wizard-demo-source-icon"
+        aria-hidden="true"
+      >
+        <MetralyIcon name={source.icon} size="sm" />
       </span>
-      {selected ? (
-        <span
-          style={{
-            width: 20,
-            height: 20,
-            borderRadius: 999,
-            display: "inline-grid",
-            placeItems: "center",
-            color: "var(--m-bg-0)",
-            background: "var(--m-cyan-500)",
-          }}
-          aria-hidden="true"
-        >
-          <MetralyIcon name="check" size="xs" />
-        </span>
-      ) : null}
+      <span>
+        <strong style={{ display: "block", color: "var(--m-fg-0)", fontSize: "var(--m-fs-11)", fontWeight: 700 }}>
+          {source.label}
+        </strong>
+        <small style={{ color: "var(--m-fg-3)", fontSize: "var(--m-fs-10)", lineHeight: 1.45 }}>
+          {source.note}
+        </small>
+      </span>
+      {selected && <MetralyBadge variant="success">Selected</MetralyBadge>}
     </button>
   );
 }
@@ -126,73 +104,44 @@ function SourceTile({
 function SetupNotice() {
   return (
     <div className="metraly-wizard-demo-notice">
-      <strong>Connector setup preview.</strong>{" "}
-      This public demo does not connect to real services. Do not enter real credentials, secrets, repository names,
-      customer data, or personal information.
+      <strong>Synthetic preview</strong>{" "}
+      No real data sources are contacted. This demo uses preloaded synthetic telemetry.
     </div>
   );
 }
 
 function SourceSelectionStep({ mode }: { mode: WizardStoryMode }) {
-  const [selectedSources, setSelectedSources] = React.useState(["github", "jira", "slack"]);
-  const sourceColumns = mode === "mobile" ? "1fr" : "repeat(3, minmax(0, 1fr))";
-  const firstSelected = sourceCatalog.find((source) => source.id === selectedSources[0])?.label ?? "GitHub";
-
+  const [selected, setSelected] = React.useState("github");
+  const cols = mode === "desktop" ? 2 : 1;
   return (
-    <div style={{ display: "grid", gap: 14 }}>
+    <div style={{ display: "grid", gap: 10 }}>
       <SetupNotice />
-      <div style={{ display: "grid", gap: 10, gridTemplateColumns: sourceColumns }}>
-        {sourceCatalog.map((source) => {
-          const selected = selectedSources.includes(source.id);
-          return (
-            <SourceTile
-              key={source.id}
-              source={source}
-              selected={selected}
-              onSelect={() => {
-                setSelectedSources((current) =>
-                  current.includes(source.id)
-                    ? current.filter((id) => id !== source.id)
-                    : [...current, source.id],
-                );
-              }}
-            />
-          );
-        })}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
+          gap: 8,
+        }}
+      >
+        {sourceCatalog.slice(0, cols === 1 ? 3 : 4).map((source) => (
+          <SourceTile
+            key={source.id}
+            source={source}
+            selected={selected === source.id}
+            onSelect={() => setSelected(source.id)}
+          />
+        ))}
       </div>
-      <MetralyPanel padding="md">
-        <div style={{ display: "grid", gap: 10, minWidth: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, flexWrap: "wrap" }}>
-            <div style={{ color: "var(--m-fg-0)", fontSize: "var(--m-fs-12)", fontWeight: 700 }}>Preview command</div>
-            <MetralyBadge variant="success">synthetic</MetralyBadge>
-          </div>
-          <MetralyCodeBlock accent="primary">
-            {`metraly demo source ${firstSelected.toLowerCase()} --synthetic\n✓ Simulated connector preview. No external authorization request is sent.`}
-          </MetralyCodeBlock>
-        </div>
-      </MetralyPanel>
     </div>
   );
 }
 
 function PreviewConnectionStep() {
   return (
-    <div style={{ display: "grid", gap: 14 }}>
+    <div style={{ display: "grid", gap: 10 }}>
       <SetupNotice />
-      <div className="metraly-wizard-demo-source-list">
-        {[sourceCatalog[0], sourceCatalog[1]].map((source) => (
-          <div key={source.id} className="metraly-wizard-demo-source-row">
-            <span className="metraly-wizard-demo-source-icon" aria-hidden="true"><MetralyIcon name={source.icon} size="sm" /></span>
-            <span style={{ display: "grid", gap: 2, minWidth: 0 }}>
-              <strong>{source.label}</strong>
-              <small>{source.note}</small>
-            </span>
-            <MetralyButton variant="secondary" size="sm">Preview connection →</MetralyButton>
-          </div>
-        ))}
-      </div>
-      <MetralyCodeBlock accent="success">
-        {`$ metraly demo source github --synthetic\n✓ Simulated connector preview. No external authorization request is sent.`}
+      <MetralyCodeBlock variant="terminal" accent="cyan">
+        {"$ metraly connect github --org acme-corp\n✓ Synthetic token validated (demo mode)\n✓ Repository list loaded — 12 repos simulated\n  Waiting for webhook configuration..."}
       </MetralyCodeBlock>
     </div>
   );
@@ -200,41 +149,22 @@ function PreviewConnectionStep() {
 
 function ConfigureStep() {
   return (
-    <div style={{ display: "grid", gap: 14 }}>
+    <div style={{ display: "grid", gap: 0 }}>
       <SetupNotice />
-      <div className="metraly-wizard-demo-settings">
-        <div className="metraly-wizard-demo-setting-row">
-          <span>Refresh mode</span>
-          <button type="button">Synthetic refresh <MetralyIcon name="chevronDown" size="xs" /></button>
-        </div>
-        <div className="metraly-wizard-demo-setting-row">
-          <span>Repositories</span>
-          <button type="button">Demo repos only <MetralyIcon name="chevronDown" size="xs" /></button>
-        </div>
-        <div className="metraly-wizard-demo-setting-row">
-          <span>Include archived demo repos</span>
-          <span className="metraly-wizard-demo-switch" aria-label="Off" role="switch" aria-checked="false" />
-        </div>
-        <div className="metraly-wizard-demo-setting-row">
-          <span>Historical demo window</span>
-          <button type="button">Demo 90 days <MetralyIcon name="chevronDown" size="xs" /></button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ReviewStep() {
-  return (
-    <div className="metraly-wizard-demo-review">
-      <span className="metraly-wizard-demo-review-icon" aria-hidden="true"><MetralyIcon name="check" size="lg" /></span>
-      <strong>Synthetic preview ready</strong>
-      <p>No real repositories are indexed in this demo. Synthetic metrics and sample activity are preloaded.</p>
-      <div className="metraly-wizard-demo-review-list">
-        {sourceCatalog.slice(0, 2).map((source) => (
-          <div key={source.id} className="metraly-wizard-demo-review-row">
-            <span><MetralyIcon name={source.icon} size="sm" /> {source.label}</span>
-            <MetralyBadge variant="success">Simulated</MetralyBadge>
+      <div className="metraly-wizard-demo-settings" style={{ marginTop: 8 }}>
+        {[
+          { label: "Workspace name", value: "acme-core" },
+          { label: "Sync frequency", value: "Every 15 minutes" },
+          { label: "Backfill period", value: "90 days" },
+          { label: "Delivery telemetry", value: "Enabled" },
+        ].map(({ label, value }) => (
+          <div key={label} className="metraly-wizard-demo-setting-row">
+            <span>
+              <span style={{ color: "var(--m-fg-0)", fontSize: "var(--m-fs-11)", fontWeight: 700 }}>{label}</span>
+            </span>
+            <button type="button">
+              {value} <MetralyIcon name="chevronDown" size="xs" />
+            </button>
           </div>
         ))}
       </div>
@@ -245,8 +175,25 @@ function ReviewStep() {
 function stageContent(stage: ConnectionStage, mode: WizardStoryMode) {
   if (stage === "preview") return <PreviewConnectionStep />;
   if (stage === "configure") return <ConfigureStep />;
-  if (stage === "review") return <ReviewStep />;
   return <SourceSelectionStep mode={mode} />;
+}
+
+function stageReview(stage: ConnectionStage) {
+  if (stage !== "review") return undefined;
+  return (
+    <ReviewPanel
+      title="Synthetic preview ready"
+      description="No real repositories are indexed in this demo. Synthetic metrics and sample activity are preloaded."
+      items={sourceCatalog.slice(0, 2).map((source) => ({
+        id: source.id,
+        icon: <MetralyIcon name={source.icon} size="sm" />,
+        label: source.label,
+        value: source.note,
+        badgeState: "preview" as const,
+        badgeLabel: "Simulated",
+      }))}
+    />
+  );
 }
 
 function stageCopy(stage: ConnectionStage) {
@@ -285,7 +232,13 @@ function stageCopy(stage: ConnectionStage) {
   };
 }
 
-function WizardLayoutStory({ stage = "sources", mode = "desktop" }: { stage?: ConnectionStage; mode?: WizardStoryMode }) {
+function WizardLayoutStory({
+  stage = "sources",
+  mode = "desktop",
+}: {
+  stage?: ConnectionStage;
+  mode?: WizardStoryMode;
+}) {
   const copy = stageCopy(stage);
 
   return (
@@ -296,21 +249,30 @@ function WizardLayoutStory({ stage = "sources", mode = "desktop" }: { stage?: Co
       description={copy.description}
       contentWidth={760}
       currentStepBadge={copy.badge}
-      footer={(
-        <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "center" }}>
-          <MetralyButton variant="ghost">Back</MetralyButton>
-          <MetralyButton variant={stage === "review" ? "secondary" : "primary"}>{copy.primary}</MetralyButton>
-        </div>
-      )}
+      review={stageReview(stage)}
+      footer={
+        <StickyWizardFooter
+          back={
+            stage !== "sources" ? (
+              <MetralyButton variant="ghost">Back</MetralyButton>
+            ) : undefined
+          }
+          primary={
+            <MetralyButton variant={stage === "review" ? "secondary" : "primary"}>
+              {copy.primary}
+            </MetralyButton>
+          }
+        />
+      }
     >
-      {stageContent(stage, mode)}
+      {stage !== "review" ? stageContent(stage, mode) : null}
     </WizardLayout>
   );
 }
 
 function SideRailReferenceStory() {
   const [selectedSource, setSelectedSource] = React.useState("github");
-  const selectedSourceLabel = sourceCatalog.find((source) => source.id === selectedSource)?.label ?? "GitHub";
+  const selectedSourceData = sourceCatalog.find((s) => s.id === selectedSource) ?? sourceCatalog[0];
 
   return (
     <WizardLayout
@@ -320,33 +282,47 @@ function SideRailReferenceStory() {
       description="Source selection and auth instructions assembled from current seams."
       progressPlacement="side"
       contentWidth={960}
-      headerActions={(
-        <MetralyButton variant="secondary" size="sm" iconLeft={<MetralyIcon name="refresh" size="sm" />}>
+      headerActions={
+        <MetralyButton
+          variant="secondary"
+          size="sm"
+          iconLeft={<MetralyIcon name="refresh" size="sm" />}
+        >
           Test connection
         </MetralyButton>
-      )}
+      }
       currentStepBadge={<MetralyBadge variant="success">current step</MetralyBadge>}
-      review={(
-        <MetralyPanel padding="md">
-          <div style={{ display: "grid", gap: 8, minWidth: 0 }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, flexWrap: "wrap" }}>
-              <div style={{ color: "var(--m-fg-0)", fontSize: "var(--m-fs-12)", fontWeight: 600 }}>Review snapshot</div>
-              <MetralyBadge variant="info">next step</MetralyBadge>
-            </div>
-            <div style={{ color: "var(--m-fg-3)", fontSize: "var(--m-fs-10)", lineHeight: 1.45 }}>
-              {selectedSourceLabel} will stream delivery telemetry into `acme-core` after the auth command completes.
-            </div>
-          </div>
-        </MetralyPanel>
-      )}
-      footer={(
-        <div style={{ display: "flex", justifyContent: "space-between", gap: 10, flexWrap: "wrap" }}>
-          <MetralyButton variant="ghost">Back</MetralyButton>
-          <MetralyButton variant="primary">Continue</MetralyButton>
-        </div>
-      )}
+      review={
+        <ReviewPanel
+          title="Review snapshot"
+          description={`${selectedSourceData.label} will stream delivery telemetry into \`acme-core\` after the auth command completes.`}
+          items={[
+            {
+              id: "source",
+              icon: <MetralyIcon name={selectedSourceData.icon} size="sm" />,
+              label: selectedSourceData.label,
+              value: selectedSourceData.note,
+              badgeState: "preview",
+              badgeLabel: "next step",
+            },
+          ]}
+        />
+      }
+      footer={
+        <StickyWizardFooter
+          back={<MetralyButton variant="ghost">Back</MetralyButton>}
+          primary={<MetralyButton variant="primary">Continue</MetralyButton>}
+        />
+      }
     >
-      <div style={{ display: "grid", gap: 10, gridTemplateColumns: "repeat(3, minmax(0, 1fr))", alignItems: "start" }}>
+      <div
+        style={{
+          display: "grid",
+          gap: 10,
+          gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+          alignItems: "start",
+        }}
+      >
         {sourceCatalog.slice(0, 3).map((source) => (
           <MetralyCard
             key={source.id}
@@ -355,7 +331,7 @@ function SideRailReferenceStory() {
             subtitle={source.note}
             icon={<MetralyIcon name={source.icon} size="md" />}
             state={selectedSource === source.id ? "selected" : "default"}
-            footer={(
+            footer={
               <MetralyButton
                 variant={selectedSource === source.id ? "primary" : "ghost"}
                 size="sm"
@@ -363,7 +339,7 @@ function SideRailReferenceStory() {
               >
                 {selectedSource === source.id ? "Selected" : "Choose"}
               </MetralyButton>
-            )}
+            }
           >
             <div style={{ color: "var(--m-fg-2)", fontSize: "var(--m-fs-10)", lineHeight: 1.45 }}>
               Choice-card recipe without promoting an onboarding-specific primitive.
@@ -415,6 +391,26 @@ export const Mobile: Story = {
     viewport: { defaultViewport: "mobile1" },
   },
   render: () => <WizardLayoutStory stage="sources" mode="mobile" />,
+};
+
+export const MobileReview: Story = {
+  name: "Mobile / Review step",
+  parameters: {
+    viewport: { defaultViewport: "mobile1" },
+  },
+  render: () => <WizardLayoutStory stage="review" mode="mobile" />,
+};
+
+export const Narrow320: Story = {
+  name: "Narrow / 320px",
+  parameters: {
+    viewport: { defaultViewport: "mobile1" },
+  },
+  render: () => (
+    <div style={{ maxWidth: 320 }}>
+      <WizardLayoutStory stage="sources" mode="mobile" />
+    </div>
+  ),
 };
 
 export const SideRailReference: Story = {

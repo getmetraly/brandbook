@@ -139,8 +139,8 @@ export type { MetralyBottomSheetProps } from "./shell/MetralyBottomSheet";
 export { OverlayShell } from "./shell/OverlayShell";
 export type { OverlayShellPlacement, OverlayShellProps } from "./shell/OverlayShell";
 
-export { WidgetPickerCard } from "./components/WidgetPickerCard";
-export type { WidgetPickerCardProps } from "./components/WidgetPickerCard";
+export { WidgetPickerCard, WidgetPickerList } from "./components/WidgetPickerCard";
+export type { WidgetPickerCardProps, WidgetPickerListProps } from "./components/WidgetPickerCard";
 
 export { DashboardGrid } from "./dashboard/DashboardGrid";
 export type { DashboardGridProps } from "./dashboard/DashboardGrid";

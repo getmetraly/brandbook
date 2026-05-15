@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { MetralyTable } from '@metraly/ui';
+import * as React from 'react';
+import { MetralyButton, MetralyTable } from '@metraly/ui';
 
 interface Row {
   name: string;
@@ -175,4 +176,78 @@ export const MobileStacked: StoryObj<typeof MetralyTable<PRReviewRow>> = {
       </div>
     </div>
   ),
+};
+
+export const BulkActions: StoryObj<typeof MetralyTable<PRReviewRow>> = {
+  name: 'Bulk Actions / Multi-row selection with toolbar',
+  render: () => {
+    const [selected, setSelected] = React.useState<string[]>(['platform', 'billing']);
+    const toggleRow = (key: string) =>
+      setSelected((prev) =>
+        prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key],
+      );
+    const allKeys = prReviewData.map((r) => r.team);
+    const allSelected = selected.length === allKeys.length;
+
+    return (
+      <div style={stageStyle}>
+        <div style={{ width: 'min(920px, 100%)', display: 'grid', gap: 0 }}>
+          {/* Bulk-action toolbar — shown only when rows are selected */}
+          {selected.length > 0 && (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 12,
+                padding: '8px 12px',
+                borderRadius: 'var(--m-radius-md) var(--m-radius-md) 0 0',
+                background: 'color-mix(in oklab, var(--m-cyan-500) 10%, var(--m-bg-1))',
+                border: '1px solid var(--m-cyan-500)',
+                borderBottom: 'none',
+              }}
+            >
+              <span style={{ color: 'var(--m-cyan-500)', fontSize: 'var(--m-fs-11)', fontWeight: 600 }}>
+                {selected.length} selected
+              </span>
+              <MetralyButton variant="ghost" size="sm" onClick={() => setSelected([])}>
+                Clear
+              </MetralyButton>
+              <MetralyButton variant="secondary" size="sm">
+                Export selected
+              </MetralyButton>
+              <MetralyButton variant="ghost" size="sm" style={{ marginLeft: 'auto', color: 'var(--m-err)' }}>
+                Archive
+              </MetralyButton>
+            </div>
+          )}
+          <MetralyTable<PRReviewRow>
+            columns={[
+              /* Checkbox-style click-to-toggle via row click — real implementation would
+                 use a dedicated checkbox column; here we demonstrate selectedRowKeys only. */
+              ...prReviewColumns,
+            ]}
+            data={prReviewData}
+            rowKey={(row) => row.team}
+            selectedRowKeys={selected}
+            ariaLabel="PR review latency by team (multi-select)"
+            dense
+            footer={
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <span>
+                  {prReviewData.length} rows · {selected.length} selected
+                </span>
+                <MetralyButton
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSelected(allSelected ? [] : allKeys)}
+                >
+                  {allSelected ? 'Deselect all' : 'Select all'}
+                </MetralyButton>
+              </div>
+            }
+          />
+        </div>
+      </div>
+    );
+  },
 };

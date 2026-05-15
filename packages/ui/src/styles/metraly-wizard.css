@@ -394,9 +394,6 @@
   margin-left: auto;
 }
 
-.metraly-sticky-wizard-footer--no-back .metraly-sticky-wizard-footer__primary {
-  margin-left: 0;
-}
 
 @media (max-width: 560px) {
   .metraly-sticky-wizard-footer {
@@ -408,6 +405,13 @@
   .metraly-sticky-wizard-footer__primary {
     flex: 1 1 auto;
   }
+}
+
+/* Prevent double-sticky when StickyWizardFooter is composed inside WizardLayout's footer slot.
+   The outer .metraly-wizard-layout-footer is already sticky; the inner component should
+   behave as a normal block inside that sticky wrapper. */
+.metraly-wizard-layout-footer .metraly-sticky-wizard-footer {
+  position: static;
 }
 
 .metraly-wizard-layout-footer {
