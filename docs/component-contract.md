@@ -14,6 +14,7 @@ The rebuilt primitive surface includes:
 
 - `StateBadge`
 - `MetralyBadge`
+- `CardShell`
 - `MetralyCard`
 - `MetralyPanel`
 - `MetralyMetricCard`
@@ -29,6 +30,21 @@ The rebuilt primitive surface includes:
 - `DashboardDropZone`
 - `DashboardResizeHandle`
 - chart wrappers from `@metraly/ui/charts`
+
+## Surface layering rules
+
+Card-like components must follow this hierarchy:
+
+```text
+MetralyPanel = surface primitive
+CardShell = layout foundation
+MetralyCard = generic content card
+MetralyMetricCard = metric summary card
+DashboardWidget = editable widget shell/chrome
+DashboardGrid / BoardCanvas = layout layer
+```
+
+Do not collapse semantic components into one overloaded public `Card`. Reuse the shared foundation instead.
 
 ## State rules
 
@@ -101,10 +117,13 @@ The rebuilt primitive surface includes:
 - Mobile usage assumes full-width stacked widgets.
 - Header content may wrap by row, but drag grip, title hierarchy, and state badge remain intact.
 
-### MetralyCard / MetralyPanel / MetralyMetricCard
+### CardShell / MetralyCard / MetralyPanel / MetralyMetricCard
 
-- These shells own visual rhythm and spacing.
-- Consumers may change layout around them, not the shell language inside them.
+- `MetralyPanel` owns the low-level surface.
+- `CardShell` owns the shared card layout foundation: header/body/footer/overlay slots, equal-height behavior, footer pinning, overflow, density, tone, and state metadata.
+- `MetralyCard` composes `CardShell` for generic content cards.
+- `MetralyMetricCard` composes `CardShell` for KPI/scalar metric summaries.
+- Consumers may change layout around these shells, not the shell language inside them.
 - On narrow widths they should widen or stack before their internals become unreadable.
 
 ### Chart wrappers

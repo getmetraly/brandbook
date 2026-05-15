@@ -11,6 +11,9 @@ export { MetralyIcon, metralyIconPaths } from "./components/MetralyIcon";
 export { metralyIconSizeMap } from "./components/MetralyIcon";
 export type { MetralyIconName, MetralyIconProps, MetralyIconSize } from "./components/MetralyIcon";
 
+export { CardShell } from "./components/CardShell";
+export type { CardShellDensity, CardShellProps, CardShellState, CardShellTone } from "./components/CardShell";
+
 export { MetralyCard } from "./components/MetralyCard";
 export type { MetralyCardDensity, MetralyCardProps, MetralyCardState } from "./components/MetralyCard";
 

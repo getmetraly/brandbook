@@ -1,6 +1,6 @@
 # Metraly UI → Brandbook Migration Execution Plan
 
-**Status:** Reworked from the attached source-of-truth report: `Metraly UI/UX migration audit from Brandbook into the local application UI layer`.  
+**Status:** Reworked from the attached source-of-truth report and updated with the upstream CardShell foundation implementation for card-like surfaces.  
 **Last updated:** 2026-05-15  
 **Companion documents:**
 - `docs/metraly-ui-to-brandbook-component-map.md`
@@ -20,7 +20,7 @@ The migration is **not** only a cosmetic adoption of `@metraly/ui`. The audit id
 - local `design-system/` structure inside `getmetraly/metraly/ui/src`;
 - a compatibility adapter for old/brandbook names;
 - canonical component renames for the local app UI layer;
-- API changes for core surfaces;
+- API changes for core surfaces, including a shared CardFrame/CardShell foundation;
 - naming/status taxonomy freeze;
 - AppShell/navigation cleanup;
 - accessibility hardening for tabs, focus, drag-and-drop, and board edit mode;
@@ -72,7 +72,7 @@ tokens + primitives
 | Local app layer | `getmetraly/metraly/ui` must get a local `src/design-system/` layer instead of importing or copying primitives ad hoc inside feature code. |
 | Adapter layer | Add `src/design-system/compat/brandbook-legacy.ts` to preserve old names during phased migration. |
 | Component names | Local app names should become product-neutral and shorter: `Card`, `WidgetShell`, `BoardToolbar`, `DataTable`, etc. |
-| API contracts | Core surfaces need explicit slots and typed state contracts, not loose page-level composition. |
+| API contracts | Core surfaces need explicit slots and typed state contracts, not loose page-level composition; Card, MetricCard, and WidgetShell share a CardFrame foundation. |
 | AppShell IA | Sidebar/title/top-tabs must never show conflicting role or dashboard context. |
 | Status taxonomy | One status vocabulary must be used across website/docs/app: preview, designed, planned, in progress, gated, benchmark pending, policy defined, live. |
 | AI and plugins | Planned/gated surfaces must be truthfully labeled in UI and must not look fully launched. |
@@ -116,6 +116,7 @@ ui/src/
       PulseMarker/
       HealthPill/
     surfaces/
+      CardFrame/
       Card/
       Panel/
       MetricCard/
@@ -215,9 +216,37 @@ These are now plan items, not deferred ideas.
 
 ## 6. Required API changes
 
+### 6.0 `CardFrame` / `CardShell` foundation
+
+Upstream brandbook implementation now introduces `CardShell` as the shared card layout foundation. The app-side local layer should expose this as an internal `CardFrame` or equivalent foundation, not as the primary feature-facing card API.
+
+Target:
+
+```ts
+type CardFrameProps = {
+  state?: "default" | "selected" | "loading" | "empty" | "error" | "stale";
+  density?: "compact" | "default" | "comfortable";
+  tone?: "neutral" | "cyan" | "purple" | "success" | "warning" | "danger";
+  header?: React.ReactNode;
+  footer?: React.ReactNode;
+  overlay?: React.ReactNode;
+  children?: React.ReactNode;
+};
+```
+
+Rules:
+
+- `Panel` remains the surface primitive;
+- `CardFrame` owns header/body/footer/overlay rhythm, equal-height behavior, overflow, and state metadata;
+- `Card`, `MetricCard`, and `WidgetShell` compose `CardFrame`;
+- product code should normally use semantic components, not `CardFrame` directly;
+- widget-specific drag/resize/remove chrome stays in `WidgetShell`, not `Card`.
+
 ### 6.1 `Card`
 
 Target:
+
+`Card` composes `CardFrame` and remains the generic content card API.
 
 ```ts
 type CardProps = {
@@ -259,7 +288,7 @@ type WidgetShellProps = {
 
 Rules:
 
-- widget shell owns title/status/actions/footer/loading/empty/error frame;
+- widget shell composes `CardFrame` and owns title/status/actions/footer/loading/empty/error frame;
 - widget renderer owns chart/table/content only;
 - widget errors are contained inside the widget.
 
@@ -546,6 +575,7 @@ Acceptance:
 Work:
 
 - Implement/adapter-wrap:
+  - `CardFrame` / `CardShell` foundation
   - `Card`
   - `MetricCard`
   - `WidgetShell`
@@ -568,6 +598,7 @@ Acceptance:
 - New code uses canonical names.
 - Legacy names resolve through compat only.
 - Core components expose explicit loading/empty/error/disabled/gated/selected states.
+- `Card`, `MetricCard`, and `WidgetShell` share the same surface foundation instead of duplicating shell CSS.
 - No pulse marker is used as drag handle.
 
 ---
@@ -813,6 +844,6 @@ No body-level horizontal overflow is allowed except for intentionally scrollable
 ## 12. Immediate next steps
 
 1. Merge this documentation rewrite or continue review on the PR.
-2. Start **Phase 1 — Inventory, naming freeze, and status taxonomy**.
-3. In parallel, prepare **Phase 2 — local design-system structure and token bridge**.
-4. Do not start screen-by-screen migration until the compat layer and canonical names exist.
+2. Treat brandbook `CardShell` as the upstream proof for app-side `CardFrame`.
+3. Continue Phase 3 surface migration by adapting local `Card`, `MetricCard`, and `WidgetShell` to the shared foundation.
+4. Do not start screen-by-screen migration until the compat layer, canonical names, and shared surface foundation exist.
