@@ -653,8 +653,8 @@ Items are ordered: P0 → P1 → P2. Within each tier, items are ordered by depe
 **Target repo:** `getmetraly/metraly/app`
 **Files:** Storybook config, `package.json` scripts
 
-**Why:** App-level visual regression and component documentation do not exist.
-**Acceptance criteria:** `npm run storybook` and `npm run build-storybook` work; at minimum `AppShell`, `DashboardScreen`, `MetricsScreen` have stories.
+**Why:** App-level visual regression, component documentation, and migration-safe screen checks were missing.
+**Acceptance criteria:** `npm run storybook` and `npm run build-storybook` work; `AppShell`, `DashboardScreen`, `MetricsScreen`, and `CompatSurfaces` have stories; `npm run test:visual` captures Playwright baselines for the compat cutover.
 **Risk level:** Medium
 
 ---

@@ -35,8 +35,8 @@ Commands available and status:
 | `npm run typecheck` | Yes | Pass | `tsc --noEmit` script added and verified |
 | `npm run build-storybook` | Yes | Pass | Storybook 10.4.0 scaffolded in `app/ui`; static build verified |
 | `npm run storybook` | Yes | Not run in this pass | Local visual harness now available on port 6007 |
-| `test:a11y` | **Missing** | — | No Playwright/axe accessibility testing yet |
-| `test:visual` | **Missing** | — | No visual regression configured yet |
+| `npm run test:a11y` | Yes | Pass | `jest-axe` smoke coverage verifies compat adapters and a screen-level consumer |
+| `npm run test:visual` | Yes | Pass | Playwright snapshots cover `Compat/Surfaces` desktop + mobile against built Storybook |
 
 ---
 
@@ -170,11 +170,11 @@ These infrastructure items are required before screen migration can start:
 |---|---|---|
 | TypeScript check script | **Present** | Verified by `npm run typecheck` |
 | Storybook | **Present** | Storybook 10 scaffolded; `npm run build-storybook` passes |
-| Visual regression | **Missing** | Choose tool (Chromatic, Playwright screenshots, or similar) before broad screen migration |
-| Accessibility testing | **Missing** | Choose tool (axe-playwright, jest-axe, or similar) before broad screen migration |
+| Visual regression | **Present** | Playwright screenshot baselines now cover app compat surfaces through built Storybook |
+| Accessibility testing | **Present** | `jest-axe` smoke tests now cover the compat adapters and `BreakdownTable` consumer |
 | `design-system/` folder | **Present** | Skeleton created in `app/ui/src/design-system/`; first live compat consumer can now route through it |
-| `compat/` barrel | **Present** | `app/ui/src/design-system/compat/brandbook-legacy.ts` now contains the first real `@metraly/ui` import (`PlaceholderScreenCompat` → `MetralyEmptyState`) |
-| Token bridge CSS | **Present** | `app/ui/src/design-system/tokens/*.css` exists as bridge placeholders; app entry + Storybook preview now also load the first upstream package styles |
+| `compat/` barrel | **Present** | `app/ui/src/design-system/compat/brandbook-legacy.ts` now contains live adapters for placeholder, status, DORA, and table surfaces |
+| Token bridge CSS | **Present** | `app/ui/src/design-system/tokens/*.css` exists as bridge placeholders; app entry + Storybook preview now also load the upstream badge/table styles |
 
 ---
 
@@ -193,9 +193,9 @@ Assessed against the gate from `metraly-ui-pre-migration-stabilization-checklist
 | StatusBadge/HealthPill canonical taxonomy represented | **Ready for Phase 3** — `StatusBadge` exists with canonical story; product-specific health variants are future work |
 | AppShell stories prove route/nav/title alignment | **Ready** — `AppShellRoleContext` in brandbook and `AppShell` stories in app Storybook cover alignment |
 | Token/CSS drift checks clean | **Partial** — no raw hex in brandbook; a few `rgba()` chart/shadow values remain, and app screens still contain known raw colors |
-| App repo has typecheck/visual/a11y strategy ready | **Partial** — typecheck + Storybook are in place; visual regression and a11y automation are not yet configured |
+| App repo has typecheck/visual/a11y strategy ready | **Ready with scoped follow-up** — typecheck, Storybook, Playwright visual snapshots, and `jest-axe` smoke coverage are in place; broaden coverage as more screens migrate |
 
-**Conclusion: the Phase 2 stabilization gate is passed for Phase 3 compat-import migration. Remaining risks are visual-regression automation, app-side raw-color cleanup in feature screens, and the deferred Phase 9 AI/Plugins component implementation.**
+**Conclusion: the Phase 2 stabilization gate is passed for Phase 3 compat-import migration. Remaining risks are app-side raw-color cleanup in feature screens and the deferred Phase 9 AI/Plugins component implementation.**
 
 
 ## Stabilization delta — foundation primitives available

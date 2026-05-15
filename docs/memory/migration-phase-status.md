@@ -283,3 +283,22 @@ Next:
 
 - Continue swapping low-risk compat aliases to real `@metraly/ui` exports.
 - Keep Phase 9 AI/Plugins surfaces out of the early compat-import wave.
+## 2026-05-15 — Phase 3 compat adapters + app automation
+
+Status: Active. The first screen-facing compat adapters now render through `@metraly/ui`, and app-side verification is no longer limited to typecheck + unit tests.
+
+Done:
+
+- `StatusBadgeCompat` now routes to real upstream badge primitives (`StatusBadge` / `StateBadge`) with a legacy-status adapter for `On track`, `At risk`, `Blocked`, `Done`, and `Open`.
+- `DORABadgeCompat` now routes through upstream `StateBadge`.
+- `DataTableCompat` now routes through upstream `MetralyTable`.
+- `widgetRegistry.tsx`, `BreakdownTable.tsx`, and `DORAPanel.tsx` now consume the compat barrel instead of local `components/ui` imports.
+- `Compat/Surfaces` Storybook coverage exists in `app/ui/src/stories/CompatSurfaces.stories.tsx`.
+- `npm run test:a11y` now runs `jest-axe` smoke tests over compat adapters and a screen consumer.
+- `npm run test:visual` now runs Playwright screenshot regression over the app Storybook compat story at desktop + mobile viewports.
+
+Remaining risks:
+
+- raw-color cleanup still remains in product feature screens (`App.tsx`, `PluginScreen.tsx`, charts, and metrics panels);
+- AI/Plugins component implementation remains deferred to Phase 9;
+- visual/a11y coverage should expand as more real screens migrate onto the compat barrel.
