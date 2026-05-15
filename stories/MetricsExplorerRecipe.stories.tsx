@@ -296,12 +296,12 @@ function MetricsExplorerRecipe({ mode = "desktop" }: { mode?: RecipeMode }) {
                   style={{
                     display: "flex",
                     gap: 10,
-                    alignItems: "center",
+                    alignItems: "flex-end",
                     justifyContent: "space-between",
                     flexWrap: "wrap",
                   }}
                 >
-                  <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+                  <div style={{ display: "flex", gap: 10, alignItems: "flex-end", flexWrap: "wrap" }}>
                     <MetralySegmentedControl
                       ariaLabel="Time range"
                       value={range}

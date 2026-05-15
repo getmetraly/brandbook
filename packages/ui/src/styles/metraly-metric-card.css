@@ -8,6 +8,7 @@
   flex-direction: column;
   gap: var(--m-2);
   min-width: 0;
+  height: 100%;
   max-width: 100%;
   padding: var(--m-3);
   border-radius: var(--m-r-4);
@@ -25,6 +26,7 @@
   align-items: flex-start;
   gap: var(--m-2);
   min-width: 0;
+  flex: 1 1 auto;
 }
 
 .metraly-metric-card-icon {
@@ -71,10 +73,22 @@
 }
 
 .metraly-metric-card-footer {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  min-height: 20px;
+  margin-top: auto;
   padding-top: var(--m-2);
   border-top: 1px solid var(--m-line);
   color: var(--m-fg-3);
   font-size: var(--m-fs-10);
+}
+
+.metraly-metric-card-footer > * {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .metraly-metric-card.is-primary { --metraly-metric-accent: var(--m-cyan-500); }
