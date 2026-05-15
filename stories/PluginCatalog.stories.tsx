@@ -1,6 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import * as React from 'react';
-import { MetralyFilterBar, MetralySegmentedControl, StateBadge, StateBlock } from '@metraly/ui';
+import {
+  MetralyButton,
+  MetralyFilterBar,
+  MetralyInput,
+  MetralySegmentedControl,
+  StateBadge,
+  StateBlock,
+} from '@metraly/ui';
 
 // ---------------------------------------------------------------------------
 // Shared fixture data
@@ -38,20 +45,37 @@ function PluginCatalogPlaceholder({
   empty?: boolean;
 }) {
   const [filter, setFilter] = React.useState('All');
-  const categoryOptions = ['All', 'Sources', 'AI', 'Alerts', 'Exporters'].map((label) => ({
-    label,
-    value: label,
-  }));
+  const [search, setSearch] = React.useState('');
 
-  const visible =
-    filter === 'All' ? plugins : plugins.filter((p) => p.category === filter);
+  const categories = React.useMemo(() => ['All', 'Sources', 'AI', 'Alerts', 'Exporters'], []);
+  const categoryOptions = React.useMemo(
+    () => categories.map((label) => ({ label, value: label })),
+    [categories],
+  );
+
+  const visible = React.useMemo(() => {
+    const query = search.trim().toLowerCase();
+
+    return plugins.filter((plugin) => {
+      const matchesCategory = filter === 'All' || plugin.category === filter;
+      const matchesSearch =
+        query.length === 0 ||
+        plugin.name.toLowerCase().includes(query) ||
+        plugin.description.toLowerCase().includes(query) ||
+        plugin.category.toLowerCase().includes(query);
+
+      return matchesCategory && matchesSearch;
+    });
+  }, [filter, plugins, search]);
+
+  const isEmpty = empty || visible.length === 0;
 
   return (
     <div
       style={{
         display: 'grid',
         gap: 20,
-        padding: 24,
+        padding: 'clamp(14px, 3vw, 24px)',
         background: 'var(--m-bg-0)',
         minHeight: 400,
         borderRadius: 'var(--m-radius-md)',
@@ -78,6 +102,20 @@ function PluginCatalogPlaceholder({
       <MetralyFilterBar
         filters={[
           {
+            id: 'search',
+            label: 'Search',
+            control: (
+              <MetralyInput
+                search
+                fullWidth
+                value={search}
+                onChange={(event) => setSearch(event.currentTarget.value)}
+                placeholder="Plugin, publisher, category…"
+                aria-label="Search plugins"
+              />
+            ),
+          },
+          {
             id: 'category',
             label: 'Category',
             control: (
@@ -93,112 +131,126 @@ function PluginCatalogPlaceholder({
             meta: `${visible.length} shown`,
           },
         ]}
+        onReset={() => {
+          setFilter('All');
+          setSearch('');
+        }}
       />
 
-      {empty || visible.length === 0 ? (
-        <StateBlock
-          variant="no-results"
-          title="No plugins found"
-          description="Try a different category or clear the search filter."
-        />
+      {isEmpty ? (
+        <div style={{ display: 'grid', minHeight: 220, placeItems: 'center' }}>
+          <StateBlock
+            variant="no-results"
+            title="No plugins found"
+            description="Try a different category or clear the search filter."
+          />
+        </div>
       ) : (
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))',
             gap: 14,
           }}
         >
-          {visible.map((p) => (
-            <div
-              key={p.id}
-              style={{
-                border: '1px solid var(--m-line-faint)',
-                borderRadius: 'var(--m-radius-md)',
-                padding: '16px',
-                background: 'var(--m-bg-1)',
-                display: 'grid',
-                gap: 10,
-              }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <div
-                  style={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: 10,
-                    background: 'var(--m-bg-3)',
-                    border: '1px solid var(--m-line)',
-                    display: 'grid',
-                    placeItems: 'center',
-                    fontSize: 18,
-                  }}
-                >
-                  ◈
-                </div>
-                <StateBadge
-                  state={p.status === 'preview' ? 'purple' : p.installed ? 'live' : 'disabled'}
-                  label={p.installed ? 'Installed' : p.status === 'preview' ? 'Preview' : ''}
-                />
-              </div>
-              <div>
-                <div
-                  style={{
-                    fontSize: 'var(--m-fs-13)',
-                    fontWeight: 700,
-                    color: 'var(--m-fg-0)',
-                    marginBottom: 4,
-                  }}
-                >
-                  {p.name}
-                </div>
-                <div
-                  style={{
-                    fontSize: 'var(--m-fs-10)',
-                    color: 'var(--m-fg-3)',
-                    lineHeight: 1.5,
-                    overflow: 'hidden',
-                    display: '-webkit-box',
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: 'vertical',
-                  }}
-                >
-                  {p.description}
-                </div>
-              </div>
-              <div
+          {visible.map((plugin) => {
+            const badge = plugin.installed
+              ? { state: plugin.status === 'preview' ? ('purple' as const) : ('live' as const), label: 'Installed' }
+              : plugin.status === 'preview'
+                ? { state: 'purple' as const, label: 'Preview' }
+                : null;
+
+            return (
+              <article
+                key={plugin.id}
                 style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  fontSize: 'var(--m-fs-10)',
-                  color: 'var(--m-fg-3)',
-                  fontFamily: 'var(--m-font-mono)',
-                  marginTop: 'auto',
+                  minWidth: 0,
+                  minHeight: 174,
+                  border: '1px solid var(--m-line-faint)',
+                  borderRadius: 'var(--m-radius-md)',
+                  padding: '16px',
+                  background: 'var(--m-bg-1)',
+                  display: 'grid',
+                  gridTemplateRows: 'auto auto 1fr',
+                  gap: 10,
                 }}
               >
-                <span>★ {p.rating} · {p.installCount}</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
+                  <div
+                    style={{
+                      width: 36,
+                      height: 36,
+                      borderRadius: 10,
+                      background: 'var(--m-bg-3)',
+                      border: '1px solid var(--m-line)',
+                      display: 'grid',
+                      placeItems: 'center',
+                      color: 'var(--m-cyan-500)',
+                      fontSize: 18,
+                      flex: '0 0 auto',
+                    }}
+                  >
+                    ◈
+                  </div>
+                  {badge ? <StateBadge state={badge.state} label={badge.label} size="sm" /> : null}
+                </div>
+
+                <div style={{ minWidth: 0 }}>
+                  <div
+                    style={{
+                      fontSize: 'var(--m-fs-13)',
+                      fontWeight: 700,
+                      color: 'var(--m-fg-0)',
+                      marginBottom: 4,
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {plugin.name}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 'var(--m-fs-10)',
+                      color: 'var(--m-fg-3)',
+                      lineHeight: 1.5,
+                      overflow: 'hidden',
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: 'vertical',
+                    }}
+                  >
+                    {plugin.description}
+                  </div>
+                </div>
+
                 <div
                   style={{
-                    padding: '5px 12px',
-                    borderRadius: 6,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    gap: 12,
                     fontSize: 'var(--m-fs-10)',
-                    fontWeight: 600,
-                    background: p.installed
-                      ? 'transparent'
-                      : 'color-mix(in oklab, var(--m-cyan-500) 12%, var(--m-bg-2))',
-                    border: p.installed
-                      ? '1px solid var(--m-line)'
-                      : '1px solid color-mix(in oklab, var(--m-cyan-500) 35%, var(--m-line))',
-                    color: p.installed ? 'var(--m-fg-3)' : 'var(--m-cyan-500)',
-                    cursor: 'pointer',
+                    color: 'var(--m-fg-3)',
+                    fontFamily: 'var(--m-font-mono)',
+                    marginTop: 'auto',
+                    minWidth: 0,
                   }}
                 >
-                  {p.installed ? 'Manage' : 'Install'}
+                  <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    ★ {plugin.rating} · {plugin.installCount}
+                  </span>
+                  <MetralyButton
+                    size="sm"
+                    variant={plugin.installed ? 'neutral' : 'primary'}
+                    aria-label={plugin.installed ? `Manage ${plugin.name}` : `Install ${plugin.name}`}
+                  >
+                    {plugin.installed ? 'Manage' : 'Install'}
+                  </MetralyButton>
                 </div>
-              </div>
-            </div>
-          ))}
+              </article>
+            );
+          })}
         </div>
       )}
     </div>
@@ -220,7 +272,7 @@ export default meta;
 // Stories
 // ---------------------------------------------------------------------------
 
-/** Default: full catalog with filter chips and installed/preview badges. */
+/** Default: full catalog with readable category filters, search and installed/preview badges. */
 export const Default: StoryObj = {
   render: () => <PluginCatalogPlaceholder />,
 };

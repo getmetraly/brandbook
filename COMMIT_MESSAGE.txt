@@ -1,0 +1,1 @@
+fix(storybook): improve plugin catalog category filters
