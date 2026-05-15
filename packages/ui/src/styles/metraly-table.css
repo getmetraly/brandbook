@@ -6,9 +6,16 @@
   flex: 1 1 auto;
   border: 1px solid var(--m-line);
   border-radius: var(--m-r-3);
-  background: var(--m-bg-2);
   scrollbar-width: thin;
   scrollbar-color: var(--m-bg-4) transparent;
+  /* Scroll shadows: the local-attachment covers hide each shadow when the
+     viewport is already at that edge. No JS required. */
+  background:
+    linear-gradient(to bottom, var(--m-bg-2) 30%, transparent) 0 0 / 100% 42px no-repeat local,
+    linear-gradient(to top,   var(--m-bg-2) 30%, transparent) 0 100% / 100% 42px no-repeat local,
+    radial-gradient(farthest-side at 50% 0%,   oklch(0 0 0 / 0.14), transparent) 0 0   / 100% 16px no-repeat scroll,
+    radial-gradient(farthest-side at 50% 100%, oklch(0 0 0 / 0.14), transparent) 0 100% / 100% 16px no-repeat scroll,
+    var(--m-bg-2);
 }
 
 .metraly-table {
@@ -144,7 +151,9 @@
 }
 
 @media (max-width: 640px) {
-  .metraly-table-frame {
+  /* Only cards/stacked modes dissolve the frame — table mode keeps scroll. */
+  .metraly-table-frame.is-mobile-cards,
+  .metraly-table-frame.is-mobile-stacked {
     overflow: visible;
     border-color: transparent;
     background: transparent;
