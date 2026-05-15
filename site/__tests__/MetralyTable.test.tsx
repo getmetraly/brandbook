@@ -97,7 +97,7 @@ describe('MetralyTable', () => {
       'utf8',
     );
 
-    expect(css).toMatch(/@media \(max-width: 640px\) \{[\s\S]*\.metraly-table-frame \{[\s\S]*background:\s*transparent/s);
+    expect(css).toMatch(/@media \(max-width: 640px\) \{[\s\S]*\.metraly-table-frame\.is-mobile-cards[\s\S]*background:\s*transparent/s);
     expect(css).toMatch(/\.metraly-table\.is-mobile-stacked \.metraly-table-row \{[\s\S]*border-radius:\s*var\(--m-r-4\)/s);
     expect(css).toMatch(/\.metraly-table\.is-mobile-stacked td \{[\s\S]*border-bottom:\s*1px solid var\(--m-line-faint\)/s);
   });
@@ -121,5 +121,33 @@ describe('MetralyTable', () => {
     const table = screen.getByRole('table', { name: 'Mobile stacked table' });
     expect(table).toHaveAttribute('data-mobile-presentation', 'stacked');
     expect(table).toHaveClass('is-mobile-stacked');
+  });
+
+  it('applies maxHeight as inline style on the frame', () => {
+    const cols = [{ key: 'x' as const, header: 'X' }];
+    const { container } = render(
+      <MetralyTable columns={cols} data={[{ x: '1' }]} maxHeight="320px" />,
+    );
+    const frame = container.querySelector('.metraly-table-frame');
+    expect(frame).toHaveStyle({ maxHeight: '320px' });
+  });
+
+  it('propagates mobilePresentation class to the frame element', () => {
+    const cols = [{ key: 'x' as const, header: 'X' }];
+    const { container } = render(
+      <MetralyTable columns={cols} data={[{ x: '1' }]} mobilePresentation="cards" />,
+    );
+    const frame = container.querySelector('.metraly-table-frame');
+    expect(frame).toHaveClass('is-mobile-cards');
+  });
+
+  it('does not add mobile class to frame when mobilePresentation is table', () => {
+    const cols = [{ key: 'x' as const, header: 'X' }];
+    const { container } = render(
+      <MetralyTable columns={cols} data={[{ x: '1' }]} mobilePresentation="table" />,
+    );
+    const frame = container.querySelector('.metraly-table-frame');
+    expect(frame).not.toHaveClass('is-mobile-cards');
+    expect(frame).not.toHaveClass('is-mobile-stacked');
   });
 });

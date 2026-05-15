@@ -251,3 +251,43 @@ export const BulkActions: StoryObj<typeof MetralyTable<PRReviewRow>> = {
     );
   },
 };
+
+const manyRows: Row[] = Array.from({ length: 24 }, (_, i) => ({
+  name: `Row ${i + 1}`,
+  value: Math.round(Math.random() * 999),
+}));
+
+/**
+ * When `maxHeight` is set the frame caps at that height and scrolls
+ * internally. Scroll shadows appear at the top edge once the user scrolls
+ * down, and disappear when they reach the bottom — no JavaScript required.
+ */
+export const InternalScroll: StoryObj<typeof MetralyTable<Row>> = {
+  render() {
+    return (
+      <div style={{ ...stageStyle, display: 'grid', gap: 24 }}>
+        <div>
+          <p style={{ color: 'var(--m-fg-3)', fontSize: 12, marginBottom: 8 }}>
+            maxHeight="280px" — 24 rows, internal scroll with shadows
+          </p>
+          <MetralyTable
+            columns={columns}
+            data={manyRows}
+            ariaLabel="Internal scroll demo"
+            maxHeight="280px"
+          />
+        </div>
+        <div>
+          <p style={{ color: 'var(--m-fg-3)', fontSize: 12, marginBottom: 8 }}>
+            No maxHeight — expands to full content height (default)
+          </p>
+          <MetralyTable
+            columns={columns}
+            data={data}
+            ariaLabel="No max-height demo"
+          />
+        </div>
+      </div>
+    );
+  },
+};

@@ -51,6 +51,12 @@ export interface MetralyTableProps<T extends Record<string, any>> {
   error?: boolean;
   /** Message or node displayed in the error state row. Defaults to "Failed to load data". */
   errorText?: React.ReactNode;
+  /**
+   * Maximum height of the scrollable frame. When set, the table scrolls
+   * internally instead of stretching its container.
+   * Accepts any CSS length: `"360px"`, `"50vh"`, `"100%"`.
+   */
+  maxHeight?: string | number;
 }
 /**
  * A simple table component consistent with Metraly’s design system. Supports
@@ -76,6 +82,7 @@ export function MetralyTable<T extends Record<string, any>>({
   mobilePresentation = "table",
   error = false,
   errorText = "Failed to load data",
+  maxHeight,
 }: MetralyTableProps<T>) {
   const classes = [
     "metraly-table",
@@ -109,8 +116,18 @@ export function MetralyTable<T extends Record<string, any>>({
     ));
   };
 
+  const frameClasses = [
+    "metraly-table-frame",
+    mobilePresentation !== "table" && `is-mobile-${mobilePresentation}`,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <div className="metraly-table-frame">
+    <div
+      className={frameClasses}
+      style={maxHeight !== undefined ? { maxHeight } : undefined}
+    >
       <table
         className={classes}
         role="table"
