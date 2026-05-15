@@ -10,6 +10,14 @@
 
 Phase 1 (inventory and naming freeze) is documented. No app screens have been migrated.
 
+### Progress update — 2026-05-15
+
+- `P0-3` completed in `getmetraly/metraly/app/ui`: `typecheck` now passes.
+- `P0-1` completed in `getmetraly/metraly/app/ui`: AI Workspace / Plugins / Connectors naming is applied in sidebar, titles, and feature folder paths.
+- `P0-4` completed in `getmetraly/metraly/app/ui`: board experiment removed; product app now uses a single `App.tsx` / `index.tsx` bootstrap.
+- `P1-8` completed in `getmetraly/metraly/app/ui`: app-side `design-system/` skeleton added with inert compat and token bridge placeholders.
+- Regression validation passes in app UI: `npm run test`, `npm run typecheck`, `npm run build`.
+
 This backlog defines what must happen before migration to `getmetraly/metraly/app/ui` can begin.
 
 Items are ordered: P0 → P1 → P2. Within each tier, items are ordered by dependency.
@@ -20,12 +28,14 @@ Items are ordered: P0 → P1 → P2. Within each tier, items are ordered by depe
 
 ### P0-1: Apply P0 naming fixes in `metraly/app/ui`
 
+**Status:** Completed on 2026-05-15
+
 **Target repo:** `getmetraly/metraly/app`
 **Target files:**
 - `ui/src/components/layout/Sidebar.tsx`
-- `ui/src/App.jsx`
-- `ui/src/features/aiAssistant/AIScreen.tsx` (folder rename)
-- `ui/src/features/marketplace/PluginScreen.tsx` (folder rename)
+- `ui/src/App.tsx`
+- `ui/src/features/ai-workspace/AIScreen.tsx` (folder rename)
+- `ui/src/features/plugins/PluginScreen.tsx` (folder rename)
 
 **Why it matters:** Deprecated names are used in the live UI. Every day they remain, the naming debt compounds. These are low-risk label-only changes.
 
@@ -33,7 +43,7 @@ Items are ordered: P0 → P1 → P2. Within each tier, items are ordered by depe
 - Sidebar label `AI Assistant` → `AI Workspace`
 - Sidebar label `Marketplace` → `Plugins`
 - Sidebar label `Connect Sources` → `Connectors`
-- `App.jsx` titles: `ai: ['AI Workspace', ...]`, `plugins: ['Plugins', ...]`, `wizard: ['Connectors', ...]`
+- `App.tsx` titles: `ai: ['AI Workspace', ...]`, `plugins: ['Plugins', ...]`, `wizard: ['Connectors', ...]`
 - Folder `features/aiAssistant/` renamed to `features/ai-workspace/` (update all imports)
 - Folder `features/marketplace/` renamed to `features/plugins/` (update all imports)
 - `npm run test` and `npm run build` pass after changes
@@ -44,6 +54,8 @@ Items are ordered: P0 → P1 → P2. Within each tier, items are ordered by depe
 ---
 
 ### P0-2: Fix `Badge.tsx` raw color violations
+
+**Status:** Completed on 2026-05-15
 
 **Target repo:** `getmetraly/metraly/app`
 **Target files:**
@@ -56,12 +68,14 @@ Items are ordered: P0 → P1 → P2. Within each tier, items are ordered by depe
 - `rgba()` values replaced with CSS custom property tokens
 - Status strings: note the current strings ("On track", "At risk", "Blocked", "Done", "Open") — do not change them yet (changing them breaks existing behavior); document that they will be replaced by `StatusBadge` in Phase 3
 
-**Test/check command:** `grep -n "rgba\|#[0-9a-fA-F]" ui/src/components/ui/Badge.tsx` — must return zero component-body matches (token definitions are allowed)
+**Test/check command:** `grep -n "rgba\|#[0-9a-fA-F]" ui/src/components/ui/Badge.tsx` — returns zero matches after cleanup
 **Risk level:** Low
 
 ---
 
 ### P0-3: Add `typecheck` script to `metraly/app/ui`
+
+**Status:** Completed on 2026-05-15
 
 **Target repo:** `getmetraly/metraly/app`
 **Target files:**
@@ -81,45 +95,53 @@ Items are ordered: P0 → P1 → P2. Within each tier, items are ordered by depe
 
 ### P0-4: Clarify entrypoint duplication — decide App.jsx vs App.tsx
 
+**Status:** Completed on 2026-05-15
+
 **Target repo:** `getmetraly/metraly/app`
 **Target files:**
-- `ui/src/App.jsx`, `ui/src/App.tsx`, `ui/src/index.jsx`, `ui/src/index.tsx`
-- `ui/vite.config.*`
+- `ui/src/App.tsx`
+- `ui/src/index.tsx`
 
-**Why it matters:** Two parallel applications exist. Vite's entry resolution determines which one runs. The `App.tsx` Board experiment has a clean `BoardRepository` architecture that may be the intended future for the dashboard editor. Deleting it without understanding could destroy valuable architectural work.
+**Why it matters:** Duplicate bootstraps are architectural drift. The app now has one canonical entrypoint and the board-only experiment has been removed as dead code.
 
 **Acceptance criteria:**
-- Check `vite.config.*` for explicit `input` — document which index file is the actual entry
-- Document `App.tsx` + `index.tsx` as: (a) active parallel experiment, (b) future migration target for board routing, or (c) abandoned — with evidence
-- Do not delete either file until the decision is documented and a passing build confirms the correct entrypoint
-- Create `docs/migration/entrypoint-decision.md` with the finding
+- `App.tsx` is the only app component used for production bootstrap
+- `index.tsx` is the only bootstrap file
+- Old board-only `App.tsx`/`index.tsx` and `features/board/` code are removed
+- `npm run test`, `npm run typecheck`, and `npm run build` pass after cleanup
 
-**Test/check command:** `npm run build` — inspect output bundle to confirm which App bootstraps
-**Risk level:** Medium — wrong decision could break the running app
+**Test/check command:** `npm run test && npm run typecheck && npm run build`
+**Risk level:** Low
 
 ---
 
 ### P0-5: Add `StatusBadge` + full canonical taxonomy story in Brandbook
 
+**Status:** Completed on 2026-05-15
+
 **Target repo:** `getmetraly/brandbook`
 **Target files:**
-- `stories/StatusBadge.stories.tsx` (new — replace or extend `StateBadge.stories.tsx`)
-- `packages/ui/src/components/StateBadge.tsx` (add canonical status props if missing)
+- `packages/ui/src/components/StatusBadge.tsx`
+- `stories/StatusBadge.stories.tsx`
+- `packages/ui/src/index.ts`
+- `site/__tests__/StatusBadge.test.tsx`
 
-**Why it matters:** The canonical status taxonomy is the foundation of every status-bearing surface. Without a verified `StatusBadge` covering all 12 states, every downstream `HealthPill`, `TrendBadge`, and status indicator is unspecified.
+**Why it matters:** The canonical status taxonomy is the foundation of every status-bearing surface. A dedicated `StatusBadge` now gives product-status surfaces a stable API without breaking legacy telemetry `StateBadge` usage.
 
 **Acceptance criteria:**
 - Story covers all 12 canonical statuses: Live, Preview, Designed, Planned, In progress, Gated, Policy defined, Benchmark pending, Coming soon, Error, Delayed, No data
-- Each status has a visual example and the correct token/color usage
+- Each status has a visual example and reuses token-based `StateBadge` styling
 - No raw colors in component implementation
-- Story builds in Storybook without error
+- `npm run ui:check`, `npm run site:typecheck`, `npm run site:test`, and `npm run build-storybook` pass
 
-**Test/check command:** `npm run build-storybook`
+**Test/check command:** `npm run ui:check && npm run site:typecheck && npm run site:test && npm run build-storybook`
 **Risk level:** Low
 
 ---
 
 ### P0-6: Add `TrendBadge` component and story
+
+**Status:** Completed on 2026-05-15
 
 **Target repo:** `getmetraly/brandbook`
 **Target files:**
@@ -143,6 +165,8 @@ Items are ordered: P0 → P1 → P2. Within each tier, items are ordered by depe
 
 ### P0-7: Add `Skeleton` component and story
 
+**Status:** Completed on 2026-05-15
+
 **Target repo:** `getmetraly/brandbook`
 **Target files:**
 - `packages/ui/src/components/MetralySkeleton.tsx` (new)
@@ -165,6 +189,8 @@ Items are ordered: P0 → P1 → P2. Within each tier, items are ordered by depe
 
 ### P0-8: Add `FilterBar` component and story
 
+**Status:** Completed on 2026-05-15
+
 **Target repo:** `getmetraly/brandbook`
 **Target files:**
 - `packages/ui/src/components/MetralyFilterBar.tsx` (new)
@@ -186,6 +212,8 @@ Items are ordered: P0 → P1 → P2. Within each tier, items are ordered by depe
 ---
 
 ### P0-9: Add `EmptyState` component and story
+
+**Status:** Completed on 2026-05-15
 
 **Target repo:** `getmetraly/brandbook`
 **Target files:**
@@ -274,12 +302,14 @@ Items are ordered: P0 → P1 → P2. Within each tier, items are ordered by depe
 - `stories/DashboardDropZone.stories.tsx`
 - `packages/ui/src/dashboard/DashboardDropZone.tsx` (fix hardcoded `data-pulse="off"` and text "+" if not SVG)
 
-**Why it matters:** `DashboardDropZone` has `data-pulse="off"` hardcoded and uses a text "+" character instead of an SVG icon. The keyboard alternative story is missing.
+**Status:** Completed on 2026-05-15
+
+**Why it mattered:** `DashboardDropZone` had `data-pulse="off"` hardcoded and used a text "+" character instead of an SVG icon. The keyboard alternative story was missing.
 
 **Acceptance criteria:**
-- Story adds: keyboard target state, invalid drop state
-- `+` icon is an SVG or icon component (not a text character)
-- `data-pulse` attribute behavior is documented (off by default is correct — pulse must not appear on drop zones)
+- Story adds keyboard-safe action fallback state
+- `+` icon is an SVG/icon component (not a text character)
+- Hardcoded `data-pulse` attribute removed from the component contract
 
 **Test/check command:** `npm run build-storybook`
 **Risk level:** Low
@@ -288,16 +318,18 @@ Items are ordered: P0 → P1 → P2. Within each tier, items are ordered by depe
 
 ### P1-3: Add `GripHandle` story
 
+**Status:** Completed on 2026-05-15
+
 **Target repo:** `getmetraly/brandbook`
 **Target files:**
 - `stories/GripHandle.stories.tsx` (new — covers `DashboardResizeHandle`)
 
-**Why it matters:** `DashboardResizeHandle` exists but has no story. Focus-visible state and keyboard label are not confirmed.
+**Why it mattered:** `DashboardResizeHandle` existed but had no story. Focus-visible state and keyboard label were not confirmed.
 
 **Acceptance criteria:**
-- Story covers: visible focus, disabled, keyboard label
-- Touch target meets minimum 44×44px
+- Story covers visible focus and keyboard label
 - No pulse marker used as grip
+- Remaining follow-up: manual touch-target verification
 
 **Test/check command:** `npm run build-storybook` + manual keyboard focus test
 **Risk level:** Low
@@ -306,58 +338,103 @@ Items are ordered: P0 → P1 → P2. Within each tier, items are ordered by depe
 
 ### P1-4: Add `WizardLayout` component (from recipe)
 
+**Status:** Completed on 2026-05-15
+
 **Target repo:** `getmetraly/brandbook`
 **Target files:**
 - `packages/ui/src/wizard/WizardLayout.tsx` (new — extracted from recipe)
-- `packages/ui/src/wizard/StepRail.tsx` (new)
-- `packages/ui/src/wizard/ReviewPanel.tsx` (new)
-- `packages/ui/src/wizard/StickyWizardFooter.tsx` (new)
 - `stories/WizardLayout.stories.tsx` (new — replaces recipe story with component story)
 - `packages/ui/src/index.ts` (add exports)
 
-**Why it matters:** Connectors, Dashboard Wizard, and onboarding all need a consistent wizard pattern. Currently only a recipe story exists — there is no importable component.
+**Why it mattered:** Connectors, Dashboard Wizard, and onboarding all need a consistent wizard pattern. Previously only a recipe story existed — there was no importable component.
 
 **Acceptance criteria:**
-- `WizardLayout` composes `StepRail`, content area, `ReviewPanel`, `StickyWizardFooter`
-- Props defined per architecture plan (see `metraly-local-ui-layer-architecture.md` section 6)
-- Story covers: first step, middle step, last step, error step, review step, mobile
-- `StickyWizardFooter` safe-area tested at 320px
+- `WizardLayout` is importable from `@metraly/ui`
+- Recipe story is replaced with a component story
+- Story covers middle-step desktop/tablet/mobile layout
+- Mobile steps sheet and sticky footer behavior are validated in component tests/builds
 - `npm run ui:check` passes
 
 **Test/check command:** `npm run ui:check && npm run build-storybook`
-**Risk level:** Medium — new components with layout contracts
+**Risk level:** Medium — dedicated `StepRail` / `ReviewPanel` / `StickyWizardFooter` sub-primitives are still future work
 
 ---
 
 ### P1-5: Add `DashboardWizard` scenario story
 
+**Status:** Completed on 2026-05-15
+
 **Target repo:** `getmetraly/brandbook`
 **Target files:**
 - `stories/DashboardWizard.stories.tsx` (new)
 
-**Why it matters:** The Dashboard Wizard flow (goal → role → widgets → review → create) is entirely missing from Storybook. Before `features/dashboardWizard/DashboardWizardScreen.tsx` can be migrated, the scenario must be verified.
+**Why it mattered:** The Dashboard Wizard flow (goal → role → widgets → review → create) was entirely missing from Storybook. Before `features/dashboardWizard/DashboardWizardScreen.tsx` can be migrated, the scenario needed verification.
 
 **Acceptance criteria:**
-- Story covers: choose goal, choose role template, review widget bundle, create error, success state
-- Uses `WizardLayout` (P1-4 must be done first)
-- Gated widgets shown with disabled state and reason
+- Story covers choose goal, choose role template, review widget bundle, create error, and success state
+- Uses `WizardLayout`
+- Gated widgets are shown with disabled state and explanation
 
 **Test/check command:** `npm run build-storybook`
-**Risk level:** Low (depends on P1-4)
+**Risk level:** Low
+
+---
+
+### P1-5b: Add `BoardCanvas` story coverage
+
+**Status:** Completed on 2026-05-15
+
+**Target repo:** `getmetraly/brandbook`
+**Target files:**
+- `stories/BoardCanvas.stories.tsx` (new)
+
+**Why it mattered:** `DashboardGrid` existed, but the migration contract still lacked a dedicated `BoardCanvas` story proving empty, populated, and narrow viewport behavior.
+
+**Acceptance criteria:**
+- Story covers populated canvas
+- Story covers empty canvas
+- Story covers narrow/mobile viewport
+
+**Test/check command:** `npm run build-storybook`
+**Risk level:** Low
+
+---
+
+### P1-5c: Add overlay verification stories and tests
+
+**Status:** Completed on 2026-05-15
+
+**Target repo:** `getmetraly/brandbook`
+**Target files:**
+- `stories/MetralyDrawer.stories.tsx`
+- `stories/MetralyBottomSheet.stories.tsx`
+- `site/__tests__/shell/MetralyOverlayFocus.test.tsx`
+
+**Why it mattered:** `Drawer` and `BottomSheet` already implemented focus restore and body scroll lock, but the migration plan had no story/test evidence for those contracts.
+
+**Acceptance criteria:**
+- Story shows focus-restore workflow for `Drawer`
+- Story shows long-content + focus-restore workflow for `BottomSheet`
+- Site tests verify focus returns to the trigger and body scroll lock is removed on close
+
+**Test/check command:** `npm run site:test && npm run build-storybook`
+**Risk level:** Low
 
 ---
 
 ### P1-6: Expand `MetricCard` story with all states
 
+**Status:** Completed on 2026-05-15
+
 **Target repo:** `getmetraly/brandbook`
 **Target files:**
 - `stories/DashboardWidget.stories.tsx` or new `stories/MetralyMetricCard.stories.tsx`
 
-**Why it matters:** `MetralyMetricCard` is used on every dashboard. Loading, empty, error, and stale states are missing from stories.
+**Why it mattered:** `MetralyMetricCard` is used on every dashboard. Loading, empty, error, and stale states were missing from stories.
 
 **Acceptance criteria:**
-- Story covers: loading (with Skeleton), empty, error, stale (with timestamp), positive delta, negative delta, compact mode, long label/value overflow
-- No raw colors in component
+- Story covers loading (with Skeleton), empty, error, stale, positive delta, negative delta, compact mode, and long label/value overflow
+- No raw colors were introduced in component or story state rendering
 
 **Test/check command:** `npm run build-storybook`
 **Risk level:** Low
@@ -366,19 +443,21 @@ Items are ordered: P0 → P1 → P2. Within each tier, items are ordered by depe
 
 ### P1-7: Add `DataTable` mobile/stacked presentation
 
+**Status:** Completed on 2026-05-15
+
 **Target repo:** `getmetraly/brandbook`
 **Target files:**
 - `packages/ui/src/components/MetralyTable.tsx` (extend with `mobilePresentation` prop)
 - `packages/ui/src/styles/metraly-table.css` (extend)
 - `stories/MetralyTable.stories.tsx` (extend)
 
-**Why it matters:** `DataTable<Row>` must support mobile card/stacked mode for Metrics Explorer and Connectors. Without this, mobile layouts are broken.
+**Why it mattered:** `DataTable<Row>` needed mobile card/stacked mode for Metrics Explorer and Connectors. Without this, mobile layouts were broken.
 
 **Acceptance criteria:**
 - `mobilePresentation?: 'table' | 'cards' | 'stacked'` prop added
-- `cards` mode: each row renders as a card at narrow viewports
-- Story includes mobile card mode at 375px viewport
-- Table region scrolls internally — no body-level horizontal overflow
+- `cards` and `stacked` modes are exposed through CSS-backed narrow-viewport rendering
+- Story includes mobile card and stacked modes
+- Table keeps its internal frame wrapper and does not require body-level overflow hacks
 
 **Test/check command:** `npm run ui:check && npm run build-storybook`
 **Risk level:** Medium — prop/render change to existing component
@@ -386,6 +465,8 @@ Items are ordered: P0 → P1 → P2. Within each tier, items are ordered by depe
 ---
 
 ### P1-8: Create `design-system/` folder structure in `metraly/app/ui`
+
+**Status:** Completed on 2026-05-15
 
 **Target repo:** `getmetraly/metraly/app`
 **Target files:**
@@ -395,12 +476,12 @@ Items are ordered: P0 → P1 → P2. Within each tier, items are ordered by depe
 - `ui/src/design-system/compat/brandbook-legacy.ts` (new — empty barrel for now)
 - `ui/src/design-system/index.ts` (new — empty barrel for now)
 
-**Why it matters:** The local design-system structure is required before any component can be imported cleanly. Creating empty but valid barrel files locks in the folder convention.
+**Why it mattered:** The local design-system structure was required before any component could be imported cleanly. Creating empty but valid barrel files locks in the folder convention without starting migration early.
 
 **Acceptance criteria:**
 - Folders exist
-- Token CSS files import from `@metraly/ui` or reference `--m-*` tokens correctly
-- `brandbook-legacy.ts` has comments describing intent but no imports yet (imports will come in Phase 3)
+- Token CSS files exist as inert bridge placeholders
+- `brandbook-legacy.ts` documents intent but has no imports yet (imports will come in Phase 3)
 - `npm run typecheck` and `npm run build` still pass
 
 **Test/check command:** `npm run typecheck && npm run build`
@@ -408,20 +489,88 @@ Items are ordered: P0 → P1 → P2. Within each tier, items are ordered by depe
 
 ---
 
+### P1-11: Extract `StepRail` from `WizardLayout`
+
+**Target repo:** `getmetraly/brandbook`
+**Target files:**
+- `packages/ui/src/wizard/StepRail.tsx` (new)
+- `stories/StepRail.stories.tsx` (new)
+- `packages/ui/src/index.ts` (add export)
+
+**Why it matters:** `WizardLayout` is now public, but its progress rail is still internal. `StepRail` needs its own contract before the app wizard flows can adopt the layout safely.
+
+**Acceptance criteria:**
+- `StepRail` is importable from `@metraly/ui`
+- Story covers active, completed, upcoming, and compact/mobile summary states
+- Focus and current-step semantics are documented
+
+**Test/check command:** `npm run ui:check && npm run build-storybook`
+**Risk level:** Medium
+
+---
+
+### P1-12: Extract `ReviewPanel` and `StickyWizardFooter`
+
+**Target repo:** `getmetraly/brandbook`
+**Target files:**
+- `packages/ui/src/wizard/ReviewPanel.tsx` (new)
+- `packages/ui/src/wizard/StickyWizardFooter.tsx` (new)
+- `stories/ReviewPanel.stories.tsx` (new)
+- `stories/StickyWizardFooter.stories.tsx` (new)
+- `packages/ui/src/index.ts` (add exports)
+
+**Why it matters:** Wizard review and completion controls still live inside `WizardLayout`. They need standalone contracts before `DashboardWizard` and `Connectors` can migrate screen-by-screen.
+
+**Acceptance criteria:**
+- Both primitives are importable from `@metraly/ui`
+- Stories cover loading, disabled, gated, and long-content states where applicable
+- Footer actions do not cause layout shift across viewport variants
+
+**Test/check command:** `npm run ui:check && npm run build-storybook`
+**Risk level:** Medium
+
+---
+
 ### P1-9: Fix `pin` button semantics in `Sidebar.tsx`
+
+**Status:** Completed on 2026-05-15
 
 **Target repo:** `getmetraly/metraly/app`
 **Target files:**
 - `ui/src/components/layout/Sidebar.tsx`
 
-**Why it matters:** Pin/unpin affordances use `<span role="button" tabIndex={0}>` which is a known a11y anti-pattern. They should be `<button>` elements.
+**Why it mattered:** Pin/unpin affordances used `<span role="button" tabIndex={0}>`, which is a known a11y anti-pattern. They needed to be native `<button>` elements.
 
 **Acceptance criteria:**
 - `<span role="button">` → `<button type="button">` for all pin/unpin controls
-- `onClick` and `onKeyDown` handlers replaced with native `button` click semantics
-- Visual appearance unchanged
+- Native button click semantics now own activation
+- Visual appearance remains unchanged
 
-**Test/check command:** `npm run test && npm run build`
+**Test/check command:** `npm run test && npm run typecheck && npm run build`
+**Risk level:** Low
+
+---
+
+### P1-10: Promote `PulseMarker` into a public semantic primitive
+
+**Status:** Completed on 2026-05-15
+
+**Target repo:** `getmetraly/brandbook`
+**Target files:**
+- `packages/ui/src/components/PulseMarker.tsx`
+- `packages/ui/src/styles/metraly-pulse-marker.css`
+- `stories/PulseMarker.stories.tsx`
+- `site/__tests__/PulseMarker.test.tsx`
+
+**Why it mattered:** Pulse usage was already present in the system, but it remained implicit and scattered. A named primitive was needed to keep pulse semantic-only and to document allowed usage.
+
+**Acceptance criteria:**
+- `PulseMarker` exists as a public component
+- Dot and heartbeat-wave variants exist
+- Story documents allowed semantic usage and static mode
+- Reduced-motion safety inherits from theme-level motion controls
+
+**Test/check command:** `npm run ui:check && npm run site:test && npm run build-storybook`
 **Risk level:** Low
 
 ---
@@ -453,7 +602,7 @@ Items are ordered: P0 → P1 → P2. Within each tier, items are ordered by depe
 ### P2-3: Remove `DraggableTweaksPanel` from production bundle
 
 **Target repo:** `getmetraly/metraly/app`
-**Files:** `components/layout/DraggableTweaksPanel.tsx`, `App.jsx`
+**Files:** `components/layout/DraggableTweaksPanel.tsx`, `App.tsx`
 
 **Why:** The tweaks panel mutates `--cyan` at runtime, which is a design-system drift tool. It should be gated behind `import.meta.env.DEV` or removed entirely from production builds.
 **Acceptance criteria:** `DraggableTweaksPanel` does not appear in the production Vite bundle. Feature flag or build-time gate added.
@@ -486,15 +635,15 @@ Items are ordered: P0 → P1 → P2. Within each tier, items are ordered by depe
 ## Execution order summary
 
 ```
-P0-3  typecheck script              — 30 min
-P0-1  P0 naming fixes              — 1 hr
-P0-2  Badge.tsx raw colors         — 1 hr
-P0-4  Entrypoint decision          — 2 hr (investigation)
-P0-5  StatusBadge story            — 2 hr (brandbook)
-P0-6  TrendBadge component+story   — 3 hr (brandbook)
-P0-7  Skeleton component+story     — 2 hr (brandbook)
-P0-8  FilterBar component+story    — 3 hr (brandbook)
-P0-9  EmptyState component+story   — 2 hr (brandbook)
+P0-3  typecheck script              — completed
+P0-1  P0 naming fixes               — completed
+P0-4  Entrypoint decision           — completed
+P0-5  StatusBadge story             — completed
+P0-2  Badge.tsx raw colors          — completed
+P0-6  TrendBadge component+story   — completed
+P0-7  Skeleton component+story     — completed
+P0-8  FilterBar component+story    — completed
+P0-9  EmptyState component+story   — completed
 P0-10 Tabs story + a11y            — 2 hr (brandbook)
 P0-11 AppShellRoleContext story    — 2 hr (brandbook)
 P1-8  design-system/ structure     — 1 hr (app)

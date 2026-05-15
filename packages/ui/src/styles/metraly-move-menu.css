@@ -1,0 +1,45 @@
+.metraly-move-menu {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  max-width: 320px;
+  padding: 12px;
+  border: 1px solid var(--m-line);
+  border-radius: var(--m-r-4);
+  background: var(--m-bg-2);
+}
+
+.metraly-move-menu__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.metraly-move-menu__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--m-control-h);
+  padding: 8px 10px;
+  border: 1px solid var(--m-line);
+  border-radius: var(--m-r-3);
+  background: var(--m-bg-1);
+  color: var(--m-fg-1);
+  font: inherit;
+  cursor: pointer;
+}
+
+.metraly-move-menu__button:hover:not(:disabled) {
+  background: var(--m-bg-3);
+  border-color: var(--m-line-strong);
+}
+
+.metraly-move-menu__button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.metraly-move-menu__button.is-cancel {
+  justify-content: center;
+}

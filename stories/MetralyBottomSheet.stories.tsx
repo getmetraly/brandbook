@@ -93,6 +93,46 @@ function BottomSheetPreview() {
   );
 }
 
+function VerificationPreview() {
+  const [open, setOpen] = React.useState(false);
+
+  return (
+    <ThemeProvider>
+      <div style={{ minHeight: 960, background: "var(--m-bg-0)", padding: 24, display: "grid", gap: 12 }}>
+        <div style={{ color: "var(--m-fg-3)", fontSize: "var(--m-fs-10)" }}>
+          Open the sheet, verify body scroll is locked, then close it and confirm focus returns to the trigger.
+        </div>
+        <MetralyButton variant="primary" onClick={() => setOpen(true)}>
+          Open bottom sheet focus test
+        </MetralyButton>
+        <div style={{ height: 1200, border: "1px dashed var(--m-line)", borderRadius: "var(--m-r-2)", padding: 12, color: "var(--m-fg-3)" }}>
+          Long page content to make body scroll lock visible on small viewports.
+        </div>
+        <MetralyBottomSheet
+          open={open}
+          onOpenChange={setOpen}
+          title="Widget library"
+          description="Bottom sheet should restore focus and keep long content scroll inside the sheet."
+          maxHeight="72dvh"
+        >
+          <div style={{ padding: 12, display: "grid", gap: 8 }}>
+            <MetralyInput search fullWidth placeholder="Filter widgets…" />
+            {Array.from({ length: 12 }, (_, index) => (
+              <WidgetPickerCard
+                key={index}
+                title={`Widget ${index + 1}`}
+                description="Scroll remains inside the sheet body."
+                kind="demo/widget"
+                iconLabel="metric"
+              />
+            ))}
+          </div>
+        </MetralyBottomSheet>
+      </div>
+    </ThemeProvider>
+  );
+}
+
 const meta: Meta<typeof BottomSheetPreview> = {
   title: "Patterns/MetralyBottomSheet",
   component: BottomSheetPreview,
@@ -110,4 +150,11 @@ export const Default: Story = {
     viewport: { defaultViewport: "mobile2" },
   },
   render: () => <BottomSheetPreview />,
+};
+
+export const Verification: Story = {
+  parameters: {
+    viewport: { defaultViewport: "mobile1" },
+  },
+  render: () => <VerificationPreview />,
 };

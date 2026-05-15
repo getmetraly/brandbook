@@ -1,4 +1,5 @@
 import * as React from "react";
+import { MetralyIcon } from "../components/MetralyIcon";
 
 export type DashboardDropZoneState = "idle" | "hover" | "active" | "rejected" | "empty";
 
@@ -7,6 +8,9 @@ export interface DashboardDropZoneProps {
   active?: boolean;
   label?: React.ReactNode;
   description?: React.ReactNode;
+  actionLabel?: React.ReactNode;
+  actionAriaLabel?: string;
+  onAction?: () => void;
   className?: string;
 }
 
@@ -29,6 +33,9 @@ export function DashboardDropZone({
   active = false,
   label,
   description,
+  actionLabel,
+  actionAriaLabel,
+  onAction,
   className,
 }: DashboardDropZoneProps) {
   const resolvedState = state ?? (active ? "active" : "idle");
@@ -54,16 +61,25 @@ export function DashboardDropZone({
       aria-label={ariaLabel}
       data-drop-zone-state={resolvedState}
       data-tone={tone}
-      data-pulse="off"
     >
       <span className="metraly-dashboard-drop-zone-icon" aria-hidden="true">
-        {resolvedState === "rejected" ? "×" : "+"}
+        <MetralyIcon name={resolvedState === "rejected" ? "x" : "plus"} size="sm" />
       </span>
       {showLine ? <span className="metraly-dashboard-drop-zone-line" aria-hidden="true" /> : null}
       <span className="metraly-dashboard-drop-zone-copy">
         <strong>{resolvedLabel}</strong>
         {description ? <small>{description}</small> : null}
       </span>
+      {actionLabel && onAction ? (
+        <button
+          type="button"
+          className="metraly-dashboard-drop-zone-action metraly-focus-ring"
+          onClick={onAction}
+          aria-label={actionAriaLabel}
+        >
+          {actionLabel}
+        </button>
+      ) : null}
     </div>
   );
 }

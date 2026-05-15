@@ -21,40 +21,25 @@ Not at `getmetraly/metraly/ui/src` as the plan assumes. All references to `metra
 
 ## 2. Entrypoint inventory
 
-### 2.1 Duplication confirmed
+### 2.1 Current entrypoint state
 
 | File | Type | Role | Active? |
 |---|---|---|---|
-| `src/index.jsx` | JSX | Mounts default `App` export without StrictMode | Yes — assumed active entry per Vite default |
-| `src/index.tsx` | TSX | Mounts named `App` export with `React.StrictMode` | Unclear — may be unused or conflict |
-| `src/App.jsx` | JSX | Main product app — manual state router, full UI | Yes — full product |
-| `src/App.tsx` | TSX | Board-only experiment — React Router, `BoardRepository` | Separate app — not the same `App` |
+| `src/index.tsx` | TSX | Canonical bootstrap for the product app | Yes |
+| `src/App.tsx` | TSX | Main product app — manual state router, full UI | Yes |
 
-### 2.2 Critical finding: two parallel applications
+### 2.2 Entry point decision
+The parallel board-only application was removed on 2026-05-15.
 
-`App.jsx` and `App.tsx` are **not** a simple JS → TS rename. They are two separate, incompatible applications:
-
-**`App.jsx`** — main product app:
-- Uses manual `useState`-based routing (`active` string key → screen component).
-- No React Router.
-- Owns: login, first-run, sidebar, topbar, all feature screens.
-- State machine is entirely local to one 300+ line component.
-
-**`App.tsx`** — isolated Board experiment:
-- Uses React Router (`/board/:boardId` route).
-- Owns: `BoardRepositoryProvider`, `BoardScreen`.
-- Has clean architecture: `BoardRepository` interface, `FakeBoardRepository` swap.
-- Comment says "swap to RealBoardRepository when the real backend is available."
-
-**`index.jsx`** mounts `App` (default export from `App.jsx`).
-**`index.tsx`** mounts `App` (named export from `App.tsx`).
+Current model:
+- `App.tsx` is the only application entry component.
+- `index.tsx` is the only bootstrap.
+- `features/board/` was deleted as abandoned migration noise.
 
 ### 2.3 Required action
 
-- Determine which index file Vite resolves as the entry.
-- Check `vite.config.*` for explicit `input` setting.
-- The Board experiment in `App.tsx` must be documented as either: (a) a future migration target for the board routing model; or (b) an abandoned prototype.
-- Do not delete either entrypoint until this decision is made and confirmed with a passing build.
+- Keep the app on a single bootstrap path.
+- Do not reintroduce alternate application entrypoints without a documented migration reason.
 
 ---
 
@@ -71,7 +56,7 @@ Not at `getmetraly/metraly/ui/src` as the plan assumes. All references to `metra
 | `api/types/api.ts` | API response types | Keep. |
 | `api/types/widgets.ts` | Widget-specific API types | Keep. |
 
-**Finding:** `api/endpoints/dora.js` and `api/endpoints/dora.ts` are a module-level duplication pattern mirroring the `App.jsx`/`App.tsx` problem.
+**Finding:** `api/endpoints/dora.js` and `api/endpoints/dora.ts` are still a module-level duplication pattern and should be cleaned later.
 
 ### 3.2 `components/`
 
@@ -134,14 +119,13 @@ Not at `getmetraly/metraly/ui/src` as the plan assumes. All references to `metra
 
 | Feature folder | Screen file | Current name | Canonical name | Migration stance |
 |---|---|---|---|---|
-| `aiAssistant/` | `AIScreen.tsx` | AI Assistant | AI Workspace | Rename folder → `ai-workspace/`. Rename screen → `AIWorkspaceScreen.tsx`. |
-| `board/` | Board context + useBoard + tests | Board | Board (keep as board feature) | This is the clean-arch board experiment. Evaluate merging with dashboard editor. |
+| `ai-workspace/` | `AIScreen.tsx` | AI Workspace | AI Workspace | Folder rename complete. Screen rename to `AIWorkspaceScreen.tsx` is still optional follow-up if the repo standardizes screen naming. |
 | `dashboard/` | `DashboardScreen.tsx` | Dashboard | Dashboard | Keep. Migrate to `WidgetShell` + `BoardCanvas`. |
 | `dashboardEditor/` | `catalog.ts`, `model.ts`, `payload.ts`, `widgetConfig.ts` | Dashboard Editor | Dashboard Editor | Keep. Wire into `BoardToolbar`/`BoardCanvas` local components. |
 | `dashboardWizard/` | `DashboardWizardScreen.tsx` | Dashboard Wizard | Dashboard Wizard | Keep name. Wire into `WizardLayout`. |
-| `marketplace/` | `PluginScreen.tsx` | Plugin Marketplace | Plugins (top-level) | Rename folder → `plugins/`. Screen → `PluginsScreen.tsx`. |
+| `plugins/` | `PluginScreen.tsx` | Plugins | Plugins (top-level) | Folder rename complete. Screen rename to `PluginsScreen.tsx` remains a cleanup item, not a blocker. |
 | `metricsExplorer/` | `MetricsScreen.tsx` | Metrics Explorer | Metrics Explorer | Keep. Wire into `DataTable<Row>`, `FilterBar`. |
-| `onboarding/` | `WizardScreen.tsx`, `firstRun.js` | Connect Sources / Onboarding | Connectors (wizard step) | Rename screen → `ConnectorWizardScreen.tsx`. `firstRun.js` → `firstRun.ts`. |
+| `onboarding/` | `WizardScreen.tsx`, `firstRun.js` | Connectors / Onboarding | Connectors (wizard step) | Label/title naming is fixed. Screen rename → `ConnectorWizardScreen.tsx` and `firstRun.js` → `firstRun.ts` remain follow-up cleanup. |
 
 ### 3.5 `hooks/`
 
@@ -194,9 +178,9 @@ Not at `getmetraly/metraly/ui/src` as the plan assumes. All references to `metra
 | My Dashboard | `dash-ic` | same | Dashboard (personal) | similar |
 | New Dashboard | `dash-wizard` | `features/dashboardWizard/DashboardWizardScreen.tsx` | Dashboard Wizard | `/dashboard/new` |
 | Metrics Explorer | `metrics` | `features/metricsExplorer/MetricsScreen.tsx` | Metrics Explorer | `/metrics` |
-| AI Assistant | `ai` | `features/aiAssistant/AIScreen.tsx` | AI Workspace | `/ai` |
-| Plugin Marketplace | `plugins` | `features/marketplace/PluginScreen.tsx` | Plugins | `/plugins` |
-| Connect Sources | `wizard` | `features/onboarding/WizardScreen.tsx` | Connectors | `/connectors` |
+| AI Workspace | `ai` | `features/ai-workspace/AIScreen.tsx` | AI Workspace | `/ai` |
+| Plugins | `plugins` | `features/plugins/PluginScreen.tsx` | Plugins | `/plugins` |
+| Connectors | `wizard` | `features/onboarding/WizardScreen.tsx` | Connectors | `/connectors` |
 | Settings | `settings` | `PlaceholderScreen` (not yet implemented) | Settings | `/settings` |
 
 ---
@@ -222,13 +206,15 @@ Not at `getmetraly/metraly/ui/src` as the plan assumes. All references to `metra
 
 ## 6. Missing folders (per plan)
 
-None of the target directories from the migration plan exist yet:
+Most of the target directories from the migration plan do not exist yet. The app-side design-system skeleton was added on 2026-05-15.
 
 ```
 src/app/routing/           — missing
 src/app/providers/         — missing
 src/app/shell/             — missing
-src/design-system/         — missing
+src/design-system/         — present (Phase 2 skeleton only; no component wiring yet)
+src/design-system/compat/  — present
+src/design-system/tokens/  — present
 src/lib/                   — missing
 src/widgets/               — missing (widget renderers are in components/charts/)
 src/test/visual/           — missing
@@ -242,9 +228,8 @@ src/test/accessibility/    — missing
 
 | Area | Risk | Severity |
 |---|---|---|
-| Two parallel App files | `App.jsx` and `App.tsx` are different apps. `index.jsx`/`index.tsx` create ambiguous entry. | Critical |
-| Manual state router | `App.jsx` uses `active` string state instead of React Router. No back/forward support, no deep links. | High |
-| Raw colors in `Badge.tsx` and `App.jsx` | Hardcoded hex and `rgba()` throughout login and first-run UI. Design drift. | High |
+| Manual state router | `App.tsx` uses `active` string state instead of React Router. No back/forward support, no deep links. | High |
+| Raw colors in `Badge.tsx` and `App.tsx` | Hardcoded hex and `rgba()` throughout login and first-run UI. Design drift. | High |
 | Non-canonical status strings | `Badge.tsx` uses "On track", "At risk", "Blocked" — none are in the canonical taxonomy. | High |
 | `WidgetShell` gap | `Widget.tsx` has no title/status/actions/loading/empty/error slots. All widgets miss these states. | High |
 | `DataTable` contract gap | Untyped `columns: string[]` + `rows: ReactNode[][]` — no typed generic, no status-row/footer. | High |

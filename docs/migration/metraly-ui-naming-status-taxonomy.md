@@ -29,13 +29,13 @@ These names must not appear in new code, sidebar labels, page titles, or route k
 
 | Deprecated | Replace with | Found in |
 |---|---|---|
-| `AI Assistant` (as surface name) | `AI Workspace` | `App.jsx` titles map, `Sidebar.tsx` label, `AIScreen.tsx` name, `features/aiAssistant/` folder |
-| `Plugin Marketplace` (as top-level nav) | `Plugins` (top-level) + `Plugin Marketplace` (gated subset) | `App.jsx` titles map (`plugins`), `Sidebar.tsx` "Marketplace" label, `features/marketplace/` folder |
-| `Connect Sources` | `Connectors` | `App.jsx` titles map (`wizard`), `Sidebar.tsx` "Connect Sources" label |
+| `AI Assistant` (as surface name) | `AI Workspace` | Historical: `App.tsx` titles map, `Sidebar.tsx` label, `AIScreen.tsx` name, `features/ai-workspace/` folder |
+| `Plugin Marketplace` (as top-level nav) | `Plugins` (top-level) + `Plugin Marketplace` (gated subset) | Historical: `App.tsx` titles map (`plugins`), `Sidebar.tsx` "Marketplace" label, `features/plugins/` folder |
+| `Connect Sources` | `Connectors` | Historical: `App.tsx` titles map (`wizard`), `Sidebar.tsx` "Connect Sources" label |
 | `Marketplace` (sidebar label) | `Plugins` | `Sidebar.tsx` sections |
 | `AI Assistant` (sidebar label) | `AI Workspace` | `Sidebar.tsx` sections |
-| `Board` (without distinct product model) | `Dashboard` or `Dashboard Editor` | `App.tsx` routes (`/board/:boardId`), `features/board/` folder |
-| `Connect Sources` (route key `wizard`) | `connectors` | `App.jsx` active state |
+| `Board` (without distinct product model) | `Dashboard` or `Dashboard Editor` | Historical board experiment, removed from app repo on 2026-05-15 |
+| `Connect Sources` (route key `wizard`) | `connectors` | Historical `App.tsx` active state |
 | `AI Soon` | — | Must not appear in copy |
 | `AI direction` | — | Must not appear in copy |
 | `Plugin ecosystem` | — | Must not appear in copy |
@@ -45,7 +45,7 @@ These names must not appear in new code, sidebar labels, page titles, or route k
 
 ## 3. Route / nav / title mapping matrix
 
-Current state in `App.jsx` titles object and `Sidebar.tsx` sections vs. canonical targets:
+Current state in `App.tsx` titles object and `Sidebar.tsx` sections vs. canonical targets:
 
 | Route key | Current sidebar label | Current page title | Current subtitle | Canonical name | Required action | Risk |
 |---|---|---|---|---|---|---|
@@ -57,9 +57,9 @@ Current state in `App.jsx` titles object and `Sidebar.tsx` sections vs. canonica
 | `dash-ic` | My View | My Dashboard | Personal metrics & sprint tasks | Dashboard (personal) | Sidebar "My View" ≠ title "My Dashboard" — drift | Low |
 | `dash-wizard` | New Dashboard | New Dashboard | Build a custom dashboard | Dashboard Wizard | Name OK; route semantics should be wizard flow | Low |
 | `metrics` | Metrics Explorer | Metrics Explorer | DORA, CI/CD, PR & custom metrics | Metrics Explorer | OK | Low |
-| `ai` | AI Assistant | AI Assistant | Private · On-premise inference | AI Workspace | **P0 rename** — sidebar + title + folder | High |
-| `plugins` | Marketplace | Plugin Marketplace | Browse & install integrations | Plugins | **P0 rename** — sidebar label must be "Plugins" | High |
-| `wizard` | Connect Sources | Connect Sources | Onboarding wizard | Connectors | **P0 rename** — sidebar + title + folder | High |
+| `ai` | AI Workspace | AI Workspace | Private · On-premise inference | AI Workspace | Completed | Low |
+| `plugins` | Plugins | Plugins | Browse & install integrations | Plugins | Completed | Low |
+| `wizard` | Connectors | Connectors | Onboarding wizard | Connectors | Completed | Low |
 | `settings` | Settings | Settings | Platform configuration | Settings | OK name; screen is placeholder only | Low |
 
 ### Shell context bugs found
@@ -75,7 +75,7 @@ Current state in `App.jsx` titles object and `Sidebar.tsx` sections vs. canonica
 - Page title shows: `My Dashboard`
 - Two different names for the same concept in the same screen.
 
-**Bug 3 — `App.jsx` manual routing creates title/context binding:**
+**Bug 3 — `App.tsx` manual routing creates title/context binding:**
 - Navigation state (`active`) is a string key in component state.
 - Titles are looked up from a static object: `titles[active]`.
 - If any screen logic sets `active` to an unrecognized key, the topbar gets `['Metraly', '']` — the wrong name.
@@ -118,24 +118,24 @@ Use only these status values in `StatusBadge`, `HealthPill`, and any status-bear
 | `'Blocked'` | `components/ui/Badge.tsx` | `Error` (or `Gated` if access-based) | `StatusBadge` |
 | `'Done'` | `components/ui/Badge.tsx` | `Live` or remove (task state, not system status) | `StatusBadge` or task-specific |
 | `'Open'` | `components/ui/Badge.tsx` | Context-dependent — likely a task/PR state, not system status | `StatusBadge` or domain-specific |
-| `installed: true/false` (boolean) | `features/marketplace/PluginScreen.tsx` | `Live` / `Gated` | `StatusBadge` |
-| `cat: 'Sources'/'AI'/'Alerts'/'Exporters'` | `features/marketplace/PluginScreen.tsx` | Plugin category labels — keep as category, not status | `Badge` (label) |
+| `installed: true/false` (boolean) | `features/plugins/PluginScreen.tsx` | `Live` / `Gated` | `StatusBadge` |
+| `cat: 'Sources'/'AI'/'Alerts'/'Exporters'` | `features/plugins/PluginScreen.tsx` | Plugin category labels — keep as category, not status | `Badge` (label) |
 | `'NEW'` badge | `components/layout/Sidebar.tsx` (AI item) | Evaluate: if AI is `Preview`, use `StatusBadge preview` | `StatusBadge` or remove |
-| `'Live local instance'` | `App.jsx` (login screen) | `Live` canonical status | Inline badge → `StatusBadge` |
-| `'Synthetic data'` | `App.jsx` (first-run screen) | Map to `Preview` or `Designed` | `StatusBadge` |
+| `'Live local instance'` | `App.tsx` (login screen) | `Live` canonical status | Inline badge → `StatusBadge` |
+| `'Synthetic data'` | `App.tsx` (first-run screen) | Map to `Preview` or `Designed` | `StatusBadge` |
 | `'All systems nominal'` | `components/layout/Sidebar.tsx` | `Live` (system health) | `HealthPill` |
 
 ---
 
 ## 6. Raw color violations in status/badge code
 
-These files use raw hex or rgba values instead of semantic tokens and must be fixed before migration:
+These files still need follow-up review for token conformance before migration:
 
 | File | Violation | Required replacement |
 |---|---|---|
-| `components/ui/Badge.tsx` | `#00C853`, `#FF9100`, `#FF1744`, `rgba(0,200,83,0.12)`, `rgba(255,145,0,0.12)`, `rgba(255,23,68,0.12)` | `var(--success)`, `var(--warning)`, `var(--error)` + opacity tokens |
-| `App.jsx` (first-run, login screens) | Multiple `rgba()` and hex values for borders, backgrounds, colors | Convert to CSS custom property tokens |
-| `features/marketplace/PluginScreen.tsx` | `color: '#E8EDF5'`, `'#2684FF'`, `'#B44CFF'` etc. per plugin card | Plugin icon colors are brand-specific — evaluate token approach |
+| `components/ui/Badge.tsx` | Cleaned on 2026-05-15. Colors now come from `var(--success)`, `var(--warning)`, `var(--error)`, `var(--cyan)`, and `var(--muted)` via `color-mix(...)`. | Replace with canonical `StatusBadge` in Phase 3 |
+| `App.tsx` (first-run, login screens) | Multiple `rgba()` and hex values for borders, backgrounds, colors | Convert to CSS custom property tokens |
+| `features/plugins/PluginScreen.tsx` | `color: '#E8EDF5'`, `'#2684FF'`, `'#B44CFF'` etc. per plugin card | Plugin icon colors are brand-specific — evaluate token approach |
 
 ---
 
@@ -143,8 +143,8 @@ These files use raw hex or rgba values instead of semantic tokens and must be fi
 
 | Navigation element | Current implementation | Correct semantics | Required fix |
 |---|---|---|---|
-| Sidebar nav items | `<button onClick>` — keyboard-accessible but no href/link semantics | Should be `<a>` or `<Link>` with proper route | Blocked by App.jsx manual routing — fix during React Router migration |
-| Pin/unpin buttons | `<span role="button" tabIndex={0}>` — accessibility workaround | Should be `<button>` | Quick fix available now |
+| Sidebar nav items | `<button onClick>` — keyboard-accessible but no href/link semantics | Should be `<a>` or `<Link>` with proper route | Blocked by App.tsx manual routing — fix during React Router migration |
+| Pin/unpin buttons | Native `<button type="button">` | Corrected from ad hoc span-button workaround | Completed on 2026-05-15 |
 | First-run choice buttons | `<button type="button">` | OK | No change needed |
 | Role dashboards | All in one state machine, no URL-level differentiation | Need distinct routes | Phase 4 — App Shell migration |
 | "AI Assistant" sidebar item | No indication of Gated/Preview status | Must show status indicator if feature is not fully Live | P0 fix after taxonomy decision |
@@ -155,15 +155,12 @@ These files use raw hex or rgba values instead of semantic tokens and must be fi
 
 ### P0 (before any migration)
 
-1. Rename sidebar label `AI Assistant` → `AI Workspace` in `Sidebar.tsx`.
-2. Rename sidebar label `Marketplace` → `Plugins` in `Sidebar.tsx`.
-3. Rename sidebar label `Connect Sources` → `Connectors` in `Sidebar.tsx`.
-4. Update `titles` object in `App.jsx`:
-   - `ai: ['AI Workspace', ...]`
-   - `plugins: ['Plugins', ...]`
-   - `wizard: ['Connectors', ...]`
-5. Rename feature folder `features/aiAssistant/` → `features/ai-workspace/` (do not delete — move/rename with file history).
-6. Rename feature folder `features/marketplace/` → `features/plugins/`.
+1. Completed: sidebar label `AI Assistant` → `AI Workspace` in `Sidebar.tsx`.
+2. Completed: sidebar label `Marketplace` → `Plugins` in `Sidebar.tsx`.
+3. Completed: sidebar label `Connect Sources` → `Connectors` in `Sidebar.tsx`.
+4. Completed: `titles` object in `App.tsx` now uses AI Workspace / Plugins / Connectors.
+5. Completed: feature folder `features/aiAssistant/` → `features/ai-workspace/`.
+6. Completed: feature folder `features/marketplace/` → `features/plugins/`.
 7. Rename `WizardScreen.tsx` → `ConnectorWizardScreen.tsx` (it is the connector onboarding, not a generic wizard).
 8. Remove `NEW` badge from AI sidebar item until canonical status is confirmed.
 
@@ -177,4 +174,4 @@ These files use raw hex or rgba values instead of semantic tokens and must be fi
 ### P2 (cleanup)
 
 13. Rename `features/onboarding/` to `features/connectors/` once connector wizard is migrated.
-14. Audit and rename `features/board/` relationship to `Dashboard Editor`.
+14. Closed: removed abandoned `features/board/` experiment from the app repo.

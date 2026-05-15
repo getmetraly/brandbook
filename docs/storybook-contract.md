@@ -6,6 +6,7 @@ Storybook is a visual conformance harness for the prototype translation.
 
 - Foundation / Tokens
 - Components / StateBadge
+- Components / PulseMarker
 - Components / Forms
 - Components / WidgetPickerCard
 - Components / DashboardWidget
@@ -44,6 +45,8 @@ Stories do not need bespoke layouts per breakpoint, but they must collapse safel
 ## Required story coverage per component
 
 `StateBadge`: live, ok, new, stale, delayed, disconnected, error, warning, noData, info, purple, disabled, success + CanonicalMatrix story.
+
+`PulseMarker`: live dot, new dot, telemetry wave, static warning, allowed semantic usage matrix.
 
 `DashboardWidget`: default, selected, dragging, resizing, loading, empty, stale, error/disconnected, full-width.
 

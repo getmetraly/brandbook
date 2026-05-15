@@ -132,3 +132,81 @@
   font-size: var(--m-fs-10);
   letter-spacing: 0.04em;
 }
+
+@media (max-width: 640px) {
+  .metraly-table.is-mobile-cards thead,
+  .metraly-table.is-mobile-stacked thead {
+    display: none;
+  }
+
+  .metraly-table.is-mobile-cards,
+  .metraly-table.is-mobile-stacked {
+    display: block;
+  }
+
+  .metraly-table.is-mobile-cards tbody,
+  .metraly-table.is-mobile-stacked tbody {
+    display: grid;
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .metraly-table.is-mobile-cards .metraly-table-row,
+  .metraly-table.is-mobile-stacked .metraly-table-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+    padding: 10px;
+    border: 1px solid var(--m-line-faint);
+    border-radius: var(--m-r-2);
+    background: var(--m-bg-1);
+  }
+
+  .metraly-table.is-mobile-cards .metraly-table-row:hover,
+  .metraly-table.is-mobile-stacked .metraly-table-row:hover {
+    background: var(--m-bg-3);
+  }
+
+  .metraly-table.is-mobile-cards td,
+  .metraly-table.is-mobile-stacked td {
+    display: grid;
+    grid-template-columns: minmax(84px, 112px) minmax(0, 1fr);
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    padding: 0;
+    border-bottom: 0;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: initial;
+  }
+
+  .metraly-table.is-mobile-cards td::before,
+  .metraly-table.is-mobile-stacked td::before {
+    content: attr(data-column-label);
+    color: var(--m-fg-3);
+    font-family: var(--m-font-mono);
+    font-size: var(--m-fs-9);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .metraly-table.is-mobile-cards td > .metraly-table-row-marker,
+  .metraly-table.is-mobile-stacked td > .metraly-table-row-marker {
+    justify-self: start;
+  }
+
+  .metraly-table.is-mobile-cards .metraly-table-empty,
+  .metraly-table.is-mobile-stacked .metraly-table-empty {
+    display: block;
+  }
+
+  .metraly-table.is-mobile-cards .metraly-table-empty td,
+  .metraly-table.is-mobile-stacked .metraly-table-empty td {
+    display: block;
+    padding: 1rem;
+    text-align: center;
+  }
+}

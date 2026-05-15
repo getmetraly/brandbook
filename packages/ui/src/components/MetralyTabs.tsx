@@ -15,6 +15,7 @@ export interface MetralyTabsProps {
   value?: string;
   defaultValue?: string;
   ariaLabel?: string;
+  idBase?: string;
   className?: string;
   /** Prototype-compatible selected-tab telemetry marker. */
   livePulse?: boolean;
@@ -27,6 +28,7 @@ export function MetralyTabs({
   value,
   defaultValue,
   ariaLabel = "Tabs",
+  idBase,
   className,
   livePulse = false,
   onValueChange,
@@ -89,6 +91,8 @@ export function MetralyTabs({
     <div className={classes} role="tablist" aria-label={ariaLabel} data-live-pulse={livePulse ? "on" : "off"}>
       {items.map((item, index) => {
         const selected = item.value === activeValue;
+        const tabId = idBase ? `${idBase}-tab-${item.value}` : undefined;
+        const panelId = idBase ? `${idBase}-panel-${item.value}` : undefined;
         return (
           <button
             key={item.value}
@@ -97,8 +101,10 @@ export function MetralyTabs({
             }}
             type="button"
             role="tab"
+            id={tabId}
             className={selected ? "metraly-tab is-active" : "metraly-tab"}
             aria-selected={selected}
+            aria-controls={panelId}
             data-state={item.disabled ? "disabled" : selected ? "selected" : "default"}
             data-live-pulse={selected && livePulse ? "on" : "off"}
             tabIndex={selected ? 0 : -1}

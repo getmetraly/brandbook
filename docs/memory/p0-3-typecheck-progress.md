@@ -1,11 +1,11 @@
 ---
 name: p0-3-typecheck-progress
-description: P0-3 progress — typecheck script implementation with 1 remaining error in WizardScreen.tsx
+description: P0-3 complete — app typecheck passes after WizardScreen fix
 metadata: 
   node_type: memory
   type: project
-  status: in-progress
-  remaining-errors: 1
+  status: completed
+  remaining-errors: 0
   originSessionId: 4f98bff0-e0b2-44fb-8599-c78cb0301929
 ---
 
@@ -13,10 +13,7 @@ metadata:
 
 **P0-3: Add typecheck script to metraly/app/ui**
 
-Almost complete. ONE error remains:
-```
-src/features/onboarding/WizardScreen.tsx(211,25): error TS2339: Property 'setter' does not exist on type 'never'.
-```
+Completed on 2026-05-15.
 
 ## What's Done
 
@@ -25,56 +22,29 @@ src/features/onboarding/WizardScreen.tsx(211,25): error TS2339: Property 'setter
 ✅ react-grid-layout@2 breaking changes fixed (Layout→LayoutItem, imports from legacy module)
 ✅ All import/missing-config errors fixed
 ✅ Vitest globals fixed
-✅ App.tsx and board features excluded from typecheck
+✅ Product app now lives in `src/App.tsx` / `src/index.tsx`
 
-## Remaining Issue
+## Implemented Fix
 
-**File**: `app/ui/src/features/onboarding/WizardScreen.tsx` line 211
-**Context**: Select element onChange handler in a settings row renderer
+**File**: `app/ui/src/features/onboarding/WizardScreen.tsx`
 
-Current code (lines 188–225):
-```tsx
-{([
-  { label: 'Sync interval', value: syncInterval, setter: setSyncInterval as (v: string | boolean) => void, options: [...], type: 'select' as const },
-  { label: 'Repositories', value: repos, setter: setRepos as (v: string | boolean) => void, options: [...], type: 'select' as const },
-  { label: 'Include archived repos', value: includeArchived, setter: setIncludeArchived as (v: string | boolean) => void, type: 'toggle' as const, options: [] as string[] },
-  { label: 'Historical backfill', value: backfill, setter: setBackfill as (v: string | boolean) => void, options: [...], type: 'select' as const },
-]).map((row, i) => (
-  <div key={i} ...>
-    <span>{row.label}</span>
-    {row.type === 'toggle' ? (
-      <button onClick={() => row.setter(Boolean(row.value))} ...>...</button>
-    ) : (
-      <select value={String(row.value)} onChange={e => {
-        if (typeof row.value === 'boolean') {
-          row.setter(e.target.value === 'true');
-        } else {
-          row.setter(e.target.value);  // <-- LINE 211 ERROR
-        }
-      }}>
-        {row.options?.map(opt => <option key={opt} value={opt}>{opt}</option>)}
-      </select>
-    )}
-  </div>
-))}
-```
+Applied the planned simplification:
 
-**Problem**: TypeScript narrows `row` to `never` in the else branch due to type conflict. The inner `if (typeof row.value === 'boolean')` check in the select branch causes unexpected narrowing.
-
-**Fix**: Remove the inner conditional. All setters are already cast to `(v: string | boolean) => void`, so just call directly:
 ```tsx
 <select value={String(row.value)} onChange={e => row.setter(e.target.value)}>
 ```
 
-This is safe because:
-- `setter` accepts `string | boolean`
-- `e.target.value` is always `string`
-- The cast already allows both types, so no safety is gained by the conditional
+This removed the incorrect narrowing path and unblocked `tsc --noEmit`.
+
+## Validation
+
+- `npm run typecheck` — passes
+- `npm run build` — passes
+- `npm run test` — passes
 
 ## Next Step
 
-Fix WizardScreen.tsx line 211 by removing the inner type check. Run `npm run typecheck` again — should pass with zero errors, completing P0-3.
-
-Then proceed to:
-- **P0-1**: Naming fixes in Sidebar.tsx and App.jsx (AI Assistant→AI Workspace, Marketplace→Plugins, Connect Sources→Connectors)
-- **P0-5**: StatusBadge canonical taxonomy story in Brandbook
+Proceed to the next stabilization slice:
+- **P1-11**: extract `StepRail` from `WizardLayout`
+- **P1-12**: extract `ReviewPanel` and `StickyWizardFooter`
+- Keep app-side `design-system/` inert until compat imports are explicitly approved
