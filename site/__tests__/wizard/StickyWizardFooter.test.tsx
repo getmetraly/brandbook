@@ -32,22 +32,14 @@ describe("StickyWizardFooter", () => {
     expect(document.querySelector(".metraly-sticky-wizard-footer__back")).toBeNull();
   });
 
-  it("adds no-back modifier class when back is absent", () => {
+  it("primary is right-aligned regardless of back presence", () => {
     const { container } = render(
       <StickyWizardFooter
         primary={<button type="button">Go</button>}
       />
     );
-    expect(container.firstChild).toHaveClass("metraly-sticky-wizard-footer--no-back");
-  });
-
-  it("does not add no-back modifier when back is present", () => {
-    const { container } = render(
-      <StickyWizardFooter
-        back={<button type="button">Back</button>}
-        primary={<button type="button">Continue</button>}
-      />
-    );
+    // Primary always has margin-left: auto via CSS; no modifier class needed.
+    expect(container.firstChild).toHaveClass("metraly-sticky-wizard-footer");
     expect(container.firstChild).not.toHaveClass("metraly-sticky-wizard-footer--no-back");
   });
 

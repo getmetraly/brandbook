@@ -132,3 +132,11 @@ button.metraly-widget-picker-card:focus-visible {
   outline: none;
   box-shadow: var(--m-glow-focus);
 }
+
+/* ─── WidgetPickerList ───────────────────────────────────────────────────────── */
+
+.metraly-widget-picker-list {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}

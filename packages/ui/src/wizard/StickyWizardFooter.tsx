@@ -58,7 +58,6 @@ export function StickyWizardFooter({
 }: StickyWizardFooterProps) {
   const classes = [
     "metraly-sticky-wizard-footer",
-    !back ? "metraly-sticky-wizard-footer--no-back" : null,
     className,
   ]
     .filter(Boolean)

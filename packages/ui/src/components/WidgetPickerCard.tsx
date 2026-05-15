@@ -1,6 +1,8 @@
 import * as React from "react";
 import { StateBadge, type StateBadgeState } from "./StateBadge";
 
+// ─── Types ────────────────────────────────────────────────────────────────────
+
 export type WidgetPickerCardVisualState = "default" | "selected" | "new" | "loading" | "dragging" | "disabled";
 
 export interface WidgetPickerCardProps {
@@ -20,6 +22,18 @@ export interface WidgetPickerCardProps {
   disabled?: boolean;
   onSelect?: () => void;
 }
+
+export interface WidgetPickerListProps {
+  children: React.ReactNode;
+  /** Accessible label for the listbox. Defaults to "Widget catalog". */
+  ariaLabel?: string;
+  /** Whether multiple options can be selected simultaneously. Defaults to true. */
+  multiSelect?: boolean;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 // Minimal operational glyphs — stroke-based, 14×14 viewBox.
 // Matches the prototype Icon set used in WidgetPicker.
@@ -80,6 +94,10 @@ const PICKER_ICONS: Record<string, React.ReactNode> = {
       <path strokeLinecap="round" strokeWidth="1.4" d="M9 9 12 12" />
     </>
   ),
+  sparkles: (
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.4"
+      d="M7 1.5 8 5h3.5l-2.8 2 1 3.5L7 8.5 4.3 10.5l1-3.5L2.5 5H6z" />
+  ),
 };
 
 function WidgetPickerIcon({ label, loading = false }: { label: string; loading?: boolean }) {
@@ -101,6 +119,34 @@ function defaultStateLabel(state: StateBadgeState) {
   return spaced.charAt(0).toUpperCase() + spaced.slice(1);
 }
 
+/** States that surface a visible badge — covers every non-live operational state. */
+const BADGE_STATES = new Set<StateBadgeState>([
+  "disabled",    // planned, gated, coming-soon all map here via StatusBadge
+  "delayed",
+  "disconnected",
+  "noData",
+  "error",
+  "warning",
+  "purple",      // preview / in-progress map here via StatusBadge
+  "info",        // policy-defined, designed (informational)
+]);
+
+// ─── WidgetPickerCard ─────────────────────────────────────────────────────────
+
+/**
+ * A catalog selection card for the widget picker panel.
+ *
+ * Use inside `WidgetPickerList` to provide the required `role="listbox"` parent
+ * context for correct ARIA semantics:
+ *
+ * ```tsx
+ * <WidgetPickerList ariaLabel="Widget catalog">
+ *   {widgets.map(w => (
+ *     <WidgetPickerCard key={w.id} title={w.title} selected={selected.includes(w.id)} onSelect={() => toggle(w.id)} />
+ *   ))}
+ * </WidgetPickerList>
+ * ```
+ */
 export function WidgetPickerCard({
   title = "Flow efficiency",
   description = "Track delivery throughput, review health and deployment flow.",
@@ -128,6 +174,16 @@ export function WidgetPickerCard({
   const effectiveKind = kind ?? iconLabel;
   const effectiveState: StateBadgeState = effectiveVisualState === "new" ? "new" : disabled ? "disabled" : state;
   const effectiveStateLabel = stateLabel ?? (effectiveVisualState === "new" ? "New" : defaultStateLabel(effectiveState));
+
+  // Show the state badge for:
+  // 1. Operational states that block or alter use (disabled, loading)
+  // 2. Non-live semantic states that need surfacing (gated, planned, preview, etc.)
+  // 3. "new" visual state — handled by a separate badge in the head
+  const showStateBadge =
+    effectiveVisualState === "disabled" ||
+    effectiveVisualState === "loading" ||
+    BADGE_STATES.has(effectiveState);
+
   const classes = [
     "metraly-widget-picker-card",
     selected && "is-selected",
@@ -150,14 +206,13 @@ export function WidgetPickerCard({
           <span>{effectiveKind}</span>
         </div>
 
-        {/* Badge inline in head: only for "new". Exceptional operational states (disabled/loading) appear in meta below. */}
+        {/* "new" badge appears inline in head only. */}
         {effectiveVisualState === "new" && (
           <StateBadge state="new" label="New" size="sm" />
         )}
       </div>
 
-      {/* Show StateBadge in meta only for states that block or alter use — not for routine live/stale. */}
-      {(effectiveVisualState === "disabled" || effectiveVisualState === "loading") && (
+      {showStateBadge ? (
         <div className="metraly-widget-picker-meta">
           <StateBadge
             state={effectiveState}
@@ -165,7 +220,7 @@ export function WidgetPickerCard({
             size="sm"
           />
         </div>
-      )}
+      ) : null}
 
       <p>{description}</p>
     </>
@@ -195,11 +250,48 @@ export function WidgetPickerCard({
       role="option"
       aria-selected={selected}
       aria-disabled={disabled || undefined}
+      // focusable so keyboard users can reach items that lack an onSelect handler
+      tabIndex={disabled ? -1 : 0}
       data-state={effectiveVisualState}
       data-kind={typeof effectiveKind === "string" ? effectiveKind : undefined}
     >
       {content}
     </article>
+  );
+}
+
+// ─── WidgetPickerList ─────────────────────────────────────────────────────────
+
+/**
+ * Required `role="listbox"` container for `WidgetPickerCard` items.
+ *
+ * Provides the ARIA listbox context that makes `role="option"` on each card
+ * semantically valid. Without this wrapper, screen readers may not announce
+ * the selection state correctly.
+ *
+ * ```tsx
+ * <WidgetPickerList ariaLabel="Available widgets" multiSelect>
+ *   {widgets.map(w => <WidgetPickerCard key={w.id} ... />)}
+ * </WidgetPickerList>
+ * ```
+ */
+export function WidgetPickerList({
+  children,
+  ariaLabel = "Widget catalog",
+  multiSelect = true,
+  className,
+  style,
+}: WidgetPickerListProps) {
+  return (
+    <div
+      role="listbox"
+      aria-label={ariaLabel}
+      aria-multiselectable={multiSelect}
+      className={["metraly-widget-picker-list", className].filter(Boolean).join(" ")}
+      style={style}
+    >
+      {children}
+    </div>
   );
 }
 
