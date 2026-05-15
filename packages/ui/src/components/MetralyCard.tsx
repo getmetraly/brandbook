@@ -1,16 +1,16 @@
 import * as React from "react";
-import { MetralyPanel } from "./MetralyPanel";
+import { CardShell } from "./CardShell";
 
 /**
  * A universal card component with slots for title, subtitle, body and footer.
  * It supports semantic states (selected, error, loading, empty) and applies
- * consistent styling via CSS classes. Use this component as a building block
- * for dashboard widgets, metric summaries and list items.
+ * consistent styling via CardShell. Use it for generic content cards; use
+ * MetralyMetricCard for KPI summaries and DashboardWidget for editable canvas widgets.
  */
 export type MetralyCardState = "default" | "selected" | "error" | "loading" | "empty";
 export type MetralyCardDensity = "comfortable" | "compact";
 
-export interface MetralyCardProps {
+export interface MetralyCardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
   /** Optional leading icon. */
   icon?: React.ReactNode;
   /** Title displayed at the top of the card. */
@@ -41,46 +41,40 @@ export function MetralyCard({
   density = "comfortable",
   emptyLabel = "No data",
   className,
+  ...rest
 }: MetralyCardProps) {
-  const classes = [
-    "metraly-card",
-    state !== "default" ? `is-${state}` : null,
-    density !== "comfortable" ? `metraly-card--${density}` : null,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
-
   const isLoading = state === "loading";
   const isEmpty = state === "empty";
 
   return (
-    <MetralyPanel
-      className={classes}
-      data-state={state}
-      data-density={density}
+    <CardShell
+      {...rest}
+      className={["metraly-card", className].filter(Boolean).join(" ")}
+      state={state}
+      density={density}
+      leading={icon}
+      title={title}
+      subtitle={subtitle}
+      leadingClassName="metraly-card-icon"
+      headingClassName="metraly-card-heading"
+      titleClassName="metraly-card-title"
+      subtitleClassName="metraly-card-subtitle"
+      headerClassName="metraly-card-header"
+      bodyClassName="metraly-card-body"
+      footerClassName="metraly-card-footer"
+      footer={footer}
       aria-busy={isLoading ? true : undefined}
     >
-      <div className="metraly-card-header">
-        {icon && <span className="metraly-card-icon">{icon}</span>}
-        <div className="metraly-card-heading">
-          <div className="metraly-card-title">{title}</div>
-          {subtitle && <div className="metraly-card-subtitle">{subtitle}</div>}
+      {isLoading ? (
+        <div className="metraly-card-skeleton" role="status" aria-label="Loading card content">
+          <div className="skeleton-bar skeleton-bar--short" />
+          <div className="skeleton-bar skeleton-bar--medium" />
+          <div className="skeleton-bar skeleton-bar--long" />
         </div>
-      </div>
-      <div className="metraly-card-body">
-        {isLoading && (
-          <div className="metraly-card-skeleton" role="status" aria-label="Loading card content">
-            <div className="skeleton-bar skeleton-bar--short" />
-            <div className="skeleton-bar skeleton-bar--medium" />
-            <div className="skeleton-bar skeleton-bar--long" />
-          </div>
-        )}
-        {isEmpty && <div className="metraly-card-empty">{emptyLabel}</div>}
-        {!isLoading && !isEmpty && children}
-      </div>
-      {footer && <div className="metraly-card-footer">{footer}</div>}
-    </MetralyPanel>
+      ) : null}
+      {isEmpty ? <div className="metraly-card-empty">{emptyLabel}</div> : null}
+      {!isLoading && !isEmpty ? children : null}
+    </CardShell>
   );
 }
 

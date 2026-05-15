@@ -43,10 +43,11 @@
 
 | Story target | Current story file | Status | Required states missing | Priority | Notes |
 |---|---|---|---|---|---|
-| `Components/Card` | `MetralyCard.stories.tsx` | **Exists** | tone variants, interactive-selected, error tone, hover/focus without layout jump | P0 | Add missing states |
+| `Foundation/CardShell` | covered by `CardShell.test.tsx`; direct story optional | **Implemented** | Direct visual story optional; public stories remain semantic card components | P0 | Shared surface foundation for Card/MetricCard/WidgetShell |
+| `Components/Card` | `MetralyCard.stories.tsx` | **Exists** | tone variants, interactive-selected, error tone, hover/focus without layout jump | P0 | Composes CardShell; add missing states |
 | `Components/Panel` | None found | **Missing** | default, nested sections, scrollable, mobile stacked | P0 | `MetralyPanel` exists but no story |
-| `Components/MetricCard` | `MetralyMetricCard.stories.tsx` | **Partial** | richer dashboard recipes | **P0** | Canonical state matrix now covered |
-| `Components/WidgetShell` | `DashboardWidget.stories.tsx` | **Partial** | editMode, gated, stale, with footer, mobile stacked | **P0** | |
+| `Components/MetricCard` | `MetralyMetricCard.stories.tsx` | **Partial** | richer dashboard recipes | **P0** | Composes CardShell; canonical state matrix now covered |
+| `Components/WidgetShell` | `DashboardWidget.stories.tsx` | **Partial** | editMode, gated, stale, with footer, mobile stacked | **P0** | Composes CardShell; widget chrome remains separate |
 | `Components/WidgetCatalogCard` | `WidgetPickerCard.stories.tsx` | **Partial** | gated, coming-soon, requiresPro, long text, preview pane | **P0** | Full-width layout risk confirmed |
 | `Components/DataTable` | `MetralyTable.stories.tsx` | **Partial** | error, bulk actions, richer internal-scroll scenarios | **P0** | mobile cards/stacked now covered |
 | `Components/EmptyState` | None found | **Missing** | dashboard empty, connector empty, no results, permission-gated | **P0** | `DashboardEmptyState` in code but no story |

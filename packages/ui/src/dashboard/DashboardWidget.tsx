@@ -1,4 +1,5 @@
 import * as React from "react";
+import { CardShell } from "../components/CardShell";
 import StateBadge, { type StateBadgeState } from "../components/StateBadge";
 import { DashboardResizeHandle, dashboardResizeHandleDirections } from "./DashboardResizeHandle";
 
@@ -149,6 +150,7 @@ export function DashboardWidget({
   const canSelect = Boolean(id && onSelect);
   const canRemove = Boolean(id && onRemove);
   const canDrag = Boolean(id && onDragStart);
+  const widgetState = state === "noData" ? "empty" : (state === "error" || state === "disconnected") ? "error" : (state === "stale" || state === "delayed") ? "stale" : selected ? "selected" : "default";
   const rootProps = canSelect
     ? {
         role: "button" as const,
@@ -162,6 +164,36 @@ export function DashboardWidget({
         },
       }
     : {};
+  const footerSlot = (footer || canRemove) ? (
+    <div className="metraly-dashboard-widget-footer-content">
+      {footer}
+      {canRemove ? (
+        <button
+          type="button"
+          className="metraly-dashboard-widget-remove metraly-focus-ring"
+          onClick={(event) => {
+            event.stopPropagation();
+            onRemove?.(id!);
+          }}
+        >
+          Remove
+        </button>
+      ) : null}
+    </div>
+  ) : null;
+
+  const resizeHandles = resizable && (selected || resizing) ? (
+    <div className="metraly-widget-shell-resize-handles" aria-hidden={false}>
+      {dashboardResizeHandleDirections.map((direction) => (
+        <DashboardResizeHandle
+          key={direction}
+          className="metraly-widget-shell-resize-handle"
+          direction={direction}
+          active={selected || resizing}
+        />
+      ))}
+    </div>
+  ) : null;
 
   return (
     <div
@@ -171,7 +203,7 @@ export function DashboardWidget({
       data-widget-id={id}
       {...rootProps}
     >
-      <div
+      <CardShell
         className={[
           "metraly-widget-shell",
           selected && "is-selected",
@@ -186,65 +218,42 @@ export function DashboardWidget({
         ]
           .filter(Boolean)
           .join(" ")}
+        state={resizing ? "resizing" : dragging ? "dragging" : widgetState}
         data-state={state}
         data-testid="widget-shell"
-      >
-        <header className="metraly-widget-shell-head">
-          <DragHandle canDrag={canDrag} id={id} onDragStart={onDragStart} />
-          <div className="metraly-widget-shell-heading">
-            <div className="metraly-widget-shell-title">{title}</div>
-            {subtitle && <div className="metraly-widget-shell-subtitle">{subtitle}</div>}
-          </div>
-          {state && (
-            <StateBadge
-              state={state}
-              label={stateLabel ?? defaultStateLabel(state)}
-              size="sm"
-              className="metraly-widget-shell-badge"
-            />
-          )}
-        </header>
-        <div className="metraly-widget-shell-body">
-          {loading && !children ? (
-            <LoadingSkeleton />
-          ) : (state === "error" || state === "disconnected") && !children ? (
-            <ErrorBody title={stateTitle} description={stateDescription} action={stateAction} />
-          ) : state === "noData" && !children ? (
-            <EmptyBody title={stateTitle} description={stateDescription} action={stateAction} />
-          ) : (
-            <div className="metraly-dashboard-widget-content">{children}</div>
-          )}
-          {(footer || canRemove) ? (
-            <div className="metraly-dashboard-widget-footer">
-              {footer}
-              {canRemove ? (
-                <button
-                  type="button"
-                  className="metraly-dashboard-widget-remove metraly-focus-ring"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    onRemove?.(id!);
-                  }}
-                >
-                  Remove
-                </button>
-              ) : null}
+        headerClassName="metraly-widget-shell-head"
+        bodyClassName="metraly-widget-shell-body"
+        footerClassName="metraly-dashboard-widget-footer"
+        footer={footerSlot}
+        overlay={resizeHandles}
+        header={(
+          <>
+            <DragHandle canDrag={canDrag} id={id} onDragStart={onDragStart} />
+            <div className="metraly-widget-shell-heading">
+              <div className="metraly-widget-shell-title">{title}</div>
+              {subtitle && <div className="metraly-widget-shell-subtitle">{subtitle}</div>}
             </div>
-          ) : null}
-        </div>
-        {resizable && (selected || resizing) ? (
-          <div className="metraly-widget-shell-resize-handles" aria-hidden={false}>
-            {dashboardResizeHandleDirections.map((direction) => (
-              <DashboardResizeHandle
-                key={direction}
-                className="metraly-widget-shell-resize-handle"
-                direction={direction}
-                active={selected || resizing}
+            {state && (
+              <StateBadge
+                state={state}
+                label={stateLabel ?? defaultStateLabel(state)}
+                size="sm"
+                className="metraly-widget-shell-badge"
               />
-            ))}
-          </div>
-        ) : null}
-      </div>
+            )}
+          </>
+        )}
+      >
+        {loading && !children ? (
+          <LoadingSkeleton />
+        ) : (state === "error" || state === "disconnected") && !children ? (
+          <ErrorBody title={stateTitle} description={stateDescription} action={stateAction} />
+        ) : state === "noData" && !children ? (
+          <EmptyBody title={stateTitle} description={stateDescription} action={stateAction} />
+        ) : (
+          <div className="metraly-dashboard-widget-content">{children}</div>
+        )}
+      </CardShell>
     </div>
   );
 }

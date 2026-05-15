@@ -1,6 +1,6 @@
 # Metraly UI → Brandbook Component Map
 
-**Status:** Reworked from the source-of-truth UI/UX audit. This map now includes mandatory local component renames, API changes, structure changes, and product terminology changes for migration into `getmetraly/metraly/ui`.  
+**Status:** Reworked from the source-of-truth UI/UX audit. Updated with the upstream CardShell foundation decision so surface components share one layout primitive before app-side rename migration.  
 **Last updated:** 2026-05-15  
 **Companion documents:**
 - `docs/metraly-ui-to-brandbook-component-plan.md`
@@ -26,6 +26,23 @@ Brandbook names can be preserved through a temporary compatibility barrel, but l
 
 ---
 
+## 1.1 Upstream surface foundation decision
+
+Brandbook now treats card-like surfaces as a layered system instead of parallel one-off shells:
+
+```text
+MetralyPanel = low-level surface primitive
+CardShell / CardFrame = shared card layout foundation
+MetralyCard = generic content card on CardShell
+MetralyMetricCard = KPI/scalar metric card on CardShell
+DashboardWidget / WidgetShell = editable widget chrome on CardShell
+DashboardGrid / BoardCanvas = layout layer, not card content
+```
+
+Migration implication: the app-side local `Card`, `MetricCard`, and `WidgetShell` should preserve separate semantic APIs, but they should all compose the same `CardFrame` foundation to avoid duplicated header/footer/overflow/mobile fixes.
+
+---
+
 ## 2. Required local UI layer
 
 Target location:
@@ -41,7 +58,7 @@ Subdomains:
 | `tokens/` | Semantic token bridge from brandbook into app. |
 | `primitives/` | Button, IconButton, Tabs, Input, Select, Dialog, Tooltip. |
 | `telemetry/` | StatusBadge, TrendBadge, PulseMarker, HealthPill. |
-| `surfaces/` | Card, Panel, MetricCard, WidgetShell, WidgetCatalogCard, DataTable, EmptyState, Skeleton, FilterBar. |
+| `surfaces/` | CardFrame/CardShell, Card, Panel, MetricCard, WidgetShell, WidgetCatalogCard, DataTable, EmptyState, Skeleton, FilterBar. |
 | `board/` | BoardCanvas, BoardDropZone, BoardToolbar, GripHandle, MoveMenu. |
 | `wizard/` | WizardLayout, StepRail, ReviewPanel, StickyWizardFooter. |
 | `ai/` | AIWorkspaceLayout, EvidencePanel, AnswerCard, TraceDrawer. |
@@ -58,7 +75,8 @@ Subdomains:
 | `MetralyInput` | `Input` | primitive | keep label/error/search/icon slots | compat optional |
 | `MetralySelect` | `Select` | primitive | keep compact selector role | compat optional |
 | `MetralyTabs` | `Tabs` | primitive/navigation | enforce real tab semantics | compat optional |
-| `MetralyCard` | `Card` | surface | add `variant`, `density`, `tone`, `header`, `footer`, `actions` | required |
+| `CardShell` / `CardFrame` | `CardFrame` | surface foundation | shared header/body/footer/overlay slots; not a product card | required |
+| `MetralyCard` | `Card` | surface | compose `CardFrame`; add `variant`, `density`, `tone`, `header`, `footer`, `actions` | required |
 | `MetralyPanel` | `Panel` | surface | preserve panel contract | required |
 | `MetralyMetricCard` | `MetricCard` | surface/data | add explicit metric/status slots if missing | required |
 | `DashboardWidget` | `WidgetShell` | dashboard/surface | split shell from renderer; add state slots | required |
@@ -83,7 +101,8 @@ Subdomains:
 
 | Local component | Required contract |
 |---|---|
-| `Card` | `variant`, `density`, `tone`, `header`, `footer`, `actions`, stable hover/focus without layout jump. |
+| `CardFrame` | internal/shared surface foundation: header/body/footer/overlay slots, density/tone/state metadata, footer pinned in equal-height grids. |
+| `Card` | compose `CardFrame`; `variant`, `density`, `tone`, `header`, `footer`, `actions`, stable hover/focus without layout jump. |
 | `MetricCard` | metric label/value/delta/status, loading/empty/error, optional compact mode. |
 | `WidgetShell` | title, description, status, actions, footer, loading, empty, error, selected, editMode. |
 | `BoardToolbar` | `mode`, `status`, `viewControls`, `editControls`, `primaryActions`, `secondaryActions`. |
@@ -153,8 +172,8 @@ Subdomains:
 
 | Current / inferred | Target |
 |---|---|
-| KPI/metric cards | `MetricCard` inside `WidgetShell`. |
-| dashboard widget wrappers | `WidgetShell` + renderer from `widgets/*`. |
+| KPI/metric cards | `MetricCard` composed from `CardFrame`; when placed on dashboards it sits inside `WidgetShell` or a widget renderer owned by the product. |
+| dashboard widget wrappers | `WidgetShell` composed from `CardFrame` + renderer from `widgets/*`; widget-specific drag/resize chrome remains outside generic cards. |
 | status chips | `StatusBadge` / `HealthPill`. |
 | charts | local chart/widget renderer inside `WidgetShell`; keep brandbook chart language. |
 | tables | `DataTable<Row>`. |

@@ -441,6 +441,35 @@ Items are ordered: P0 → P1 → P2. Within each tier, items are ordered by depe
 
 ---
 
+### P1-6a: Introduce shared `CardShell` foundation
+
+**Status:** Completed on 2026-05-15
+
+**Target repo:** `getmetraly/brandbook`
+**Target files:**
+- `packages/ui/src/components/CardShell.tsx` (new)
+- `packages/ui/src/components/MetralyCard.tsx`
+- `packages/ui/src/components/MetralyMetricCard.tsx`
+- `packages/ui/src/dashboard/DashboardWidget.tsx`
+- `packages/ui/src/styles/metraly-card.css`
+- `site/__tests__/surface/CardShell.test.tsx`
+- migration/map/architecture docs
+
+**Why it mattered:** `MetralyCard`, `MetralyMetricCard`, and `DashboardWidget` were visually similar but maintained separate shell layouts. This caused repeated footer, overflow, density, badge, and mobile fixes across multiple CSS files.
+
+**Acceptance criteria:**
+- `MetralyPanel` remains the low-level surface primitive
+- `CardShell` owns header/body/footer/overlay slots and equal-height behavior
+- `MetralyCard` composes `CardShell` for generic content
+- `MetralyMetricCard` composes `CardShell` for KPI/scalar metrics
+- `DashboardWidget` composes `CardShell` while keeping drag/resize/remove widget chrome separate
+- Docs and migration maps explicitly describe the layered surface model
+
+**Test/check command:** `npm run site:test -- CardShell` plus full `npm run site:test && npm run build-storybook` when dependencies are installed
+**Risk level:** Medium — shared foundation touches core surfaces
+
+---
+
 ### P1-7: Add `DataTable` mobile/stacked presentation
 
 **Status:** Completed on 2026-05-15

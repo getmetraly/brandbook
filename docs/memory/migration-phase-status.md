@@ -107,6 +107,13 @@ Planning document created. Identified pre-migration blockers:
   - `app/ui/src/design-system/tokens/status-tokens.css`
 - Validation: app `npm run typecheck` and `npm run build` both pass
 
+**P1-11A (COMPLETED, 2026-05-15)**: Introduce shared card surface foundation in Brandbook
+- Added `CardShell` as the common layout foundation above `MetralyPanel`
+- Reworked `MetralyCard` and `MetralyMetricCard` to compose `CardShell` while preserving semantic APIs
+- Reworked `DashboardWidget` to compose `CardShell` while keeping widget-specific drag/resize/remove chrome separate
+- Updated migration map/plan/local architecture/component contract docs to reflect the layered surface model
+- Validation: static source/CSS checks in sandbox; full Jest requires installed dependencies
+
 ## Task Ordering
 
 1. **P1-11**: Extract `StepRail` from `WizardLayout`

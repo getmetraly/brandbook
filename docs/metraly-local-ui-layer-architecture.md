@@ -49,6 +49,7 @@ ui/src/
       PulseMarker/
       HealthPill/
     surfaces/
+      CardFrame/
       Card/
       Panel/
       MetricCard/
@@ -111,6 +112,22 @@ ui/src/
     interactions/
     accessibility/
 ```
+
+---
+
+## 2.1 Surface foundation layering
+
+The brandbook upstream now uses this layering for card-like surfaces:
+
+```text
+Panel
+  → CardFrame / CardShell
+    → Card
+    → MetricCard
+    → WidgetShell
+```
+
+Local app architecture should mirror this shape. `CardFrame` owns only the shell slots and layout invariants. `Card`, `MetricCard`, and `WidgetShell` remain separate semantic components so product code does not pass widget editor props into a generic content card.
 
 ---
 
@@ -189,6 +206,7 @@ export * from "./telemetry/StatusBadge";
 export * from "./telemetry/TrendBadge";
 export * from "./telemetry/PulseMarker";
 export * from "./telemetry/HealthPill";
+export * from "./surfaces/CardFrame";
 export * from "./surfaces/Card";
 export * from "./surfaces/Panel";
 export * from "./surfaces/MetricCard";

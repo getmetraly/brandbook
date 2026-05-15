@@ -209,10 +209,6 @@
 
 .metraly-dashboard-widget-footer {
   flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 0.5rem;
   min-width: 0;
   max-width: 100%;
   margin-top: auto;
@@ -220,7 +216,16 @@
   border-top: 1px solid var(--m-line-faint);
 }
 
-.metraly-dashboard-widget-footer > * {
+.metraly-dashboard-widget-footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  min-width: 0;
+  width: 100%;
+}
+
+.metraly-dashboard-widget-footer-content > * {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;

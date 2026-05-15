@@ -83,10 +83,11 @@ Components required by the migration plan, assessed against what exists in `pack
 | `MetralyInput` → `Input` | Yes | Yes (`MetralyInput.stories.tsx`) | Long value, icon combinations, mobile full-width | Low | Low | Medium | No |
 | `MetralySelect` → `Select` | Yes | Partial (in `MetralyForms.stories.tsx`) | Open state, error, long options, compact filter usage | Medium | Low | Medium | No |
 | `MetralyTabs` → `Tabs` | Yes | None found | All states — keyboard nav, overflow, route-link alternative | High | **High** — tab semantics unverified | Medium | **Yes** |
-| `MetralyCard` → `Card` | Yes | Yes (`MetralyCard.stories.tsx`) | Tone variants, interactive selected, error, hover/focus states | Medium | Low | Low | No |
+| `CardShell` / `CardFrame` foundation | Yes | Covered by surface tests | Additional direct story optional; semantic cards remain public stories | Medium | Low | Low | No |
+| `MetralyCard` → `Card` | Yes, composed from `CardShell` | Yes (`MetralyCard.stories.tsx`) | Tone variants, interactive selected, error, hover/focus states | Medium | Low | Low | No |
 | `MetralyPanel` → `Panel` | Yes | None found (in `NewComponentStateBoard`?) | All states | Medium | Low | Medium | No |
-| `MetralyMetricCard` → `MetricCard` | Yes | Yes (`MetralyMetricCard.stories.tsx`) | richer dashboard recipes | Medium | Low | Low | No |
-| `DashboardWidget` → `WidgetShell` | Yes | Yes (`DashboardWidget.stories.tsx`) | editMode, gated, stale | Medium | Low | Medium | **Yes** |
+| `MetralyMetricCard` → `MetricCard` | Yes, composed from `CardShell` | Yes (`MetralyMetricCard.stories.tsx`) | richer dashboard recipes | Medium | Low | Low | No |
+| `DashboardWidget` → `WidgetShell` | Yes, composed from `CardShell` while retaining widget chrome | Yes (`DashboardWidget.stories.tsx`) | editMode, gated, stale | Medium | Low | Medium | **Yes** |
 | `WidgetPickerCard` → `WidgetCatalogCard` | Yes | Yes (`WidgetPickerCard.stories.tsx`) | Gated, coming-soon, requiresPro, long text | Medium | Low | **High** — full-width layout seen | **Yes** |
 | `MetralyTable` → `DataTable<Row>` | Yes | Yes (`MetralyTable.stories.tsx`) | error, bulk actions, richer responsive datasets | Medium | Low | Medium | No |
 | `EmptyState` / `DashboardEmptyState` | Partial (`MetralyEmptyState` + `DashboardEmptyState`) | Yes (`MetralyEmptyState.stories.tsx`) | Dashboard-specific integration still missing | Medium | Low | Medium | No |
@@ -195,7 +196,7 @@ Assessed against the gate from `metraly-ui-pre-migration-stabilization-checklist
 | P0 scenario stories exist and pass responsive review | **Not ready** — AppShell, AppShellRoleContext, DashboardOverview missing; DashboardEditor exists |
 | Drawer/BottomSheet/Dialog focus behavior is production-safe | **Partial** — `Drawer` and `BottomSheet` verified by story + site test; dialog-specific checks still absent |
 | `DataTable<Row>` validated for mobile and dense data | **Ready at component level** — `mobilePresentation` added; screen-level adoption still pending |
-| `WidgetShell` validated across all states | **Partial** — editMode, gated, stale states missing |
+| `WidgetShell` validated across all states | **Partial** — shared CardShell foundation is in place; editMode, gated, stale states still need final story coverage |
 | Board editing has non-drag fallback | **Partial** — `MoveMenu` exists; editor wiring still pending |
 | StatusBadge/HealthPill canonical taxonomy represented | **Partial** — `StatusBadge` now exists and has a canonical story; HealthPill and downstream integrations remain incomplete |
 | AppShell stories prove route/nav/title alignment | **Not ready** — AppShell and AppShellRoleContext stories missing |
