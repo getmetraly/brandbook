@@ -36,7 +36,7 @@ export function MetralyBadge({
         .join(" ")}
       data-variant={variant}
     >
-      {children}
+      <span className="metraly-badge__label">{children}</span>
     </span>
   );
 }

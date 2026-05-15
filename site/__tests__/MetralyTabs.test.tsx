@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { MetralyTabs } from "@metraly/ui";
@@ -18,6 +20,17 @@ describe("MetralyTabs", () => {
 
     expect(screen.getByRole("tab", { name: "Overview" })).toHaveAttribute("id", "metrics-tab-overview");
     expect(screen.getByRole("tab", { name: "Overview" })).toHaveAttribute("aria-controls", "metrics-panel-overview");
+  });
+
+  it("draws the active rail above and below the tab divider", () => {
+    const css = readFileSync(
+      join(__dirname, "../../packages/ui/src/styles/metraly-forms.css"),
+      "utf8",
+    );
+
+    expect(css).toMatch(/\.metraly-tabs\s*\{[^}]*border-top:\s*1px solid var\(--m-line-faint\)/s);
+    expect(css).toMatch(/\.metraly-tab\.is-active::before\s*\{/);
+    expect(css).toMatch(/\.metraly-tab\.is-active::after\s*\{/);
   });
 
   it("supports arrow-key navigation", () => {

@@ -5,6 +5,7 @@
   width: fit-content;
   max-width: 100%;
   min-width: 0;
+  overflow: hidden;
   gap: 6px;
   padding: 2px 8px;
   border-radius: var(--m-r-5);
@@ -15,6 +16,15 @@
   line-height: 1.2;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.metraly-badge__label {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
