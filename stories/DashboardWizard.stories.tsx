@@ -171,9 +171,9 @@ function appSidebarHeader() {
   );
 }
 
-function AppShellSidebar() {
+function AppShellSidebar({ id }: { id?: string }) {
   return (
-    <MetralySidebar header={appSidebarHeader()} aria-label="Primary navigation">
+    <MetralySidebar id={id} header={appSidebarHeader()} aria-label="Primary navigation">
       <MetralySidebarSection label="Dashboards">
         <MetralySidebarItem href="/dashboard/overview" icon={<MetralyIcon name="home" size={14} />} label="Overview" />
         <MetralySidebarItem href="/dashboard/vp" icon={<MetralyIcon name="users" size={14} />} label="VP Engineering" />
@@ -410,11 +410,24 @@ function BuilderPanel({ stage, className }: { stage: WizardStage; className?: st
 
 function DashboardWizardScenario({ stage = "goal" }: { stage?: WizardStage }) {
   const [builderOpen, setBuilderOpen] = React.useState(false);
+  const [sidebarOpen, setSidebarOpen] = React.useState(false);
 
   return (
     <div className="metraly-dashboard-wizard-app">
-      <MetralyShell className="metraly-dashboard-wizard-app__shell">
-        <AppShellSidebar />
+      <MetralyShell
+        className={[
+          "metraly-dashboard-wizard-app__shell",
+          "metraly-shell--mobile-drawer",
+          sidebarOpen && "is-sidebar-open",
+        ].filter(Boolean).join(" ")}
+      >
+        <AppShellSidebar id="dashboard-wizard-primary-navigation" />
+        <button
+          type="button"
+          className="metraly-shell__sidebar-scrim"
+          aria-label="Close navigation"
+          onClick={() => setSidebarOpen(false)}
+        />
         <main className="metraly-dashboard-wizard-recipe">
           <MetralyTopbar
             breadcrumb="Workspace / Dashboards / Preview"
@@ -422,6 +435,16 @@ function DashboardWizardScenario({ stage = "goal" }: { stage?: WizardStage }) {
             subtitle="Synthetic dashboard builder preview"
             actions={(
               <>
+                <button
+                  type="button"
+                  className="metraly-shell-mobile-trigger"
+                  aria-controls="dashboard-wizard-primary-navigation"
+                  aria-expanded={sidebarOpen}
+                  onClick={() => setSidebarOpen(true)}
+                >
+                  <MetralyIcon name="menu" size={13} />
+                  Menu
+                </button>
                 <MetralyButton
                   variant="ghost"
                   className="metraly-dashboard-wizard-recipe__builder-trigger"

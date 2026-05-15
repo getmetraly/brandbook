@@ -1155,6 +1155,13 @@
   }
 }
 
+
+@media (max-width: 767px) {
+  .metraly-dashboard-wizard-app .metraly-shell--mobile-drawer > .metraly-sidebar {
+    display: flex;
+  }
+}
+
 @media (max-width: 560px) {
   .metraly-dashboard-wizard-recipe__topbar-search {
     width: 100%;
