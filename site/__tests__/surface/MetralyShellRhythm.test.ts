@@ -19,6 +19,6 @@ describe("Metraly shell visual rhythm", () => {
     );
 
     expect(css).toMatch(/\.metraly-wizard-layout-body\s*\{[^}]*display:\s*grid/s);
-    expect(css).toMatch(/\.metraly-wizard-layout-body\s*\{[^}]*gap:\s*var\(--m-4\)/s);
+    expect(css).toMatch(/\.metraly-wizard-layout-body\s*\{[^}]*gap:\s*14px/s);
   });
 });

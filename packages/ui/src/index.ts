@@ -178,6 +178,20 @@ export type {
   WizardLayoutStepStatus,
 } from "./wizard/WizardLayout";
 
+export { StepRail } from "./wizard/StepRail";
+export type {
+  StepRailOrientation,
+  StepRailProps,
+  StepRailStep,
+  StepRailStepStatus,
+} from "./wizard/StepRail";
+
+export { ReviewPanel } from "./wizard/ReviewPanel";
+export type { ReviewPanelItem, ReviewPanelProps } from "./wizard/ReviewPanel";
+
+export { StickyWizardFooter } from "./wizard/StickyWizardFooter";
+export type { StickyWizardFooterProps } from "./wizard/StickyWizardFooter";
+
 export { defaultDashboardWidgetRegistry, findDashboardWidgetDefinition, createDashboardWidgetInstance } from "./dashboard/WidgetRegistry";
 export type {
   DashboardLayoutItem,

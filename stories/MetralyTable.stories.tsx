@@ -81,6 +81,15 @@ export const Loading: Story = {
   },
 };
 
+export const Error: Story = {
+  args: {
+    data: [],
+    error: true,
+    errorText: 'Could not load telemetry — check your connector health.',
+    footer: <span>last attempt failed</span>,
+  },
+};
+
 export const SelectedRow: Story = {
   args: {
     selectedRowKeys: ['Beta'],

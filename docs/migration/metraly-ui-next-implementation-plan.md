@@ -520,45 +520,43 @@ Items are ordered: P0 → P1 → P2. Within each tier, items are ordered by depe
 
 ### P1-11: Extract `StepRail` from `WizardLayout`
 
+**Status:** Completed on 2026-05-15
+
 **Target repo:** `getmetraly/brandbook`
 **Target files:**
 - `packages/ui/src/wizard/StepRail.tsx` (new)
-- `stories/StepRail.stories.tsx` (new)
-- `packages/ui/src/index.ts` (add export)
+- `stories/StepRail.stories.tsx` (new — 9 stories)
+- `site/__tests__/wizard/StepRail.test.tsx` (new — 14 assertions)
+- `packages/ui/src/index.ts` (exports added)
 
-**Why it matters:** `WizardLayout` is now public, but its progress rail is still internal. `StepRail` needs its own contract before the app wizard flows can adopt the layout safely.
-
-**Acceptance criteria:**
+**Acceptance criteria met:**
 - `StepRail` is importable from `@metraly/ui`
-- Story covers active, completed, upcoming, and compact/mobile summary states
-- Focus and current-step semantics are documented
-
-**Test/check command:** `npm run ui:check && npm run build-storybook`
-**Risk level:** Medium
-
+- Horizontal and vertical orientations with all status states (done/current/next/warning)
+- `WizardLayout` composes `StepRail` internally; backward compat type aliases in place
+- `aria-current="step"` on current step; no-aria on completed/pending
+- Mobile story at 390px
 ---
 
 ### P1-12: Extract `ReviewPanel` and `StickyWizardFooter`
+
+**Status:** Completed on 2026-05-15
 
 **Target repo:** `getmetraly/brandbook`
 **Target files:**
 - `packages/ui/src/wizard/ReviewPanel.tsx` (new)
 - `packages/ui/src/wizard/StickyWizardFooter.tsx` (new)
-- `stories/ReviewPanel.stories.tsx` (new)
-- `stories/StickyWizardFooter.stories.tsx` (new)
-- `packages/ui/src/index.ts` (add exports)
+- `stories/ReviewPanel.stories.tsx` (new — 6 stories)
+- `stories/StickyWizardFooter.stories.tsx` (new — 6 stories)
+- `site/__tests__/wizard/ReviewPanel.test.tsx` (new)
+- `site/__tests__/wizard/StickyWizardFooter.test.tsx` (new)
+- `packages/ui/src/index.ts` (exports added)
+- `packages/ui/src/styles/metraly-wizard.css` (CSS added for both primitives)
 
-**Why it matters:** Wizard review and completion controls still live inside `WizardLayout`. They need standalone contracts before `DashboardWizard` and `Connectors` can migrate screen-by-screen.
-
-**Acceptance criteria:**
+**Acceptance criteria met:**
 - Both primitives are importable from `@metraly/ui`
-- Stories cover loading, disabled, gated, and long-content states where applicable
-- Footer actions do not cause layout shift across viewport variants
-
-**Test/check command:** `npm run ui:check && npm run build-storybook`
-**Risk level:** Medium
-
----
+- `ReviewPanel`: connector, dashboard, loading, empty, long-text, and no-header stories
+- `StickyWizardFooter`: middle-step, first-step, submitting, status-slot, mobile, and composed stories
+- Footer is sticky above the viewport floor with safe-area inset; static on ≤560px
 
 ### P1-9: Fix `pin` button semantics in `Sidebar.tsx`
 

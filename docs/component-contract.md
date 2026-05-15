@@ -198,3 +198,34 @@ Rule: `WizardLayout` remains the canonical primitive for connector/setup/onboard
 `WizardLayout` owns the connector/setup wizard foundation. Its top progress stepper must be visually bounded by the centered card width and must not extend past the card's imaginary left/right rails. Additional connector stages should be represented as separate Storybook stories: source selection, connection preview, configuration, and review.
 
 `DashboardWizard` is not a generic wizard card. It is an app-shell recipe: sidebar and header rhythm follow `Scenarios/AppShellRoleContext`, the left rail owns template/widget/settings controls, and the right pane owns dashboard preview. Widget selection lists must expose a quick search input before category chips.
+
+## Wizard sub-primitive layer — 2026-05-15
+
+Three wizard sub-primitives are now importable from `@metraly/ui`:
+
+| Primitive | Responsibility | Composed by |
+|---|---|---|
+| `StepRail` | Progress stepper (horizontal) and side rail (vertical) | `WizardLayout` internally; also importable standalone |
+| `ReviewPanel` | Key/value review list with icon, badge, loading, and empty state | `WizardLayout` `review` slot; standalone connector/dashboard review surfaces |
+| `StickyWizardFooter` | Canonical Back / Primary / Status footer rhythm | `WizardLayout` `footer` slot; standalone wizard shells |
+
+### StepRail contract
+
+- `orientation="horizontal"` → horizontal top stepper (default, matches app wizard).
+- `orientation="vertical"` → sidebar rail (documentation only; use `progressPlacement="side"` in WizardLayout).
+- `aria-current="step"` is set on the active step item.
+- `WizardLayoutStep` and `WizardLayoutStepStatus` remain as backward-compat type aliases.
+
+### ReviewPanel contract
+
+- Items: `{ id, icon?, label, value?, badgeState?, badgeLabel? }`.
+- Empty state: rendered when `items.length === 0` and `loading` is false.
+- Loading state: renders `loadingRows` skeleton rows via `MetralySkeleton`.
+- No raw colors; `badgeState` delegates to `StateBadge`.
+
+### StickyWizardFooter contract
+
+- `back?` left slot, `primary` right slot, `status?` center slot.
+- `position: sticky; bottom: max(14px, env(safe-area-inset-bottom))` — inherits safe-area at all widths.
+- On ≤560px: `position: static` + `flex-wrap: wrap` so both buttons remain accessible.
+- When `back` is absent, adds `--no-back` modifier class; primary does not shift left — it stays at the right edge.
