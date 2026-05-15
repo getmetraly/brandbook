@@ -510,7 +510,7 @@ Items are ordered: P0 → P1 → P2. Within each tier, items are ordered by depe
 **Acceptance criteria:**
 - Folders exist
 - Token CSS files exist as inert bridge placeholders
-- `brandbook-legacy.ts` documents intent but has no imports yet (imports will come in Phase 3)
+- `brandbook-legacy.ts` documents intent; the first live `@metraly/ui` import now starts the Phase 3 cutover with `PlaceholderScreenCompat` → `MetralyEmptyState`
 - `npm run typecheck` and `npm run build` still pass
 
 **Test/check command:** `npm run typecheck && npm run build`

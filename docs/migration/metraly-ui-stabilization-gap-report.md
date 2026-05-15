@@ -172,9 +172,9 @@ These infrastructure items are required before screen migration can start:
 | Storybook | **Present** | Storybook 10 scaffolded; `npm run build-storybook` passes |
 | Visual regression | **Missing** | Choose tool (Chromatic, Playwright screenshots, or similar) before broad screen migration |
 | Accessibility testing | **Missing** | Choose tool (axe-playwright, jest-axe, or similar) before broad screen migration |
-| `design-system/` folder | **Present** | Skeleton created in `app/ui/src/design-system/`; ready for Phase 3 adapter imports |
-| `compat/` barrel | **Present** | `app/ui/src/design-system/compat/brandbook-legacy.ts` now contains real migration mappings |
-| Token bridge CSS | **Present** | `app/ui/src/design-system/tokens/*.css` exists as bridge placeholders |
+| `design-system/` folder | **Present** | Skeleton created in `app/ui/src/design-system/`; first live compat consumer can now route through it |
+| `compat/` barrel | **Present** | `app/ui/src/design-system/compat/brandbook-legacy.ts` now contains the first real `@metraly/ui` import (`PlaceholderScreenCompat` → `MetralyEmptyState`) |
+| Token bridge CSS | **Present** | `app/ui/src/design-system/tokens/*.css` exists as bridge placeholders; app entry + Storybook preview now also load the first upstream package styles |
 
 ---
 
