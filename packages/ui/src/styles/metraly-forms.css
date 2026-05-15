@@ -331,6 +331,7 @@
   display: flex;
   align-items: flex-end;
   gap: 0;
+  border-top: 0;
   border-bottom: 1px solid var(--m-line);
   min-width: 0;
   overflow-x: auto;
@@ -342,7 +343,7 @@
 
 .metraly-tab {
   position: relative;
-  padding: 8px 12px;
+  padding: 9px 12px;
   background: transparent;
   border: none;
   color: var(--m-fg-2);
@@ -372,15 +373,16 @@
   color: var(--m-fg-0);
 }
 
+
 .metraly-tab.is-active::after {
   content: "";
   position: absolute;
   left: 8px;
   right: 8px;
-  bottom: -1px;
-  height: 2px;
+  bottom: -2px;
+  height: 3px;
   background: var(--m-cyan-500);
-  border-radius: 1px;
+  border-radius: 999px;
   box-shadow: 0 0 8px -1px var(--m-cyan-glow);
 }
 
@@ -434,4 +436,56 @@
 
 [data-density="compact"] .metraly-tab {
   padding: 6px 10px;
+}
+
+/* Foundation: FieldShell / ControlField */
+.metraly-field-shell {
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.metraly-field-shell--full {
+  width: 100%;
+}
+
+.metraly-field-shell--field {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.metraly-field-shell--control-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--m-fg-1);
+}
+
+.metraly-field-shell--filter-chip {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.metraly-field-shell.is-disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.metraly-input.metraly-field-shell--full,
+.metraly-input--full {
+  width: 100%;
+}
+
+.metraly-input.is-error .metraly-input__control,
+.metraly-input--error .metraly-input__control {
+  border-color: var(--m-err);
+  box-shadow: 0 0 0 3px var(--m-err-bg);
+}
+
+.metraly-input.is-disabled .metraly-input__field,
+.metraly-input--disabled .metraly-input__field {
+  cursor: not-allowed;
 }

@@ -11,6 +11,21 @@ export { MetralyIcon, metralyIconPaths } from "./components/MetralyIcon";
 export { metralyIconSizeMap } from "./components/MetralyIcon";
 export type { MetralyIconName, MetralyIconProps, MetralyIconSize } from "./components/MetralyIcon";
 
+export { FieldShell, FieldCopy } from "./components/FieldShell";
+export type { FieldCopyProps, FieldShellContext, FieldShellElement, FieldShellLayout, FieldShellProps, FieldShellState } from "./components/FieldShell";
+
+export { StateBlock } from "./components/StateBlock";
+export type { StateBlockAlign, StateBlockDensity, StateBlockProps, StateBlockVariant } from "./components/StateBlock";
+
+export { NavigationItemFrame } from "./components/NavigationItemFrame";
+export type { NavigationItemFrameAs, NavigationItemFrameProps, NavigationItemFrameTone } from "./components/NavigationItemFrame";
+
+export { useRovingSelection } from "./components/useRovingSelection";
+export type { RovingSelectionItem, RovingSelectionMode, UseRovingSelectionOptions } from "./components/useRovingSelection";
+
+export { CardShell } from "./components/CardShell";
+export type { CardShellDensity, CardShellProps, CardShellState, CardShellTone } from "./components/CardShell";
+
 export { MetralyCard } from "./components/MetralyCard";
 export type { MetralyCardDensity, MetralyCardProps, MetralyCardState } from "./components/MetralyCard";
 
@@ -37,6 +52,34 @@ export type { ThemeMode, ThemeProviderProps } from "./components/ThemeProvider";
 
 export { StateBadge } from "./components/StateBadge";
 export type { StateBadgeProps, StateBadgeSize, StateBadgeState, StateBadgeTone } from "./components/StateBadge";
+
+export { StatusBadge } from "./components/StatusBadge";
+export type { StatusBadgeProps, StatusBadgeStatus } from "./components/StatusBadge";
+
+export { TrendBadge } from "./components/TrendBadge";
+export type {
+  TrendBadgeDirection,
+  TrendBadgeProps,
+  TrendBadgeSentiment,
+  TrendBadgeSize,
+} from "./components/TrendBadge";
+
+export { PulseMarker } from "./components/PulseMarker";
+export type {
+  PulseMarkerProps,
+  PulseMarkerSize,
+  PulseMarkerTone,
+  PulseMarkerVariant,
+} from "./components/PulseMarker";
+
+export { MetralySkeleton } from "./components/MetralySkeleton";
+export type { MetralySkeletonProps, MetralySkeletonVariant } from "./components/MetralySkeleton";
+
+export { MetralyEmptyState } from "./components/MetralyEmptyState";
+export type { MetralyEmptyStateProps, MetralyEmptyStateVariant } from "./components/MetralyEmptyState";
+
+export { MetralyFilterBar } from "./components/MetralyFilterBar";
+export type { MetralyFilterBarItem, MetralyFilterBarProps } from "./components/MetralyFilterBar";
 
 export { MetralyCheckbox } from "./components/MetralyCheckbox";
 export type { MetralyCheckboxProps } from "./components/MetralyCheckbox";
@@ -93,8 +136,15 @@ export type { MetralyDrawerProps, MetralyDrawerSide } from "./shell/MetralyDrawe
 export { MetralyBottomSheet } from "./shell/MetralyBottomSheet";
 export type { MetralyBottomSheetProps } from "./shell/MetralyBottomSheet";
 
-export { WidgetPickerCard } from "./components/WidgetPickerCard";
-export type { WidgetPickerCardProps } from "./components/WidgetPickerCard";
+export { OverlayShell } from "./shell/OverlayShell";
+export type { OverlayShellPlacement, OverlayShellProps } from "./shell/OverlayShell";
+
+export { WidgetPickerCard, WidgetPickerList } from "./components/WidgetPickerCard";
+export type { WidgetPickerCardProps, WidgetPickerListProps } from "./components/WidgetPickerCard";
+ 
+ // Semantic alias — preferred name when building catalog UIs
+ export { WidgetPickerCard as WidgetCatalogCard, WidgetPickerList as WidgetCatalogList } from "./components/WidgetPickerCard";
+ export type { WidgetPickerCardProps as WidgetCatalogCardProps, WidgetPickerListProps as WidgetCatalogListProps } from "./components/WidgetPickerCard";
 
 export { DashboardGrid } from "./dashboard/DashboardGrid";
 export type { DashboardGridProps } from "./dashboard/DashboardGrid";
@@ -112,7 +162,39 @@ export { DashboardDropZone } from "./dashboard/DashboardDropZone";
 export type { DashboardDropZoneProps } from "./dashboard/DashboardDropZone";
 
 export { DashboardResizeHandle } from "./dashboard/DashboardResizeHandle";
-export type { DashboardResizeHandleProps } from "./dashboard/DashboardResizeHandle";
+export { dashboardResizeHandleDirections } from "./dashboard/DashboardResizeHandle";
+export type {
+  DashboardResizeHandleDirection,
+  DashboardResizeHandleProps,
+} from "./dashboard/DashboardResizeHandle";
+
+export { MoveMenu } from "./dashboard/MoveMenu";
+export type { MoveMenuDirection, MoveMenuProps } from "./dashboard/MoveMenu";
+
+export { HandlePrimitive } from "./dashboard/HandlePrimitive";
+export type { HandlePrimitiveKind, HandlePrimitiveProps, HandlePrimitiveState } from "./dashboard/HandlePrimitive";
+
+export { WizardLayout } from "./wizard/WizardLayout";
+export type {
+  WizardLayoutProgressPlacement,
+  WizardLayoutProps,
+  WizardLayoutStep,
+  WizardLayoutStepStatus,
+} from "./wizard/WizardLayout";
+
+export { StepRail } from "./wizard/StepRail";
+export type {
+  StepRailOrientation,
+  StepRailProps,
+  StepRailStep,
+  StepRailStepStatus,
+} from "./wizard/StepRail";
+
+export { ReviewPanel } from "./wizard/ReviewPanel";
+export type { ReviewPanelItem, ReviewPanelProps } from "./wizard/ReviewPanel";
+
+export { StickyWizardFooter } from "./wizard/StickyWizardFooter";
+export type { StickyWizardFooterProps } from "./wizard/StickyWizardFooter";
 
 export { defaultDashboardWidgetRegistry, findDashboardWidgetDefinition, createDashboardWidgetInstance } from "./dashboard/WidgetRegistry";
 export type {
@@ -121,3 +203,22 @@ export type {
   DashboardWidgetInstance,
   DashboardWidgetSize,
 } from "./dashboard/types";
+
+// ── AI Workspace (Phase 9) ────────────────────────────────────────────────────
+export type { EvidenceCitation, AnswerCardProps } from "./components/AnswerCard";
+export { AnswerCard } from "./components/AnswerCard";
+export type { EvidencePanelProps } from "./components/EvidencePanel";
+export { EvidencePanel } from "./components/EvidencePanel";
+export type { TraceStep, TraceStepStatus, TraceDrawerProps } from "./components/TraceDrawer";
+export { TraceDrawer } from "./components/TraceDrawer";
+export type { ChatMessage, AIWorkspaceLayoutProps } from "./components/AIWorkspaceLayout";
+export { AIWorkspaceLayout } from "./components/AIWorkspaceLayout";
+// ── Plugins (Phase 9) ─────────────────────────────────────────────────────────
+export type { PermissionLevel, PermissionBadgeProps } from "./components/PermissionBadge";
+export { PermissionBadge } from "./components/PermissionBadge";
+export type { SigningStatus, SigningBannerProps } from "./components/SigningBanner";
+export { SigningBanner } from "./components/SigningBanner";
+export type { Plugin, PluginCatalogProps } from "./components/PluginCatalog";
+export { PluginCatalog } from "./components/PluginCatalog";
+export type { PluginPermission, PluginReviewDrawerProps } from "./components/PluginReviewDrawer";
+export { PluginReviewDrawer } from "./components/PluginReviewDrawer";

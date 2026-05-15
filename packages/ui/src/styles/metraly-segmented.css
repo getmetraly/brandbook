@@ -75,6 +75,7 @@
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .metraly-segmented-control--sm .metraly-segmented-control__option {
@@ -84,6 +85,12 @@
 }
 
 .metraly-segmented-control--full .metraly-segmented-control__option {
-  min-width: 0;
-  flex: 1 1 0;
+  min-width: max-content;
+  flex: 1 0 max-content;
+}
+
+@media (max-width: 767px) {
+  .metraly-segmented-control--full .metraly-segmented-control__option {
+    flex-grow: 0;
+  }
 }

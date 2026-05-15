@@ -42,8 +42,9 @@ describe('WidgetPickerCard', () => {
 
     expect(onSelect).toHaveBeenCalledTimes(1);
     expect(option).toHaveAttribute('aria-selected', 'false');
-    // "delayed" is a routine operational state — no badge shown in picker rows.
-    expect(screen.queryByText('Delayed')).not.toBeInTheDocument();
+    // "delayed" is a non-routine operational state — it surfaces a badge so the user
+    // knows the widget data feed is behind schedule.
+    expect(screen.queryByText('Delayed')).toBeInTheDocument();
 
     render(
       <WidgetPickerCard

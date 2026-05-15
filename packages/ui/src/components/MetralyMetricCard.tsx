@@ -1,8 +1,9 @@
 import * as React from "react";
-import { MetralyPanel } from "./MetralyPanel";
+import { CardShell, type CardShellTone } from "./CardShell";
 
 /**
  * A card used to display a single metric or statistic.
+ * It composes the shared CardShell foundation while keeping a metric-specific API.
  */
 export type MetralyMetricCardVariant =
   | "primary"
@@ -34,6 +35,15 @@ export interface MetralyMetricCardProps extends Omit<React.HTMLAttributes<HTMLDi
   className?: string;
 }
 
+const variantTone: Record<MetralyMetricCardVariant, CardShellTone> = {
+  primary: "cyan",
+  secondary: "purple",
+  success: "success",
+  warning: "warning",
+  error: "danger",
+  info: "info",
+};
+
 export function MetralyMetricCard({
   title,
   value,
@@ -46,33 +56,37 @@ export function MetralyMetricCard({
   className,
   ...rest
 }: MetralyMetricCardProps) {
-  const classes = [
-    "metraly-metric-card",
-    `is-${variant}`,
-    density !== "comfortable" ? `metraly-metric-card--${density}` : null,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
-
   return (
-    <MetralyPanel
+    <CardShell
       {...rest}
-      className={classes}
+      className={[
+        "metraly-metric-card",
+        `is-${variant}`,
+        density !== "comfortable" ? `metraly-metric-card--${density}` : null,
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
       data-variant={variant}
       data-density={density}
-    >
-      <div className="metraly-metric-card-header">
-        {icon ? <span className="metraly-metric-card-icon" aria-hidden="true">{icon}</span> : null}
-        <div className="metraly-metric-card-copy">
-          <div className="metraly-metric-card-title">{title}</div>
-          <div className="metraly-metric-card-value">{value}</div>
-          {description ? <div className="metraly-metric-card-description">{description}</div> : null}
-        </div>
-        {badge ? <div className="metraly-metric-card-badge">{badge}</div> : null}
-      </div>
-      {footer ? <div className="metraly-metric-card-footer">{footer}</div> : null}
-    </MetralyPanel>
+      density={density}
+      tone={variantTone[variant]}
+      headerClassName="metraly-metric-card-header"
+      bodyClassName="metraly-metric-card-body"
+      footerClassName="metraly-metric-card-footer"
+      footer={footer}
+      header={(
+        <>
+          {icon ? <span className="metraly-metric-card-icon" aria-hidden="true">{icon}</span> : null}
+          <div className="metraly-metric-card-copy">
+            <div className="metraly-metric-card-title">{title}</div>
+            <div className="metraly-metric-card-value">{value}</div>
+            {description ? <div className="metraly-metric-card-description">{description}</div> : null}
+          </div>
+          {badge ? <div className="metraly-metric-card-badge">{badge}</div> : null}
+        </>
+      )}
+    />
   );
 }
 

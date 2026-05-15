@@ -1,4 +1,5 @@
 import * as React from "react";
+import { NavigationItemFrame } from "../components/NavigationItemFrame";
 
 type SidebarContextValue = {
   collapsed: boolean;
@@ -114,56 +115,26 @@ export function MetralySidebarItem({
   variant = "default",
 }: MetralySidebarItemProps) {
   const { collapsed } = React.useContext(SidebarContext);
-  const classes = [
-    "metraly-sidebar-item",
-    active && "is-active",
-    disabled && "is-disabled",
-    variant === "accent" && "is-accent",
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
-
   const textLabel = typeof label === "string" ? label : collapsedLabel;
   const resolvedAriaLabel = ariaLabel ?? (collapsed ? textLabel : undefined);
   const resolvedTitle = collapsed ? title ?? textLabel : title;
 
-  const content = (
-    <>
-      {active ? <span className="metraly-sidebar-item__accent" aria-hidden="true" /> : null}
-      {icon ? <span className="metraly-sidebar-item__icon" aria-hidden="true">{icon}</span> : null}
-      <span className="metraly-sidebar-item__label">{label}</span>
-      {meta !== undefined ? <span className="metraly-sidebar-item__meta">{meta}</span> : null}
-    </>
-  );
-
-  if (href && !disabled) {
-    return (
-      <a
-        href={href}
-        className={classes}
-        aria-current={active ? "page" : undefined}
-        aria-label={resolvedAriaLabel}
-        onClick={onClick as React.MouseEventHandler<HTMLAnchorElement> | undefined}
-        title={resolvedTitle}
-      >
-        {content}
-      </a>
-    );
-  }
-
   return (
-    <button
-      type="button"
-      className={classes}
+    <NavigationItemFrame
+      as={href && !disabled ? "a" : "button"}
+      href={href}
+      className={["metraly-sidebar-item", className].filter(Boolean).join(" ")}
+      active={active}
+      disabled={disabled}
+      accent={variant === "accent"}
+      icon={icon}
+      label={label}
+      meta={meta}
       aria-current={active ? "page" : undefined}
       aria-label={resolvedAriaLabel}
-      onClick={disabled ? undefined : onClick as React.MouseEventHandler<HTMLButtonElement> | undefined}
+      onClick={disabled ? undefined : onClick as any}
       title={resolvedTitle}
-      disabled={disabled}
-    >
-      {content}
-    </button>
+    />
   );
 }
 

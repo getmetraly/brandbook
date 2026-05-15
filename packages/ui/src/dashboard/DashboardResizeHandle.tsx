@@ -1,4 +1,5 @@
 import * as React from "react";
+import { HandlePrimitive } from "./HandlePrimitive";
 
 export type DashboardResizeHandleDirection =
   | "northwest"
@@ -46,27 +47,17 @@ export function DashboardResizeHandle({
   className,
 }: DashboardResizeHandleProps) {
   const resolvedLabel = label ?? directionLabels[direction];
-  const classes = [
-    "metraly-dashboard-resize-handle",
-    `is-${direction}`,
-    active && "is-active",
-    "metraly-focus-ring",
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
 
   return (
-    <span
-      className={classes}
+    <HandlePrimitive
+      kind="resize"
+      label={resolvedLabel}
+      direction={direction}
+      active={active}
+      focusable={active}
+      className={["metraly-dashboard-resize-handle", className].filter(Boolean).join(" ")}
       role="separator"
-      aria-label={resolvedLabel}
-      data-direction={direction}
-      data-state={active ? "active" : "idle"}
-      tabIndex={active ? 0 : undefined}
-    >
-      <span aria-hidden="true" />
-    </span>
+    />
   );
 }
 

@@ -22,9 +22,19 @@ describe('dashboard edit mode primitives', () => {
     const { container } = render(<DashboardDropZone state="idle" label="Drop widget here" />);
 
     expect(screen.getByRole('status')).toHaveAttribute('data-drop-zone-state', 'idle');
-    expect(container.querySelector('.metraly-dashboard-drop-zone-icon')).toHaveTextContent('+');
+    expect(container.querySelector('.metraly-dashboard-drop-zone-icon svg')).toBeInTheDocument();
     expect(container.querySelector('.metraly-dashboard-drop-zone-line')).not.toBeInTheDocument();
     expect(container.querySelector('.metraly-pulse-marker')).not.toBeInTheDocument();
+  });
+
+  it('renders a keyboard-safe action button when a fallback handler is provided', () => {
+    const onAction = jest.fn();
+    render(<DashboardDropZone state="empty" actionLabel="Add widget" onAction={onAction} />);
+
+    const button = screen.getByRole('button', { name: 'Add widget' });
+    expect(button).toBeInTheDocument();
+    button.click();
+    expect(onAction).toHaveBeenCalledTimes(1);
   });
 
   it('renders a keyboard-focusable resize handle with an accessible label', () => {
