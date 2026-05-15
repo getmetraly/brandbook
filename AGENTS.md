@@ -122,3 +122,12 @@ For wizard scenarios, prefer the app-aligned `WizardLayout` default: horizontal 
 ### Wizard scenario split rule
 
 Connector/setup/onboarding wizard stories should use `WizardLayout` default top progress. Dashboard creation/builder stories should use the app-like split builder recipe: compact left rail for template/widgets/settings and a right preview canvas. Do not force Dashboard Wizard into the connector setup card layout, and do not use the side rail variant for product-like wizard flows unless explicitly documenting the rail primitive.
+
+
+## Wizard story parity rules
+
+- Do not mix the connector setup wizard and dashboard builder wizard in the same layout.
+- `Components/WizardLayout` demonstrates the connector/source setup flow: centered card, bounded top stepper, provider tiles, connection preview, configure, review.
+- `Scenarios/DashboardWizard` demonstrates the dashboard builder flow: AppShell-like sidebar/topbar, left builder rail, right preview canvas.
+- Use the AppShellRoleContext sidebar/header rhythm for dashboard-builder stories; avoid creating a second oversized navigation shell.
+- Dashboard builder rails must include search/filter affordances when the list can grow beyond a few items.

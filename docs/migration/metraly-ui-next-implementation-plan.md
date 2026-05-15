@@ -712,3 +712,8 @@ After foundation iterations 1–6, the next app-alignment change is the wizard s
 3. Keep `progressPlacement="side"` only for primitive documentation.
 4. Do not introduce one-off sidebar wizard shells in product scenarios.
 5. When migrating into `getmetraly/metraly/ui`, map this foundation to local `WizardLayout`, `StepRail`, `ReviewPanel`, and `StickyWizardFooter` without changing the visual rhythm.
+
+
+### Wizard implementation note
+
+Keep connector setup and dashboard builder as separate migration tracks. Connector setup should be migrated as a product flow using `WizardLayout`; dashboard builder should be migrated as an AppShell recipe with its own left rail and preview canvas.

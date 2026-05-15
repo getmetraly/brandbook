@@ -906,3 +906,8 @@ Shared wizard pieces -> StepRail / ReviewPanel / StickyWizardFooter where useful
 ```
 
 Agents must not collapse these two flows into a single generic centered card.
+
+
+### Current wizard follow-up
+
+The next UI migration pass should treat connector setup and dashboard creation as two separate recipes. Connector setup remains a `WizardLayout` usage. Dashboard creation remains a scenario-level composition with AppShell-like navigation, builder rail, search/filter controls, and preview canvas. Agents must not collapse these into a single wizard primitive.

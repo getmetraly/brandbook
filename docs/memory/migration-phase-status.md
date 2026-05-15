@@ -191,3 +191,9 @@ Next:
 
 - Validate both stories at 320, 390, 768, 1024 and 1280px.
 - When migrating to `getmetraly/metraly/ui`, map connector flows to `WizardLayout` and dashboard creation to a feature-owned `DashboardWizardShell` recipe.
+
+
+### Wizard parity status
+
+- Connector wizard: split into source, preview connection, configure, and review stories.
+- Dashboard wizard: sidebar/header rhythm aligned toward AppShellRoleContext; review bundle has search before category chips; mini-stepper no longer renders stray connector lines.

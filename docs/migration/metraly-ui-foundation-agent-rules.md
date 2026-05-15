@@ -113,3 +113,8 @@ Dashboard wizard / dashboard builder
 ```
 
 The dashboard builder recipe can compose wizard foundation pieces, but it must preserve the app mental model: the user is configuring a dashboard while seeing the preview, not stepping through an isolated modal-like setup card.
+
+
+### Wizard parity rule
+
+When changing wizard stories, first identify whether the target is connector setup or dashboard builder. Connector setup uses `WizardLayout`; dashboard builder uses the AppShell-like scenario composition. Keep the top stepper bounded to the wizard card width. Add search/filter affordances to any dashboard-builder list that can exceed visible rows.

@@ -191,3 +191,10 @@ Two wizard families are now explicit in Storybook:
 | `Scenarios/DashboardWizard` | App-recipe split layout: left builder rail + right live preview | Mirrors the Dashboard Preview app flow. Do not force this into the generic centered connector wizard card. |
 
 Rule: `WizardLayout` remains the canonical primitive for connector/setup/onboarding flows. Dashboard Wizard is a product scenario that may compose a compact stepper and builder panel because the preview canvas is the primary surface.
+
+
+### Wizard and dashboard-builder story contract
+
+`WizardLayout` owns the connector/setup wizard foundation. Its top progress stepper must be visually bounded by the centered card width and must not extend past the card's imaginary left/right rails. Additional connector stages should be represented as separate Storybook stories: source selection, connection preview, configuration, and review.
+
+`DashboardWizard` is not a generic wizard card. It is an app-shell recipe: sidebar and header rhythm follow `Scenarios/AppShellRoleContext`, the left rail owns template/widget/settings controls, and the right pane owns dashboard preview. Widget selection lists must expose a quick search input before category chips.
