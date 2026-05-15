@@ -17,13 +17,13 @@ describe("MetralyFilterBar", () => {
       "utf8",
     );
 
-    expect(css).toMatch(/\.metraly-filter-bar__item\s*\{[^}]*min-height:\s*28px/s);
+    expect(css).toMatch(/\.metraly-filter-bar__item\s*\{[^}]*min-height:\s*30px/s);
     expect(css).toMatch(/\.metraly-filter-bar__reset\s*\{[^}]*height:\s*26px/s);
     expect(css).toMatch(/\.metraly-filter-bar__actions\s*\{[^}]*align-self:\s*center/s);
-    expect(css).toMatch(/\.metraly-filter-bar__item\s*\{[^}]*align-items:\s*baseline/s);
-    expect(css).toMatch(/\.metraly-filter-bar__label\s*\{[^}]*line-height:\s*1/s);
-    expect(css).toMatch(/\.metraly-filter-bar__control\s*\{[^}]*line-height:\s*1[\s\S]*transform:\s*translateY\(-1px\)/s);
-    expect(css).toMatch(/\.metraly-filter-bar__control > :where\(span, strong, em\)\s*\{[^}]*align-items:\s*baseline/s);
+    expect(css).toMatch(/\.metraly-filter-bar__item\s*\{[^}]*align-items:\s*center/s);
+    expect(css).toMatch(/\.metraly-filter-bar__label\s*\{[^}]*line-height:\s*1\.2/s);
+    expect(css).toMatch(/\.metraly-filter-bar__control\s*\{[^}]*align-items:\s*center[\s\S]*transform:\s*none/s);
+    expect(css).toMatch(/\.metraly-filter-bar__control > :where\(span, strong, em\)\s*\{[^}]*align-items:\s*center/s);
   });
 
   it("centers the mobile filter bar content instead of pinning actions to the right", () => {
