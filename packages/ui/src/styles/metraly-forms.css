@@ -331,7 +331,7 @@
   display: flex;
   align-items: flex-end;
   gap: 0;
-  border-top: 1px solid var(--m-line-faint);
+  border-top: 0;
   border-bottom: 1px solid var(--m-line);
   min-width: 0;
   overflow-x: auto;
@@ -373,27 +373,16 @@
   color: var(--m-fg-0);
 }
 
-.metraly-tab.is-active::before {
-  content: "";
-  position: absolute;
-  left: 8px;
-  right: 8px;
-  top: -1px;
-  height: 2px;
-  background: var(--m-cyan-500);
-  border-radius: 1px;
-  box-shadow: 0 0 8px -1px var(--m-cyan-glow);
-}
 
 .metraly-tab.is-active::after {
   content: "";
   position: absolute;
   left: 8px;
   right: 8px;
-  bottom: -1px;
-  height: 2px;
+  bottom: -2px;
+  height: 3px;
   background: var(--m-cyan-500);
-  border-radius: 1px;
+  border-radius: 999px;
   box-shadow: 0 0 8px -1px var(--m-cyan-glow);
 }
 

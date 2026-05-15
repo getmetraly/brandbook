@@ -498,3 +498,72 @@
     border-right: 0;
   }
 }
+
+.metraly-shell-mobile-trigger {
+  display: none;
+}
+
+.metraly-shell__sidebar-scrim {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .metraly-shell--mobile-drawer {
+    position: relative;
+    min-height: 100dvh;
+  }
+
+  .metraly-shell--mobile-drawer > .metraly-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 30;
+    width: min(286px, calc(100vw - 56px));
+    max-width: calc(100vw - 56px);
+    transform: translateX(-104%);
+    box-shadow: 24px 0 60px oklch(0.04 0.012 250 / 0.64);
+    transition: transform var(--m-dur-2) var(--m-ease);
+  }
+
+  .metraly-shell--mobile-drawer.is-sidebar-open > .metraly-sidebar {
+    transform: translateX(0);
+  }
+
+  .metraly-shell--mobile-drawer > .metraly-shell__sidebar-scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: block;
+    border: 0;
+    background: oklch(0.04 0.012 250 / 0.58);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--m-dur-2) var(--m-ease);
+  }
+
+  .metraly-shell--mobile-drawer.is-sidebar-open > .metraly-shell__sidebar-scrim {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .metraly-shell--mobile-drawer > :not(.metraly-sidebar):not(.metraly-shell__sidebar-scrim) {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .metraly-shell-mobile-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 30px;
+    padding: 0 10px;
+    border: 1px solid var(--m-line);
+    border-radius: var(--m-r-2);
+    background: var(--m-bg-2);
+    color: var(--m-fg-0);
+    font-family: var(--m-font-ui);
+    font-size: var(--m-fs-11);
+    font-weight: 650;
+  }
+}

@@ -25,6 +25,7 @@
   gap: 8px;
   min-height: 28px;
   padding: 0 10px;
+  line-height: 1;
   border: 1px solid var(--m-line);
   border-radius: var(--m-r-3);
   background: var(--m-bg-1);
@@ -37,6 +38,7 @@
   font-family: var(--m-font-mono);
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  line-height: 1;
   color: var(--m-fg-3);
 }
 
@@ -45,6 +47,7 @@
   align-items: center;
   gap: 6px;
   min-width: 0;
+  line-height: 1;
 }
 
 .metraly-filter-bar__meta {
@@ -54,6 +57,7 @@
   white-space: nowrap;
   color: var(--m-fg-2);
   font-size: var(--m-fs-11);
+  line-height: 1;
 }
 
 .metraly-filter-bar__actions {
@@ -91,6 +95,16 @@
 @media (max-width: 767px) {
   .metraly-filter-bar {
     align-items: stretch;
+    gap: 12px;
+  }
+
+  .metraly-filter-bar__items {
+    flex-basis: 100%;
+    align-items: center;
+  }
+
+  .metraly-filter-bar__item {
+    min-height: 30px;
   }
 
   .metraly-filter-bar__actions {

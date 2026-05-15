@@ -22,15 +22,15 @@ describe("MetralyTabs", () => {
     expect(screen.getByRole("tab", { name: "Overview" })).toHaveAttribute("aria-controls", "metrics-panel-overview");
   });
 
-  it("draws the active rail above and below the tab divider", () => {
+  it("draws only a centered active rail on the bottom divider", () => {
     const css = readFileSync(
       join(__dirname, "../../packages/ui/src/styles/metraly-forms.css"),
       "utf8",
     );
 
-    expect(css).toMatch(/\.metraly-tabs\s*\{[^}]*border-top:\s*1px solid var\(--m-line-faint\)/s);
-    expect(css).toMatch(/\.metraly-tab\.is-active::before\s*\{/);
-    expect(css).toMatch(/\.metraly-tab\.is-active::after\s*\{/);
+    expect(css).toMatch(/\.metraly-tabs\s*\{[^}]*border-top:\s*0/s);
+    expect(css).not.toMatch(/\.metraly-tab\.is-active::before\s*\{/);
+    expect(css).toMatch(/\.metraly-tab\.is-active::after\s*\{[^}]*bottom:\s*-2px[^}]*height:\s*3px/s);
   });
 
   it("supports arrow-key navigation", () => {

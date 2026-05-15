@@ -452,3 +452,48 @@
     text-overflow: ellipsis;
   }
 }
+
+@media (max-width: 640px) {
+  .metraly-dashboard-toolbar {
+    gap: 0.5rem;
+    padding: 0.75rem;
+    overflow: visible;
+  }
+
+  .metraly-dashboard-toolbar-head {
+    gap: 0.5rem;
+  }
+
+  .metraly-dashboard-toolbar-tabs-row {
+    flex-basis: 100%;
+  }
+
+  .metraly-dashboard-toolbar-row-controls {
+    justify-content: flex-start;
+    align-items: center;
+    row-gap: 0.5rem;
+  }
+
+  .metraly-dashboard-toolbar-controls {
+    display: contents;
+  }
+
+  .metraly-dashboard-toolbar-search {
+    order: 1;
+    flex: 1 0 100%;
+    max-width: none;
+  }
+
+  .metraly-dashboard-toolbar-actions {
+    order: 2;
+    flex: 1 1 auto;
+    align-items: center;
+  }
+
+  .metraly-dashboard-toolbar-sync,
+  .metraly-dashboard-toolbar-sync.metraly-state-badge {
+    order: 3;
+    margin-left: auto;
+    align-self: center;
+  }
+}
