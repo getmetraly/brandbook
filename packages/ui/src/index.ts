@@ -203,3 +203,122 @@ export type {
   DashboardWidgetInstance,
   DashboardWidgetSize,
 } from "./dashboard/types";
+
+// ── AI Workspace (Phase 9) ────────────────────────────────────────────────────
+export type { EvidenceCitation, AnswerCardProps } from "./components/AnswerCard";
+export { AnswerCard } from "./components/AnswerCard";
+export type { EvidencePanelProps } from "./components/EvidencePanel";
+export { EvidencePanel } from "./components/EvidencePanel";
+export type { TraceStep, TraceStepStatus, TraceDrawerProps } from "./components/TraceDrawer";
+export { TraceDrawer } from "./components/TraceDrawer";
+export type { ChatMessage, AIWorkspaceLayoutProps } from "./components/AIWorkspaceLayout";
+export { AIWorkspaceLayout } from "./components/AIWorkspaceLayout";
+// ── Plugins (Phase 9) ─────────────────────────────────────────────────────────
+export type { PermissionLevel, PermissionBadgeProps } from "./components/PermissionBadge";
+export { PermissionBadge } from "./components/PermissionBadge";
+export type { SigningStatus, SigningBannerProps } from "./components/SigningBanner";
+export { SigningBanner } from "./components/SigningBanner";
+export type { Plugin, PluginCatalogProps } from "./components/PluginCatalog";
+export { PluginCatalog } from "./components/PluginCatalog";
+export type { PluginPermission, PluginReviewDrawerProps } from "./components/PluginReviewDrawer";
+export { PluginReviewDrawer } from "./components/PluginReviewDrawer";
+
+// ── Phase 1 System Design Extensions ────────────────────────────────────────
+export { MetralyGauge } from "./charts/MetralyGauge";
+export type {
+  MetralyGaugeProps,
+  MetralyGaugeState,
+  MetralyGaugeTone,
+  MetralyGaugeVariant,
+  MetralyGaugeThreshold,
+} from "./charts/MetralyGauge";
+
+export { MetralyHeatmap } from "./charts/MetralyHeatmap";
+export type {
+  MetralyHeatmapProps,
+  MetralyHeatmapState,
+  MetralyHeatmapCell,
+  MetralyHeatmapCellStatus,
+} from "./charts/MetralyHeatmap";
+
+export { ActivityFeed } from "./components/ActivityFeed";
+export type {
+  ActivityFeedProps,
+  ActivityFeedState,
+  ActivityItem,
+  ActivityKind,
+  ActivitySeverity,
+} from "./components/ActivityFeed";
+
+export { InsightCard } from "./components/InsightCard";
+export type {
+  InsightCardProps,
+  InsightState,
+  InsightTone,
+  InsightSource,
+  InsightConfidence,
+  InsightEvidence,
+  InsightAction,
+} from "./components/InsightCard";
+
+export { StateBoard } from "./components/StateBoard";
+export type {
+  StateBoardProps,
+  StateBoardState,
+  StateBoardItem,
+  StateBoardItemStatus,
+} from "./components/StateBoard";
+
+export { WidgetStateMatrix, WIDGET_STATE_ORDER } from "./components/WidgetStateMatrix";
+export type { WidgetStateMatrixProps, WidgetStateStatus } from "./components/WidgetStateMatrix";
+
+export { TokenInput } from "./source/TokenInput";
+export type { TokenInputProps, TokenKind, TokenValidationStatus } from "./source/TokenInput";
+
+export { PermissionExplainer } from "./source/PermissionExplainer";
+export type { PermissionExplainerProps, PermissionScope, ScopeRequirement, ScopeState } from "./source/PermissionExplainer";
+
+export { BackfillRangePicker } from "./source/BackfillRangePicker";
+export type { BackfillRangePickerProps, BackfillPresetId, BackfillEstimate, EstimateConfidence } from "./source/BackfillRangePicker";
+
+export { ConnectionTestPanel } from "./source/ConnectionTestPanel";
+export type { ConnectionTestPanelProps, ConnectionTestStatus, ConnectionCheck } from "./source/ConnectionTestPanel";
+
+export { SyncProgressPanel } from "./source/SyncProgressPanel";
+export type { SyncProgressPanelProps, SyncStage } from "./source/SyncProgressPanel";
+
+export { SettingsSection } from "./settings/SettingsSection";
+export type { SettingsSectionProps } from "./settings/SettingsSection";
+
+export { SettingsAuditRow } from "./settings/SettingsAuditRow";
+export type { SettingsAuditRowProps, SettingsAuditAction } from "./settings/SettingsAuditRow";
+
+export { AIProviderConnectorCard } from "./settings/AIProviderConnectorCard";
+export type {
+  AIProviderConnectorCardProps,
+  AIProviderKind,
+  AIProviderState,
+  AIProviderModel,
+  AIProviderPluginAttribution,
+} from "./settings/AIProviderConnectorCard";
+
+export { BYOLLMConnectorPanel } from "./settings/BYOLLMConnectorPanel";
+export type { BYOLLMConnectorPanelProps, BYOLLMProviderEntry } from "./settings/BYOLLMConnectorPanel";
+
+export {
+  GaugeWidgetExample,
+  HeatmapWidgetExample,
+  ActivityWidgetExample,
+  InsightWidgetExample,
+  StateBoardWidgetExample,
+} from "./dashboard/DashboardWidgetExamples";
+
+export { MoveMenuA11yExample } from "./dashboard/MoveMenuA11yExample";
+export type { MoveMenuA11yExampleProps, MoveMenuA11yWidget } from "./dashboard/MoveMenuA11yExample";
+
+export { DashboardWizardSplitBuilder } from "./dashboard/DashboardWizardSplitBuilder";
+export type {
+  DashboardWizardSplitBuilderProps,
+  DashboardWizardStep,
+  DashboardWizardStepId,
+} from "./dashboard/DashboardWizardSplitBuilder";

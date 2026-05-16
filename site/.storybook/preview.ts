@@ -30,6 +30,15 @@ import "@metraly/ui/styles/metraly-trend-badge.css";
 import "@metraly/ui/styles/metraly-widget-picker.css";
 import "@metraly/ui/styles/metraly-widget-shell.css";
 import "@metraly/ui/styles/metraly-wizard.css";
+import "@metraly/ui/styles/metraly-gauge.css";
+import "@metraly/ui/styles/metraly-heatmap.css";
+import "@metraly/ui/styles/metraly-activity-feed.css";
+import "@metraly/ui/styles/metraly-insight-card.css";
+import "@metraly/ui/styles/metraly-state-board.css";
+import "@metraly/ui/styles/metraly-state-matrix.css";
+import "@metraly/ui/styles/metraly-source.css";
+import "@metraly/ui/styles/metraly-settings.css";
+import "@metraly/ui/styles/metraly-dashboard-wizard.css";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 
