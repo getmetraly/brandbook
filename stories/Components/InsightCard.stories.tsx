@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import { InsightCard } from "../../packages/ui/src/components/InsightCard";
+import { InsightWidgetExample } from "../../packages/ui/src/dashboard/DashboardWidgetExamples";
 import { WidgetStateMatrix } from "../../packages/ui/src/components/WidgetStateMatrix";
 
 const meta: Meta<typeof InsightCard> = {
@@ -93,6 +94,37 @@ export const Compact: Story = {
     frame: false,
   },
 };
+
+// ── widget-shell composition ─────────────────────────────────────────────────
+
+export const InsideWidget: Story = {
+  render: () => (
+    <div style={{ maxWidth: 420 }}>
+      <InsightWidgetExample
+        title="Delivery bottleneck"
+        subtitle="Platform team · 14 d"
+        insight={{
+          title: "Review queue is slowing deployment frequency",
+          summary:
+            "Three teams have rising PR age while deploy cadence stayed flat. Focus on ownership handoff before adding more WIP.",
+          tone: "warning",
+          source: "ai",
+          confidence: "high",
+          freshness: "2026-05-15T10:30:00Z",
+          evidence: [
+            { id: "e1", label: "PR review age · p95 18h → 29h", kind: "metric", caption: "trend ▲" },
+            { id: "e2", label: "Deploy frequency · 42 → 39", kind: "metric", caption: "trend ▼" },
+          ],
+          primaryAction: { label: "Open in AI Workspace", onClick: () => {} },
+        }}
+        onDrilldown={() => {}}
+      />
+    </div>
+  ),
+};
+
+// ── states ───────────────────────────────────────────────────────────────────
+
 
 export const Loading: Story = {
   args: { title: "Sprint burndown", summary: "", state: "loading" },

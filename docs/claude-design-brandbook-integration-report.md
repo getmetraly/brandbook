@@ -205,3 +205,74 @@ fix(ui): align Claude Design components with brandbook palette and framing
 - Verify MetralyGauge: role=meter, threshold ticks, card composition confirmed
 - All 44 test suites pass; build-storybook produces no compile errors
 ```
+
+---
+
+## Update — 2026-05-16 (Post-integration QA pass)
+
+### What was audited
+
+Full component-by-component QA against `../claudedesign/implementation-pack-viewer.html` and all 18 story files.
+Checked: palette compliance, story coverage per component, widget-shell composition coverage, behavioral implementation.
+
+### Findings
+
+**Palette compliance:** Clean. No violations found after previous pass.
+- `var(--m-cyan)` undefined token: 0 occurrences (all fixed).
+- `rgba()` / `rgb()` / `hsl()` / `hsla()`: 0 occurrences in active UI source.
+- Raw hex in component CSS/TSX: 0 occurrences. The `#4912` in `ActivityFeed.stories.tsx` is a PR identifier string in fixture data, not a CSS color.
+- `color-mix(in oklch, ...)` in `DashboardWizardSplitBuilder.stories.tsx` lines 83, 196–197: inconsistent with `color-mix(in srgb, ...)` used elsewhere. Fixed (see below).
+
+**Story coverage:**
+- All 18 components have Storybook stories. State matrices (via `WidgetStateMatrix`) confirm all 12 canonical states are covered for chart and component primitives.
+- `MetralyGauge`: 15 stories including 3 widget-shell compositions (InsideDashboardWidget, InsideSourceHealthCard, InsideDORAOverview). No gaps.
+- `MetralyHeatmap`: Comprehensive coverage — color ramps, tooltips, keyboard nav, showCellValues, legend, mobile. No gaps.
+- `ActivityFeed`, `InsightCard`, `StateBoard`: Had state coverage and FullStateMatrix but were missing widget-shell composition stories. **Gap found and fixed** (see below).
+- All Source, Settings, and Components stories have proper `maxWidth` framing confirmed.
+
+**DashboardWidgetExamples composition gap:**
+The Storybook build emitted `/* unused harmony exports ActivityWidgetExample, InsightWidgetExample, StateBoardWidgetExample */`.
+`GaugeWidgetExample` and `HeatmapWidgetExample` were used in their respective chart stories.
+`ActivityWidgetExample`, `InsightWidgetExample`, `StateBoardWidgetExample` were exported from the package and implemented correctly but NOT referenced in any story.
+The viewer shows `DashboardWidgetExamples` with "widget shells, recipes, dashboard" covering all 5 types. This was a real gap.
+
+### Changes made
+
+**Stories — new widget-shell composition stories (3 files):**
+- `stories/Components/ActivityFeed.stories.tsx`: Added `ActivityWidgetExample` import and `InsideWidget` story (400px shell, 5 feed items, onDrilldown callback).
+- `stories/Components/InsightCard.stories.tsx`: Added `InsightWidgetExample` import and `InsideWidget` story (420px shell, AI-grounded insight with evidence items).
+- `stories/Components/StateBoard.stories.tsx`: Added `StateBoardWidgetExample` import and `InsideWidget` story (380px shell, 5-source health list view).
+
+**Stories — color-mix consistency fix:**
+- `stories/Dashboard/DashboardWizardSplitBuilder.stories.tsx` lines 83, 196–197: `color-mix(in oklch, ...)` → `color-mix(in srgb, ...)` for consistency with rest of codebase.
+
+### Components verified unchanged
+
+All other 15 components left unchanged — implementation and stories confirmed correct:
+`WidgetStateMatrix`, `TokenInput`, `PermissionExplainer`, `BackfillRangePicker`, `ConnectionTestPanel`, `SyncProgressPanel`, `SettingsSection`, `SettingsAuditRow`, `AIProviderConnectorCard`, `BYOLLMConnectorPanel`, `MoveMenuA11yExample`, `DashboardWidgetExamples` (the container story for Gauge and Heatmap compositions was already present), `DashboardWizardSplitBuilder` (color-mix fix only).
+
+### Validation
+
+| Command | Result |
+|---------|--------|
+| `npm run ui:check` | ✅ PASS — zero TypeScript errors |
+| `npm run site:typecheck` | ✅ PASS — zero TypeScript errors |
+| `npm run site:test` | ✅ PASS — 44 suites, 254 tests, 0 failures |
+| `npm run build-storybook` | ✅ PASS — no compile errors; `ActivityWidgetExample`, `InsightWidgetExample`, `StateBoardWidgetExample` are now referenced (no more "unused harmony exports" warning) |
+
+### Suggested commit message for this pass
+
+```
+fix(ui): close widget composition story gaps from Claude Design QA pass
+
+- Add InsideWidget story to ActivityFeed: uses ActivityWidgetExample in
+  a 400px DashboardWidget shell with 5 feed items and drilldown callback
+- Add InsideWidget story to InsightCard: uses InsightWidgetExample with
+  a realistic AI-grounded delivery bottleneck insight in a 420px shell
+- Add InsideWidget story to StateBoard: uses StateBoardWidgetExample
+  with 5-source health data in a 380px list-variant shell
+- Fix color-mix(in oklch) → color-mix(in srgb) in DashboardWizardSplitBuilder
+  story btn() helper (lines 83, 196-197) for consistency with other CSS
+- All 44 test suites pass; build-storybook emits no "unused exports" warning
+  for the three newly-exercised DashboardWidgetExamples recipe components
+```

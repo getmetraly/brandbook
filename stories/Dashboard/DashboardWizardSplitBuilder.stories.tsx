@@ -80,7 +80,7 @@ export const Default: Story = {
                         padding: "8px 10px",
                         borderRadius: 8,
                         border: "1px solid var(--m-line)",
-                        background: i === 0 ? "color-mix(in oklch, var(--m-cyan-500) 14%, var(--m-bg-2))" : "var(--m-bg-2)",
+                        background: i === 0 ? "color-mix(in srgb, var(--m-cyan-500) 14%, var(--m-bg-2))" : "var(--m-bg-2)",
                         color: "var(--m-fg-0)",
                         fontFamily: "inherit",
                         textAlign: "left",
@@ -193,8 +193,8 @@ function btn(variant: "primary" | "ghost" = "ghost"): React.CSSProperties {
   if (variant === "primary") {
     return {
       height: 28, padding: "0 12px", borderRadius: 6,
-      border: "1px solid color-mix(in oklch, var(--m-cyan-500) 50%, transparent)",
-      background: "color-mix(in oklch, var(--m-cyan-500) 18%, transparent)",
+      border: "1px solid color-mix(in srgb, var(--m-cyan-500) 50%, transparent)",
+      background: "color-mix(in srgb, var(--m-cyan-500) 18%, transparent)",
       color: "var(--m-cyan-500)", font: "inherit", fontSize: 12, cursor: "pointer",
     };
   }

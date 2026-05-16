@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import { ActivityFeed, type ActivityItem } from "../../packages/ui/src/components/ActivityFeed";
+import { ActivityWidgetExample } from "../../packages/ui/src/dashboard/DashboardWidgetExamples";
 import { WidgetStateMatrix } from "../../packages/ui/src/components/WidgetStateMatrix";
 
 const meta: Meta<typeof ActivityFeed> = {
@@ -105,6 +106,27 @@ export const CompactWidget: Story = {
     (Story) => <div style={{ maxWidth: 340, padding: 12, background: "var(--m-bg-1)", border: "1px solid var(--m-line)", borderRadius: 12 }}><Story /></div>,
   ],
 };
+
+// ── widget-shell composition ─────────────────────────────────────────────────
+
+export const InsideWidget: Story = {
+  render: () => (
+    <div style={{ maxWidth: 400 }}>
+      <ActivityWidgetExample
+        title="Engineering activity"
+        subtitle="all sources · today"
+        feed={{
+          items: ITEMS.slice(0, 5),
+          title: "Engineering activity",
+        }}
+        onDrilldown={() => {}}
+      />
+    </div>
+  ),
+};
+
+// ── states ───────────────────────────────────────────────────────────────────
+
 
 export const Loading: Story = { args: { items: [], state: "loading", title: "Recent activity" } };
 export const Empty: Story = { args: { items: [], state: "empty", title: "Recent activity" } };

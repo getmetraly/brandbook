@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import { StateBoard, type StateBoardItem } from "../../packages/ui/src/components/StateBoard";
+import { StateBoardWidgetExample } from "../../packages/ui/src/dashboard/DashboardWidgetExamples";
 import { WidgetStateMatrix } from "../../packages/ui/src/components/WidgetStateMatrix";
 
 const meta: Meta<typeof StateBoard> = {
@@ -49,6 +50,28 @@ export const ServiceStatus: Story = {
 export const PluginRuntimes: Story = {
   args: { title: "Plugin runtime status", items: PLUGIN_RUNTIME, variant: "list" },
 };
+
+// ── widget-shell composition ─────────────────────────────────────────────────
+
+export const InsideWidget: Story = {
+  render: () => (
+    <div style={{ maxWidth: 380 }}>
+      <StateBoardWidgetExample
+        title="Source health"
+        subtitle="5 sources"
+        board={{
+          title: "Source health",
+          items: SOURCE_HEALTH,
+          variant: "list",
+        }}
+        onDrilldown={() => {}}
+      />
+    </div>
+  ),
+};
+
+// ── states ───────────────────────────────────────────────────────────────────
+
 
 export const Loading: Story = { args: { items: [], state: "loading", title: "Source health" } };
 export const Empty: Story = { args: { items: [], state: "empty", title: "Source health" } };
