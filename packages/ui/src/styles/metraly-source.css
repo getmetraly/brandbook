@@ -30,8 +30,8 @@
 
 .m-token__input:focus-visible {
   outline: none;
-  border-color: var(--m-cyan);
-  box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan));
+  border-color: var(--m-cyan-500);
+  box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500));
 }
 
 .m-token__preview {
@@ -80,14 +80,14 @@
 
 .m-token__btn:hover { background: var(--m-bg-3); border-color: var(--m-line-strong); }
 .m-token__btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.m-token__btn:focus-visible { outline: none; box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan)); }
+.m-token__btn:focus-visible { outline: none; box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500)); }
 .m-token__btn--ghost { background: transparent; }
 .m-token__btn--primary {
-  background: color-mix(in oklch, var(--m-cyan) 18%, transparent);
-  border-color: color-mix(in oklch, var(--m-cyan) 50%, transparent);
-  color: var(--m-cyan);
+  background: color-mix(in oklch, var(--m-cyan-500) 18%, transparent);
+  border-color: color-mix(in oklch, var(--m-cyan-500) 50%, transparent);
+  color: var(--m-cyan-500);
 }
-.m-token__btn--primary:hover { background: color-mix(in oklch, var(--m-cyan) 28%, transparent); }
+.m-token__btn--primary:hover { background: color-mix(in oklch, var(--m-cyan-500) 28%, transparent); }
 
 .m-token__sr {
   position: absolute;
@@ -259,7 +259,7 @@
 
 .m-backfill__preset:focus-visible {
   outline: none;
-  box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan));
+  box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500));
 }
 
 .m-backfill__custom {
@@ -431,7 +431,7 @@
   cursor: pointer;
 }
 .m-conntest__btn:hover { background: var(--m-bg-3); }
-.m-conntest__btn:focus-visible { outline: none; box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan)); }
+.m-conntest__btn:focus-visible { outline: none; box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500)); }
 
 /* ── SyncProgressPanel ───────────────────────────────────────────── */
 
@@ -462,7 +462,7 @@
 
 .m-sync__bar {
   height: 100%;
-  background: var(--m-cyan);
+  background: var(--m-cyan-500);
   transition: width 220ms ease;
 }
 
@@ -472,9 +472,9 @@
 .m-sync__bar--indeterminate {
   width: 35% !important;
   background: linear-gradient(90deg,
-    color-mix(in oklch, var(--m-cyan) 20%, var(--m-bg-3)),
-    var(--m-cyan),
-    color-mix(in oklch, var(--m-cyan) 20%, var(--m-bg-3))
+    color-mix(in oklch, var(--m-cyan-500) 20%, var(--m-bg-3)),
+    var(--m-cyan-500),
+    color-mix(in oklch, var(--m-cyan-500) 20%, var(--m-bg-3))
   );
   animation: m-sync-indet 1.4s ease-in-out infinite;
 }
@@ -539,11 +539,11 @@
 .m-sync__btn:hover { background: var(--m-bg-3); }
 .m-sync__btn--ghost { background: transparent; }
 .m-sync__btn--primary {
-  background: color-mix(in oklch, var(--m-cyan) 18%, transparent);
-  border-color: color-mix(in oklch, var(--m-cyan) 50%, transparent);
-  color: var(--m-cyan);
+  background: color-mix(in oklch, var(--m-cyan-500) 18%, transparent);
+  border-color: color-mix(in oklch, var(--m-cyan-500) 50%, transparent);
+  color: var(--m-cyan-500);
 }
-.m-sync__btn:focus-visible { outline: none; box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan)); }
+.m-sync__btn:focus-visible { outline: none; box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500)); }
 
 /* ── visual stabilization ─────────────────────────────────────────── */
 .m-token,

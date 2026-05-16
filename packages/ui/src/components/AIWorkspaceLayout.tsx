@@ -83,7 +83,7 @@ export function AIWorkspaceLayout({
       <div style={{ padding: "14px 28px", borderTop: "1px solid var(--m-line, var(--border))", background: "var(--m-bg-0, transparent)", flexShrink: 0 }}>
         <div style={{ display: "flex", gap: 8, alignItems: "center", background: "var(--m-bg-1, var(--glass))", border: "1px solid var(--m-line, var(--border))", borderRadius: 12, padding: "6px 14px" }}>
           <div style={{ position: "relative", flexShrink: 0 }}>
-            <MetralyIcon name="sparkles" size="sm" color="var(--m-purple, var(--purple))" />
+            <MetralyIcon name="sparkles" size="sm" color="var(--m-purple-500, var(--purple))" />
             <PulseMarker tone="live" size="sm" style={{ position: "absolute", top: -3, right: -3 }} />
           </div>
           <MetralyInput

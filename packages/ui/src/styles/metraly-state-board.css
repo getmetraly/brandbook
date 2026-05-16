@@ -113,9 +113,9 @@
 .m-board__dot--ok       { background: var(--m-ok); box-shadow: 0 0 6px color-mix(in oklch, var(--m-ok) 60%, transparent); }
 .m-board__dot--warning  { background: var(--m-warn); }
 .m-board__dot--danger   { background: var(--m-err); }
-.m-board__dot--info     { background: var(--m-cyan); }
+.m-board__dot--info     { background: var(--m-cyan-500); }
 .m-board__dot--neutral  { background: var(--m-fg-3); }
-.m-board__dot--gated    { background: var(--m-purple); }
+.m-board__dot--gated    { background: var(--m-purple-500); }
 .m-board__dot--disabled { background: var(--m-bg-4); }
 
 .m-board__item-label {
@@ -152,7 +152,7 @@
 .m-board__item--interactive:hover { background: var(--m-bg-2); border-color: var(--m-line-strong); }
 .m-board__item--interactive:focus-visible {
   outline: none;
-  box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan));
+  box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500));
 }
 
 /* tone tints on tile background */

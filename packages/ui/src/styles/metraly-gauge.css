@@ -4,7 +4,7 @@
  */
 
 .m-gauge {
-  --m-gauge-accent: var(--m-cyan);
+  --m-gauge-accent: var(--m-cyan-500);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -86,7 +86,7 @@
 
 .m-gauge__tick { opacity: 0.85; }
 .m-gauge__tick--neutral { stroke: var(--m-fg-3); }
-.m-gauge__tick--cyan    { stroke: var(--m-cyan); }
+.m-gauge__tick--cyan    { stroke: var(--m-cyan-500); }
 .m-gauge__tick--success { stroke: var(--m-ok); }
 .m-gauge__tick--warning { stroke: var(--m-warn); }
 .m-gauge__tick--danger  { stroke: var(--m-err); }
@@ -141,7 +141,7 @@
   background: var(--m-fg-3);
 }
 
-.m-gauge__legend-item--cyan    .m-gauge__legend-dot { background: var(--m-cyan); }
+.m-gauge__legend-item--cyan    .m-gauge__legend-dot { background: var(--m-cyan-500); }
 .m-gauge__legend-item--success .m-gauge__legend-dot { background: var(--m-ok); }
 .m-gauge__legend-item--warning .m-gauge__legend-dot { background: var(--m-warn); }
 .m-gauge__legend-item--danger  .m-gauge__legend-dot { background: var(--m-err); }
@@ -193,7 +193,7 @@
 
 .m-gauge:focus-visible {
   outline: none;
-  box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan));
+  box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500));
   border-radius: 12px;
 }
 

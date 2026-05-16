@@ -58,7 +58,7 @@
 
 .m-feed__row--interactive:focus-visible {
   outline: none;
-  box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan));
+  box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500));
 }
 
 .m-feed__row-meta {
