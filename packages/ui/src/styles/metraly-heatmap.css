@@ -6,9 +6,9 @@
  */
 
 .m-heatmap {
-  --m-heatmap-cell-min: 38px;
-  --m-heatmap-cell-max: 68px;
-  --m-heatmap-cell-height: 26px;
+  --m-heatmap-cell-min: 34px;
+  --m-heatmap-cell-max: 58px;
+  --m-heatmap-cell-height: 24px;
   --m-heatmap-row-label: 84px;
   display: flex;
   flex-direction: column;
@@ -21,16 +21,16 @@
 
 .m-heatmap--density-compact,
 .m-heatmap--compact {
-  --m-heatmap-cell-min: 22px;
-  --m-heatmap-cell-max: 34px;
+  --m-heatmap-cell-min: 20px;
+  --m-heatmap-cell-max: 30px;
   --m-heatmap-cell-height: 18px;
   --m-heatmap-row-label: 52px;
   gap: 6px;
 }
 
 .m-heatmap--density-dashboard {
-  --m-heatmap-cell-min: 20px;
-  --m-heatmap-cell-max: 28px;
+  --m-heatmap-cell-min: 18px;
+  --m-heatmap-cell-max: 24px;
   --m-heatmap-cell-height: 18px;
   --m-heatmap-row-label: 42px;
   gap: 6px;
@@ -44,9 +44,21 @@
   min-height: 22px;
 }
 
-.m-heatmap__head-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.m-heatmap__title { font-size: 13px; font-weight: 600; color: var(--m-fg-0); }
-.m-heatmap__desc  { font-size: 11.5px; color: var(--m-fg-2); }
+.m-heatmap__head-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.m-heatmap__title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--m-fg-0);
+}
+.m-heatmap__desc {
+  font-size: 11.5px;
+  color: var(--m-fg-2);
+}
 
 .m-heatmap__scroll {
   overflow-x: auto;
@@ -61,7 +73,10 @@
   display: grid;
   grid-template-columns:
     minmax(var(--m-heatmap-row-label), max-content)
-    repeat(var(--m-heatmap-cols, 1), minmax(var(--m-heatmap-cell-min), var(--m-heatmap-cell-max)));
+    repeat(
+      var(--m-heatmap-cols, 1),
+      minmax(var(--m-heatmap-cell-min), var(--m-heatmap-cell-max))
+    );
   gap: 3px;
   align-items: stretch;
   width: max-content;
@@ -69,12 +84,18 @@
   max-width: 100%;
 }
 
-.m-heatmap__row { display: contents; }
+.m-heatmap__row {
+  display: contents;
+}
 
 .m-heatmap__row--head .m-heatmap__xlabel,
-.m-heatmap__corner { background: transparent; }
+.m-heatmap__corner {
+  background: transparent;
+}
 
-.m-heatmap__corner { min-height: 20px; }
+.m-heatmap__corner {
+  min-height: 20px;
+}
 
 .m-heatmap__xlabel {
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
@@ -112,7 +133,7 @@
 }
 
 .m-heatmap__cell {
-  --m-cell-accent: var(--m-cyan);
+  --m-cell-accent: var(--m-cyan-500, var(--m-cyan));
   position: relative;
   min-height: var(--m-heatmap-cell-height);
   min-width: var(--m-heatmap-cell-min);
@@ -125,7 +146,10 @@
   cursor: default;
   outline: none;
   overflow: hidden;
-  transition: transform 100ms ease, border-color 100ms ease, box-shadow 100ms ease;
+  transition:
+    transform 100ms ease,
+    border-color 100ms ease,
+    box-shadow 100ms ease;
 }
 
 .m-heatmap--density-dashboard .m-heatmap__cell,
@@ -141,11 +165,11 @@
   background:
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--m-cell-accent) 18%, transparent),
-      transparent 62%
+      color-mix(in srgb, var(--m-cell-accent) 26%, transparent),
+      transparent 68%
     ),
     var(--m-cell-accent);
-  opacity: calc(0.06 + (var(--m-cell-intensity, 0) * 0.54));
+  opacity: calc(0.1 + (var(--m-cell-intensity, 0) * 0.74));
   pointer-events: none;
 }
 
@@ -159,20 +183,69 @@
   opacity: 0.94;
   pointer-events: none;
   text-shadow: 0 1px 0 var(--m-bg-0);
+  display: none;
+}
+
+.m-heatmap--show-values .m-heatmap__cell-value {
+  display: inline;
 }
 
 /* status tints layered on top of intensity */
-.m-heatmap__cell--ok { --m-cell-accent: var(--m-ok); }
-.m-heatmap__cell--warning { --m-cell-accent: var(--m-warn); }
-.m-heatmap__cell--danger { --m-cell-accent: var(--m-err); }
-.m-heatmap__cell--neutral { --m-cell-accent: var(--m-cyan); }
+.m-heatmap--ramp-cyan .m-heatmap__cell--neutral {
+  --m-cell-accent: var(--m-cyan-500, var(--m-cyan));
+}
+.m-heatmap--ramp-purple .m-heatmap__cell--neutral {
+  --m-cell-accent: var(--m-purple-500, var(--m-purple));
+}
+.m-heatmap--ramp-success .m-heatmap__cell--neutral {
+  --m-cell-accent: var(--m-ok);
+}
+.m-heatmap--ramp-warning .m-heatmap__cell--neutral {
+  --m-cell-accent: var(--m-warn);
+}
+.m-heatmap--ramp-danger .m-heatmap__cell--neutral {
+  --m-cell-accent: var(--m-err);
+}
+.m-heatmap--ramp-cyan-purple-diverging .m-heatmap__cell--below-mid {
+  --m-cell-accent: var(--m-purple-500, var(--m-purple));
+}
+.m-heatmap--ramp-cyan-purple-diverging .m-heatmap__cell--above-mid {
+  --m-cell-accent: var(--m-cyan-500, var(--m-cyan));
+}
+.m-heatmap--ramp-cyan-purple-diverging .m-heatmap__cell--at-mid {
+  --m-cell-accent: var(--m-bg-4);
+}
+.m-heatmap__cell--ok {
+  --m-cell-accent: var(--m-ok);
+}
+.m-heatmap__cell--warning {
+  --m-cell-accent: var(--m-warn);
+}
+.m-heatmap__cell--danger {
+  --m-cell-accent: var(--m-err);
+}
+.m-heatmap__cell--neutral {
+  --m-cell-accent: var(--m-cyan-500, var(--m-cyan));
+}
 
-.m-heatmap__cell--i-0::before { opacity: 0.05; }
-.m-heatmap__cell--i-1::before { opacity: 0.13; }
-.m-heatmap__cell--i-2::before { opacity: 0.23; }
-.m-heatmap__cell--i-3::before { opacity: 0.34; }
-.m-heatmap__cell--i-4::before { opacity: 0.47; }
-.m-heatmap__cell--i-5::before { opacity: 0.62; }
+.m-heatmap__cell--i-0::before {
+  opacity: 0.06;
+}
+.m-heatmap__cell--i-1::before {
+  opacity: 0.18;
+}
+.m-heatmap__cell--i-2::before {
+  opacity: 0.32;
+}
+.m-heatmap__cell--i-3::before {
+  opacity: 0.48;
+}
+.m-heatmap__cell--i-4::before {
+  opacity: 0.66;
+}
+.m-heatmap__cell--i-5::before {
+  opacity: 0.84;
+}
 
 .m-heatmap__cell--i-0 {
   border-color: var(--m-line-faint);
@@ -185,21 +258,20 @@
 
 .m-heatmap__cell--null {
   background:
-    repeating-linear-gradient(
-      45deg,
-      var(--m-bg-2) 0 4px,
-      transparent 4px 8px
-    ),
+    repeating-linear-gradient(45deg, var(--m-bg-2) 0 4px, transparent 4px 8px),
     var(--m-bg-3);
   opacity: 0.62;
 }
 
-.m-heatmap__cell--null::before { display: none; }
+.m-heatmap__cell--null::before {
+  display: none;
+}
 
 .m-heatmap__cell:hover {
   transform: translateY(-1px);
   border-color: color-mix(in srgb, var(--m-cell-accent) 48%, var(--m-line));
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--m-cell-accent) 22%, transparent);
+  box-shadow: 0 0 0 1px
+    color-mix(in srgb, var(--m-cell-accent) 22%, transparent);
 }
 
 .m-heatmap__cell--focus,
@@ -233,6 +305,7 @@
 }
 
 .m-heatmap__legend-bar {
+  position: relative;
   display: inline-block;
   height: 6px;
   width: min(120px, 28vw);
@@ -240,21 +313,113 @@
   background: linear-gradient(
     to right,
     var(--m-bg-3),
-    color-mix(in srgb, var(--m-cyan) 25%, var(--m-bg-3)),
-    color-mix(in srgb, var(--m-cyan) 55%, var(--m-bg-3)),
-    var(--m-cyan)
+    color-mix(in srgb, var(--m-cyan-500, var(--m-cyan)) 28%, var(--m-bg-3)),
+    color-mix(in srgb, var(--m-cyan-500, var(--m-cyan)) 62%, var(--m-bg-3)),
+    var(--m-cyan-500, var(--m-cyan))
   );
+  overflow: hidden;
 }
 
-.m-heatmap__legend-end { white-space: nowrap; }
+.m-heatmap__legend--ramp-purple .m-heatmap__legend-bar {
+  background: linear-gradient(
+    to right,
+    var(--m-bg-3),
+    color-mix(in srgb, var(--m-purple-500, var(--m-purple)) 35%, var(--m-bg-3)),
+    var(--m-purple-500, var(--m-purple))
+  );
+}
+.m-heatmap__legend--ramp-success .m-heatmap__legend-bar {
+  background: linear-gradient(
+    to right,
+    var(--m-bg-3),
+    color-mix(in srgb, var(--m-ok) 35%, var(--m-bg-3)),
+    var(--m-ok)
+  );
+}
+.m-heatmap__legend--ramp-warning .m-heatmap__legend-bar {
+  background: linear-gradient(
+    to right,
+    var(--m-bg-3),
+    color-mix(in srgb, var(--m-warn) 35%, var(--m-bg-3)),
+    var(--m-warn)
+  );
+}
+.m-heatmap__legend--ramp-danger .m-heatmap__legend-bar,
+.m-heatmap__legend--ramp-semantic .m-heatmap__legend-bar {
+  background: linear-gradient(
+    to right,
+    var(--m-bg-3),
+    var(--m-ok),
+    var(--m-warn),
+    var(--m-err)
+  );
+}
+.m-heatmap__legend--ramp-cyan-purple-diverging .m-heatmap__legend-bar {
+  background: linear-gradient(
+    to right,
+    var(--m-purple-500, var(--m-purple)),
+    var(--m-bg-4),
+    var(--m-cyan-500, var(--m-cyan))
+  );
+}
+.m-heatmap__legend-mid {
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  left: 50%;
+  width: 1px;
+  background: var(--m-fg-0);
+  opacity: 0.75;
+}
+
+.m-heatmap__legend-end {
+  white-space: nowrap;
+}
+
+/* accessible table mirror, visible only in ultra-narrow fallbacks */
+.m-heatmap__fallback-table {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.m-heatmap__fallback-table caption {
+  text-align: left;
+  color: var(--m-fg-1);
+  font-weight: 600;
+  padding-bottom: 8px;
+}
+
+.m-heatmap__fallback-table th,
+.m-heatmap__fallback-table td {
+  border: 1px solid var(--m-line-faint);
+  padding: 6px 8px;
+  text-align: right;
+  font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
+  font-size: 11px;
+  color: var(--m-fg-1);
+}
+
+.m-heatmap__fallback-table th:first-child {
+  text-align: left;
+  font-family: var(--m-font-ui, "Inter", sans-serif);
+}
 
 /* visually-hidden SR summary */
 .m-heatmap__sr {
   position: absolute;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
   overflow: hidden;
-  clip: rect(0,0,0,0);
+  clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
 }
@@ -287,11 +452,38 @@
     --m-heatmap-cell-height: 20px;
     --m-heatmap-row-label: 48px;
   }
-  .m-heatmap__cell-value { display: none; }
-  .m-heatmap__legend--horizontal { margin-left: 0; }
+  .m-heatmap__cell-value {
+    display: none;
+  }
+  .m-heatmap__legend--horizontal {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 340px) {
+  .m-heatmap__scroll {
+    display: none;
+  }
+  .m-heatmap__legend {
+    display: none;
+  }
+  .m-heatmap__fallback-table {
+    position: static;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    overflow: auto;
+    clip: auto;
+    white-space: normal;
+    border-collapse: collapse;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .m-heatmap__cell { transition: none; }
-  .m-heatmap__cell:hover { transform: none; }
+  .m-heatmap__cell {
+    transition: none;
+  }
+  .m-heatmap__cell:hover {
+    transform: none;
+  }
 }
