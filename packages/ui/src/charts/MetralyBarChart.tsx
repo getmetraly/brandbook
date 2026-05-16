@@ -59,7 +59,7 @@ export function MetralyBarChart<TDatum extends MetralyChartDatum = MetralyChartD
       name={item.name}
       fill={resolveChartTone(item.tone ?? (index === 0 ? "primary" : "secondary"))}
       radius={[8, 8, 0, 0]}
-      activeBar={{ stroke: "rgba(0,229,204,0.42)", strokeWidth: 1, fillOpacity: 0.88 }}
+      activeBar={{ stroke: "color-mix(in srgb, var(--m-cyan-500) 42%, transparent)", strokeWidth: 1, fillOpacity: 0.88 }}
       isAnimationActive={false}
     />
   ));
@@ -68,7 +68,7 @@ export function MetralyBarChart<TDatum extends MetralyChartDatum = MetralyChartD
     <div ref={containerRef} className={classes} role="img" aria-label={ariaLabel} {...chartProps}>
       {width ? (
         <BarChart width={width} height={height} data={data} margin={metralyChartMargin} title={ariaLabel}>
-          <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
+          <CartesianGrid stroke="var(--m-line)" vertical={false} />
           <XAxis dataKey={xKey} {...xAxisProps} />
           <YAxis {...yAxisProps} />
           <MetralyChartTooltip />
@@ -77,7 +77,7 @@ export function MetralyBarChart<TDatum extends MetralyChartDatum = MetralyChartD
       ) : (
         <ResponsiveContainer width="100%" height={height}>
           <BarChart data={data} margin={metralyChartMargin} title={ariaLabel}>
-            <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
+            <CartesianGrid stroke="var(--m-line)" vertical={false} />
             <XAxis dataKey={xKey} {...xAxisProps} />
             <YAxis {...yAxisProps} />
             <MetralyChartTooltip />

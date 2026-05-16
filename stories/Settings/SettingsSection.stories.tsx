@@ -6,6 +6,9 @@ import { SettingsAuditRow } from "../../packages/ui/src/settings/SettingsAuditRo
 const meta: Meta<typeof SettingsSection> = {
   title: "Settings/SettingsSection",
   component: SettingsSection,
+  decorators: [
+    (Story) => React.createElement("div", { style: { maxWidth: 700 } }, React.createElement(Story)),
+  ],
   parameters: { layout: "padded" },
 };
 export default meta;
@@ -76,9 +79,9 @@ export const Compact: Story = {
           height: 26,
           padding: "0 10px",
           borderRadius: 6,
-          border: "1px solid color-mix(in oklch, var(--m-cyan) 50%, transparent)",
-          background: "color-mix(in oklch, var(--m-cyan) 18%, transparent)",
-          color: "var(--m-cyan)",
+          border: "1px solid color-mix(in oklch, var(--m-cyan-500) 50%, transparent)",
+          background: "color-mix(in oklch, var(--m-cyan-500) 18%, transparent)",
+          color: "var(--m-cyan-500)",
           fontFamily: "inherit",
           fontSize: 11.5,
           cursor: "pointer",

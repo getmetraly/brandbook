@@ -1,9 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import * as React from "react";
 import { ConnectionTestPanel } from "../../packages/ui/src/source/ConnectionTestPanel";
 
 const meta: Meta<typeof ConnectionTestPanel> = {
   title: "Source/ConnectionTestPanel",
   component: ConnectionTestPanel,
+  decorators: [
+    (Story) => React.createElement("div", { style: { maxWidth: 680 } }, React.createElement(Story)),
+  ],
   parameters: { layout: "padded" },
 };
 export default meta;

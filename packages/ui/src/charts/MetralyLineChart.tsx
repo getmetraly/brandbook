@@ -54,7 +54,7 @@ export function MetralyLineChart<TDatum extends MetralyChartDatum = MetralyChart
 
   const chart = width ? (
     <LineChart width={width} height={height} data={data} margin={metralyChartMargin} title={ariaLabel}>
-      <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
+      <CartesianGrid stroke="var(--m-line)" vertical={false} />
       <XAxis dataKey={xKey} {...xAxisProps} />
       <YAxis {...yAxisProps} />
       <MetralyChartTooltip />
@@ -75,7 +75,7 @@ export function MetralyLineChart<TDatum extends MetralyChartDatum = MetralyChart
   ) : (
     <ResponsiveContainer width="100%" height={height}>
       <LineChart data={data} margin={metralyChartMargin} title={ariaLabel}>
-        <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
+        <CartesianGrid stroke="var(--m-line)" vertical={false} />
         <XAxis dataKey={xKey} {...xAxisProps} />
         <YAxis {...yAxisProps} />
         <MetralyChartTooltip />

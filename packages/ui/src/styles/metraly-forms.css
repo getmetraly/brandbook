@@ -271,7 +271,7 @@
   border: 1px solid var(--m-line);
   border-radius: var(--m-r-3);
   background: var(--m-bg-2);
-  box-shadow: 0 12px 32px -8px rgba(0,0,0,0.5);
+  box-shadow: 0 12px 32px -8px color-mix(in srgb, black 50%, transparent);
 }
 
 .metraly-select-option {

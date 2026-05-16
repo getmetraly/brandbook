@@ -6,6 +6,9 @@ import { WidgetStateMatrix } from "../../packages/ui/src/components/WidgetStateM
 const meta: Meta<typeof InsightCard> = {
   title: "Components/InsightCard",
   component: InsightCard,
+  decorators: [
+    (Story) => React.createElement("div", { style: { maxWidth: 680 } }, React.createElement(Story)),
+  ],
   parameters: { layout: "padded" },
 };
 export default meta;

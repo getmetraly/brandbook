@@ -1,9 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import * as React from "react";
 import { AIProviderConnectorCard } from "../../packages/ui/src/settings/AIProviderConnectorCard";
 
 const meta: Meta<typeof AIProviderConnectorCard> = {
   title: "Settings/AIProviderConnectorCard",
   component: AIProviderConnectorCard,
+  decorators: [
+    (Story) => React.createElement("div", { style: { maxWidth: 660 } }, React.createElement(Story)),
+  ],
   parameters: { layout: "padded" },
 };
 export default meta;

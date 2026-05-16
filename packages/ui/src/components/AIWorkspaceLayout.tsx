@@ -105,7 +105,7 @@ export function AIWorkspaceLayout({
                 key={q}
                 type="button"
                 onClick={() => setInput(q)}
-                style={{ background: "var(--m-bg-1, rgba(255,255,255,0.05))", border: "1px solid var(--m-line, var(--border))", borderRadius: 14, padding: "4px 12px", fontSize: "var(--m-fs-11, 11px)", color: "var(--m-fg-2, var(--muted2))", cursor: "pointer" }}
+                style={{ background: "var(--m-bg-1)", border: "1px solid var(--m-line)", borderRadius: 14, padding: "4px 12px", fontSize: "var(--m-fs-11, 11px)", color: "var(--m-fg-2)", cursor: "pointer" }}
               >
                 {q}
               </button>

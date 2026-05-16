@@ -39,7 +39,7 @@
 .metraly-wizard-layout-card {
   overflow: hidden;
   background: color-mix(in oklab, var(--m-bg-1) 92%, var(--m-cyan-500) 2%);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 20px 60px color-mix(in srgb, black 22%, transparent);
 }
 
 .metraly-wizard-layout-body {
