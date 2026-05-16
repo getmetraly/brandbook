@@ -1,0 +1,247 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import * as React from "react";
+import { MetralyHeatmap, type MetralyHeatmapCell } from "../../packages/ui/src/charts/MetralyHeatmap";
+import { WidgetStateMatrix } from "../../packages/ui/src/components/WidgetStateMatrix";
+import { HeatmapWidgetExample } from "../../packages/ui/src/dashboard/DashboardWidgetExamples";
+
+const meta: Meta<typeof MetralyHeatmap> = {
+  title: "Charts/MetralyHeatmap",
+  component: MetralyHeatmap,
+  parameters: {
+    layout: "padded",
+    docs: {
+      description: {
+        component:
+          "First-class heatmap primitive. Source-agnostic data shape; reusable across deploy density, incident heatmaps, PR aging, flaky-test patterns, and connector sync gaps. Includes keyboard cell navigation and accessible cell summaries.",
+      },
+    },
+  },
+};
+export default meta;
+type Story = StoryObj<typeof MetralyHeatmap>;
+
+// ── realistic fixtures ─────────────────────────────────────────────────────
+
+const HOURS = ["00", "02", "04", "06", "08", "10", "12", "14", "16", "18", "20", "22"];
+const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+function genCells(rows: string[], cols: string[], seed: number, shape: (r: number, c: number) => number): MetralyHeatmapCell[] {
+  const out: MetralyHeatmapCell[] = [];
+  for (let r = 0; r < rows.length; r++) {
+    for (let c = 0; c < cols.length; c++) {
+      const v = Math.max(0, Math.round(shape(r, c) + ((seed * (r + 1) * (c + 1)) % 5) - 2));
+      out.push({ x: cols[c], y: rows[r], value: v });
+    }
+  }
+  return out;
+}
+
+// deploys per weekday/hour — peak Tue–Thu mid-day
+const deployCells = genCells(WEEKDAYS, HOURS, 7, (r, c) => {
+  const dayWeight = [3, 7, 9, 8, 6, 1, 1][r] ?? 0;
+  const hourWeight = c >= 4 && c <= 9 ? 5 : 0;
+  return dayWeight + hourWeight;
+});
+
+// ── deploy activity ────────────────────────────────────────────────────────
+
+export const DeployActivity: Story = {
+  args: {
+    title: "Deploy activity",
+    description: "Last 28 days · production deploys by weekday and 2-hour bucket",
+    xLabels: HOURS,
+    yLabels: WEEKDAYS,
+    cells: deployCells,
+    unit: "deploys",
+  },
+};
+
+// ── incidents by service / severity ────────────────────────────────────────
+
+const SERVICES = ["core-api", "payments", "ingest", "scheduler", "search", "billing"];
+const SEVERITIES = ["sev0", "sev1", "sev2", "sev3"];
+
+const incidentCells: MetralyHeatmapCell[] = (() => {
+  const data: MetralyHeatmapCell[] = [];
+  const matrix: number[][] = [
+    [0, 1, 2, 4],
+    [0, 0, 3, 6],
+    [1, 2, 5, 8],
+    [0, 0, 1, 3],
+    [0, 1, 4, 5],
+    [0, 0, 2, 4],
+  ];
+  SERVICES.forEach((svc, r) => {
+    SEVERITIES.forEach((sev, c) => {
+      const v = matrix[r][c];
+      data.push({
+        x: sev, y: svc, value: v,
+        status: c === 0 && v > 0 ? "danger" : c === 1 && v > 0 ? "warning" : "neutral",
+        description: v === 0 ? "no incidents this window" : `${v} ${sev} incidents in 30 d`,
+      });
+    });
+  });
+  return data;
+})();
+
+export const IncidentHeatmap: Story = {
+  args: {
+    title: "Incidents by service & severity",
+    description: "Trailing 30 d",
+    xLabels: SEVERITIES,
+    yLabels: SERVICES,
+    cells: incidentCells,
+    unit: "incidents",
+  },
+};
+
+// ── PR aging ───────────────────────────────────────────────────────────────
+
+const TEAMS = ["platform", "growth", "data", "billing", "infra"];
+const WEEKS = ["W18", "W19", "W20", "W21", "W22"];
+const prAgingCells: MetralyHeatmapCell[] = genCells(TEAMS, WEEKS, 3, (r, c) => {
+  return [12, 18, 22, 14, 9][r] * (0.7 + (c % 3) * 0.1);
+});
+
+export const PRAgingByTeam: Story = {
+  args: {
+    title: "PR aging by team & week",
+    description: "Median PR age in hours · lower is better",
+    xLabels: WEEKS,
+    yLabels: TEAMS,
+    cells: prAgingCells,
+    unit: "h",
+  },
+};
+
+// ── flaky tests by suite/day ───────────────────────────────────────────────
+
+const SUITES = ["unit", "integration", "e2e-web", "e2e-api", "perf"];
+const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+const flakyCells: MetralyHeatmapCell[] = genCells(SUITES, DAYS, 11, (r, c) => {
+  return [0, 2, 6, 9, 4][r] + (c % 2 === 0 ? 2 : 0);
+});
+
+export const FlakyTestsBySuite: Story = {
+  args: {
+    title: "Flaky tests by suite & day",
+    description: "Count of failures attributed to flakiness, not signal",
+    xLabels: DAYS,
+    yLabels: SUITES,
+    cells: flakyCells,
+    unit: "flakes",
+  },
+};
+
+// ── connector sync gaps ────────────────────────────────────────────────────
+
+const SOURCES = ["github-acme", "github-frontend", "jira-prod", "linear-platform"];
+const SYNC_DAYS = ["May 09", "May 10", "May 11", "May 12", "May 13", "May 14", "May 15"];
+
+const syncCells: MetralyHeatmapCell[] = (() => {
+  const data: MetralyHeatmapCell[] = [];
+  const matrix: Array<Array<number | null>> = [
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 12, 0, 0, 0, 0],
+    [0, 0, 0, 0, 35, 0, 0],
+    [0, 0, 0, 0, 0, 0, null],
+  ];
+  SOURCES.forEach((s, r) => {
+    SYNC_DAYS.forEach((d, c) => {
+      const v = matrix[r][c];
+      data.push({
+        x: d, y: s, value: v,
+        status: v === null ? "neutral" : v === 0 ? "ok" : v > 20 ? "danger" : "warning",
+        description: v === null ? "no data" : v === 0 ? "no gap" : `${v} min gap`,
+      });
+    });
+  });
+  return data;
+})();
+
+export const ConnectorSyncGaps: Story = {
+  args: {
+    title: "Connector sync gaps",
+    description: "Largest gap per day, in minutes. Zero is healthy.",
+    xLabels: SYNC_DAYS,
+    yLabels: SOURCES,
+    cells: syncCells,
+    unit: "min",
+  },
+};
+
+// ── compact dashboard widget ───────────────────────────────────────────────
+
+export const CompactDashboardWidget: Story = {
+  render: () => (
+    <div style={{ maxWidth: 380 }}>
+      <HeatmapWidgetExample
+        title="Deploy activity"
+        subtitle="last 28 d"
+        heatmap={{
+          xLabels: HOURS,
+          yLabels: WEEKDAYS,
+          cells: deployCells,
+          unit: "deploys",
+        }}
+        onDrilldown={() => {}}
+      />
+    </div>
+  ),
+};
+
+// ── states ────────────────────────────────────────────────────────────────
+
+export const Loading: Story = {
+  args: { xLabels: HOURS, yLabels: WEEKDAYS, cells: [], state: "loading", title: "Deploy activity" },
+};
+export const Empty: Story = {
+  args: { xLabels: HOURS, yLabels: WEEKDAYS, cells: [], state: "empty", title: "Deploy activity" },
+};
+export const ErrorState: Story = {
+  args: { xLabels: HOURS, yLabels: WEEKDAYS, cells: [], state: "error", title: "Deploy activity" },
+};
+export const Stale: Story = {
+  args: { ...DeployActivity.args!, state: "stale" },
+};
+export const Partial: Story = {
+  args: { ...DeployActivity.args!, state: "partial" },
+};
+export const RateLimited: Story = {
+  args: { ...DeployActivity.args!, state: "rate_limited" },
+};
+
+// ── widget state matrix ────────────────────────────────────────────────────
+
+export const FullStateMatrix: Story = {
+  render: () => (
+    <WidgetStateMatrix
+      title="MetralyHeatmap — widget state matrix"
+      columns={4}
+      render={(s) => (
+        <MetralyHeatmap
+          xLabels={HOURS.slice(0, 6)}
+          yLabels={WEEKDAYS.slice(0, 4)}
+          cells={s === "ready" || s === "partial" || s === "stale" ? deployCells.slice(0, 24) : []}
+          state={s}
+          compact
+          showLegend={false}
+        />
+      )}
+    />
+  ),
+};
+
+// ── mobile narrow ──────────────────────────────────────────────────────────
+
+export const MobileNarrow: Story = {
+  args: {
+    title: "Deploy activity",
+    xLabels: HOURS,
+    yLabels: WEEKDAYS,
+    cells: deployCells,
+    compact: true,
+    showLegend: false,
+  },
+  parameters: { viewport: { defaultViewport: "mobile1" } },
+};

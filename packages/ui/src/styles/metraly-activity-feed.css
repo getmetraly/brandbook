@@ -1,0 +1,173 @@
+/* ActivityFeed */
+
+.m-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: var(--m-font-ui, "Inter", sans-serif);
+  color: var(--m-fg-1);
+  min-width: 0;
+}
+
+.m-feed__head { display: flex; flex-direction: column; gap: 2px; }
+.m-feed__title { font-size: 13px; font-weight: 600; color: var(--m-fg-0); }
+.m-feed__desc { font-size: 11.5px; color: var(--m-fg-2); }
+
+.m-feed__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.m-feed__list > .m-feed__item + .m-feed__item {
+  border-top: 1px solid var(--m-line-faint);
+}
+
+.m-feed__item { padding: 0; }
+
+.m-feed__row {
+  display: grid;
+  grid-template-columns: minmax(120px, max-content) 1fr;
+  gap: 12px;
+  align-items: start;
+  padding: 10px 0;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font: inherit;
+}
+
+.m-feed--widget .m-feed__row {
+  padding: 8px 0;
+  grid-template-columns: minmax(96px, max-content) 1fr;
+}
+
+.m-feed__row--interactive {
+  cursor: pointer;
+  border-radius: 6px;
+  padding-inline: 8px;
+  margin-inline: -8px;
+  transition: background 100ms ease;
+}
+
+.m-feed__row--interactive:hover { background: var(--m-bg-2); }
+
+.m-feed__row--interactive:focus-visible {
+  outline: none;
+  box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan));
+}
+
+.m-feed__row-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
+  font-feature-settings: "tnum";
+  font-size: 10.5px;
+  color: var(--m-fg-3);
+  white-space: nowrap;
+}
+
+.m-feed__time { color: var(--m-fg-2); }
+.m-feed__kind {
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--m-fg-3);
+}
+
+.m-feed__row-body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+
+.m-feed__row-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.m-feed__row-title-text {
+  font-size: 13px;
+  color: var(--m-fg-0);
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.m-feed__row-desc {
+  margin: 0;
+  font-size: 12px;
+  color: var(--m-fg-2);
+  line-height: 1.45;
+}
+
+.m-feed__row-meta-chips {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+}
+
+.m-feed__chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--m-bg-2);
+  border: 1px solid var(--m-line-faint);
+  font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
+  font-feature-settings: "tnum";
+  font-size: 10.5px;
+  color: var(--m-fg-1);
+}
+
+.m-feed__chip-key { color: var(--m-fg-3); }
+.m-feed__chip-sep { color: var(--m-fg-3); }
+.m-feed__chip-val { color: var(--m-fg-0); }
+
+/* grouped */
+.m-feed__group { display: flex; flex-direction: column; gap: 4px; }
+.m-feed__group-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 8px 0 4px;
+  border-bottom: 1px solid var(--m-line-faint);
+  font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
+  font-feature-settings: "tnum";
+  font-size: 10.5px;
+  color: var(--m-fg-3);
+}
+.m-feed__group-label { letter-spacing: 0.04em; text-transform: uppercase; }
+.m-feed__group-count { color: var(--m-fg-2); }
+
+/* loading skeletons */
+.m-feed__list--loading .m-feed__item--skeleton {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  padding: 10px 0;
+  border-top: 1px solid var(--m-line-faint);
+}
+.m-feed__list--loading .m-feed__item--skeleton:first-child { border-top: 0; }
+
+/* footer */
+.m-feed__footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 6px;
+  border-top: 1px solid var(--m-line-faint);
+}
+.m-feed__footer-note { font-size: 11.5px; color: var(--m-fg-2); }
+
+/* narrow */
+@media (max-width: 480px) {
+  .m-feed__row { grid-template-columns: 1fr; gap: 4px; }
+  .m-feed__row-meta { flex-direction: row; gap: 8px; }
+}
