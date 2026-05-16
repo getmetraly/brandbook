@@ -8,7 +8,7 @@
 .m-heatmap {
   --m-heatmap-cell-min: 34px;
   --m-heatmap-cell-max: 58px;
-  --m-heatmap-cell-height: 24px;
+  --m-heatmap-cell-height: 32px;
   --m-heatmap-row-label: 84px;
   display: flex;
   flex-direction: column;
@@ -77,7 +77,7 @@
       var(--m-heatmap-cols, 1),
       minmax(var(--m-heatmap-cell-min), var(--m-heatmap-cell-max))
     );
-  gap: 3px;
+  gap: 4px;
   align-items: stretch;
   width: max-content;
   min-width: max-content;
