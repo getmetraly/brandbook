@@ -1,0 +1,140 @@
+════════════════════════════════════════════════════════════════════════════════
+  CLAUDE DESIGN → METRALY: Top 5 Next Steps — Execution Timeline & Dependencies
+════════════════════════════════════════════════════════════════════════════════
+
+CURRENT STATE (2026-05-16)
+═══════════════════════════════════════════════════════════════════════════════
+✅ 18 Claude Design components migrated to brandbook
+✅ Palette violations fixed (var(--m-cyan) → var(--m-cyan-500), rgba() → color-mix)
+✅ Storybook framing added (maxWidth decorators)
+✅ All validation passes (typecheck, tests, build-storybook)
+
+NEXT: Complete missing Storybook stories + component implementations + app cleanup
+
+
+EXECUTION TIMELINE
+═══════════════════════════════════════════════════════════════════════════════
+
+                WEEK 1              WEEK 2              WEEK 3
+                ────────            ────────            ────────
+
+Step 1:  ████████████                                   (12h — Brandbook)
+         Storybook Stories
+         • Tabs + a11y
+         • MoveMenu
+         • DashboardWizard
+         • GripHandle
+         • DataTable mobile
+         • AppShellRoleContext
+         └─→ Produces: 6 verified stories
+
+Step 2:  ████████                                       (8h — Brandbook)
+         Core Primitives
+         • MoveMenu impl
+         • DashboardWidget verify
+         • EmptyState finalize
+         • Chart coverage
+         └─→ Produces: 4 production-ready components
+
+
+Step 3:        ██████████████████                      (16h — Metraly/UI)
+              App Cleanup P0
+              • Rename sidebar labels
+              • Rename folders (ai-workspace, plugins)
+              • Tokenize colors (rgba → --m-*)
+              • Fix a11y (button semantics)
+              • Delete dual entrypoints
+              └─→ Produces: Clean P0 codebase
+
+Step 4:                    ████████                    (4h — Metraly/UI)
+                          Compat Layer
+                          • design-system/compat/
+                          • 50 aliases (Button→MetralyButton, etc)
+                          • @metraly/ui integration
+                          └─→ Produces: Single integration point
+
+Step 5:                         ████████████████████  (20h — Metraly/UI)
+                               Component Migration
+                               Phase 1: StateBadge (4h)
+                               Phase 2: Icon (2h)
+                               Phase 3: DataTable (3h)
+                               Phase 4: Button (4h)
+                               Phase 5: EmptyState (2h)
+                               Phase 6: DashboardWidget pilot (5h)
+                               └─→ Produces: 5 components migrated
+
+
+DEPENDENCIES
+═══════════════════════════════════════════════════════════════════════════════
+
+Step 1 ─────┐
+            ├──→ Step 2 ───┐
+            │              │
+            └──────────────┤
+                           │
+                    Step 3 ┤
+                           ├──→ Step 4 ──→ Step 5 (Full migration)
+                           │
+Step 2 ────────────────────┘
+
+
+CAN RUN IN PARALLEL:
+  • Step 1 (Brandbook) + Step 3 (Metraly/UI) — different repos, no conflicts
+  • Step 5 (6 components) — can parallelize across 2-3 agents
+
+
+METRICS & VERIFICATION
+═══════════════════════════════════════════════════════════════════════════════
+
+After Step 1:  npm run build-storybook ✓  (6 stories render, keyboard flows tested)
+After Step 2:  npm run ui:check ✓         (zero TS errors)
+After Step 3:  npm run test ✓             (typecheck + build pass, visual baseline)
+After Step 4:  npm run build ✓            (compat imports resolve)
+After Step 5:  npm run test ✓             (all 5 components migrated, tests pass)
+
+FINAL STATE:
+  ✅ Storybook:            6/6 new stories + 12 existing = 100% coverage
+  ✅ Brandbook components: 18 Claude Design + 4 new = 22 canonical
+  ✅ App cleanup:          11 P0 gaps fixed
+  ✅ Type safety:          zero errors (typecheck + tests)
+  ✅ Visual parity:        regression baselines captured
+  ✅ Token conformance:    zero rgba()/hex in product code
+  ✅ Accessibility:        WCAG 2.1 SC 2.5.1 floor met
+  ✅ Compat layer:         50 aliases, 5 components migrated
+
+
+EFFORT SUMMARY
+═══════════════════════════════════════════════════════════════════════════════
+
+TOTAL:                      60 hours
+├─ Brandbook:              20 hours (Steps 1 + 2)
+├─ Metraly/UI:             40 hours (Steps 3 + 4 + 5)
+└─ Parallelizable:         12 hours (Steps 1 + 3 overlap)
+
+ACTUAL CALENDAR TIME:       2–3 weeks (depending on parallelization)
+
+
+KEY BLOCKING ITEMS
+═══════════════════════════════════════════════════════════════════════════════
+
+🔴 MUST COMPLETE BEFORE MIGRATION STARTS:
+   1. All 6 Storybook stories (Step 1)
+   2. App P0 cleanup: taxonomy rename, color tokenization (Step 3)
+   3. Compat layer created (Step 4)
+
+🟡 CAN START IN PARALLEL:
+   1. Storybook stories (Step 1) while app cleanup runs (Step 3)
+   2. Component migrations (Step 5) can be split across 3 agents
+
+
+NEXT ACTIONS (TODAY)
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Review NEXT-5-STEPS.md checklist
+2. Start Step 1 (Storybook) — 6 stories to create
+3. Start Step 3 in parallel (App cleanup) — folder renames + colors
+4. Monitor: npm run ui:check, npm run typecheck, npm run test
+5. After Step 3 completes → Step 4 (compat layer)
+6. After Step 4 completes → Step 5 (5 agents, 1 component each)
+
+════════════════════════════════════════════════════════════════════════════════
