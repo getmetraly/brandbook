@@ -244,6 +244,7 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
                 const cell = lookup.get(`${y}\u0000${x}`);
                 const v = cell?.value ?? null;
                 const i = v === null ? 0 : intensity(v, minVal, maxVal);
+                const level = v === null ? 0 : Math.max(1, Math.min(5, Math.ceil(i * 5)));
                 const status = cell?.status ?? "neutral";
                 const labelText = cell?.label ?? (v === null ? "no data" : `${fmt(v)}${unit ? ` ${unit}` : ""}`);
                 const ariaLabel = `${y} on ${x}: ${labelText}${cell?.description ? `, ${cell.description}` : ""}`;
@@ -259,9 +260,10 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
                     type="button"
                     role="gridcell"
                     aria-label={ariaLabel}
+                    data-intensity={level}
                     className={[
                       "m-heatmap__cell",
-                      v === null ? "m-heatmap__cell--null" : "",
+                      v === null ? "m-heatmap__cell--null" : `m-heatmap__cell--i-${level}`,
                       `m-heatmap__cell--${status}`,
                       isFocused ? "m-heatmap__cell--focus" : "",
                     ]

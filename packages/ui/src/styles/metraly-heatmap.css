@@ -183,3 +183,64 @@
   .m-heatmap__cell { transition: none; }
   .m-heatmap__cell:hover { transform: none; }
 }
+
+/* ── visual stabilization ───────────────────────────────────────────
+ * Use a token overlay as a fallback/progressive enhancement so heatmap
+ * intensity remains visible even when color-mix rendering is weak.
+ */
+.m-heatmap__cell {
+  --m-cell-accent: var(--m-cyan);
+  overflow: hidden;
+  border: 1px solid color-mix(in oklch, var(--m-cell-accent) 16%, var(--m-line));
+  background: var(--m-bg-3);
+}
+
+.m-heatmap__cell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--m-cell-accent);
+  opacity: calc(0.08 + (var(--m-cell-intensity, 0) * 0.48));
+  pointer-events: none;
+}
+
+.m-heatmap__cell--ok { --m-cell-accent: var(--m-ok); }
+.m-heatmap__cell--warning { --m-cell-accent: var(--m-warn); }
+.m-heatmap__cell--danger { --m-cell-accent: var(--m-err); }
+.m-heatmap__cell--neutral { --m-cell-accent: var(--m-cyan); }
+
+.m-heatmap__cell--i-1::before { opacity: 0.12; }
+.m-heatmap__cell--i-2::before { opacity: 0.2; }
+.m-heatmap__cell--i-3::before { opacity: 0.3; }
+.m-heatmap__cell--i-4::before { opacity: 0.42; }
+.m-heatmap__cell--i-5::before { opacity: 0.56; }
+
+.m-heatmap__cell--null::before {
+  display: none;
+}
+
+.m-heatmap__cell-value {
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 1px 0 var(--m-bg-0);
+}
+
+.m-heatmap__legend {
+  margin-top: 2px;
+}
+
+.m-heatmap__legend-bar {
+  background: linear-gradient(
+    to right,
+    var(--m-bg-3),
+    color-mix(in oklch, var(--m-cyan) 35%, var(--m-bg-3)),
+    color-mix(in oklch, var(--m-cyan) 65%, var(--m-bg-3)),
+    var(--m-cyan)
+  );
+}
+
+.metraly-dashboard-widget-content .m-heatmap,
+.m-dashboard-widget-example .m-heatmap {
+  gap: 6px;
+}

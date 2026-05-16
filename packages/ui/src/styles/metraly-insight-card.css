@@ -217,3 +217,53 @@
 .m-insight--tone-warning .m-insight__title { color: var(--m-fg-0); }
 .m-insight--tone-danger  .m-insight__title { color: var(--m-fg-0); }
 .m-insight--tone-warning .m-insight__summary { color: var(--m-fg-1); }
+
+/* ── visual stabilization ─────────────────────────────────────────── */
+.m-insight-frame {
+  width: min(100%, 920px);
+  max-width: 920px;
+}
+
+.m-insight {
+  max-width: 880px;
+}
+
+.m-insight--compact {
+  max-width: 420px;
+}
+
+.m-insight__head {
+  align-items: flex-start;
+}
+
+.m-insight__summary {
+  max-width: 76ch;
+}
+
+.m-insight__evidence-list {
+  max-width: 780px;
+}
+
+.m-insight__actions {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+@media (min-width: 720px) {
+  .m-insight:not(.m-insight--compact) .m-insight__actions {
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 640px) {
+  .m-insight__head {
+    flex-direction: column;
+  }
+  .m-insight__badges {
+    align-self: flex-start;
+    flex-wrap: wrap;
+  }
+  .m-insight__evidence-item {
+    grid-template-columns: 1fr;
+  }
+}

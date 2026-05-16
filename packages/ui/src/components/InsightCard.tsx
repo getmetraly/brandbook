@@ -229,7 +229,7 @@ export const InsightCard: React.FC<InsightCardProps> = ({
     </article>
   );
 
-  return frame ? <CardShell>{inner}</CardShell> : inner;
+  return frame ? <CardShell className="m-insight-frame">{inner}</CardShell> : inner;
 };
 
 InsightCard.displayName = "InsightCard";

@@ -171,3 +171,34 @@
   .m-feed__row { grid-template-columns: 1fr; gap: 4px; }
   .m-feed__row-meta { flex-direction: row; gap: 8px; }
 }
+
+/* ── visual stabilization ───────────────────────────────────────────
+ * Keep feed examples and production panels from stretching into a
+ * full-width log table on wide Storybook canvases.
+ */
+.m-feed-frame {
+  width: min(100%, 860px);
+  max-width: 860px;
+}
+
+.m-feed--feed {
+  width: min(100%, 820px);
+  max-width: 820px;
+}
+
+.m-feed--feed .m-feed__row {
+  grid-template-columns: minmax(116px, 148px) minmax(0, 1fr);
+}
+
+.m-feed--feed .m-feed__row-title-text,
+.m-feed--feed .m-feed__row-desc {
+  max-width: 72ch;
+}
+
+.m-feed--widget {
+  max-width: 100%;
+}
+
+.m-feed--widget .m-feed__head {
+  padding-bottom: 2px;
+}
