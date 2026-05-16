@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import * as React from "react";
 import {
   BYOLLMConnectorPanel,
   type BYOLLMProviderEntry,
@@ -7,6 +8,9 @@ import {
 const meta: Meta<typeof BYOLLMConnectorPanel> = {
   title: "Settings/BYOLLMConnectorPanel",
   component: BYOLLMConnectorPanel,
+  decorators: [
+    (Story) => React.createElement("div", { style: { maxWidth: 720 } }, React.createElement(Story)),
+  ],
   parameters: {
     layout: "padded",
     docs: {

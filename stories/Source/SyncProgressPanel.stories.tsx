@@ -1,9 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import * as React from "react";
 import { SyncProgressPanel } from "../../packages/ui/src/source/SyncProgressPanel";
 
 const meta: Meta<typeof SyncProgressPanel> = {
   title: "Source/SyncProgressPanel",
   component: SyncProgressPanel,
+  decorators: [
+    (Story) => React.createElement("div", { style: { maxWidth: 680 } }, React.createElement(Story)),
+  ],
   parameters: { layout: "padded" },
 };
 export default meta;

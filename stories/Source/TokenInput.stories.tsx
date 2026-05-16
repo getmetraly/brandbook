@@ -5,6 +5,9 @@ import { TokenInput } from "../../packages/ui/src/source/TokenInput";
 const meta: Meta<typeof TokenInput> = {
   title: "Source/TokenInput",
   component: TokenInput,
+  decorators: [
+    (Story) => React.createElement("div", { style: { maxWidth: 600 } }, React.createElement(Story)),
+  ],
   parameters: {
     layout: "padded",
     docs: {

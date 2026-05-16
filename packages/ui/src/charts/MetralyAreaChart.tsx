@@ -90,7 +90,7 @@ export function MetralyAreaChart<TDatum extends MetralyChartDatum = MetralyChart
       {width ? (
         <AreaChart width={width} height={height} data={data} margin={metralyChartMargin} title={ariaLabel}>
           {gradients}
-          <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
+          <CartesianGrid stroke="var(--m-line)" vertical={false} />
           <XAxis dataKey={xKey} {...xAxisProps} />
           <YAxis {...yAxisProps} />
           <MetralyChartTooltip />
@@ -100,7 +100,7 @@ export function MetralyAreaChart<TDatum extends MetralyChartDatum = MetralyChart
         <ResponsiveContainer width="100%" height={height}>
           <AreaChart data={data} margin={metralyChartMargin} title={ariaLabel}>
             {gradients}
-            <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
+            <CartesianGrid stroke="var(--m-line)" vertical={false} />
             <XAxis dataKey={xKey} {...xAxisProps} />
             <YAxis {...yAxisProps} />
             <MetralyChartTooltip />

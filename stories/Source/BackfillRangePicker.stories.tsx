@@ -8,6 +8,9 @@ import {
 const meta: Meta<typeof BackfillRangePicker> = {
   title: "Source/BackfillRangePicker",
   component: BackfillRangePicker,
+  decorators: [
+    (Story) => React.createElement("div", { style: { maxWidth: 560 } }, React.createElement(Story)),
+  ],
   parameters: { layout: "padded" },
 };
 export default meta;

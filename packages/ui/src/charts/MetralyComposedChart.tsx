@@ -107,7 +107,7 @@ export function MetralyComposedChart<TDatum extends MetralyChartDatum = MetralyC
           name={item.name}
           fill={color}
           radius={[8, 8, 0, 0]}
-          activeBar={{ stroke: "rgba(0,229,204,0.42)", strokeWidth: 1, fillOpacity: 0.88 }}
+          activeBar={{ stroke: "color-mix(in srgb, var(--m-cyan-500) 42%, transparent)", strokeWidth: 1, fillOpacity: 0.88 }}
           isAnimationActive={false}
         />
       );
@@ -132,7 +132,7 @@ export function MetralyComposedChart<TDatum extends MetralyChartDatum = MetralyC
       {width ? (
         <ComposedChart width={width} height={height} data={data} margin={metralyChartMargin} title={ariaLabel}>
           {gradients}
-          <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
+          <CartesianGrid stroke="var(--m-line)" vertical={false} />
           <XAxis dataKey={xKey} {...xAxisProps} />
           <YAxis {...yAxisProps} />
           <MetralyChartTooltip />
@@ -142,7 +142,7 @@ export function MetralyComposedChart<TDatum extends MetralyChartDatum = MetralyC
         <ResponsiveContainer width="100%" height={height}>
           <ComposedChart data={data} margin={metralyChartMargin} title={ariaLabel}>
             {gradients}
-            <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
+            <CartesianGrid stroke="var(--m-line)" vertical={false} />
             <XAxis dataKey={xKey} {...xAxisProps} />
             <YAxis {...yAxisProps} />
             <MetralyChartTooltip />

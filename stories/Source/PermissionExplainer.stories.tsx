@@ -1,9 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import * as React from "react";
 import { PermissionExplainer, type PermissionScope } from "../../packages/ui/src/source/PermissionExplainer";
 
 const meta: Meta<typeof PermissionExplainer> = {
   title: "Source/PermissionExplainer",
   component: PermissionExplainer,
+  decorators: [
+    (Story) => React.createElement("div", { style: { maxWidth: 700 } }, React.createElement(Story)),
+  ],
   parameters: { layout: "padded" },
 };
 export default meta;

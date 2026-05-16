@@ -6,6 +6,9 @@ import { WidgetStateMatrix } from "../../packages/ui/src/components/WidgetStateM
 const meta: Meta<typeof StateBoard> = {
   title: "Components/StateBoard",
   component: StateBoard,
+  decorators: [
+    (Story) => React.createElement("div", { style: { maxWidth: 720 } }, React.createElement(Story)),
+  ],
   parameters: { layout: "padded" },
 };
 export default meta;

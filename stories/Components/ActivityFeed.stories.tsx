@@ -6,6 +6,9 @@ import { WidgetStateMatrix } from "../../packages/ui/src/components/WidgetStateM
 const meta: Meta<typeof ActivityFeed> = {
   title: "Components/ActivityFeed",
   component: ActivityFeed,
+  decorators: [
+    (Story) => React.createElement("div", { style: { maxWidth: 660 } }, React.createElement(Story)),
+  ],
   parameters: { layout: "padded" },
 };
 export default meta;
