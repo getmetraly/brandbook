@@ -119,43 +119,43 @@ export const ConnectionTestPanel: React.FC<ConnectionTestPanelProps> = ({
     <section
       id={rootId}
       className={[
-        "m-conntest",
-        `m-conntest--${status}`,
+        "metraly-conntest",
+        `metraly-conntest--${status}`,
         className ?? "",
       ]
         .filter(Boolean)
         .join(" ")}
       aria-busy={status === "testing" || undefined}
     >
-      <header className="m-conntest__head">
-        <div className="m-conntest__head-text">
-          <span className="m-conntest__title">{STATUS_TITLE[status]}</span>
-          <span className="m-conntest__help">{nextStep ?? STATUS_HELP[status]}</span>
+      <header className="metraly-conntest__head">
+        <div className="metraly-conntest__head-text">
+          <span className="metraly-conntest__title">{STATUS_TITLE[status]}</span>
+          <span className="metraly-conntest__help">{nextStep ?? STATUS_HELP[status]}</span>
         </div>
         <StatusBadge status={meta.status} label={meta.label} />
       </header>
 
-      <ul className="m-conntest__meta" aria-label="Test metadata">
-        <li className="m-conntest__meta-row">
-          <span className="m-conntest__meta-key">Last tested</span>
-          <span className="m-conntest__meta-val">{fmtTime(lastTestedAt)}</span>
+      <ul className="metraly-conntest__meta" aria-label="Test metadata">
+        <li className="metraly-conntest__meta-row">
+          <span className="metraly-conntest__meta-key">Last tested</span>
+          <span className="metraly-conntest__meta-val">{fmtTime(lastTestedAt)}</span>
         </li>
-        <li className="m-conntest__meta-row">
-          <span className="m-conntest__meta-key">Latency</span>
-          <span className="m-conntest__meta-val">
+        <li className="metraly-conntest__meta-row">
+          <span className="metraly-conntest__meta-key">Latency</span>
+          <span className="metraly-conntest__meta-val">
             {typeof latencyMs === "number" ? `${latencyMs} ms` : "—"}
           </span>
         </li>
       </ul>
 
       {checks && checks.length > 0 ? (
-        <ul className="m-conntest__checks" aria-label="Connection checks">
+        <ul className="metraly-conntest__checks" aria-label="Connection checks">
           {checks.map((c) => (
-            <li key={c.id} className={`m-conntest__check m-conntest__check--${c.result}`}>
-              <span className={`m-conntest__check-dot m-conntest__check-dot--${c.result}`} aria-hidden="true" />
-              <span className="m-conntest__check-label">{c.label}</span>
-              {c.detail ? <span className="m-conntest__check-detail">{c.detail}</span> : null}
-              <span className="m-conntest__check-result">
+            <li key={c.id} className={`metraly-conntest__check metraly-conntest__check--${c.result}`}>
+              <span className={`metraly-conntest__check-dot metraly-conntest__check-dot--${c.result}`} aria-hidden="true" />
+              <span className="metraly-conntest__check-label">{c.label}</span>
+              {c.detail ? <span className="metraly-conntest__check-detail">{c.detail}</span> : null}
+              <span className="metraly-conntest__check-result">
                 {c.result === "ok" ? "passed" : c.result === "fail" ? "failed" : "skipped"}
               </span>
             </li>
@@ -164,10 +164,10 @@ export const ConnectionTestPanel: React.FC<ConnectionTestPanelProps> = ({
       ) : null}
 
       {onRetry ? (
-        <footer className="m-conntest__footer">
+        <footer className="metraly-conntest__footer">
           <button
             type="button"
-            className="m-conntest__btn"
+            className="metraly-conntest__btn"
             onClick={onRetry}
             disabled={status === "testing"}
           >

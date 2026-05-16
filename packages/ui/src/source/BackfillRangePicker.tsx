@@ -85,10 +85,10 @@ export const BackfillRangePicker: React.FC<BackfillRangePickerProps> = ({
       label={label}
       description={errorText ? undefined : helper}
       error={errorText}
-      className={["m-backfill", className ?? ""].filter(Boolean).join(" ")}
+      className={["metraly-backfill", className ?? ""].filter(Boolean).join(" ")}
     >
-      <div className="m-backfill__row">
-        <div role="radiogroup" aria-label="Quick range" className="m-backfill__presets">
+      <div className="metraly-backfill__row">
+        <div role="radiogroup" aria-label="Quick range" className="metraly-backfill__presets">
           {PRESETS.map((p) => (
             <button
               key={p.id}
@@ -96,8 +96,8 @@ export const BackfillRangePicker: React.FC<BackfillRangePickerProps> = ({
               role="radio"
               aria-checked={preset === p.id}
               className={[
-                "m-backfill__preset",
-                preset === p.id ? "m-backfill__preset--active" : "",
+                "metraly-backfill__preset",
+                preset === p.id ? "metraly-backfill__preset--active" : "",
               ]
                 .filter(Boolean)
                 .join(" ")}
@@ -112,8 +112,8 @@ export const BackfillRangePicker: React.FC<BackfillRangePickerProps> = ({
             role="radio"
             aria-checked={preset === "custom"}
             className={[
-              "m-backfill__preset",
-              preset === "custom" ? "m-backfill__preset--active" : "",
+              "metraly-backfill__preset",
+              preset === "custom" ? "metraly-backfill__preset--active" : "",
             ]
               .filter(Boolean)
               .join(" ")}
@@ -125,14 +125,14 @@ export const BackfillRangePicker: React.FC<BackfillRangePickerProps> = ({
         </div>
 
         {preset === "custom" ? (
-          <label className="m-backfill__custom" htmlFor={customId}>
+          <label className="metraly-backfill__custom" htmlFor={customId}>
             <input
               id={customId}
               type="number"
               min={minDays}
               max={maxDays}
               step={1}
-              className="m-backfill__custom-input"
+              className="metraly-backfill__custom-input"
               value={customDays ?? 30}
               onChange={(e) => {
                 const v = Math.max(minDays, Math.min(maxDays, Number(e.target.value)));
@@ -141,33 +141,33 @@ export const BackfillRangePicker: React.FC<BackfillRangePickerProps> = ({
               disabled={disabled}
               aria-label="Custom days"
             />
-            <span className="m-backfill__custom-unit">days</span>
+            <span className="metraly-backfill__custom-unit">days</span>
           </label>
         ) : null}
       </div>
 
-      <div className="m-backfill__estimate" aria-live="polite">
-        <div className="m-backfill__estimate-row">
-          <span className="m-backfill__estimate-label">Estimated events</span>
-          <span className="m-backfill__estimate-value">
+      <div className="metraly-backfill__estimate" aria-live="polite">
+        <div className="metraly-backfill__estimate-row">
+          <span className="metraly-backfill__estimate-label">Estimated events</span>
+          <span className="metraly-backfill__estimate-value">
             {formatEvents(estimate?.events, estimate?.confidence)}
           </span>
           {estimate?.confidence && estimate.confidence !== "exact" ? (
-            <span className="m-backfill__estimate-note">
+            <span className="metraly-backfill__estimate-note">
               {estimate.confidence === "rough" ? "rough estimate" : "unknown"}
             </span>
           ) : null}
         </div>
         {estimate?.duration ? (
-          <div className="m-backfill__estimate-row">
-            <span className="m-backfill__estimate-label">Likely duration</span>
-            <span className="m-backfill__estimate-value">{estimate.duration}</span>
+          <div className="metraly-backfill__estimate-row">
+            <span className="metraly-backfill__estimate-label">Likely duration</span>
+            <span className="metraly-backfill__estimate-value">{estimate.duration}</span>
           </div>
         ) : null}
         {estimate?.warning ? (
-          <div className="m-backfill__warning">
+          <div className="metraly-backfill__warning">
             <StatusBadge status="Delayed" label="Heads up" />
-            <span className="m-backfill__warning-text">{estimate.warning}</span>
+            <span className="metraly-backfill__warning-text">{estimate.warning}</span>
           </div>
         ) : null}
       </div>

@@ -82,25 +82,25 @@ export const PermissionExplainer: React.FC<PermissionExplainerProps> = ({
     <section
       id={rootId}
       className={[
-        "m-perm",
-        compact ? "m-perm--compact" : "",
+        "metraly-perm",
+        compact ? "metraly-perm--compact" : "",
         className ?? "",
       ]
         .filter(Boolean)
         .join(" ")}
       aria-label={title ?? "Required permissions"}
     >
-      <header className="m-perm__head">
-        <div className="m-perm__head-text">
-          {title ? <span className="m-perm__title">{title}</span> : null}
-          {description ? <span className="m-perm__desc">{description}</span> : null}
+      <header className="metraly-perm__head">
+        <div className="metraly-perm__head-text">
+          {title ? <span className="metraly-perm__title">{title}</span> : null}
+          {description ? <span className="metraly-perm__desc">{description}</span> : null}
         </div>
-        <div className="m-perm__summary">
-          <span className="m-perm__summary-counts">
-            <span className="m-perm__summary-num">{summary.granted}</span>
-            <span className="m-perm__summary-sep">/</span>
-            <span className="m-perm__summary-total">{summary.total}</span>
-            <span className="m-perm__summary-label">granted</span>
+        <div className="metraly-perm__summary">
+          <span className="metraly-perm__summary-counts">
+            <span className="metraly-perm__summary-num">{summary.granted}</span>
+            <span className="metraly-perm__summary-sep">/</span>
+            <span className="metraly-perm__summary-total">{summary.total}</span>
+            <span className="metraly-perm__summary-label">granted</span>
           </span>
           {summary.missingReq > 0 ? (
             <StatusBadge status="Error" label={`${summary.missingReq} required missing`} />
@@ -108,32 +108,32 @@ export const PermissionExplainer: React.FC<PermissionExplainerProps> = ({
         </div>
       </header>
 
-      <ul className="m-perm__list">
+      <ul className="metraly-perm__list">
         {sorted.map((s) => (
           <li
             key={s.id}
             className={[
-              "m-perm__item",
-              `m-perm__item--${s.state}`,
-              s.requirement === "required" ? "m-perm__item--required" : "",
+              "metraly-perm__item",
+              `metraly-perm__item--${s.state}`,
+              s.requirement === "required" ? "metraly-perm__item--required" : "",
             ]
               .filter(Boolean)
               .join(" ")}
           >
-            <div className="m-perm__item-head">
-              <code className="m-perm__scope">{s.id}</code>
-              <span className={`m-perm__req m-perm__req--${s.requirement}`}>
+            <div className="metraly-perm__item-head">
+              <code className="metraly-perm__scope">{s.id}</code>
+              <span className={`metraly-perm__req metraly-perm__req--${s.requirement}`}>
                 {s.requirement === "required" ? "Required" : "Optional"}
               </span>
               <StatusBadge status={STATE_BADGE[s.state].status} label={STATE_BADGE[s.state].label} />
             </div>
-            <p className="m-perm__reason">{s.reason}</p>
+            <p className="metraly-perm__reason">{s.reason}</p>
             {!compact && s.unlocksMetrics && s.unlocksMetrics.length > 0 ? (
-              <div className="m-perm__metrics">
-                <span className="m-perm__metrics-label">Unlocks</span>
-                <ul className="m-perm__metrics-list">
+              <div className="metraly-perm__metrics">
+                <span className="metraly-perm__metrics-label">Unlocks</span>
+                <ul className="metraly-perm__metrics-list">
                   {s.unlocksMetrics.map((m) => (
-                    <li key={m} className="m-perm__metrics-chip">{m}</li>
+                    <li key={m} className="metraly-perm__metrics-chip">{m}</li>
                   ))}
                 </ul>
               </div>

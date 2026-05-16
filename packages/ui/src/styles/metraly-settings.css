@@ -2,9 +2,9 @@
 
 /* ── SettingsSection ─────────────────────────────────────────────── */
 
-.m-settings-section { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.metraly-settings-section { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 
-.m-settings-section__head {
+.metraly-settings-section__head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -12,15 +12,15 @@
   flex-wrap: wrap;
 }
 
-.m-settings-section__head-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.m-settings-section__title {
+.metraly-settings-section__head-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.metraly-settings-section__title {
   margin: 0;
   font-size: 14px;
   font-weight: 600;
   color: var(--m-fg-0);
 }
 
-.m-settings-section__desc {
+.metraly-settings-section__desc {
   margin: 0;
   font-size: 12px;
   color: var(--m-fg-2);
@@ -28,23 +28,23 @@
   max-width: 64ch;
 }
 
-.m-settings-section__head-aside {
+.metraly-settings-section__head-aside {
   display: inline-flex;
   align-items: center;
   gap: 8px;
 }
 
-.m-settings-section__body {
+.metraly-settings-section__body {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.m-settings-section--compact .m-settings-section__body { gap: 4px; }
+.metraly-settings-section--compact .metraly-settings-section__body { gap: 4px; }
 
 /* ── SettingsAuditRow ────────────────────────────────────────────── */
 
-.m-audit-row {
+.metraly-audit-row {
   display: grid;
   grid-template-columns:
     minmax(110px, max-content)   /* time   */
@@ -65,20 +65,20 @@
   color: var(--m-fg-1);
 }
 
-.m-audit-row__time   { color: var(--m-fg-2); }
-.m-audit-row__actor  { color: var(--m-fg-0); }
-.m-audit-row__action { color: var(--m-fg-1); text-transform: lowercase; }
-.m-audit-row__subject { color: var(--m-fg-0); }
-.m-audit-row__detail { color: var(--m-fg-2); }
-.m-audit-row__ref    { color: var(--m-fg-3); }
+.metraly-audit-row__time   { color: var(--m-fg-2); }
+.metraly-audit-row__actor  { color: var(--m-fg-0); }
+.metraly-audit-row__action { color: var(--m-fg-1); text-transform: lowercase; }
+.metraly-audit-row__subject { color: var(--m-fg-0); }
+.metraly-audit-row__detail { color: var(--m-fg-2); }
+.metraly-audit-row__ref    { color: var(--m-fg-3); }
 
 @media (max-width: 600px) {
-  .m-audit-row { grid-template-columns: 1fr; gap: 2px; padding: 6px 8px; }
+  .metraly-audit-row { grid-template-columns: 1fr; gap: 2px; padding: 6px 8px; }
 }
 
 /* ── AIProviderConnectorCard ─────────────────────────────────────── */
 
-.m-ai-provider {
+.metraly-ai-provider {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -86,29 +86,29 @@
   color: var(--m-fg-1);
 }
 
-.m-ai-provider__head {
+.metraly-ai-provider__head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
 }
 
-.m-ai-provider__head-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.metraly-ai-provider__head-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 
-.m-ai-provider__name-row {
+.metraly-ai-provider__name-row {
   display: flex;
   align-items: baseline;
   gap: 8px;
   flex-wrap: wrap;
 }
 
-.m-ai-provider__name {
+.metraly-ai-provider__name {
   font-size: 14px;
   font-weight: 600;
   color: var(--m-fg-0);
 }
 
-.m-ai-provider__kind {
+.metraly-ai-provider__kind {
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-size: 10px;
   letter-spacing: 0.06em;
@@ -116,7 +116,7 @@
   color: var(--m-fg-3);
 }
 
-.m-ai-provider__plugin {
+.metraly-ai-provider__plugin {
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-size: 10px;
   padding: 1px 6px;
@@ -126,9 +126,9 @@
   color: var(--m-purple-500);
 }
 
-.m-ai-provider__desc { margin: 0; font-size: 12px; color: var(--m-fg-2); line-height: 1.45; }
+.metraly-ai-provider__desc { margin: 0; font-size: 12px; color: var(--m-fg-2); line-height: 1.45; }
 
-.m-ai-provider__endpoint {
+.metraly-ai-provider__endpoint {
   align-self: flex-start;
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-size: 11px;
@@ -143,22 +143,22 @@
   white-space: nowrap;
 }
 
-.m-ai-provider__token { padding-top: 4px; }
+.metraly-ai-provider__token { padding-top: 4px; }
 
-.m-ai-provider__models {
+.metraly-ai-provider__models {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.m-ai-provider__models-label {
+.metraly-ai-provider__models-label {
   font-size: 10px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--m-fg-3);
 }
 
-.m-ai-provider__models-list {
+.metraly-ai-provider__models-list {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -167,7 +167,7 @@
   gap: 4px 6px;
 }
 
-.m-ai-provider__model {
+.metraly-ai-provider__model {
   display: inline-flex;
   align-items: baseline;
   gap: 6px;
@@ -181,21 +181,21 @@
   color: var(--m-fg-1);
 }
 
-.m-ai-provider__model--default {
+.metraly-ai-provider__model--default {
   border-color: color-mix(in oklch, var(--m-cyan-500) 50%, var(--m-line));
   background: color-mix(in oklch, var(--m-cyan-500) 10%, var(--m-bg-2));
 }
 
-.m-ai-provider__model-label { color: var(--m-fg-0); }
-.m-ai-provider__model-meta { color: var(--m-fg-3); font-size: 10px; }
-.m-ai-provider__model-default-tag {
+.metraly-ai-provider__model-label { color: var(--m-fg-0); }
+.metraly-ai-provider__model-meta { color: var(--m-fg-3); font-size: 10px; }
+.metraly-ai-provider__model-default-tag {
   font-size: 9.5px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--m-cyan-500);
 }
 
-.m-ai-provider__privacy {
+.metraly-ai-provider__privacy {
   margin: 0;
   display: flex;
   align-items: baseline;
@@ -203,14 +203,14 @@
   font-size: 11.5px;
   color: var(--m-fg-1);
 }
-.m-ai-provider__privacy-label {
+.metraly-ai-provider__privacy-label {
   font-size: 10px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--m-fg-3);
 }
 
-.m-ai-provider__footer {
+.metraly-ai-provider__footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -220,7 +220,7 @@
   flex-wrap: wrap;
 }
 
-.m-ai-provider__audit {
+.metraly-ai-provider__audit {
   display: inline-flex;
   align-items: baseline;
   gap: 6px;
@@ -229,21 +229,21 @@
   font-size: 10.5px;
 }
 
-.m-ai-provider__audit-label {
+.metraly-ai-provider__audit-label {
   color: var(--m-fg-3);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
-.m-ai-provider__audit-time { color: var(--m-fg-1); }
+.metraly-ai-provider__audit-time { color: var(--m-fg-1); }
 
-.m-ai-provider__actions {
+.metraly-ai-provider__actions {
   display: inline-flex;
   align-items: center;
   gap: 6px;
 }
 
-.m-ai-provider__btn {
+.metraly-ai-provider__btn {
   height: 28px;
   padding: 0 10px;
   border-radius: 6px;
@@ -254,23 +254,23 @@
   font-size: 11.5px;
   cursor: pointer;
 }
-.m-ai-provider__btn:hover { background: var(--m-bg-3); }
-.m-ai-provider__btn:focus-visible { outline: none; box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500)); }
-.m-ai-provider__btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.m-ai-provider__btn--ghost { background: transparent; }
-.m-ai-provider__btn--primary {
+.metraly-ai-provider__btn:hover { background: var(--m-bg-3); }
+.metraly-ai-provider__btn:focus-visible { outline: none; box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500)); }
+.metraly-ai-provider__btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.metraly-ai-provider__btn--ghost { background: transparent; }
+.metraly-ai-provider__btn--primary {
   background: color-mix(in oklch, var(--m-cyan-500) 18%, transparent);
   border-color: color-mix(in oklch, var(--m-cyan-500) 50%, transparent);
   color: var(--m-cyan-500);
 }
 
-.m-ai-provider--from-plugin { box-shadow: inset 2px 0 0 var(--m-purple-500); }
+.metraly-ai-provider--from-plugin { box-shadow: inset 2px 0 0 var(--m-purple-500); }
 
 /* ── BYOLLMConnectorPanel ────────────────────────────────────────── */
 
-.m-byo { display: flex; flex-direction: column; gap: 12px; }
+.metraly-byo { display: flex; flex-direction: column; gap: 12px; }
 
-.m-byo__add {
+.metraly-byo__add {
   height: 28px;
   padding: 0 12px;
   border-radius: 6px;
@@ -281,10 +281,10 @@
   font-size: 11.5px;
   cursor: pointer;
 }
-.m-byo__add:hover { background: color-mix(in oklch, var(--m-cyan-500) 28%, transparent); }
-.m-byo__add:focus-visible { outline: none; box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500)); }
+.metraly-byo__add:hover { background: color-mix(in oklch, var(--m-cyan-500) 28%, transparent); }
+.metraly-byo__add:focus-visible { outline: none; box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500)); }
 
-.m-byo__summary {
+.metraly-byo__summary {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -293,24 +293,24 @@
   gap: 6px 16px;
 }
 
-.m-byo__summary-row { display: flex; align-items: baseline; gap: 6px; }
-.m-byo__summary-key {
+.metraly-byo__summary-row { display: flex; align-items: baseline; gap: 6px; }
+.metraly-byo__summary-key {
   font-size: 10px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--m-fg-3);
 }
-.m-byo__summary-val { font-size: 12px; color: var(--m-fg-1); }
+.metraly-byo__summary-val { font-size: 12px; color: var(--m-fg-1); }
 
-.m-byo__group { display: flex; flex-direction: column; gap: 6px; }
-.m-byo__group-label {
+.metraly-byo__group { display: flex; flex-direction: column; gap: 6px; }
+.metraly-byo__group-label {
   font-size: 10px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--m-fg-3);
 }
 
-.m-byo__list {
+.metraly-byo__list {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -320,29 +320,29 @@
 }
 
 @media (min-width: 1024px) {
-  .m-byo__list { grid-template-columns: 1fr 1fr; }
+  .metraly-byo__list { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 480px) {
-  .m-byo__summary { grid-template-columns: 1fr; }
+  .metraly-byo__summary { grid-template-columns: 1fr; }
 }
 
 /* ── visual stabilization ─────────────────────────────────────────── */
-.m-settings-section,
-.m-ai-provider,
-.m-byo-llm {
+.metraly-settings-section,
+.metraly-ai-provider,
+.metraly-byo {
   max-width: 960px;
 }
 
-.m-ai-provider__head,
-.m-ai-provider__footer {
+.metraly-ai-provider__head,
+.metraly-ai-provider__footer {
   align-items: flex-start;
 }
 
 @media (max-width: 720px) {
-  .m-ai-provider__head,
-  .m-ai-provider__footer,
-  .m-settings-section__head {
+  .metraly-ai-provider__head,
+  .metraly-ai-provider__footer,
+  .metraly-settings-section__head {
     flex-direction: column;
   }
 }

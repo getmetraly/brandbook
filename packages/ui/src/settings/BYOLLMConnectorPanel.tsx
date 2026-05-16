@@ -60,7 +60,7 @@ export const BYOLLMConnectorPanel: React.FC<BYOLLMConnectorPanelProps> = ({
   return (
     <div
       id={rootId}
-      className={["m-byo", className ?? ""].filter(Boolean).join(" ")}
+      className={["metraly-byo", className ?? ""].filter(Boolean).join(" ")}
     >
       <SettingsSection
         title="AI Provider Connectors"
@@ -76,7 +76,7 @@ export const BYOLLMConnectorPanel: React.FC<BYOLLMConnectorPanelProps> = ({
           onAddProvider ? (
             <button
               type="button"
-              className="m-byo__add"
+              className="metraly-byo__add"
               onClick={onAddProvider}
             >
               Add provider
@@ -85,17 +85,17 @@ export const BYOLLMConnectorPanel: React.FC<BYOLLMConnectorPanelProps> = ({
         }
       >
         {routingSummary || privacySummary ? (
-          <ul className="m-byo__summary">
+          <ul className="metraly-byo__summary">
             {routingSummary ? (
-              <li className="m-byo__summary-row">
-                <span className="m-byo__summary-key">Routing</span>
-                <span className="m-byo__summary-val">{routingSummary}</span>
+              <li className="metraly-byo__summary-row">
+                <span className="metraly-byo__summary-key">Routing</span>
+                <span className="metraly-byo__summary-val">{routingSummary}</span>
               </li>
             ) : null}
             {privacySummary ? (
-              <li className="m-byo__summary-row">
-                <span className="m-byo__summary-key">Privacy</span>
-                <span className="m-byo__summary-val">{privacySummary}</span>
+              <li className="metraly-byo__summary-row">
+                <span className="metraly-byo__summary-key">Privacy</span>
+                <span className="metraly-byo__summary-val">{privacySummary}</span>
               </li>
             ) : null}
           </ul>
@@ -111,11 +111,11 @@ export const BYOLLMConnectorPanel: React.FC<BYOLLMConnectorPanelProps> = ({
         ) : (
           <>
             {providers.length > 0 ? (
-              <div className="m-byo__group">
-                <span className="m-byo__group-label">Workspace providers</span>
-                <ul className="m-byo__list">
+              <div className="metraly-byo__group">
+                <span className="metraly-byo__group-label">Workspace providers</span>
+                <ul className="metraly-byo__list">
                   {providers.map((p) => (
-                    <li key={p.providerId} className="m-byo__list-item">
+                    <li key={p.providerId} className="metraly-byo__list-item">
                       <AIProviderConnectorCard {...p} />
                     </li>
                   ))}
@@ -124,11 +124,11 @@ export const BYOLLMConnectorPanel: React.FC<BYOLLMConnectorPanelProps> = ({
             ) : null}
 
             {pluginContributedProviders && pluginContributedProviders.length > 0 ? (
-              <div className="m-byo__group">
-                <span className="m-byo__group-label">Plugin-contributed</span>
-                <ul className="m-byo__list">
+              <div className="metraly-byo__group">
+                <span className="metraly-byo__group-label">Plugin-contributed</span>
+                <ul className="metraly-byo__list">
                   {pluginContributedProviders.map((p) => (
-                    <li key={p.providerId} className="m-byo__list-item">
+                    <li key={p.providerId} className="metraly-byo__list-item">
                       <AIProviderConnectorCard {...p} />
                     </li>
                   ))}

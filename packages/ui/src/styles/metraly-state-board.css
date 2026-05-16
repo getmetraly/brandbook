@@ -1,6 +1,6 @@
 /* StateBoard */
 
-.m-board {
+.metraly-board {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -9,7 +9,7 @@
   min-width: 0;
 }
 
-.m-board__head {
+.metraly-board__head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -17,11 +17,11 @@
   flex-wrap: wrap;
 }
 
-.m-board__head-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.m-board__title { font-size: 13px; font-weight: 600; color: var(--m-fg-0); }
-.m-board__desc  { font-size: 11.5px; color: var(--m-fg-2); }
+.metraly-board__head-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.metraly-board__title { font-size: 13px; font-weight: 600; color: var(--m-fg-0); }
+.metraly-board__desc  { font-size: 11.5px; color: var(--m-fg-2); }
 
-.m-board__summary {
+.metraly-board__summary {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -29,7 +29,7 @@
   gap: 6px;
 }
 
-.m-board__summary-chip {
+.metraly-board__summary-chip {
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -44,37 +44,37 @@
   color: var(--m-fg-1);
 }
 
-.m-board__summary-dot {
+.metraly-board__summary-dot {
   width: 6px; height: 6px; border-radius: 999px; background: var(--m-fg-3);
 }
-.m-board__summary-chip--ok      .m-board__summary-dot { background: var(--m-ok); }
-.m-board__summary-chip--warning .m-board__summary-dot { background: var(--m-warn); }
-.m-board__summary-chip--danger  .m-board__summary-dot { background: var(--m-err); }
+.metraly-board__summary-chip--ok      .metraly-board__summary-dot { background: var(--m-ok); }
+.metraly-board__summary-chip--warning .metraly-board__summary-dot { background: var(--m-warn); }
+.metraly-board__summary-chip--danger  .metraly-board__summary-dot { background: var(--m-err); }
 
-.m-board__summary-count { color: var(--m-fg-0); }
-.m-board__summary-label { color: var(--m-fg-2); text-transform: lowercase; }
+.metraly-board__summary-count { color: var(--m-fg-0); }
+.metraly-board__summary-label { color: var(--m-fg-2); text-transform: lowercase; }
 
-.m-board__items {
+.metraly-board__items {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.m-board__items--grid {
+.metraly-board__items--grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 8px;
 }
 
-.m-board__items--list {
+.metraly-board__items--list {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.m-board__item-wrap { display: contents; }
+.metraly-board__item-wrap { display: contents; }
 
-.m-board__item {
+.metraly-board__item {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -88,7 +88,7 @@
   transition: background 100ms ease, border-color 100ms ease;
 }
 
-.m-board--list .m-board__item {
+.metraly-board--list .metraly-board__item {
   display: grid;
   grid-template-columns: auto 1fr auto;
   gap: 12px;
@@ -96,29 +96,29 @@
   padding: 8px 10px;
 }
 
-.m-board--list .m-board__item-head {
+.metraly-board--list .metraly-board__item-head {
   grid-column: 1 / 3;
 }
 
-.m-board__item-head {
+.metraly-board__item-head {
   display: flex;
   align-items: center;
   gap: 8px;
   min-width: 0;
 }
 
-.m-board__dot {
+.metraly-board__dot {
   width: 8px; height: 8px; border-radius: 999px; background: var(--m-fg-3); flex-shrink: 0;
 }
-.m-board__dot--ok       { background: var(--m-ok); box-shadow: 0 0 6px color-mix(in oklch, var(--m-ok) 60%, transparent); }
-.m-board__dot--warning  { background: var(--m-warn); }
-.m-board__dot--danger   { background: var(--m-err); }
-.m-board__dot--info     { background: var(--m-cyan-500); }
-.m-board__dot--neutral  { background: var(--m-fg-3); }
-.m-board__dot--gated    { background: var(--m-purple-500); }
-.m-board__dot--disabled { background: var(--m-bg-4); }
+.metraly-board__dot--ok       { background: var(--m-ok); box-shadow: 0 0 6px color-mix(in oklch, var(--m-ok) 60%, transparent); }
+.metraly-board__dot--warning  { background: var(--m-warn); }
+.metraly-board__dot--danger   { background: var(--m-err); }
+.metraly-board__dot--info     { background: var(--m-cyan-500); }
+.metraly-board__dot--neutral  { background: var(--m-fg-3); }
+.metraly-board__dot--gated    { background: var(--m-purple-500); }
+.metraly-board__dot--disabled { background: var(--m-bg-4); }
 
-.m-board__item-label {
+.metraly-board__item-label {
   flex: 1;
   font-size: 12.5px;
   font-weight: 500;
@@ -128,14 +128,14 @@
   text-overflow: ellipsis;
 }
 
-.m-board__item-hint {
+.metraly-board__item-hint {
   margin: 0;
   font-size: 11.5px;
   color: var(--m-fg-2);
   line-height: 1.45;
 }
 
-.m-board__item-meta {
+.metraly-board__item-meta {
   display: flex;
   align-items: baseline;
   gap: 10px;
@@ -145,53 +145,53 @@
   color: var(--m-fg-3);
 }
 
-.m-board__item-meter { color: var(--m-fg-1); }
-.m-board__item-time  { color: var(--m-fg-3); }
+.metraly-board__item-meter { color: var(--m-fg-1); }
+.metraly-board__item-time  { color: var(--m-fg-3); }
 
-.m-board__item--interactive { cursor: pointer; }
-.m-board__item--interactive:hover { background: var(--m-bg-2); border-color: var(--m-line-strong); }
-.m-board__item--interactive:focus-visible {
+.metraly-board__item--interactive { cursor: pointer; }
+.metraly-board__item--interactive:hover { background: var(--m-bg-2); border-color: var(--m-line-strong); }
+.metraly-board__item--interactive:focus-visible {
   outline: none;
   box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500));
 }
 
 /* tone tints on tile background */
-.m-board__item--danger  { border-color: color-mix(in oklch, var(--m-err) 45%, var(--m-line)); }
-.m-board__item--warning { border-color: color-mix(in oklch, var(--m-warn) 35%, var(--m-line)); }
+.metraly-board__item--danger  { border-color: color-mix(in oklch, var(--m-err) 45%, var(--m-line)); }
+.metraly-board__item--warning { border-color: color-mix(in oklch, var(--m-warn) 35%, var(--m-line)); }
 
 @media (max-width: 480px) {
-  .m-board__items--grid { grid-template-columns: 1fr; }
+  .metraly-board__items--grid { grid-template-columns: 1fr; }
 }
 
 /* ── visual stabilization ─────────────────────────────────────────── */
-.m-board-frame {
+.metraly-board-frame {
   width: min(100%, 980px);
   max-width: 980px;
 }
 
-.m-board {
+.metraly-board {
   max-width: 940px;
 }
 
-.m-board__items--grid {
+.metraly-board__items--grid {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
-.m-board__item {
+.metraly-board__item {
   min-height: 78px;
 }
 
-.m-board--list .m-board__item {
+.metraly-board--list .metraly-board__item {
   min-height: 44px;
 }
 
-.m-board__item-meta {
+.metraly-board__item-meta {
   min-width: 0;
   flex-wrap: wrap;
 }
 
 @media (min-width: 1180px) {
-  .m-board__items--grid {
+  .metraly-board__items--grid {
     grid-template-columns: repeat(3, minmax(240px, 1fr));
   }
 }

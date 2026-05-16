@@ -150,17 +150,17 @@ export const ActivityFeed: React.FC<ActivityFeedProps> = ({
     <div
       id={rootId}
       className={[
-        "m-feed",
-        `m-feed--${mode}`,
+        "metraly-feed",
+        `metraly-feed--${mode}`,
         className ?? "",
       ]
         .filter(Boolean)
         .join(" ")}
     >
       {title || description ? (
-        <header className="m-feed__head">
-          {title ? <span className="m-feed__title">{title}</span> : null}
-          {description ? <span className="m-feed__desc">{description}</span> : null}
+        <header className="metraly-feed__head">
+          {title ? <span className="metraly-feed__title">{title}</span> : null}
+          {description ? <span className="metraly-feed__desc">{description}</span> : null}
         </header>
       ) : null}
 
@@ -178,9 +178,9 @@ export const ActivityFeed: React.FC<ActivityFeedProps> = ({
       )}
 
       {state === "stale" || state === "partial" ? (
-        <footer className="m-feed__footer">
+        <footer className="metraly-feed__footer">
           <StatusBadge status="Delayed" label={state === "stale" ? "Delayed" : "Partial"} />
-          <span className="m-feed__footer-note">
+          <span className="metraly-feed__footer-note">
             {state === "stale"
               ? "Showing last successful sync window."
               : "Backfill in progress. New events may appear soon."}
@@ -190,7 +190,7 @@ export const ActivityFeed: React.FC<ActivityFeedProps> = ({
     </div>
   );
 
-  return useFrame ? <CardShell className="m-feed-frame">{body}</CardShell> : body;
+  return useFrame ? <CardShell className="metraly-feed-frame">{body}</CardShell> : body;
 };
 
 ActivityFeed.displayName = "ActivityFeed";
@@ -203,9 +203,9 @@ const NonReadyBody: React.FC<{ state: ActivityFeedState; emptyLabel: string }> =
 }) => {
   if (state === "loading") {
     return (
-      <ul className="m-feed__list m-feed__list--loading" aria-busy="true">
+      <ul className="metraly-feed__list metraly-feed__list--loading" aria-busy="true">
         {Array.from({ length: 5 }).map((_, i) => (
-          <li key={i} className="m-feed__item m-feed__item--skeleton">
+          <li key={i} className="metraly-feed__item metraly-feed__item--skeleton">
             <MetralySkeleton height="12px" style={{ width: "64px" }} />
             <MetralySkeleton height="14px" style={{ width: "70%" }} />
             <MetralySkeleton height="10px" style={{ width: "40%" }} />
@@ -241,7 +241,7 @@ const GroupedList: React.FC<{
 }> = ({ items, groupBy, mode, onItemActivate }) => {
   if (groupBy === "none") {
     return (
-      <ul className="m-feed__list">
+      <ul className="metraly-feed__list">
         {items.map((it) => (
           <ActivityRow key={it.id} item={it} mode={mode} onActivate={onItemActivate} />
         ))}
@@ -261,12 +261,12 @@ const GroupedList: React.FC<{
   return (
     <>
       {[...buckets.entries()].map(([groupLabel, groupItems]) => (
-        <section key={groupLabel} className="m-feed__group">
-          <header className="m-feed__group-head">
-            <span className="m-feed__group-label">{groupLabel}</span>
-            <span className="m-feed__group-count">{groupItems.length}</span>
+        <section key={groupLabel} className="metraly-feed__group">
+          <header className="metraly-feed__group-head">
+            <span className="metraly-feed__group-label">{groupLabel}</span>
+            <span className="metraly-feed__group-count">{groupItems.length}</span>
           </header>
-          <ul className="m-feed__list">
+          <ul className="metraly-feed__list">
             {groupItems.map((it) => (
               <ActivityRow key={it.id} item={it} mode={mode} onActivate={onItemActivate} />
             ))}
@@ -287,27 +287,27 @@ const ActivityRow: React.FC<{
 
   const inner = (
     <>
-      <div className="m-feed__row-meta">
-        <span className="m-feed__time">{formatTime(item.timestamp)}</span>
-        <span className="m-feed__kind">{KIND_LABEL[item.kind]}</span>
+      <div className="metraly-feed__row-meta">
+        <span className="metraly-feed__time">{formatTime(item.timestamp)}</span>
+        <span className="metraly-feed__kind">{KIND_LABEL[item.kind]}</span>
       </div>
-      <div className="m-feed__row-body">
-        <div className="m-feed__row-title">
-          <span className="m-feed__row-title-text">{item.title}</span>
+      <div className="metraly-feed__row-body">
+        <div className="metraly-feed__row-title">
+          <span className="metraly-feed__row-title-text">{item.title}</span>
           {severity !== "neutral" ? (
             <StatusBadge status={SEVERITY_TO_BADGE[severity]} label={severityLabel(severity)} />
           ) : null}
         </div>
         {item.description && mode === "feed" ? (
-          <p className="m-feed__row-desc">{item.description}</p>
+          <p className="metraly-feed__row-desc">{item.description}</p>
         ) : null}
         {item.meta && item.meta.length > 0 ? (
-          <ul className="m-feed__row-meta-chips" aria-label="event metadata">
+          <ul className="metraly-feed__row-meta-chips" aria-label="event metadata">
             {item.meta.slice(0, mode === "widget" ? 2 : 6).map((m, i) => (
-              <li key={i} className="m-feed__chip">
-                <span className="m-feed__chip-key">{m.key}</span>
-                <span className="m-feed__chip-sep">:</span>
-                <span className="m-feed__chip-val">{m.value}</span>
+              <li key={i} className="metraly-feed__chip">
+                <span className="metraly-feed__chip-key">{m.key}</span>
+                <span className="metraly-feed__chip-sep">:</span>
+                <span className="metraly-feed__chip-val">{m.value}</span>
               </li>
             ))}
           </ul>
@@ -318,10 +318,10 @@ const ActivityRow: React.FC<{
 
   if (interactive) {
     return (
-      <li className="m-feed__item">
+      <li className="metraly-feed__item">
         <button
           type="button"
-          className="m-feed__row m-feed__row--interactive"
+          className="metraly-feed__row metraly-feed__row--interactive"
           onClick={() => onActivate?.(item)}
           aria-label={`${KIND_LABEL[item.kind]}: ${item.title}`}
         >
@@ -332,8 +332,8 @@ const ActivityRow: React.FC<{
   }
 
   return (
-    <li className="m-feed__item">
-      <div className="m-feed__row">{inner}</div>
+    <li className="metraly-feed__item">
+      <div className="metraly-feed__row">{inner}</div>
     </li>
   );
 };

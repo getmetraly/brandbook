@@ -67,13 +67,13 @@ export const SettingsAuditRow: React.FC<SettingsAuditRowProps> = ({
   className,
 }) => {
   return (
-    <div className={["m-audit-row", className ?? ""].filter(Boolean).join(" ")}>
-      <span className="m-audit-row__time">{fmtTime(timestamp)}</span>
-      <span className="m-audit-row__actor">{actor}</span>
-      <span className="m-audit-row__action">{ACTION_LABEL[action]}</span>
-      <span className="m-audit-row__subject">{subject}</span>
-      {detail ? <span className="m-audit-row__detail">{detail}</span> : null}
-      {refId ? <span className="m-audit-row__ref">{refId}</span> : null}
+    <div className={["metraly-audit-row", className ?? ""].filter(Boolean).join(" ")}>
+      <span className="metraly-audit-row__time">{fmtTime(timestamp)}</span>
+      <span className="metraly-audit-row__actor">{actor}</span>
+      <span className="metraly-audit-row__action">{ACTION_LABEL[action]}</span>
+      <span className="metraly-audit-row__subject">{subject}</span>
+      {detail ? <span className="metraly-audit-row__detail">{detail}</span> : null}
+      {refId ? <span className="metraly-audit-row__ref">{refId}</span> : null}
     </div>
   );
 };

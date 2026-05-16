@@ -3,7 +3,7 @@
  * --m-warn*, --m-err*, --m-glow-focus, --m-font-mono, --m-font-ui.
  */
 
-.m-gauge {
+.metraly-gauge {
   --m-gauge-accent: var(--m-cyan-500);
   display: flex;
   flex-direction: column;
@@ -13,16 +13,16 @@
   min-width: 0;
 }
 
-.m-gauge--card {
+.metraly-gauge--card {
   background: var(--m-bg-1);
   border: 1px solid var(--m-line);
   border-radius: 12px;
   padding: 14px 16px;
 }
 
-.m-gauge--bare { padding: 0; background: transparent; border: 0; }
+.metraly-gauge--bare { padding: 0; background: transparent; border: 0; }
 
-.m-gauge__head {
+.metraly-gauge__head {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -30,21 +30,21 @@
   min-height: 22px;
 }
 
-.m-gauge__label {
+.metraly-gauge__label {
   font-size: 12.5px;
   font-weight: 500;
   letter-spacing: 0.005em;
   color: var(--m-fg-0);
 }
 
-.m-gauge__desc {
+.metraly-gauge__desc {
   margin: 0;
   font-size: 11.5px;
   line-height: 1.45;
   color: var(--m-fg-2);
 }
 
-.m-gauge__body {
+.metraly-gauge__body {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -53,7 +53,7 @@
 
 /* ── semicircle dial ───────────────────────────────────────────────── */
 
-.m-gauge__dial {
+.metraly-gauge__dial {
   position: relative;
   display: grid;
   grid-template-rows: auto auto;
@@ -62,7 +62,7 @@
   isolation: isolate;
 }
 
-.m-gauge__svg {
+.metraly-gauge__svg {
   display: block;
   width: 100%;
   height: auto;
@@ -71,27 +71,27 @@
   overflow: visible;
 }
 
-.m-gauge__track {
+.metraly-gauge__track {
   stroke: var(--m-bg-3);
 }
 
-.m-gauge__arc {
+.metraly-gauge__arc {
   /* color comes inline from --m-gauge-accent / direct stroke */
   transition: stroke-dashoffset 220ms ease-out;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .m-gauge__arc { transition: none; }
+  .metraly-gauge__arc { transition: none; }
 }
 
-.m-gauge__tick { opacity: 0.85; }
-.m-gauge__tick--neutral { stroke: var(--m-fg-3); }
-.m-gauge__tick--cyan    { stroke: var(--m-cyan-500); }
-.m-gauge__tick--success { stroke: var(--m-ok); }
-.m-gauge__tick--warning { stroke: var(--m-warn); }
-.m-gauge__tick--danger  { stroke: var(--m-err); }
+.metraly-gauge__tick { opacity: 0.85; }
+.metraly-gauge__tick--neutral { stroke: var(--m-fg-3); }
+.metraly-gauge__tick--cyan    { stroke: var(--m-cyan-500); }
+.metraly-gauge__tick--success { stroke: var(--m-ok); }
+.metraly-gauge__tick--warning { stroke: var(--m-warn); }
+.metraly-gauge__tick--danger  { stroke: var(--m-err); }
 
-.m-gauge__readout {
+.metraly-gauge__readout {
   position: absolute;
   inset: 0;
   display: flex;
@@ -100,7 +100,7 @@
   pointer-events: none;
 }
 
-.m-gauge__value {
+.metraly-gauge__value {
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-feature-settings: "tnum";
   font-variant-numeric: tabular-nums;
@@ -111,12 +111,12 @@
   letter-spacing: -0.01em;
 }
 
-.m-gauge__dial--compact .m-gauge__svg { max-width: 160px; }
-.m-gauge__dial--compact .m-gauge__value { font-size: 18px; }
+.metraly-gauge__dial--compact .metraly-gauge__svg { max-width: 160px; }
+.metraly-gauge__dial--compact .metraly-gauge__value { font-size: 18px; }
 
 /* ── legend ────────────────────────────────────────────────────────── */
 
-.m-gauge__legend {
+.metraly-gauge__legend {
   margin: 4px 0 0;
   padding: 0;
   list-style: none;
@@ -129,36 +129,36 @@
   font-size: 10.5px;
 }
 
-.m-gauge__legend-item {
+.metraly-gauge__legend-item {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   color: var(--m-fg-2);
 }
 
-.m-gauge__legend-dot {
+.metraly-gauge__legend-dot {
   width: 6px; height: 6px; border-radius: 999px;
   background: var(--m-fg-3);
 }
 
-.m-gauge__legend-item--cyan    .m-gauge__legend-dot { background: var(--m-cyan-500); }
-.m-gauge__legend-item--success .m-gauge__legend-dot { background: var(--m-ok); }
-.m-gauge__legend-item--warning .m-gauge__legend-dot { background: var(--m-warn); }
-.m-gauge__legend-item--danger  .m-gauge__legend-dot { background: var(--m-err); }
+.metraly-gauge__legend-item--cyan    .metraly-gauge__legend-dot { background: var(--m-cyan-500); }
+.metraly-gauge__legend-item--success .metraly-gauge__legend-dot { background: var(--m-ok); }
+.metraly-gauge__legend-item--warning .metraly-gauge__legend-dot { background: var(--m-warn); }
+.metraly-gauge__legend-item--danger  .metraly-gauge__legend-dot { background: var(--m-err); }
 
-.m-gauge__legend-label { color: var(--m-fg-2); }
-.m-gauge__legend-value { color: var(--m-fg-0); }
+.metraly-gauge__legend-label { color: var(--m-fg-2); }
+.metraly-gauge__legend-value { color: var(--m-fg-0); }
 
 /* ── inline variant ────────────────────────────────────────────────── */
 
-.m-gauge--inline { display: inline-flex; flex-direction: column; gap: 4px; min-width: 96px; }
-.m-gauge__inline {
+.metraly-gauge--inline { display: inline-flex; flex-direction: column; gap: 4px; min-width: 96px; }
+.metraly-gauge__inline {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.m-gauge__inline-value {
+.metraly-gauge__inline-value {
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-feature-settings: "tnum";
   font-variant-numeric: tabular-nums;
@@ -169,7 +169,7 @@
   text-align: right;
 }
 
-.m-gauge__inline-track {
+.metraly-gauge__inline-track {
   position: relative;
   flex: 1;
   height: 4px;
@@ -178,7 +178,7 @@
   overflow: hidden;
 }
 
-.m-gauge__inline-fill {
+.metraly-gauge__inline-fill {
   display: block;
   height: 100%;
   border-radius: inherit;
@@ -186,30 +186,30 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .m-gauge__inline-fill { transition: none; }
+  .metraly-gauge__inline-fill { transition: none; }
 }
 
 /* ── focus / states ────────────────────────────────────────────────── */
 
-.m-gauge:focus-visible {
+.metraly-gauge:focus-visible {
   outline: none;
   box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500));
   border-radius: 12px;
 }
 
 /* tone halo on the value when readout is highlighted */
-.m-gauge--tone-warning .m-gauge__value { color: var(--m-warn); }
-.m-gauge--tone-danger  .m-gauge__value { color: var(--m-err); }
-.m-gauge--tone-success .m-gauge__value { color: var(--m-ok); }
+.metraly-gauge--tone-warning .metraly-gauge__value { color: var(--m-warn); }
+.metraly-gauge--tone-danger  .metraly-gauge__value { color: var(--m-err); }
+.metraly-gauge--tone-success .metraly-gauge__value { color: var(--m-ok); }
 
 /* narrow layouts */
 @media (max-width: 360px) {
-  .m-gauge__value { font-size: 22px; }
-  .m-gauge__svg { max-width: 200px; }
+  .metraly-gauge__value { font-size: 22px; }
+  .metraly-gauge__svg { max-width: 200px; }
 }
 
 /* ── visual stabilization ─────────────────────────────────────────── */
-.m-gauge__dial {
+.metraly-gauge__dial {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -217,50 +217,50 @@
   gap: 8px;
 }
 
-.m-gauge__dial-figure {
+.metraly-gauge__dial-figure {
   position: relative;
   width: min(100%, 260px);
   margin-inline: auto;
 }
 
-.m-gauge__dial--compact .m-gauge__dial-figure {
+.metraly-gauge__dial--compact .metraly-gauge__dial-figure {
   width: min(100%, 160px);
 }
 
-.m-gauge__svg {
+.metraly-gauge__svg {
   max-width: 100%;
 }
 
-.m-gauge__readout {
+.metraly-gauge__readout {
   inset: 0;
   align-items: flex-end;
   padding-bottom: 2px;
 }
 
-.m-gauge__dial--compact .m-gauge__readout {
+.metraly-gauge__dial--compact .metraly-gauge__readout {
   padding-bottom: 0;
 }
 
-.m-gauge__legend {
+.metraly-gauge__legend {
   margin-top: -2px;
   row-gap: 4px;
 }
 
-.m-gauge--inline .m-gauge__body {
+.metraly-gauge--inline .metraly-gauge__body {
   min-width: 140px;
 }
 
-.metraly-dashboard-widget-content .m-gauge,
-.m-dashboard-widget-example .m-gauge {
+.metraly-dashboard-widget-content .metraly-gauge,
+.metraly-dashboard-widget-example .metraly-gauge {
   align-items: stretch;
 }
 
-.metraly-dashboard-widget-content .m-gauge__head,
-.m-dashboard-widget-example .m-gauge__head {
+.metraly-dashboard-widget-content .metraly-gauge__head,
+.metraly-dashboard-widget-example .metraly-gauge__head {
   display: none;
 }
 
-.metraly-dashboard-widget-content .m-gauge__dial-figure,
-.m-dashboard-widget-example .m-gauge__dial-figure {
+.metraly-dashboard-widget-content .metraly-gauge__dial-figure,
+.metraly-dashboard-widget-example .metraly-gauge__dial-figure {
   width: min(100%, 220px);
 }
