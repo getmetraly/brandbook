@@ -48,6 +48,7 @@ export type MetralyHeatmapRamp =
   | "cyan-purple-diverging"
   | "semantic";
 export type MetralyHeatmapValueVisibility = boolean | "auto";
+export type MetralyHeatmapTooltipMode = boolean | "hover" | "focus" | "none";
 
 export interface MetralyHeatmapColorScale {
   /** Explicit visual minimum. When omitted, derived from finite cell values. */
@@ -70,7 +71,25 @@ export interface MetralyHeatmapCell {
   href?: string;
   status?: MetralyHeatmapCellStatus;
   description?: string;
+  /** Key/value metadata shown in the cell tooltip and drilldown contexts. */
+  labels?: Record<string, string | number | boolean | null | undefined>;
 }
+export interface MetralyHeatmapTooltipContext {
+  cell: MetralyHeatmapCell | null;
+  x: string;
+  y: string;
+  value: number | null;
+  valueText: string;
+  unit?: string;
+  status: MetralyHeatmapCellStatus;
+  statusLabel: string;
+  intensity: number;
+  intensityLevel: number;
+  ramp: MetralyHeatmapRamp;
+  description?: string;
+  labels?: Record<string, string | number | boolean | null | undefined>;
+}
+
 
 export interface MetralyHeatmapProps {
   xLabels: string[];
@@ -93,6 +112,10 @@ export interface MetralyHeatmapProps {
   showCellValues?: MetralyHeatmapValueVisibility;
   /** Accessible label for the grid. Defaults to title or a generic label. */
   ariaLabel?: string;
+  /** Cell tooltip behavior. Defaults to true: visible on hover, focus, and touch/click. */
+  tooltip?: MetralyHeatmapTooltipMode;
+  /** Optional custom tooltip renderer. Default uses Metraly chart tooltip chrome. */
+  renderTooltip?: (context: MetralyHeatmapTooltipContext) => React.ReactNode;
   /** Format the displayed cell value (in tooltip/aria). */
   formatter?: (value: number) => string;
   emptyLabel?: string;
@@ -198,6 +221,38 @@ function focusableIndex(
   return null;
 }
 
+function statusLabel(status: MetralyHeatmapCellStatus): string {
+  if (status === "ok") return "OK";
+  if (status === "warning") return "Warning";
+  if (status === "danger") return "Danger";
+  return "Neutral";
+}
+
+function tooltipModeEnabled(
+  mode: Exclude<MetralyHeatmapTooltipMode, boolean>,
+  origin: "hover" | "focus" | "touch",
+): boolean {
+  if (mode === "none") return false;
+  if (mode === "focus") return origin !== "hover";
+  return true;
+}
+
+function labelEntries(
+  labels?: Record<string, string | number | boolean | null | undefined>,
+): Array<[string, string]> {
+  if (!labels) return [];
+  return Object.entries(labels)
+    .filter((entry): entry is [string, string | number | boolean] =>
+      entry[1] !== null && entry[1] !== undefined,
+    )
+    .map(([key, value]) => [key, String(value)]);
+}
+
+interface ActiveHeatmapTooltip extends MetralyHeatmapTooltipContext {
+  left: number;
+  top: number;
+}
+
 export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
   xLabels,
   yLabels,
@@ -211,6 +266,8 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
   colorScale,
   showCellValues = false,
   ariaLabel,
+  tooltip = true,
+  renderTooltip,
   formatter,
   emptyLabel = "No activity recorded yet",
   onCellFocus,
@@ -223,6 +280,8 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
   const reactId = React.useId();
   const rootId = id ?? reactId;
   const summaryId = `${rootId}-sum`;
+  const tooltipId = `${rootId}-tooltip`;
+  const rootRef = React.useRef<HTMLDivElement | null>(null);
   const resolvedDensity: MetralyHeatmapDensity =
     density ?? (compact ? "compact" : "comfortable");
 
@@ -257,6 +316,37 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
   const shouldClamp = colorScale?.clamp ?? true;
   const fmt = formatter ?? defaultFormatter;
   const isReady = state === "ready" || state === "partial" || state === "stale";
+  const resolvedTooltipMode: Exclude<MetralyHeatmapTooltipMode, boolean> =
+    tooltip === true ? "hover" : tooltip === false ? "none" : tooltip;
+  const [activeTooltip, setActiveTooltip] =
+    React.useState<ActiveHeatmapTooltip | null>(null);
+
+  const showCellTooltip = React.useCallback(
+    (
+      context: MetralyHeatmapTooltipContext,
+      element: HTMLElement,
+      origin: "hover" | "focus" | "touch",
+    ) => {
+      if (!tooltipModeEnabled(resolvedTooltipMode, origin)) return;
+      const root = rootRef.current;
+      if (!root) return;
+      const rootRect = root.getBoundingClientRect();
+      const cellRect = element.getBoundingClientRect();
+      const halfWidth = 132;
+      const left = clamp(
+        cellRect.left - rootRect.left + cellRect.width / 2,
+        halfWidth,
+        Math.max(halfWidth, rootRect.width - halfWidth),
+      );
+      const top = Math.max(0, cellRect.top - rootRect.top - 8);
+      setActiveTooltip({ ...context, left, top });
+    },
+    [resolvedTooltipMode],
+  );
+
+  const hideCellTooltip = React.useCallback(() => {
+    setActiveTooltip(null);
+  }, []);
 
   // Roving focus is adapted to the existing brandbook hook API.
   // The hook is one-dimensional, so each heatmap cell becomes an item
@@ -346,6 +436,7 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
 
   return (
     <div
+      ref={rootRef}
       id={rootId}
       className={[
         "m-heatmap",
@@ -436,6 +527,23 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
                     ? "no data"
                     : `${fmt(v)}${unit ? ` ${unit}` : ""}`);
                 const ariaCellLabel = `${y} on ${x}: ${labelText}${cell?.description ? `, ${cell.description}` : ""}`;
+                const valueText =
+                  v === null ? "No data" : `${fmt(v)}${unit ? ` ${unit}` : ""}`;
+                const tooltipContext: MetralyHeatmapTooltipContext = {
+                  cell: cell ?? null,
+                  x,
+                  y,
+                  value: v,
+                  valueText,
+                  unit,
+                  status,
+                  statusLabel: statusLabel(status),
+                  intensity: visualIntensity,
+                  intensityLevel: level,
+                  ramp,
+                  description: cell?.description,
+                  labels: cell?.labels,
+                };
 
                 const flatIdx = rIdx * colCount + cIdx;
                 const props = getItemProps(flatIdx, { selectOnArrow: false });
@@ -448,6 +556,8 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
                     type="button"
                     role="gridcell"
                     aria-label={ariaCellLabel}
+                    aria-describedby={isFocused && activeTooltip ? tooltipId : undefined}
+                    title={`${y} · ${x}: ${valueText}`}
                     data-intensity={level}
                     data-status={status}
                     data-ramp={ramp}
@@ -476,9 +586,23 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
                         "--m-cell-intensity": visualIntensity.toFixed(3),
                       } as React.CSSProperties
                     }
-                    onFocus={() => {
-                      selectValue(String(flatIdx));
+                    onMouseEnter={(event) => {
+                      showCellTooltip(
+                        tooltipContext,
+                        event.currentTarget,
+                        "hover",
+                      );
                     }}
+                    onMouseLeave={hideCellTooltip}
+                    onFocus={(event) => {
+                      selectValue(String(flatIdx));
+                      showCellTooltip(
+                        tooltipContext,
+                        event.currentTarget,
+                        "focus",
+                      );
+                    }}
+                    onBlur={hideCellTooltip}
                     onKeyDown={(event) => {
                       const nextIndex = focusableIndex(
                         flatIdx,
@@ -499,8 +623,13 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
                         onCellActivate?.(cell);
                       }
                     }}
-                    onClick={() => {
+                    onClick={(event) => {
                       selectValue(String(flatIdx));
+                      showCellTooltip(
+                        tooltipContext,
+                        event.currentTarget,
+                        "touch",
+                      );
                       if (cell) onCellActivate?.(cell);
                     }}
                   >
@@ -514,6 +643,14 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
           ))}
         </div>
       </div>
+
+      {activeTooltip ? (
+        <HeatmapTooltip
+          id={tooltipId}
+          tooltip={activeTooltip}
+          renderTooltip={renderTooltip}
+        />
+      ) : null}
 
       {resolvedLegend !== "none" ? (
         <HeatmapLegend
@@ -567,6 +704,55 @@ const HeatmapHeader: React.FC<{
       </div>
       {badge ? <StatusBadge status={badge.status} label={badge.label} /> : null}
     </header>
+  );
+};
+
+const HeatmapTooltip: React.FC<{
+  id: string;
+  tooltip: ActiveHeatmapTooltip;
+  renderTooltip?: (context: MetralyHeatmapTooltipContext) => React.ReactNode;
+}> = ({ id, tooltip, renderTooltip }) => {
+  const labels = labelEntries(tooltip.labels);
+  const custom = renderTooltip?.(tooltip);
+
+  return (
+    <div
+      id={id}
+      className="metraly-chart-tooltip m-heatmap__tooltip"
+      role="status"
+      style={
+        {
+          "--m-heatmap-tooltip-x": `${tooltip.left}px`,
+          "--m-heatmap-tooltip-y": `${tooltip.top}px`,
+        } as React.CSSProperties
+      }
+    >
+      {custom ?? (
+        <>
+          <div className="m-heatmap__tooltip-head">
+            <strong>{tooltip.y}</strong>
+            <span>{tooltip.x}</span>
+          </div>
+          <div className="m-heatmap__tooltip-value">
+            <b>{tooltip.valueText}</b>
+            <span>{tooltip.statusLabel}</span>
+          </div>
+          {tooltip.description ? (
+            <p className="m-heatmap__tooltip-desc">{tooltip.description}</p>
+          ) : null}
+          {labels.length > 0 ? (
+            <dl className="m-heatmap__tooltip-list">
+              {labels.map(([key, value]) => (
+                <div key={key}>
+                  <dt>{key}</dt>
+                  <dd>{value}</dd>
+                </div>
+              ))}
+            </dl>
+          ) : null}
+        </>
+      )}
+    </div>
   );
 };
 

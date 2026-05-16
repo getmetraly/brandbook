@@ -243,6 +243,8 @@ export type {
   MetralyHeatmapLegend,
   MetralyHeatmapRamp,
   MetralyHeatmapValueVisibility,
+  MetralyHeatmapTooltipMode,
+  MetralyHeatmapTooltipContext,
   MetralyHeatmapColorScale,
 } from "./charts/MetralyHeatmap";
 

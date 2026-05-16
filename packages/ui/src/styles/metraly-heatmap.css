@@ -487,3 +487,124 @@
     transform: none;
   }
 }
+
+/* cell tooltip: uses Metraly chart tooltip chrome, positioned from the active cell */
+.m-heatmap__tooltip {
+  position: absolute;
+  left: var(--m-heatmap-tooltip-x, 0);
+  top: var(--m-heatmap-tooltip-y, 0);
+  z-index: 24;
+  min-width: 188px;
+  max-width: min(280px, calc(100vw - 32px));
+  transform: translate(-50%, calc(-100% - 10px));
+  pointer-events: none;
+  box-shadow:
+    0 0 0 1px var(--m-line-strong),
+    0 14px 34px color-mix(in oklch, var(--m-bg-0) 84%, transparent);
+}
+
+.m-heatmap__tooltip::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  width: 8px;
+  height: 8px;
+  transform: translateX(-50%) rotate(45deg);
+  background: var(--m-bg-1);
+  border-right: 1px solid var(--m-line-strong);
+  border-bottom: 1px solid var(--m-line-strong);
+}
+
+.m-heatmap__tooltip-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+}
+
+.m-heatmap__tooltip-head strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--m-fg-0);
+}
+
+.m-heatmap__tooltip-head span,
+.m-heatmap__tooltip-value span {
+  font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
+  font-size: 10.5px;
+  color: var(--m-fg-3);
+  white-space: nowrap;
+}
+
+.m-heatmap__tooltip-value {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 6px;
+  border-top: 1px solid var(--m-line-faint);
+}
+
+.m-heatmap__tooltip-value b {
+  font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
+  font-size: 14px;
+  color: var(--m-fg-0);
+}
+
+.m-heatmap__tooltip-desc {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--m-fg-2);
+}
+
+.m-heatmap__tooltip-list {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+}
+
+.m-heatmap__tooltip-list div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.m-heatmap__tooltip-list dt,
+.m-heatmap__tooltip-list dd {
+  margin: 0;
+  font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
+  font-size: 10.5px;
+}
+
+.m-heatmap__tooltip-list dt {
+  color: var(--m-fg-3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.m-heatmap__tooltip-list dd {
+  color: var(--m-fg-1);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.m-heatmap--density-dashboard .m-heatmap__tooltip,
+.m-heatmap--compact .m-heatmap__tooltip {
+  min-width: 172px;
+  max-width: 240px;
+}
+
+@media (max-width: 520px) {
+  .m-heatmap__tooltip {
+    display: none;
+  }
+}

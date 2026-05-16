@@ -41,5 +41,7 @@ export type {
   MetralyHeatmapLegend,
   MetralyHeatmapRamp,
   MetralyHeatmapValueVisibility,
+  MetralyHeatmapTooltipMode,
+  MetralyHeatmapTooltipContext,
   MetralyHeatmapColorScale,
 } from "./MetralyHeatmap";
