@@ -326,3 +326,23 @@
 @media (max-width: 480px) {
   .m-byo__summary { grid-template-columns: 1fr; }
 }
+
+/* ── visual stabilization ─────────────────────────────────────────── */
+.m-settings-section,
+.m-ai-provider,
+.m-byo-llm {
+  max-width: 960px;
+}
+
+.m-ai-provider__head,
+.m-ai-provider__footer {
+  align-items: flex-start;
+}
+
+@media (max-width: 720px) {
+  .m-ai-provider__head,
+  .m-ai-provider__footer,
+  .m-settings-section__head {
+    flex-direction: column;
+  }
+}

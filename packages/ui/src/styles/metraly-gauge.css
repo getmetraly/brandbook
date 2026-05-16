@@ -207,3 +207,60 @@
   .m-gauge__value { font-size: 22px; }
   .m-gauge__svg { max-width: 200px; }
 }
+
+/* ── visual stabilization ─────────────────────────────────────────── */
+.m-gauge__dial {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.m-gauge__dial-figure {
+  position: relative;
+  width: min(100%, 260px);
+  margin-inline: auto;
+}
+
+.m-gauge__dial--compact .m-gauge__dial-figure {
+  width: min(100%, 160px);
+}
+
+.m-gauge__svg {
+  max-width: 100%;
+}
+
+.m-gauge__readout {
+  inset: 0;
+  align-items: flex-end;
+  padding-bottom: 2px;
+}
+
+.m-gauge__dial--compact .m-gauge__readout {
+  padding-bottom: 0;
+}
+
+.m-gauge__legend {
+  margin-top: -2px;
+  row-gap: 4px;
+}
+
+.m-gauge--inline .m-gauge__body {
+  min-width: 140px;
+}
+
+.metraly-dashboard-widget-content .m-gauge,
+.m-dashboard-widget-example .m-gauge {
+  align-items: stretch;
+}
+
+.metraly-dashboard-widget-content .m-gauge__head,
+.m-dashboard-widget-example .m-gauge__head {
+  display: none;
+}
+
+.metraly-dashboard-widget-content .m-gauge__dial-figure,
+.m-dashboard-widget-example .m-gauge__dial-figure {
+  width: min(100%, 220px);
+}

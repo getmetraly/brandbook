@@ -344,47 +344,49 @@ const SemicircleDial: React.FC<SemicircleDialProps> = ({
 }) => {
   return (
     <div className={`m-gauge__dial${compact ? " m-gauge__dial--compact" : ""}`}>
-      <svg
-        className="m-gauge__svg"
-        viewBox="0 0 200 110"
-        aria-hidden="true"
-        focusable="false"
-      >
-        {/* track */}
-        <path
-          className="m-gauge__track"
-          d={trackPath}
-          fill="none"
-          strokeWidth={compact ? 6 : 8}
-          strokeLinecap="round"
-        />
-        {/* filled arc */}
-        <path
-          className="m-gauge__arc"
-          d={trackPath}
-          fill="none"
-          stroke={accent}
-          strokeWidth={compact ? 6 : 8}
-          strokeLinecap="round"
-          strokeDasharray={arcLength}
-          strokeDashoffset={filledOffset}
-        />
-        {/* threshold ticks */}
-        {ticks.map((t, i) => (
-          <line
-            key={`tk-${i}`}
-            x1={t.x1}
-            y1={t.y1}
-            x2={t.x2}
-            y2={t.y2}
-            className={`m-gauge__tick m-gauge__tick--${t.tone}`}
-            strokeWidth={2}
+      <div className="m-gauge__dial-figure">
+        <svg
+          className="m-gauge__svg"
+          viewBox="0 0 200 110"
+          aria-hidden="true"
+          focusable="false"
+        >
+          {/* track */}
+          <path
+            className="m-gauge__track"
+            d={trackPath}
+            fill="none"
+            strokeWidth={compact ? 6 : 8}
             strokeLinecap="round"
           />
-        ))}
-      </svg>
-      <div className="m-gauge__readout">
-        <span className="m-gauge__value">{displayValue}</span>
+          {/* filled arc */}
+          <path
+            className="m-gauge__arc"
+            d={trackPath}
+            fill="none"
+            stroke={accent}
+            strokeWidth={compact ? 6 : 8}
+            strokeLinecap="round"
+            strokeDasharray={arcLength}
+            strokeDashoffset={filledOffset}
+          />
+          {/* threshold ticks */}
+          {ticks.map((t, i) => (
+            <line
+              key={`tk-${i}`}
+              x1={t.x1}
+              y1={t.y1}
+              x2={t.x2}
+              y2={t.y2}
+              className={`m-gauge__tick m-gauge__tick--${t.tone}`}
+              strokeWidth={2}
+              strokeLinecap="round"
+            />
+          ))}
+        </svg>
+        <div className="m-gauge__readout">
+          <span className="m-gauge__value">{displayValue}</span>
+        </div>
       </div>
       {ticks.length > 0 && !compact ? (
         <ul className="m-gauge__legend" aria-hidden="true">

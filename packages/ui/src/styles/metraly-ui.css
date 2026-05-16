@@ -1,0 +1,44 @@
+/* Metraly UI stylesheet aggregator.
+ *
+ * Keep this file as the single public CSS entrypoint for Storybook and
+ * downstream apps. Individual component styles remain importable, but
+ * examples should prefer this entrypoint so new primitives do not silently
+ * miss their styles.
+ */
+
+@import "./metraly-theme.css";
+@import "./metraly-badge.css";
+@import "./metraly-button.css";
+@import "./metraly-card.css";
+@import "./metraly-charts.css";
+@import "./metraly-code-block.css";
+@import "./metraly-dashboard.css";
+@import "./metraly-empty-state.css";
+@import "./metraly-filter-bar.css";
+@import "./metraly-forms.css";
+@import "./metraly-input.css";
+@import "./metraly-logo.css";
+@import "./metraly-metric-card.css";
+@import "./metraly-move-menu.css";
+@import "./metraly-navigation-tree.css";
+@import "./metraly-pulse-marker.css";
+@import "./metraly-segmented.css";
+@import "./metraly-shell.css";
+@import "./metraly-skeleton.css";
+@import "./metraly-state-badge.css";
+@import "./metraly-table.css";
+@import "./metraly-trend-badge.css";
+@import "./metraly-widget-picker.css";
+@import "./metraly-widget-shell.css";
+@import "./metraly-wizard.css";
+
+/* Phase 1 system-design extensions */
+@import "./metraly-gauge.css";
+@import "./metraly-heatmap.css";
+@import "./metraly-activity-feed.css";
+@import "./metraly-insight-card.css";
+@import "./metraly-state-board.css";
+@import "./metraly-state-matrix.css";
+@import "./metraly-source.css";
+@import "./metraly-settings.css";
+@import "./metraly-dashboard-wizard.css";

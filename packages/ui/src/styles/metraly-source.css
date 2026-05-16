@@ -544,3 +544,25 @@
   color: var(--m-cyan);
 }
 .m-sync__btn:focus-visible { outline: none; box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan)); }
+
+/* ── visual stabilization ─────────────────────────────────────────── */
+.m-token,
+.m-perm,
+.m-backfill,
+.m-connection-test,
+.m-sync-progress {
+  max-width: 760px;
+}
+
+.m-backfill__row {
+  align-items: stretch;
+}
+
+.m-backfill__presets {
+  max-width: 100%;
+  overflow-x: auto;
+}
+.m-conntest,
+.m-sync {
+  max-width: 760px;
+}

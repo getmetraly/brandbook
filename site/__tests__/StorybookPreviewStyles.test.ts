@@ -6,15 +6,27 @@ describe("storybook preview style contract", () => {
     const stylesDir = path.resolve(__dirname, "../../packages/ui/src/styles");
     const previewPath = path.resolve(__dirname, "../.storybook/preview.ts");
     const previewSource = fs.readFileSync(previewPath, "utf8");
+    const aggregatorPath = path.resolve(stylesDir, "metraly-ui.css");
+    const aggregatorSource = fs.existsSync(aggregatorPath)
+      ? fs.readFileSync(aggregatorPath, "utf8")
+      : "";
 
     const cssFiles = fs
       .readdirSync(stylesDir)
       .filter((fileName) => fileName.endsWith(".css"))
       .sort();
 
-    const missingImports = cssFiles.filter(
-      (fileName) => !previewSource.includes(`@metraly/ui/styles/${fileName}`),
-    );
+    const importedByPreview = (fileName: string) =>
+      previewSource.includes(`@metraly/ui/styles/${fileName}`);
+
+    const importedByAggregator = (fileName: string) =>
+      fileName === "metraly-ui.css" || aggregatorSource.includes(`./${fileName}`);
+
+    const usesAggregator = importedByPreview("metraly-ui.css");
+    const missingImports = cssFiles.filter((fileName) => {
+      if (importedByPreview(fileName)) return false;
+      return !(usesAggregator && importedByAggregator(fileName));
+    });
 
     expect(missingImports).toEqual([]);
   });

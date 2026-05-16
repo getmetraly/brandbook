@@ -238,3 +238,26 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* ── visual stabilization ─────────────────────────────────────────── */
+.m-dwiz {
+  max-width: 1440px;
+}
+
+.m-dwiz__canvas-frame {
+  min-height: 320px;
+}
+
+.m-dwiz__canvas-frame .m-gauge__dial-figure {
+  width: min(100%, 180px);
+}
+
+.m-a11y-editor {
+  max-width: 1440px;
+}
+
+@media (min-width: 1180px) {
+  .m-a11y-editor__grid {
+    grid-template-rows: repeat(var(--m-a11y-rows, 3), minmax(132px, auto));
+  }
+}

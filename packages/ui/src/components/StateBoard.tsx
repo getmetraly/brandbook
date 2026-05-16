@@ -166,7 +166,7 @@ export const StateBoard: React.FC<StateBoardProps> = ({
     </section>
   );
 
-  return frame ? <CardShell>{inner}</CardShell> : inner;
+  return frame ? <CardShell className="m-board-frame">{inner}</CardShell> : inner;
 };
 
 StateBoard.displayName = "StateBoard";

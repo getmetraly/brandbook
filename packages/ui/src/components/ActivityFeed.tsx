@@ -190,7 +190,7 @@ export const ActivityFeed: React.FC<ActivityFeedProps> = ({
     </div>
   );
 
-  return useFrame ? <CardShell>{body}</CardShell> : body;
+  return useFrame ? <CardShell className="m-feed-frame">{body}</CardShell> : body;
 };
 
 ActivityFeed.displayName = "ActivityFeed";
