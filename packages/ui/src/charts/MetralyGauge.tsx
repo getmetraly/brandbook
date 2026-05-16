@@ -129,7 +129,7 @@ const STATE_TO_STATUS: Record<MetralyGaugeState, {
 
 const TONE_TO_VAR: Record<MetralyGaugeTone, string> = {
   neutral: "var(--m-fg-3)",
-  cyan: "var(--m-cyan)",
+  cyan: "var(--m-cyan-500)",
   success: "var(--m-ok)",
   warning: "var(--m-warn)",
   danger: "var(--m-err)",

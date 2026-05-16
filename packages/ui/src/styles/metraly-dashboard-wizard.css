@@ -57,12 +57,12 @@
 .m-dwiz__step-btn:hover { background: var(--m-bg-2); }
 .m-dwiz__step-btn:focus-visible {
   outline: none;
-  box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan));
+  box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500));
 }
 
 .m-dwiz__step--active .m-dwiz__step-btn {
   background: var(--m-bg-2);
-  border-color: color-mix(in oklch, var(--m-cyan) 50%, var(--m-line));
+  border-color: color-mix(in oklch, var(--m-cyan-500) 50%, var(--m-line));
 }
 
 .m-dwiz__step--locked .m-dwiz__step-btn {
@@ -102,9 +102,9 @@
 }
 
 .m-dwiz__step--active .m-dwiz__step-marker {
-  border-color: var(--m-cyan);
-  color: var(--m-cyan);
-  background: color-mix(in oklch, var(--m-cyan) 14%, transparent);
+  border-color: var(--m-cyan-500);
+  color: var(--m-cyan-500);
+  background: color-mix(in oklch, var(--m-cyan-500) 14%, transparent);
 }
 
 .m-dwiz__step-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
@@ -195,11 +195,11 @@
 }
 
 .m-a11y-editor__cell:focus-visible {
-  box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan));
+  box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500));
 }
 
 .m-a11y-editor__cell--selected {
-  box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan));
+  box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500));
 }
 
 .m-a11y-editor__chrome {

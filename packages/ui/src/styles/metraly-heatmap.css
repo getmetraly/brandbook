@@ -133,7 +133,7 @@
 }
 
 .m-heatmap__cell {
-  --m-cell-accent: var(--m-cyan-500, var(--m-cyan));
+  --m-cell-accent: var(--m-cyan-500, var(--m-cyan-500));
   position: relative;
   min-height: var(--m-heatmap-cell-height);
   min-width: var(--m-heatmap-cell-min);
@@ -192,10 +192,10 @@
 
 /* status tints layered on top of intensity */
 .m-heatmap--ramp-cyan .m-heatmap__cell--neutral {
-  --m-cell-accent: var(--m-cyan-500, var(--m-cyan));
+  --m-cell-accent: var(--m-cyan-500, var(--m-cyan-500));
 }
 .m-heatmap--ramp-purple .m-heatmap__cell--neutral {
-  --m-cell-accent: var(--m-purple-500, var(--m-purple));
+  --m-cell-accent: var(--m-purple-500, var(--m-purple-500));
 }
 .m-heatmap--ramp-success .m-heatmap__cell--neutral {
   --m-cell-accent: var(--m-ok);
@@ -207,10 +207,10 @@
   --m-cell-accent: var(--m-err);
 }
 .m-heatmap--ramp-cyan-purple-diverging .m-heatmap__cell--below-mid {
-  --m-cell-accent: var(--m-purple-500, var(--m-purple));
+  --m-cell-accent: var(--m-purple-500, var(--m-purple-500));
 }
 .m-heatmap--ramp-cyan-purple-diverging .m-heatmap__cell--above-mid {
-  --m-cell-accent: var(--m-cyan-500, var(--m-cyan));
+  --m-cell-accent: var(--m-cyan-500, var(--m-cyan-500));
 }
 .m-heatmap--ramp-cyan-purple-diverging .m-heatmap__cell--at-mid {
   --m-cell-accent: var(--m-bg-4);
@@ -225,7 +225,7 @@
   --m-cell-accent: var(--m-err);
 }
 .m-heatmap__cell--neutral {
-  --m-cell-accent: var(--m-cyan-500, var(--m-cyan));
+  --m-cell-accent: var(--m-cyan-500, var(--m-cyan-500));
 }
 
 .m-heatmap__cell--i-0::before {
@@ -276,8 +276,8 @@
 
 .m-heatmap__cell--focus,
 .m-heatmap__cell:focus-visible {
-  border-color: var(--m-cyan);
-  box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan));
+  border-color: var(--m-cyan-500);
+  box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500));
   z-index: 2;
 }
 
@@ -313,9 +313,9 @@
   background: linear-gradient(
     to right,
     var(--m-bg-3),
-    color-mix(in srgb, var(--m-cyan-500, var(--m-cyan)) 28%, var(--m-bg-3)),
-    color-mix(in srgb, var(--m-cyan-500, var(--m-cyan)) 62%, var(--m-bg-3)),
-    var(--m-cyan-500, var(--m-cyan))
+    color-mix(in srgb, var(--m-cyan-500, var(--m-cyan-500)) 28%, var(--m-bg-3)),
+    color-mix(in srgb, var(--m-cyan-500, var(--m-cyan-500)) 62%, var(--m-bg-3)),
+    var(--m-cyan-500, var(--m-cyan-500))
   );
   overflow: hidden;
 }
@@ -324,8 +324,8 @@
   background: linear-gradient(
     to right,
     var(--m-bg-3),
-    color-mix(in srgb, var(--m-purple-500, var(--m-purple)) 35%, var(--m-bg-3)),
-    var(--m-purple-500, var(--m-purple))
+    color-mix(in srgb, var(--m-purple-500, var(--m-purple-500)) 35%, var(--m-bg-3)),
+    var(--m-purple-500, var(--m-purple-500))
   );
 }
 .m-heatmap__legend--ramp-success .m-heatmap__legend-bar {
@@ -357,9 +357,9 @@
 .m-heatmap__legend--ramp-cyan-purple-diverging .m-heatmap__legend-bar {
   background: linear-gradient(
     to right,
-    var(--m-purple-500, var(--m-purple)),
+    var(--m-purple-500, var(--m-purple-500)),
     var(--m-bg-4),
-    var(--m-cyan-500, var(--m-cyan))
+    var(--m-cyan-500, var(--m-cyan-500))
   );
 }
 .m-heatmap__legend-mid {
