@@ -6,6 +6,7 @@ import {
 } from "../../packages/ui/src/charts/MetralyHeatmap";
 import { WidgetStateMatrix } from "../../packages/ui/src/components/WidgetStateMatrix";
 import { HeatmapWidgetExample } from "../../packages/ui/src/dashboard/DashboardWidgetExamples";
+import { MetralyStoryFrame } from "../_shared/MetralyStoryFrame";
 
 const meta: Meta<typeof MetralyHeatmap> = {
   title: "Charts/MetralyHeatmap",
@@ -532,4 +533,47 @@ export const MobileNarrow: Story = {
     colorScale: { min: 0, max: 16, ramp: "cyan" },
   },
   parameters: { viewport: { defaultViewport: "mobile1" } },
+};
+
+const _previewCells: MetralyHeatmapCell[] = (() => {
+  const teams = ["platform", "growth", "data", "billing", "infra"];
+  const weeks = ["W18", "W19", "W20", "W21", "W22", "W23", "W24"];
+  const base = [14, 22, 18, 9, 11];
+  const result: MetralyHeatmapCell[] = [];
+  teams.forEach((team, r) => {
+    weeks.forEach((week, c) => {
+      result.push({
+        row: team,
+        col: week,
+        value: Math.round(base[r] * (0.7 + ((r * 3 + c) % 5) * 0.12)),
+      });
+    });
+  });
+  return result;
+})();
+
+export const ProductPreview: Story = {
+  name: "Product Preview",
+  parameters: { layout: "padded" },
+  render: () => (
+    <MetralyStoryFrame
+      category="Charts"
+      title="MetralyHeatmap"
+      description="Contribution and activity heatmap for engineering metrics. Supports team, repo, and time-range context."
+      status="Ready"
+      tags={["heatmap", "activity", "matrix"]}
+    >
+      <MetralyHeatmap
+        title="PR activity by team"
+        description="Open PRs per week across engineering teams · W18–W24"
+        xLabels={["W18", "W19", "W20", "W21", "W22", "W23", "W24"]}
+        yLabels={["platform", "growth", "data", "billing", "infra"]}
+        cells={_previewCells}
+        unit="PRs"
+        ariaLabel="PR activity by team per week"
+        colorScale={{ min: 0, max: 30, ramp: "cyan" }}
+        showLegend
+      />
+    </MetralyStoryFrame>
+  ),
 };

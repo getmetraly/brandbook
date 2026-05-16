@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import { SyncProgressPanel } from "../../packages/ui/src/source/SyncProgressPanel";
+import { MetralyStoryFrame } from "../_shared/MetralyStoryFrame";
 
 const meta: Meta<typeof SyncProgressPanel> = {
   title: "Source/SyncProgressPanel",
@@ -113,4 +114,29 @@ export const Completed: Story = {
     totalEstimate: 8420,
     lastSyncedAt: "2026-05-15T10:42:00Z",
   },
+};
+
+export const ProductPreview: Story = {
+  name: "Product Preview",
+  parameters: { layout: "padded" },
+  render: () => (
+    <MetralyStoryFrame
+      category="Source"
+      title="SyncProgressPanel"
+      description="Tracks the live state of a source sync job — queued, discovering, backfilling, incremental, paused, rate-limited, failed, or completed — with progress and controls."
+      status="Ready"
+      tags={["sync", "progress", "backfill", "ingestion", "source"]}
+    >
+      <SyncProgressPanel
+        sourceLabel="GitHub · acme"
+        sourceId="github-acme"
+        stage="backfilling"
+        subStage="Fetching pull requests"
+        eventsIngested={4520}
+        totalEstimate={8420}
+        onCancel={() => {}}
+        onPause={() => {}}
+      />
+    </MetralyStoryFrame>
+  ),
 };

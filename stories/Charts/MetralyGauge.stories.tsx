@@ -7,6 +7,7 @@ import {
   WidgetStateMatrix,
 } from "../../packages/ui/src/components/WidgetStateMatrix";
 import { GaugeWidgetExample } from "../../packages/ui/src/dashboard/DashboardWidgetExamples";
+import { MetralyStoryFrame } from "../_shared/MetralyStoryFrame";
 
 const meta: Meta<typeof MetralyGauge> = {
   title: "Charts/MetralyGauge",
@@ -244,5 +245,56 @@ export const FullStateMatrix: Story = {
         />
       )}
     />
+  ),
+};
+
+export const ProductPreview: Story = {
+  name: "Product Preview",
+  parameters: { layout: "padded" },
+  render: () => (
+    <MetralyStoryFrame
+      category="Charts"
+      title="MetralyGauge"
+      description="Health score gauge for DORA metrics, SLA saturation, and connector health. Composes inside DashboardWidget and MetralyChartCard."
+      status="Ready"
+      tags={["gauge", "DORA", "health", "SLA"]}
+    >
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
+        <MetralyGauge
+          label="Source health"
+          description="Composite score over 24h"
+          value={86}
+          unit="%"
+          thresholds={[
+            { value: 0, tone: "danger", label: "Critical" },
+            { value: 60, tone: "warning", label: "At risk" },
+            { value: 80, tone: "success", label: "Healthy" },
+          ]}
+        />
+        <MetralyGauge
+          label="Lead time score"
+          description="Lead time for changes vs. elite target"
+          value={64}
+          unit="%"
+          thresholds={[
+            { value: 0, tone: "danger" },
+            { value: 60, tone: "warning" },
+            { value: 80, tone: "success" },
+          ]}
+          summary="vs target 90%"
+        />
+        <MetralyGauge
+          label="Change failure rate"
+          description="Failed deploys / total deploys over 14d"
+          value={22}
+          unit="%"
+          thresholds={[
+            { value: 0, tone: "success" },
+            { value: 10, tone: "warning" },
+            { value: 20, tone: "danger" },
+          ]}
+        />
+      </div>
+    </MetralyStoryFrame>
   ),
 };

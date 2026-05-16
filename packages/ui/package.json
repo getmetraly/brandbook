@@ -32,7 +32,17 @@
     "./dashboard/DashboardDropZone": "./src/dashboard/DashboardDropZone.tsx",
     "./dashboard/DashboardResizeHandle": "./src/dashboard/DashboardResizeHandle.tsx",
     "./dashboard/HandlePrimitive": "./src/dashboard/HandlePrimitive.tsx",
-    "./dashboard/WidgetRegistry": "./src/dashboard/WidgetRegistry.ts"
+    "./dashboard/WidgetRegistry": "./src/dashboard/WidgetRegistry.ts",
+    "./app-kit": "./src/app-kit/index.ts",
+    "./app-kit/AppSidebar": "./src/app-kit/AppSidebar.tsx",
+    "./app-kit/AppTopbar": "./src/app-kit/AppTopbar.tsx",
+    "./app-kit/AppWidget": "./src/app-kit/AppWidget.tsx",
+    "./app-kit/AppMetricStrip": "./src/app-kit/AppMetricStrip.tsx",
+    "./app-kit/AppDashboardScreen": "./src/app-kit/AppDashboardScreen.tsx",
+    "./app-kit/AppAIWorkspaceScreen": "./src/app-kit/AppAIWorkspaceScreen.tsx",
+    "./app-kit/AppPluginsScreen": "./src/app-kit/AppPluginsScreen.tsx",
+    "./app-kit/AppConnectorWizardScreen": "./src/app-kit/AppConnectorWizardScreen.tsx",
+    "./app-kit/AppIconLibrary": "./src/app-kit/AppIconLibrary.tsx"
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json"

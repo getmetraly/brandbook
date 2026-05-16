@@ -3,6 +3,7 @@ import * as React from "react";
 import { InsightCard } from "../../packages/ui/src/components/InsightCard";
 import { InsightWidgetExample } from "../../packages/ui/src/dashboard/DashboardWidgetExamples";
 import { WidgetStateMatrix } from "../../packages/ui/src/components/WidgetStateMatrix";
+import { MetralyStoryFrame } from "../_shared/MetralyStoryFrame";
 
 const meta: Meta<typeof InsightCard> = {
   title: "Components/InsightCard",
@@ -160,5 +161,21 @@ export const FullStateMatrix: Story = {
         />
       )}
     />
+  ),
+};
+
+export const ProductPreview: Story = {
+  name: "Product Preview",
+  parameters: { layout: "padded" },
+  render: () => (
+    <MetralyStoryFrame
+      category="Components"
+      title="InsightCard"
+      description="AI- and rules-driven insight card surfacing anomalies, trends, and recommendations with evidence and confidence signals."
+      status="Ready"
+      tags={["insight", "AI", "anomaly", "recommendation"]}
+    >
+      <InsightCard {...Anomaly.args!} />
+    </MetralyStoryFrame>
   ),
 };

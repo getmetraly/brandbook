@@ -4,6 +4,7 @@ import {
   BackfillRangePicker,
   type BackfillPresetId,
 } from "../../packages/ui/src/source/BackfillRangePicker";
+import { MetralyStoryFrame } from "../_shared/MetralyStoryFrame";
 
 const meta: Meta<typeof BackfillRangePicker> = {
   title: "Source/BackfillRangePicker",
@@ -87,6 +88,31 @@ export const UnknownEstimate: Story = {
         estimate={{ confidence: "unknown" }}
         helper="Estimate unavailable until the connector test completes."
       />
+    );
+  },
+};
+
+export const ProductPreview: Story = {
+  name: "Product Preview",
+  parameters: { layout: "padded" },
+  render: () => {
+    const [preset, setPreset] = React.useState<BackfillPresetId>("30d");
+    const [days, setDays] = React.useState<number>(30);
+    return (
+      <MetralyStoryFrame
+        category="Source"
+        title="BackfillRangePicker"
+        description="Lets the user choose how far back to backfill data when connecting a new source. Offers presets and a custom day count with an event-count estimate."
+        status="Ready"
+        tags={["backfill", "range", "preset", "connector", "source"]}
+      >
+        <BackfillRangePicker
+          preset={preset}
+          customDays={days}
+          onChange={(p, d) => { setPreset(p); if (typeof d === "number") setDays(d); }}
+          estimate={{ events: 8420, duration: "~12 min", confidence: "rough" }}
+        />
+      </MetralyStoryFrame>
     );
   },
 };

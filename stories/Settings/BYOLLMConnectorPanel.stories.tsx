@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
+import { MetralyStoryFrame } from "../_shared/MetralyStoryFrame";
 import {
   BYOLLMConnectorPanel,
   type BYOLLMProviderEntry,
@@ -116,4 +117,28 @@ export const NeedsAttention: Story = {
     providers: [{ ...OPENAI, state: "auth_failed" }, { ...ANTHROPIC, state: "not_configured" }],
     onAddProvider: () => {},
   },
+};
+
+export const ProductPreview: Story = {
+  name: "Product Preview",
+  parameters: { layout: "padded" },
+  render: () => (
+    <MetralyStoryFrame
+      category="Settings"
+      title="BYOLLMConnectorPanel"
+      description="Full BYO-LLM settings panel — lists all configured AI provider connectors (first-party and plugin-contributed), a routing summary, privacy summary, and an Add provider action."
+      status="Ready"
+      tags={["settings", "BYO-LLM", "AI", "providers", "panel"]}
+    >
+      <div style={{ maxWidth: 720 }}>
+        <BYOLLMConnectorPanel
+          providers={[ANTHROPIC, OPENAI, LOCAL]}
+          pluginContributedProviders={[BEDROCK_PLUGIN]}
+          routingSummary="Default model: claude-sonnet-4.5 · fallback: gpt-4o"
+          privacySummary="Workspace VPC · region eu-west-1 · local Ollama allowed for dev"
+          onAddProvider={() => {}}
+        />
+      </div>
+    </MetralyStoryFrame>
+  ),
 };
