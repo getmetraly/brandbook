@@ -20,3 +20,21 @@ export type {
   MetralyChartState,
   MetralyChartTone,
 } from "./types";
+
+// Phase 1 chart primitive exports
+export { MetralyGauge } from "./MetralyGauge";
+export type {
+  MetralyGaugeProps,
+  MetralyGaugeState,
+  MetralyGaugeTone,
+  MetralyGaugeVariant,
+  MetralyGaugeThreshold,
+} from "./MetralyGauge";
+
+export { MetralyHeatmap } from "./MetralyHeatmap";
+export type {
+  MetralyHeatmapProps,
+  MetralyHeatmapState,
+  MetralyHeatmapCell,
+  MetralyHeatmapCellStatus,
+} from "./MetralyHeatmap";
