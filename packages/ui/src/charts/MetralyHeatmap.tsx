@@ -39,14 +39,25 @@ export type MetralyHeatmapState =
 export type MetralyHeatmapCellStatus = "ok" | "warning" | "danger" | "neutral";
 export type MetralyHeatmapDensity = "comfortable" | "compact" | "dashboard";
 export type MetralyHeatmapLegend = "horizontal" | "inline" | "none";
+export type MetralyHeatmapRamp =
+  | "cyan"
+  | "purple"
+  | "success"
+  | "warning"
+  | "danger"
+  | "cyan-purple-diverging"
+  | "semantic";
+export type MetralyHeatmapValueVisibility = boolean | "auto";
 
 export interface MetralyHeatmapColorScale {
   /** Explicit visual minimum. When omitted, derived from finite cell values. */
   min?: number;
   /** Explicit visual maximum. When omitted, derived from finite cell values. */
   max?: number;
-  /** Optional midpoint reserved for future diverging scales. */
+  /** Optional midpoint for diverging scales. */
   mid?: number;
+  /** Token-backed visual ramp. Defaults to cyan. */
+  ramp?: MetralyHeatmapRamp;
   /** Clamp values into the visual min/max range. Defaults to true. */
   clamp?: boolean;
 }
@@ -78,6 +89,8 @@ export interface MetralyHeatmapProps {
   legend?: MetralyHeatmapLegend;
   /** Optional explicit visual scale for sparse or domain-known data. */
   colorScale?: MetralyHeatmapColorScale;
+  /** Controls visible numeric labels inside cells. Defaults to false; values remain available via aria/title. */
+  showCellValues?: MetralyHeatmapValueVisibility;
   /** Accessible label for the grid. Defaults to title or a generic label. */
   ariaLabel?: string;
   /** Format the displayed cell value (in tooltip/aria). */
@@ -96,10 +109,13 @@ export interface MetralyHeatmapProps {
 
 // ────────────────────────────────────────────────────────────────────────────
 
-const STATE_TO_STATUS: Record<MetralyHeatmapState, {
-  status: React.ComponentProps<typeof StatusBadge>["status"];
-  label: string;
-}> = {
+const STATE_TO_STATUS: Record<
+  MetralyHeatmapState,
+  {
+    status: React.ComponentProps<typeof StatusBadge>["status"];
+    label: string;
+  }
+> = {
   ready: { status: "Live", label: "Live" },
   loading: { status: "Preview", label: "Loading" },
   empty: { status: "Preview", label: "No data" },
@@ -126,17 +142,60 @@ function clamp(n: number, lo: number, hi: number): number {
   return Math.max(lo, Math.min(hi, n));
 }
 
-function intensity(value: number, min: number, max: number, shouldClamp: boolean): number {
+function intensity(
+  value: number,
+  min: number,
+  max: number,
+  shouldClamp: boolean,
+): number {
   if (!Number.isFinite(value)) return 0;
   if (max <= min) return 0;
   const normalized = (value - min) / (max - min);
   return shouldClamp ? clamp(normalized, 0, 1) : normalized;
 }
 
-function intensityLevel(value: number | null, normalized: number, status: MetralyHeatmapCellStatus): number {
+function intensityLevel(
+  value: number | null,
+  normalized: number,
+  status: MetralyHeatmapCellStatus,
+): number {
   if (value === null) return 0;
   if (normalized <= 0) return status === "ok" ? 1 : 0;
   return clamp(Math.ceil(normalized * 5), 1, 5);
+}
+
+function semanticStatusForValue(
+  normalized: number,
+  explicit?: MetralyHeatmapCellStatus,
+): MetralyHeatmapCellStatus {
+  if (explicit && explicit !== "neutral") return explicit;
+  if (normalized >= 0.82) return "danger";
+  if (normalized >= 0.52) return "warning";
+  if (normalized > 0) return "ok";
+  return explicit ?? "neutral";
+}
+
+function focusableIndex(
+  index: number,
+  rowCount: number,
+  colCount: number,
+  key: string,
+): number | null {
+  if (colCount <= 0 || rowCount <= 0) return null;
+  const row = Math.floor(index / colCount);
+  const col = index % colCount;
+  if (key === "ArrowRight")
+    return row * colCount + Math.min(col + 1, colCount - 1);
+  if (key === "ArrowLeft") return row * colCount + Math.max(col - 1, 0);
+  if (key === "ArrowDown")
+    return Math.min(row + 1, rowCount - 1) * colCount + col;
+  if (key === "ArrowUp") return Math.max(row - 1, 0) * colCount + col;
+  if (key === "Home") return row * colCount;
+  if (key === "End") return row * colCount + colCount - 1;
+  if (key === "PageDown")
+    return Math.min(row + 1, rowCount - 1) * colCount + col;
+  if (key === "PageUp") return Math.max(row - 1, 0) * colCount + col;
+  return null;
 }
 
 export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
@@ -150,6 +209,7 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
   showLegend,
   legend,
   colorScale,
+  showCellValues = false,
   ariaLabel,
   formatter,
   emptyLabel = "No activity recorded yet",
@@ -163,33 +223,37 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
   const reactId = React.useId();
   const rootId = id ?? reactId;
   const summaryId = `${rootId}-sum`;
-  const resolvedDensity: MetralyHeatmapDensity = density ?? (compact ? "compact" : "comfortable");
+  const resolvedDensity: MetralyHeatmapDensity =
+    density ?? (compact ? "compact" : "comfortable");
 
   // Build a (y,x) lookup and value range.
-  const { lookup, derivedMin, derivedMax, total, finiteCount } = React.useMemo(() => {
-    const lookup = new Map<string, MetralyHeatmapCell>();
-    let mn = Infinity;
-    let mx = -Infinity;
-    let total = 0;
-    let finiteCount = 0;
+  const { lookup, derivedMin, derivedMax, total, finiteCount } =
+    React.useMemo(() => {
+      const lookup = new Map<string, MetralyHeatmapCell>();
+      let mn = Infinity;
+      let mx = -Infinity;
+      let total = 0;
+      let finiteCount = 0;
 
-    for (const c of cells) {
-      lookup.set(`${c.y}\u0000${c.x}`, c);
-      if (typeof c.value === "number" && Number.isFinite(c.value)) {
-        if (c.value < mn) mn = c.value;
-        if (c.value > mx) mx = c.value;
-        total += c.value;
-        finiteCount += 1;
+      for (const c of cells) {
+        lookup.set(`${c.y}\u0000${c.x}`, c);
+        if (typeof c.value === "number" && Number.isFinite(c.value)) {
+          if (c.value < mn) mn = c.value;
+          if (c.value > mx) mx = c.value;
+          total += c.value;
+          finiteCount += 1;
+        }
       }
-    }
 
-    if (!Number.isFinite(mn)) mn = 0;
-    if (!Number.isFinite(mx)) mx = 0;
-    return { lookup, derivedMin: mn, derivedMax: mx, total, finiteCount };
-  }, [cells]);
+      if (!Number.isFinite(mn)) mn = 0;
+      if (!Number.isFinite(mx)) mx = 0;
+      return { lookup, derivedMin: mn, derivedMax: mx, total, finiteCount };
+    }, [cells]);
 
   const minVal = colorScale?.min ?? derivedMin;
   const maxVal = colorScale?.max ?? derivedMax;
+  const scaleMid = colorScale?.mid;
+  const ramp = colorScale?.ramp ?? "cyan";
   const shouldClamp = colorScale?.clamp ?? true;
   const fmt = formatter ?? defaultFormatter;
   const isReady = state === "ready" || state === "partial" || state === "stale";
@@ -201,23 +265,44 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
   const rowCount = yLabels.length;
   const totalCells = rowCount * colCount;
   const rovingItems = React.useMemo(
-    () => Array.from({ length: totalCells }, (_, index) => ({ value: String(index) })),
+    () =>
+      Array.from({ length: totalCells }, (_, index) => ({
+        value: String(index),
+      })),
     [totalCells],
   );
-  const cellByIndex = React.useCallback((index: number) => {
-    if (colCount <= 0 || index < 0 || index >= totalCells) return null;
-    const r = Math.floor(index / colCount);
-    const c = index % colCount;
-    return lookup.get(`${yLabels[r]}\u0000${xLabels[c]}`) ?? null;
-  }, [colCount, lookup, totalCells, xLabels, yLabels]);
+  const cellByIndex = React.useCallback(
+    (index: number) => {
+      if (colCount <= 0 || index < 0 || index >= totalCells) return null;
+      const r = Math.floor(index / colCount);
+      const c = index % colCount;
+      return lookup.get(`${yLabels[r]}\u0000${xLabels[c]}`) ?? null;
+    },
+    [colCount, lookup, totalCells, xLabels, yLabels],
+  );
 
-  const { selectedValue, getItemProps, selectValue } = useRovingSelection({
-    items: rovingItems,
-    defaultValue: rovingItems[0]?.value,
-    mode: "focus-only",
-    onValueChange: (nextValue) => onCellFocus?.(cellByIndex(Number(nextValue))),
-  });
+  const { selectedValue, getItemProps, selectValue, refs } = useRovingSelection(
+    {
+      items: rovingItems,
+      defaultValue: rovingItems[0]?.value,
+      mode: "focus-only",
+      onValueChange: (nextValue) =>
+        onCellFocus?.(cellByIndex(Number(nextValue))),
+    },
+  );
   const activeCellIndex = selectedValue ? Number(selectedValue) : 0;
+  const moveToIndex = React.useCallback(
+    (nextIndex: number) => {
+      const safeIndex = clamp(nextIndex, 0, Math.max(0, totalCells - 1));
+      selectValue(String(safeIndex));
+      refs.current[safeIndex]?.focus();
+    },
+    [refs, selectValue, totalCells],
+  );
+  const resolvedShowCellValues =
+    showCellValues === "auto"
+      ? !compact && resolvedDensity === "comfortable" && colCount <= 8
+      : Boolean(showCellValues);
 
   const stateMeta = STATE_TO_STATUS[state];
 
@@ -229,18 +314,35 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
         className={`m-heatmap m-heatmap--density-${resolvedDensity} m-heatmap--state-${state} ${className ?? ""}`.trim()}
         aria-busy={state === "loading" || undefined}
       >
-        {title ? <HeatmapHeader title={title} description={description} badge={stateMeta} /> : null}
+        {title ? (
+          <HeatmapHeader
+            title={title}
+            description={description}
+            badge={stateMeta}
+          />
+        ) : null}
         <StateBlock
-          variant={state === "loading" ? "loading" : state === "empty" ? "empty" : state === "source_disconnected" ? "disconnected" : "error"}
+          variant={
+            state === "loading"
+              ? "loading"
+              : state === "empty"
+                ? "empty"
+                : state === "source_disconnected"
+                  ? "disconnected"
+                  : "error"
+          }
           title={titleForState(state, emptyLabel)}
           description={hintForState(state)}
-          density={resolvedDensity === "comfortable" ? "comfortable" : "compact"}
+          density={
+            resolvedDensity === "comfortable" ? "comfortable" : "compact"
+          }
         />
       </div>
     );
   }
 
-  const resolvedLegend: MetralyHeatmapLegend = legend ?? (showLegend === false || compact ? "none" : "horizontal");
+  const resolvedLegend: MetralyHeatmapLegend =
+    legend ?? (showLegend === false || compact ? "none" : "horizontal");
 
   return (
     <div
@@ -248,6 +350,8 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
       className={[
         "m-heatmap",
         `m-heatmap--density-${resolvedDensity}`,
+        `m-heatmap--ramp-${ramp}`,
+        resolvedShowCellValues ? "m-heatmap--show-values" : "",
         compact ? "m-heatmap--compact" : "",
         finiteCount === 0 ? "m-heatmap--empty-data" : "",
         className ?? "",
@@ -257,7 +361,11 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
       style={{ "--m-heatmap-cols": colCount } as React.CSSProperties}
     >
       {title || description ? (
-        <HeatmapHeader title={title} description={description} badge={state !== "ready" ? stateMeta : undefined} />
+        <HeatmapHeader
+          title={title}
+          description={description}
+          badge={state !== "ready" ? stateMeta : undefined}
+        />
       ) : null}
 
       <div className="m-heatmap__scroll">
@@ -272,7 +380,11 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
         >
           {/* header row */}
           <div role="row" className="m-heatmap__row m-heatmap__row--head">
-            <div role="columnheader" className="m-heatmap__corner" aria-hidden="true" />
+            <div
+              role="columnheader"
+              className="m-heatmap__corner"
+              aria-hidden="true"
+            />
             {xLabels.map((x) => (
               <div
                 key={`xh-${x}`}
@@ -294,10 +406,35 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
               {xLabels.map((x, cIdx) => {
                 const cell = lookup.get(`${y}\u0000${x}`);
                 const v = cell?.value ?? null;
-                const i = v === null ? 0 : intensity(v, minVal, maxVal, shouldClamp);
-                const level = intensityLevel(v, i, cell?.status ?? "neutral");
-                const status = cell?.status ?? "neutral";
-                const labelText = cell?.label ?? (v === null ? "no data" : `${fmt(v)}${unit ? ` ${unit}` : ""}`);
+                const i =
+                  v === null ? 0 : intensity(v, minVal, maxVal, shouldClamp);
+                const divergingI =
+                  scaleMid !== undefined && v !== null && maxVal !== minVal
+                    ? Math.abs(v - scaleMid) /
+                      Math.max(
+                        Math.abs(maxVal - scaleMid),
+                        Math.abs(scaleMid - minVal),
+                        1,
+                      )
+                    : i;
+                const visualIntensity =
+                  ramp === "cyan-purple-diverging"
+                    ? clamp(divergingI, 0, 1)
+                    : clamp(i, 0, 1);
+                const level = intensityLevel(
+                  v,
+                  visualIntensity,
+                  cell?.status ?? "neutral",
+                );
+                const status =
+                  ramp === "semantic"
+                    ? semanticStatusForValue(visualIntensity, cell?.status)
+                    : (cell?.status ?? "neutral");
+                const labelText =
+                  cell?.label ??
+                  (v === null
+                    ? "no data"
+                    : `${fmt(v)}${unit ? ` ${unit}` : ""}`);
                 const ariaCellLabel = `${y} on ${x}: ${labelText}${cell?.description ? `, ${cell.description}` : ""}`;
 
                 const flatIdx = rIdx * colCount + cIdx;
@@ -313,24 +450,51 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
                     aria-label={ariaCellLabel}
                     data-intensity={level}
                     data-status={status}
+                    data-ramp={ramp}
                     data-value={v === null ? undefined : v}
                     className={[
                       "m-heatmap__cell",
-                      v === null ? "m-heatmap__cell--null" : `m-heatmap__cell--i-${level}`,
+                      v === null
+                        ? "m-heatmap__cell--null"
+                        : `m-heatmap__cell--i-${level}`,
                       `m-heatmap__cell--${status}`,
+                      ramp === "cyan-purple-diverging" &&
+                      v !== null &&
+                      scaleMid !== undefined
+                        ? v < scaleMid
+                          ? "m-heatmap__cell--below-mid"
+                          : v > scaleMid
+                            ? "m-heatmap__cell--above-mid"
+                            : "m-heatmap__cell--at-mid"
+                        : "",
                       isFocused ? "m-heatmap__cell--focus" : "",
                     ]
                       .filter(Boolean)
                       .join(" ")}
-                    style={{
-                      "--m-cell-intensity": clamp(i, 0, 1).toFixed(3),
-                    } as React.CSSProperties}
+                    style={
+                      {
+                        "--m-cell-intensity": visualIntensity.toFixed(3),
+                      } as React.CSSProperties
+                    }
                     onFocus={() => {
                       selectValue(String(flatIdx));
                     }}
                     onKeyDown={(event) => {
-                      props.onKeyDown?.(event);
-                      if ((event.key === "Enter" || event.key === " ") && cell) {
+                      const nextIndex = focusableIndex(
+                        flatIdx,
+                        rowCount,
+                        colCount,
+                        event.key,
+                      );
+                      if (nextIndex !== null) {
+                        event.preventDefault();
+                        moveToIndex(nextIndex);
+                        return;
+                      }
+                      if (
+                        (event.key === "Enter" || event.key === " ") &&
+                        cell
+                      ) {
                         event.preventDefault();
                         onCellActivate?.(cell);
                       }
@@ -340,7 +504,7 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
                       if (cell) onCellActivate?.(cell);
                     }}
                   >
-                    {!compact && v !== null ? (
+                    {resolvedShowCellValues && v !== null ? (
                       <span className="m-heatmap__cell-value">{fmt(v)}</span>
                     ) : null}
                   </button>
@@ -352,12 +516,28 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
       </div>
 
       {resolvedLegend !== "none" ? (
-        <HeatmapLegend minVal={minVal} maxVal={maxVal} unit={unit} formatter={fmt} variant={resolvedLegend} />
+        <HeatmapLegend
+          minVal={minVal}
+          midVal={scaleMid}
+          maxVal={maxVal}
+          unit={unit}
+          formatter={fmt}
+          variant={resolvedLegend}
+          ramp={ramp}
+        />
       ) : null}
 
+      <HeatmapTableFallback
+        xLabels={xLabels}
+        yLabels={yLabels}
+        lookup={lookup}
+        formatter={fmt}
+        unit={unit}
+      />
+
       <p id={summaryId} className="m-heatmap__sr">
-        {rowCount} rows by {colCount} columns. {totalCells} cells total.
-        Values range from {fmt(minVal)} to {fmt(maxVal)}
+        {rowCount} rows by {colCount} columns. {totalCells} cells total. Values
+        range from {fmt(minVal)} to {fmt(maxVal)}
         {unit ? ` ${unit}` : ""}. Total {fmt(total)}
         {unit ? ` ${unit}` : ""}. Use arrow keys to navigate cells.
       </p>
@@ -372,13 +552,18 @@ MetralyHeatmap.displayName = "MetralyHeatmap";
 const HeatmapHeader: React.FC<{
   title?: string;
   description?: string;
-  badge?: { status: React.ComponentProps<typeof StatusBadge>["status"]; label: string };
+  badge?: {
+    status: React.ComponentProps<typeof StatusBadge>["status"];
+    label: string;
+  };
 }> = ({ title, description, badge }) => {
   return (
     <header className="m-heatmap__head">
       <div className="m-heatmap__head-text">
         {title ? <span className="m-heatmap__title">{title}</span> : null}
-        {description ? <span className="m-heatmap__desc">{description}</span> : null}
+        {description ? (
+          <span className="m-heatmap__desc">{description}</span>
+        ) : null}
       </div>
       {badge ? <StatusBadge status={badge.status} label={badge.label} /> : null}
     </header>
@@ -387,51 +572,129 @@ const HeatmapHeader: React.FC<{
 
 const HeatmapLegend: React.FC<{
   minVal: number;
+  midVal?: number;
   maxVal: number;
   unit?: string;
   formatter: (n: number) => string;
   variant: Exclude<MetralyHeatmapLegend, "none">;
-}> = ({ minVal, maxVal, unit, formatter, variant }) => {
+  ramp: MetralyHeatmapRamp;
+}> = ({ minVal, midVal, maxVal, unit, formatter, variant, ramp }) => {
+  const showMid =
+    ramp === "cyan-purple-diverging" && typeof midVal === "number";
   return (
-    <div className={`m-heatmap__legend m-heatmap__legend--${variant}`} aria-hidden="true">
+    <div
+      className={`m-heatmap__legend m-heatmap__legend--${variant} m-heatmap__legend--ramp-${ramp}`}
+      aria-hidden="true"
+    >
       <span className="m-heatmap__legend-end">{formatter(minVal)}</span>
-      <span className="m-heatmap__legend-bar" />
-      <span className="m-heatmap__legend-end">{formatter(maxVal)}{unit ? ` ${unit}` : ""}</span>
+      <span className="m-heatmap__legend-bar">
+        {showMid ? <span className="m-heatmap__legend-mid" /> : null}
+      </span>
+      {showMid ? (
+        <span className="m-heatmap__legend-end">{formatter(midVal!)}</span>
+      ) : null}
+      <span className="m-heatmap__legend-end">
+        {formatter(maxVal)}
+        {unit ? ` ${unit}` : ""}
+      </span>
     </div>
+  );
+};
+
+const HeatmapTableFallback: React.FC<{
+  xLabels: string[];
+  yLabels: string[];
+  lookup: Map<string, MetralyHeatmapCell>;
+  formatter: (n: number) => string;
+  unit?: string;
+}> = ({ xLabels, yLabels, lookup, formatter, unit }) => {
+  return (
+    <table className="m-heatmap__fallback-table">
+      <caption>Heatmap values</caption>
+      <thead>
+        <tr>
+          <th scope="col">Dimension</th>
+          {xLabels.map((x) => (
+            <th key={x} scope="col">
+              {x}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {yLabels.map((y) => (
+          <tr key={y}>
+            <th scope="row">{y}</th>
+            {xLabels.map((x) => {
+              const cell = lookup.get(`${y}\u0000${x}`);
+              const value =
+                typeof cell?.value === "number"
+                  ? `${formatter(cell.value)}${unit ? ` ${unit}` : ""}`
+                  : "—";
+              return <td key={`${y}-${x}`}>{value}</td>;
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 };
 
 function titleForState(state: MetralyHeatmapState, emptyLabel: string): string {
   switch (state) {
-    case "loading": return "Loading";
-    case "empty": return emptyLabel;
-    case "auth_failed": return "Authentication failed";
-    case "rate_limited": return "Rate limited";
-    case "source_disconnected": return "Source disconnected";
-    case "schema_mismatch": return "Schema mismatch";
-    case "permission_denied": return "Permission denied";
-    case "formula_invalid": return "Formula invalid";
-    case "error": return "Could not load";
-    case "stale": return "Last update is stale";
-    case "partial": return "Partial data";
-    default: return "";
+    case "loading":
+      return "Loading";
+    case "empty":
+      return emptyLabel;
+    case "auth_failed":
+      return "Authentication failed";
+    case "rate_limited":
+      return "Rate limited";
+    case "source_disconnected":
+      return "Source disconnected";
+    case "schema_mismatch":
+      return "Schema mismatch";
+    case "permission_denied":
+      return "Permission denied";
+    case "formula_invalid":
+      return "Formula invalid";
+    case "error":
+      return "Could not load";
+    case "stale":
+      return "Last update is stale";
+    case "partial":
+      return "Partial data";
+    default:
+      return "";
   }
 }
 
 function hintForState(state: MetralyHeatmapState): string | undefined {
   switch (state) {
-    case "loading": return undefined;
-    case "empty": return "Once activity is recorded the heatmap will populate.";
-    case "stale": return "Showing the last successful sync window. Trigger a refresh to update.";
-    case "partial": return "Backfill is still in progress. Cells may shift as data arrives.";
-    case "auth_failed": return "Re-authorize the connector to resume cell calculation.";
-    case "rate_limited": return "Upstream provider returned 429. Retrying with backoff.";
-    case "source_disconnected": return "The underlying source is unreachable. Check the connector status.";
-    case "schema_mismatch": return "Underlying schema changed. Re-validate the metric mapping.";
-    case "permission_denied": return "Current scopes are too narrow. Expand scopes in source settings.";
-    case "formula_invalid": return "Cell formula did not compile.";
-    case "error": return "An unexpected error occurred. Retry or open the error log.";
-    default: return undefined;
+    case "loading":
+      return undefined;
+    case "empty":
+      return "Once activity is recorded the heatmap will populate.";
+    case "stale":
+      return "Showing the last successful sync window. Trigger a refresh to update.";
+    case "partial":
+      return "Backfill is still in progress. Cells may shift as data arrives.";
+    case "auth_failed":
+      return "Re-authorize the connector to resume cell calculation.";
+    case "rate_limited":
+      return "Upstream provider returned 429. Retrying with backoff.";
+    case "source_disconnected":
+      return "The underlying source is unreachable. Check the connector status.";
+    case "schema_mismatch":
+      return "Underlying schema changed. Re-validate the metric mapping.";
+    case "permission_denied":
+      return "Current scopes are too narrow. Expand scopes in source settings.";
+    case "formula_invalid":
+      return "Cell formula did not compile.";
+    case "error":
+      return "An unexpected error occurred. Retry or open the error log.";
+    default:
+      return undefined;
   }
 }
 

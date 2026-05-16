@@ -241,6 +241,8 @@ export type {
   MetralyHeatmapCellStatus,
   MetralyHeatmapDensity,
   MetralyHeatmapLegend,
+  MetralyHeatmapRamp,
+  MetralyHeatmapValueVisibility,
   MetralyHeatmapColorScale,
 } from "./charts/MetralyHeatmap";
 

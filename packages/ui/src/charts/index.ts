@@ -39,5 +39,7 @@ export type {
   MetralyHeatmapCellStatus,
   MetralyHeatmapDensity,
   MetralyHeatmapLegend,
+  MetralyHeatmapRamp,
+  MetralyHeatmapValueVisibility,
   MetralyHeatmapColorScale,
 } from "./MetralyHeatmap";
