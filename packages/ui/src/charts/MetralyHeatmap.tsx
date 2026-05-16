@@ -401,7 +401,7 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
     return (
       <div
         id={rootId}
-        className={`m-heatmap m-heatmap--density-${resolvedDensity} m-heatmap--state-${state} ${className ?? ""}`.trim()}
+        className={`metraly-heatmap metraly-heatmap--density-${resolvedDensity} metraly-heatmap--state-${state} ${className ?? ""}`.trim()}
         aria-busy={state === "loading" || undefined}
       >
         {title ? (
@@ -439,12 +439,12 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
       ref={rootRef}
       id={rootId}
       className={[
-        "m-heatmap",
-        `m-heatmap--density-${resolvedDensity}`,
-        `m-heatmap--ramp-${ramp}`,
-        resolvedShowCellValues ? "m-heatmap--show-values" : "",
-        compact ? "m-heatmap--compact" : "",
-        finiteCount === 0 ? "m-heatmap--empty-data" : "",
+        "metraly-heatmap",
+        `metraly-heatmap--density-${resolvedDensity}`,
+        `metraly-heatmap--ramp-${ramp}`,
+        resolvedShowCellValues ? "metraly-heatmap--show-values" : "",
+        compact ? "metraly-heatmap--compact" : "",
+        finiteCount === 0 ? "metraly-heatmap--empty-data" : "",
         className ?? "",
       ]
         .filter(Boolean)
@@ -459,28 +459,28 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
         />
       ) : null}
 
-      <div className="m-heatmap__scroll">
+      <div className="metraly-heatmap__scroll">
         <div
           role="grid"
           aria-label={ariaLabel ?? title ?? "Heatmap"}
           aria-rowcount={rowCount}
           aria-colcount={colCount}
           aria-describedby={summaryId}
-          className="m-heatmap__grid"
+          className="metraly-heatmap__grid"
           style={{ "--m-heatmap-cols": colCount } as React.CSSProperties}
         >
           {/* header row */}
-          <div role="row" className="m-heatmap__row m-heatmap__row--head">
+          <div role="row" className="metraly-heatmap__row metraly-heatmap__row--head">
             <div
               role="columnheader"
-              className="m-heatmap__corner"
+              className="metraly-heatmap__corner"
               aria-hidden="true"
             />
             {xLabels.map((x) => (
               <div
                 key={`xh-${x}`}
                 role="columnheader"
-                className="m-heatmap__xlabel"
+                className="metraly-heatmap__xlabel"
                 title={x}
               >
                 {x}
@@ -490,8 +490,8 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
 
           {/* body */}
           {yLabels.map((y, rIdx) => (
-            <div key={`r-${y}`} role="row" className="m-heatmap__row">
-              <div role="rowheader" className="m-heatmap__ylabel" title={y}>
+            <div key={`r-${y}`} role="row" className="metraly-heatmap__row">
+              <div role="rowheader" className="metraly-heatmap__ylabel" title={y}>
                 {y}
               </div>
               {xLabels.map((x, cIdx) => {
@@ -563,21 +563,21 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
                     data-ramp={ramp}
                     data-value={v === null ? undefined : v}
                     className={[
-                      "m-heatmap__cell",
+                      "metraly-heatmap__cell",
                       v === null
-                        ? "m-heatmap__cell--null"
-                        : `m-heatmap__cell--i-${level}`,
-                      `m-heatmap__cell--${status}`,
+                        ? "metraly-heatmap__cell--null"
+                        : `metraly-heatmap__cell--i-${level}`,
+                      `metraly-heatmap__cell--${status}`,
                       ramp === "cyan-purple-diverging" &&
                       v !== null &&
                       scaleMid !== undefined
                         ? v < scaleMid
-                          ? "m-heatmap__cell--below-mid"
+                          ? "metraly-heatmap__cell--below-mid"
                           : v > scaleMid
-                            ? "m-heatmap__cell--above-mid"
-                            : "m-heatmap__cell--at-mid"
+                            ? "metraly-heatmap__cell--above-mid"
+                            : "metraly-heatmap__cell--at-mid"
                         : "",
-                      isFocused ? "m-heatmap__cell--focus" : "",
+                      isFocused ? "metraly-heatmap__cell--focus" : "",
                     ]
                       .filter(Boolean)
                       .join(" ")}
@@ -634,7 +634,7 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
                     }}
                   >
                     {resolvedShowCellValues && v !== null ? (
-                      <span className="m-heatmap__cell-value">{fmt(v)}</span>
+                      <span className="metraly-heatmap__cell-value">{fmt(v)}</span>
                     ) : null}
                   </button>
                 );
@@ -672,7 +672,7 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
         unit={unit}
       />
 
-      <p id={summaryId} className="m-heatmap__sr">
+      <p id={summaryId} className="metraly-heatmap__sr">
         {rowCount} rows by {colCount} columns. {totalCells} cells total. Values
         range from {fmt(minVal)} to {fmt(maxVal)}
         {unit ? ` ${unit}` : ""}. Total {fmt(total)}
@@ -695,11 +695,11 @@ const HeatmapHeader: React.FC<{
   };
 }> = ({ title, description, badge }) => {
   return (
-    <header className="m-heatmap__head">
-      <div className="m-heatmap__head-text">
-        {title ? <span className="m-heatmap__title">{title}</span> : null}
+    <header className="metraly-heatmap__head">
+      <div className="metraly-heatmap__head-text">
+        {title ? <span className="metraly-heatmap__title">{title}</span> : null}
         {description ? (
-          <span className="m-heatmap__desc">{description}</span>
+          <span className="metraly-heatmap__desc">{description}</span>
         ) : null}
       </div>
       {badge ? <StatusBadge status={badge.status} label={badge.label} /> : null}
@@ -718,7 +718,7 @@ const HeatmapTooltip: React.FC<{
   return (
     <div
       id={id}
-      className="metraly-chart-tooltip m-heatmap__tooltip"
+      className="metraly-chart-tooltip metraly-heatmap__tooltip"
       role="status"
       style={
         {
@@ -729,19 +729,19 @@ const HeatmapTooltip: React.FC<{
     >
       {custom ?? (
         <>
-          <div className="m-heatmap__tooltip-head">
+          <div className="metraly-heatmap__tooltip-head">
             <strong>{tooltip.y}</strong>
             <span>{tooltip.x}</span>
           </div>
-          <div className="m-heatmap__tooltip-value">
+          <div className="metraly-heatmap__tooltip-value">
             <b>{tooltip.valueText}</b>
             <span>{tooltip.statusLabel}</span>
           </div>
           {tooltip.description ? (
-            <p className="m-heatmap__tooltip-desc">{tooltip.description}</p>
+            <p className="metraly-heatmap__tooltip-desc">{tooltip.description}</p>
           ) : null}
           {labels.length > 0 ? (
-            <dl className="m-heatmap__tooltip-list">
+            <dl className="metraly-heatmap__tooltip-list">
               {labels.map(([key, value]) => (
                 <div key={key}>
                   <dt>{key}</dt>
@@ -769,17 +769,17 @@ const HeatmapLegend: React.FC<{
     ramp === "cyan-purple-diverging" && typeof midVal === "number";
   return (
     <div
-      className={`m-heatmap__legend m-heatmap__legend--${variant} m-heatmap__legend--ramp-${ramp}`}
+      className={`metraly-heatmap__legend metraly-heatmap__legend--${variant} metraly-heatmap__legend--ramp-${ramp}`}
       aria-hidden="true"
     >
-      <span className="m-heatmap__legend-end">{formatter(minVal)}</span>
-      <span className="m-heatmap__legend-bar">
-        {showMid ? <span className="m-heatmap__legend-mid" /> : null}
+      <span className="metraly-heatmap__legend-end">{formatter(minVal)}</span>
+      <span className="metraly-heatmap__legend-bar">
+        {showMid ? <span className="metraly-heatmap__legend-mid" /> : null}
       </span>
       {showMid ? (
-        <span className="m-heatmap__legend-end">{formatter(midVal!)}</span>
+        <span className="metraly-heatmap__legend-end">{formatter(midVal!)}</span>
       ) : null}
-      <span className="m-heatmap__legend-end">
+      <span className="metraly-heatmap__legend-end">
         {formatter(maxVal)}
         {unit ? ` ${unit}` : ""}
       </span>
@@ -795,7 +795,7 @@ const HeatmapTableFallback: React.FC<{
   unit?: string;
 }> = ({ xLabels, yLabels, lookup, formatter, unit }) => {
   return (
-    <table className="m-heatmap__fallback-table">
+    <table className="metraly-heatmap__fallback-table">
       <caption>Heatmap values</caption>
       <thead>
         <tr>

@@ -85,17 +85,17 @@ export const DashboardWizardSplitBuilder: React.FC<DashboardWizardSplitBuilderPr
   return (
     <div
       id={rootId}
-      className={["m-dwiz", className ?? ""].filter(Boolean).join(" ")}
+      className={["metraly-dwiz", className ?? ""].filter(Boolean).join(" ")}
       role="region"
       aria-label={title}
     >
-      <aside className="m-dwiz__rail" aria-label="Builder rail">
-        <header className="m-dwiz__rail-head">
-          <h2 className="m-dwiz__title">{title}</h2>
-          {description ? <p className="m-dwiz__desc">{description}</p> : null}
+      <aside className="metraly-dwiz__rail" aria-label="Builder rail">
+        <header className="metraly-dwiz__rail-head">
+          <h2 className="metraly-dwiz__title">{title}</h2>
+          {description ? <p className="metraly-dwiz__desc">{description}</p> : null}
         </header>
 
-        <ol className="m-dwiz__steps" aria-label="Builder steps">
+        <ol className="metraly-dwiz__steps" aria-label="Builder steps">
           {steps.map((s, i) => {
             const isActive = s.id === activeStepId;
             const isPast = i < activeIdx;
@@ -103,28 +103,28 @@ export const DashboardWizardSplitBuilder: React.FC<DashboardWizardSplitBuilderPr
               <li
                 key={s.id}
                 className={[
-                  "m-dwiz__step",
-                  isActive ? "m-dwiz__step--active" : "",
-                  s.complete ? "m-dwiz__step--complete" : "",
-                  s.locked ? "m-dwiz__step--locked" : "",
-                  s.errorText ? "m-dwiz__step--error" : "",
+                  "metraly-dwiz__step",
+                  isActive ? "metraly-dwiz__step--active" : "",
+                  s.complete ? "metraly-dwiz__step--complete" : "",
+                  s.locked ? "metraly-dwiz__step--locked" : "",
+                  s.errorText ? "metraly-dwiz__step--error" : "",
                 ]
                   .filter(Boolean)
                   .join(" ")}
               >
                 <button
                   type="button"
-                  className="m-dwiz__step-btn"
+                  className="metraly-dwiz__step-btn"
                   onClick={() => !s.locked && onSelectStep(s.id)}
                   disabled={!!s.locked}
                   aria-current={isActive ? "step" : undefined}
                 >
                   <span
                     className={[
-                      "m-dwiz__step-marker",
-                      s.complete ? "m-dwiz__step-marker--complete" : "",
-                      isPast ? "m-dwiz__step-marker--past" : "",
-                      s.errorText ? "m-dwiz__step-marker--error" : "",
+                      "metraly-dwiz__step-marker",
+                      s.complete ? "metraly-dwiz__step-marker--complete" : "",
+                      isPast ? "metraly-dwiz__step-marker--past" : "",
+                      s.errorText ? "metraly-dwiz__step-marker--error" : "",
                     ]
                       .filter(Boolean)
                       .join(" ")}
@@ -132,12 +132,12 @@ export const DashboardWizardSplitBuilder: React.FC<DashboardWizardSplitBuilderPr
                   >
                     {s.complete ? "✓" : isActive ? "●" : i + 1}
                   </span>
-                  <span className="m-dwiz__step-text">
-                    <span className="m-dwiz__step-label">{s.label}</span>
+                  <span className="metraly-dwiz__step-text">
+                    <span className="metraly-dwiz__step-label">{s.label}</span>
                     {s.errorText ? (
-                      <span className="m-dwiz__step-error">{s.errorText}</span>
+                      <span className="metraly-dwiz__step-error">{s.errorText}</span>
                     ) : s.helper ? (
-                      <span className="m-dwiz__step-helper">{s.helper}</span>
+                      <span className="metraly-dwiz__step-helper">{s.helper}</span>
                     ) : null}
                   </span>
                   {s.locked ? (
@@ -150,20 +150,20 @@ export const DashboardWizardSplitBuilder: React.FC<DashboardWizardSplitBuilderPr
         </ol>
 
         <CardShell>
-          <div className="m-dwiz__body">{stepBody}</div>
+          <div className="metraly-dwiz__body">{stepBody}</div>
         </CardShell>
 
-        {footer ? <footer className="m-dwiz__rail-foot">{footer}</footer> : null}
+        {footer ? <footer className="metraly-dwiz__rail-foot">{footer}</footer> : null}
       </aside>
 
-      <section className="m-dwiz__canvas" aria-label="Dashboard preview">
-        <header className="m-dwiz__canvas-head">
-          <span className="m-dwiz__canvas-label">Preview</span>
+      <section className="metraly-dwiz__canvas" aria-label="Dashboard preview">
+        <header className="metraly-dwiz__canvas-head">
+          <span className="metraly-dwiz__canvas-label">Preview</span>
           <StatusBadge status={previewState === "empty" ? "No data" : previewState === "error" ? "Error" : previewState === "loading" ? "Preview" : "Live"} label={previewState === "empty" ? "Pick a template" :
               previewState === "error" ? "Could not render" :
               previewState === "loading" ? "Loading" : "Live"} />
         </header>
-        <div className="m-dwiz__canvas-frame">
+        <div className="metraly-dwiz__canvas-frame">
           {previewState === "empty" ? (
             <StateBlock variant="empty" title={emptyLabel} description="Once a template is selected, the preview will render here." />
           ) : previewState === "error" ? (

@@ -139,20 +139,20 @@ export const TokenInput: React.FC<TokenInputProps> = ({
       label={label}
       description={resolvedHint}
       error={errorText}
-      className={["m-token", className ?? ""].filter(Boolean).join(" ")}
+      className={["metraly-token", className ?? ""].filter(Boolean).join(" ")}
     >
       {committed ? (
-        <div className="m-token__stored" role="group" aria-label={`${label} — stored`}>
-          <span className="m-token__preview" title="Stored token preview">
+        <div className="metraly-token__stored" role="group" aria-label={`${label} — stored`}>
+          <span className="metraly-token__preview" title="Stored token preview">
             {maskedPreview ?? "••••••••"}
           </span>
-          <span className={`m-token__validation m-token__validation--${validation}`}>
+          <span className={`metraly-token__validation metraly-token__validation--${validation}`}>
             {validationMsg}
           </span>
-          <span className="m-token__stored-actions">
+          <span className="metraly-token__stored-actions">
             <button
               type="button"
-              className="m-token__btn m-token__btn--ghost"
+              className="metraly-token__btn metraly-token__btn--ghost"
               onClick={onReplace}
               disabled={disabled}
             >
@@ -160,7 +160,7 @@ export const TokenInput: React.FC<TokenInputProps> = ({
             </button>
             <button
               type="button"
-              className="m-token__btn m-token__btn--ghost"
+              className="metraly-token__btn metraly-token__btn--ghost"
               onClick={onClear}
               disabled={disabled}
             >
@@ -169,12 +169,12 @@ export const TokenInput: React.FC<TokenInputProps> = ({
           </span>
         </div>
       ) : (
-        <div className="m-token__row">
+        <div className="metraly-token__row">
           <input
             id={inputId}
             name={name}
             type={revealed ? "text" : "password"}
-            className="m-token__input"
+            className="metraly-token__input"
             placeholder={placeholder}
             autoComplete="off"
             spellCheck={false}
@@ -192,7 +192,7 @@ export const TokenInput: React.FC<TokenInputProps> = ({
           />
           <button
             type="button"
-            className="m-token__btn m-token__btn--ghost"
+            className="metraly-token__btn metraly-token__btn--ghost"
             onClick={() => setRevealed((r) => !r)}
             aria-pressed={revealed}
             aria-label={revealed ? "Hide token" : "Reveal token"}
@@ -204,7 +204,7 @@ export const TokenInput: React.FC<TokenInputProps> = ({
           {onValidate ? (
             <button
               type="button"
-              className="m-token__btn m-token__btn--primary"
+              className="metraly-token__btn metraly-token__btn--primary"
               onClick={() => onValidate(current)}
               disabled={disabled || !current || validation === "validating"}
             >
@@ -214,7 +214,7 @@ export const TokenInput: React.FC<TokenInputProps> = ({
         </div>
       )}
 
-      <span id={liveId} aria-live="polite" className="m-token__sr">
+      <span id={liveId} aria-live="polite" className="metraly-token__sr">
         {validationMsg}
       </span>
     </FieldShell>

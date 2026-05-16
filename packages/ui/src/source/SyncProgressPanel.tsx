@@ -137,30 +137,30 @@ export const SyncProgressPanel: React.FC<SyncProgressPanelProps> = ({
     <section
       id={rootId}
       className={[
-        "m-sync",
-        `m-sync--${stage}`,
-        showIndeterminate ? "m-sync--indeterminate" : "",
+        "metraly-sync",
+        `metraly-sync--${stage}`,
+        showIndeterminate ? "metraly-sync--indeterminate" : "",
         className ?? "",
       ]
         .filter(Boolean)
         .join(" ")}
       aria-busy={isActive || undefined}
     >
-      <header className="m-sync__head">
-        <div className="m-sync__head-text">
-          <span className="m-sync__source-label">{sourceLabel}</span>
-          {sourceId ? <span className="m-sync__source-id">{sourceId}</span> : null}
+      <header className="metraly-sync__head">
+        <div className="metraly-sync__head-text">
+          <span className="metraly-sync__source-label">{sourceLabel}</span>
+          {sourceId ? <span className="metraly-sync__source-id">{sourceId}</span> : null}
         </div>
         <StatusBadge status={meta.status} label={meta.label} />
       </header>
 
-      <div className="m-sync__progress" aria-hidden="true">
+      <div className="metraly-sync__progress" aria-hidden="true">
         <div
           className={[
-            "m-sync__bar",
-            showIndeterminate ? "m-sync__bar--indeterminate" : "",
-            stage === "failed" ? "m-sync__bar--failed" : "",
-            stage === "rate_limited" ? "m-sync__bar--rate-limited" : "",
+            "metraly-sync__bar",
+            showIndeterminate ? "metraly-sync__bar--indeterminate" : "",
+            stage === "failed" ? "metraly-sync__bar--failed" : "",
+            stage === "rate_limited" ? "metraly-sync__bar--rate-limited" : "",
           ]
             .filter(Boolean)
             .join(" ")}
@@ -169,7 +169,7 @@ export const SyncProgressPanel: React.FC<SyncProgressPanelProps> = ({
       </div>
 
       <div
-        className="m-sync__progress-sr"
+        className="metraly-sync__progress-sr"
         role="progressbar"
         aria-valuemin={0}
         aria-valuemax={100}
@@ -181,31 +181,31 @@ export const SyncProgressPanel: React.FC<SyncProgressPanelProps> = ({
         }
       />
 
-      <ul className="m-sync__meta">
-        <li className="m-sync__meta-row">
-          <span className="m-sync__meta-key">Stage</span>
-          <span className="m-sync__meta-val">{STAGE_LABEL[stage]}{subStage ? ` · ${subStage}` : ""}</span>
+      <ul className="metraly-sync__meta">
+        <li className="metraly-sync__meta-row">
+          <span className="metraly-sync__meta-key">Stage</span>
+          <span className="metraly-sync__meta-val">{STAGE_LABEL[stage]}{subStage ? ` · ${subStage}` : ""}</span>
         </li>
-        <li className="m-sync__meta-row">
-          <span className="m-sync__meta-key">Events</span>
-          <span className="m-sync__meta-val">
+        <li className="metraly-sync__meta-row">
+          <span className="metraly-sync__meta-key">Events</span>
+          <span className="metraly-sync__meta-val">
             {fmtNum(eventsIngested)}
             {typeof totalEstimate === "number" ? (
               <>
                 {" / "}
-                <span className="m-sync__meta-val-est">~{fmtNum(totalEstimate)}</span>
+                <span className="metraly-sync__meta-val-est">~{fmtNum(totalEstimate)}</span>
               </>
             ) : null}
           </span>
         </li>
-        <li className="m-sync__meta-row">
-          <span className="m-sync__meta-key">Last sync</span>
-          <span className="m-sync__meta-val">{fmtTime(lastSyncedAt)}</span>
+        <li className="metraly-sync__meta-row">
+          <span className="metraly-sync__meta-key">Last sync</span>
+          <span className="metraly-sync__meta-val">{fmtTime(lastSyncedAt)}</span>
         </li>
         {rateLimit ? (
-          <li className="m-sync__meta-row">
-            <span className="m-sync__meta-key">Rate limit</span>
-            <span className="m-sync__meta-val">
+          <li className="metraly-sync__meta-row">
+            <span className="metraly-sync__meta-key">Rate limit</span>
+            <span className="metraly-sync__meta-val">
               {rateLimit.remaining} left / {rateLimit.window}
               {rateLimit.resetAt ? ` · resets ${fmtTime(rateLimit.resetAt)}` : ""}
             </span>
@@ -213,22 +213,22 @@ export const SyncProgressPanel: React.FC<SyncProgressPanelProps> = ({
         ) : null}
       </ul>
 
-      <footer className="m-sync__footer">
+      <footer className="metraly-sync__footer">
         {stage === "incremental" || stage === "backfilling" || stage === "discovering" ? (
           onPause ? (
-            <button type="button" className="m-sync__btn" onClick={onPause}>Pause</button>
+            <button type="button" className="metraly-sync__btn" onClick={onPause}>Pause</button>
           ) : null
         ) : null}
         {stage === "paused" && onResume ? (
-          <button type="button" className="m-sync__btn" onClick={onResume}>Resume</button>
+          <button type="button" className="metraly-sync__btn" onClick={onResume}>Resume</button>
         ) : null}
         {(stage === "failed" || stage === "rate_limited") && onRetry ? (
-          <button type="button" className="m-sync__btn m-sync__btn--primary" onClick={onRetry}>
+          <button type="button" className="metraly-sync__btn metraly-sync__btn--primary" onClick={onRetry}>
             Retry
           </button>
         ) : null}
         {(stage === "queued" || stage === "discovering" || stage === "backfilling") && onCancel ? (
-          <button type="button" className="m-sync__btn m-sync__btn--ghost" onClick={onCancel}>
+          <button type="button" className="metraly-sync__btn metraly-sync__btn--ghost" onClick={onCancel}>
             Cancel
           </button>
         ) : null}

@@ -121,29 +121,29 @@ export const InsightCard: React.FC<InsightCardProps> = ({
     <article
       id={rootId}
       className={[
-        "m-insight",
-        compact ? "m-insight--compact" : "",
-        `m-insight--tone-${tone}`,
+        "metraly-insight",
+        compact ? "metraly-insight--compact" : "",
+        `metraly-insight--tone-${tone}`,
         className ?? "",
       ]
         .filter(Boolean)
         .join(" ")}
       aria-busy={state === "loading" || undefined}
     >
-      <header className="m-insight__head">
-        <div className="m-insight__head-text">
-          <span className="m-insight__title">{title}</span>
+      <header className="metraly-insight__head">
+        <div className="metraly-insight__head-text">
+          <span className="metraly-insight__title">{title}</span>
           {freshness ? (
-            <span className="m-insight__fresh" title={`Last evidence ${freshness}`}>
-              <span className="m-insight__fresh-label">updated</span>
-              <span className="m-insight__fresh-time">{formatTime(freshness)}</span>
+            <span className="metraly-insight__fresh" title={`Last evidence ${freshness}`}>
+              <span className="metraly-insight__fresh-label">updated</span>
+              <span className="metraly-insight__fresh-time">{formatTime(freshness)}</span>
             </span>
           ) : null}
         </div>
-        <div className="m-insight__badges">
+        <div className="metraly-insight__badges">
           {source === "ai" ? (
-            <span className="m-insight__ai-tag" title="AI generated">
-              <span className="m-insight__ai-dot" aria-hidden="true" />
+            <span className="metraly-insight__ai-tag" title="AI generated">
+              <span className="metraly-insight__ai-dot" aria-hidden="true" />
               AI generated
             </span>
           ) : null}
@@ -164,27 +164,27 @@ export const InsightCard: React.FC<InsightCardProps> = ({
         />
       ) : (
         <>
-          <p className="m-insight__summary">{summary}</p>
+          <p className="metraly-insight__summary">{summary}</p>
 
           {confidence ? (
-            <div className="m-insight__confidence">
-              <span className="m-insight__confidence-label">Confidence</span>
+            <div className="metraly-insight__confidence">
+              <span className="metraly-insight__confidence-label">Confidence</span>
               <StatusBadge status={CONFIDENCE_TONE[confidence]} label={confidence === "low" ? "Low" : confidence === "medium" ? "Medium" : "High"} />
             </div>
           ) : null}
 
           {evidence && evidence.length > 0 ? (
-            <div className="m-insight__evidence">
-              <span className="m-insight__evidence-head">
+            <div className="metraly-insight__evidence">
+              <span className="metraly-insight__evidence-head">
                 Evidence
-                <span className="m-insight__evidence-count">{evidence.length}</span>
+                <span className="metraly-insight__evidence-count">{evidence.length}</span>
               </span>
-              <ul className="m-insight__evidence-list">
+              <ul className="metraly-insight__evidence-list">
                 {evidence.slice(0, compact ? 3 : 8).map((e) => (
-                  <li key={e.id} className="m-insight__evidence-item">
-                    {e.kind ? <span className="m-insight__evidence-kind">{e.kind}</span> : null}
-                    <span className="m-insight__evidence-label">{e.label}</span>
-                    {e.caption ? <span className="m-insight__evidence-caption">{e.caption}</span> : null}
+                  <li key={e.id} className="metraly-insight__evidence-item">
+                    {e.kind ? <span className="metraly-insight__evidence-kind">{e.kind}</span> : null}
+                    <span className="metraly-insight__evidence-label">{e.label}</span>
+                    {e.caption ? <span className="metraly-insight__evidence-caption">{e.caption}</span> : null}
                   </li>
                 ))}
               </ul>
@@ -192,22 +192,22 @@ export const InsightCard: React.FC<InsightCardProps> = ({
           ) : null}
 
           {meta && meta.length > 0 ? (
-            <ul className="m-insight__meta" aria-label="metadata">
+            <ul className="metraly-insight__meta" aria-label="metadata">
               {meta.slice(0, 6).map((m, i) => (
-                <li key={i} className="m-insight__meta-item">
-                  <span className="m-insight__meta-key">{m.key}</span>
-                  <span className="m-insight__meta-val">{m.value}</span>
+                <li key={i} className="metraly-insight__meta-item">
+                  <span className="metraly-insight__meta-key">{m.key}</span>
+                  <span className="metraly-insight__meta-val">{m.value}</span>
                 </li>
               ))}
             </ul>
           ) : null}
 
           {primaryAction || secondaryAction ? (
-            <footer className="m-insight__actions">
+            <footer className="metraly-insight__actions">
               {secondaryAction ? (
                 <button
                   type="button"
-                  className="m-insight__btn m-insight__btn--ghost"
+                  className="metraly-insight__btn metraly-insight__btn--ghost"
                   onClick={secondaryAction.onClick}
                 >
                   {secondaryAction.label}
@@ -216,7 +216,7 @@ export const InsightCard: React.FC<InsightCardProps> = ({
               {primaryAction ? (
                 <button
                   type="button"
-                  className="m-insight__btn m-insight__btn--primary"
+                  className="metraly-insight__btn metraly-insight__btn--primary"
                   onClick={primaryAction.onClick}
                 >
                   {primaryAction.label}
@@ -229,7 +229,7 @@ export const InsightCard: React.FC<InsightCardProps> = ({
     </article>
   );
 
-  return frame ? <CardShell className="m-insight-frame">{inner}</CardShell> : inner;
+  return frame ? <CardShell className="metraly-insight-frame">{inner}</CardShell> : inner;
 };
 
 InsightCard.displayName = "InsightCard";

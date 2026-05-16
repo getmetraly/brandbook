@@ -50,30 +50,30 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
     <section
       id={rootId}
       className={[
-        "m-settings-section",
-        compact ? "m-settings-section--compact" : "",
+        "metraly-settings-section",
+        compact ? "metraly-settings-section--compact" : "",
         className ?? "",
       ]
         .filter(Boolean)
         .join(" ")}
       aria-labelledby={`${rootId}-title`}
     >
-      <header className="m-settings-section__head">
-        <div className="m-settings-section__head-text">
-          <Heading id={`${rootId}-title`} className="m-settings-section__title">
+      <header className="metraly-settings-section__head">
+        <div className="metraly-settings-section__head-text">
+          <Heading id={`${rootId}-title`} className="metraly-settings-section__title">
             {title}
           </Heading>
           {description ? (
-            <p className="m-settings-section__desc">{description}</p>
+            <p className="metraly-settings-section__desc">{description}</p>
           ) : null}
         </div>
-        <div className="m-settings-section__head-aside">
+        <div className="metraly-settings-section__head-aside">
           {badge ? <StatusBadge status={badge.status} label={badge.label} /> : null}
           {actions}
         </div>
       </header>
 
-      {children ? <div className="m-settings-section__body">{children}</div> : null}
+      {children ? <div className="metraly-settings-section__body">{children}</div> : null}
     </section>
   );
 

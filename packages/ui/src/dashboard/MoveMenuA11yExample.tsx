@@ -105,20 +105,20 @@ export const MoveMenuA11yExample: React.FC<MoveMenuA11yExampleProps> = ({
   return (
     <div
       id={rootId}
-      className={["m-a11y-editor", className ?? ""].filter(Boolean).join(" ")}
+      className={["metraly-a11y-editor", className ?? ""].filter(Boolean).join(" ")}
       role="application"
       aria-label="Dashboard editor — keyboard movement example"
       onKeyDown={onKeyDown}
     >
-      <header className="m-a11y-editor__head">
-        <span className="m-a11y-editor__title">Dashboard editor — keyboard movement</span>
-        <span className="m-a11y-editor__hint">
+      <header className="metraly-a11y-editor__head">
+        <span className="metraly-a11y-editor__title">Dashboard editor — keyboard movement</span>
+        <span className="metraly-a11y-editor__hint">
           Tab to select. Arrow keys to move. Move menu also exposes per-step actions.
         </span>
       </header>
 
       <div
-        className="m-a11y-editor__grid"
+        className="metraly-a11y-editor__grid"
         style={{
           "--m-a11y-cols": cols,
           "--m-a11y-rows": rows,
@@ -131,8 +131,8 @@ export const MoveMenuA11yExample: React.FC<MoveMenuA11yExampleProps> = ({
               key={w.id}
               ref={(el) => { widgetRefs.current[w.id] = el; }}
               className={[
-                "m-a11y-editor__cell",
-                selectedHere ? "m-a11y-editor__cell--selected" : "",
+                "metraly-a11y-editor__cell",
+                selectedHere ? "metraly-a11y-editor__cell--selected" : "",
               ]
                 .filter(Boolean)
                 .join(" ")}
@@ -149,7 +149,7 @@ export const MoveMenuA11yExample: React.FC<MoveMenuA11yExampleProps> = ({
                 subtitle={w.subtitle}
                 state="live"
                 footer={
-                  <div className="m-a11y-editor__chrome">
+                  <div className="metraly-a11y-editor__chrome">
                     <HandlePrimitive
                       kind="drag"
                       label={`Drag handle for ${w.title}`}
@@ -170,9 +170,9 @@ export const MoveMenuA11yExample: React.FC<MoveMenuA11yExampleProps> = ({
                   </div>
                 }
               >
-                <div className="m-a11y-editor__placeholder">
-                  <span className="m-a11y-editor__placeholder-label">{w.title}</span>
-                  <span className="m-a11y-editor__placeholder-meta">
+                <div className="metraly-a11y-editor__placeholder">
+                  <span className="metraly-a11y-editor__placeholder-label">{w.title}</span>
+                  <span className="metraly-a11y-editor__placeholder-meta">
                     r{w.position.row + 1}/c{w.position.col + 1}
                   </span>
                 </div>
@@ -182,7 +182,7 @@ export const MoveMenuA11yExample: React.FC<MoveMenuA11yExampleProps> = ({
         })}
       </div>
 
-      <footer className="m-a11y-editor__foot" aria-live="polite">
+      <footer className="metraly-a11y-editor__foot" aria-live="polite">
         {selected ? (
           <span>
             Selected: <strong>{selected.title}</strong> at row {selected.position.row + 1}, column {selected.position.col + 1}.

@@ -2,6 +2,8 @@
 
 Generated: 2026-05-16. Working directory: `brandbook/`.
 
+
+> **2026-05-16 update**: All Phase 1 component CSS class names have been migrated from the `m-*` short prefix to the canonical `metraly-*` prefix. CSS design tokens (`--m-*`) and keyframe names (`@keyframes m-*`) are unchanged. See `docs/css-prefix-and-style-base-report.md` for the full migration record.
 ---
 
 ## Claude Design sources reviewed

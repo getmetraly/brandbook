@@ -1,6 +1,6 @@
 /* WidgetStateMatrix — documentation / story helper */
 
-.m-statematrix {
+.metraly-statematrix {
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -8,23 +8,23 @@
   color: var(--m-fg-1);
 }
 
-.m-statematrix__head { display: flex; flex-direction: column; gap: 4px; }
-.m-statematrix__title { margin: 0; font-size: 16px; font-weight: 600; color: var(--m-fg-0); }
-.m-statematrix__desc { margin: 0; font-size: 12.5px; color: var(--m-fg-2); }
+.metraly-statematrix__head { display: flex; flex-direction: column; gap: 4px; }
+.metraly-statematrix__title { margin: 0; font-size: 16px; font-weight: 600; color: var(--m-fg-0); }
+.metraly-statematrix__desc { margin: 0; font-size: 12.5px; color: var(--m-fg-2); }
 
-.m-statematrix__grid {
+.metraly-statematrix__grid {
   list-style: none;
   padding: 0;
   margin: 0;
   display: grid;
   gap: 12px;
 }
-.m-statematrix--cols-2 .m-statematrix__grid { grid-template-columns: repeat(2, 1fr); }
-.m-statematrix--cols-3 .m-statematrix__grid { grid-template-columns: repeat(3, 1fr); }
-.m-statematrix--cols-4 .m-statematrix__grid { grid-template-columns: repeat(4, 1fr); }
-.m-statematrix--cols-6 .m-statematrix__grid { grid-template-columns: repeat(6, 1fr); }
+.metraly-statematrix--cols-2 .metraly-statematrix__grid { grid-template-columns: repeat(2, 1fr); }
+.metraly-statematrix--cols-3 .metraly-statematrix__grid { grid-template-columns: repeat(3, 1fr); }
+.metraly-statematrix--cols-4 .metraly-statematrix__grid { grid-template-columns: repeat(4, 1fr); }
+.metraly-statematrix--cols-6 .metraly-statematrix__grid { grid-template-columns: repeat(6, 1fr); }
 
-.m-statematrix__cell {
+.metraly-statematrix__cell {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -35,13 +35,13 @@
   min-width: 0;
 }
 
-.m-statematrix__cell-head {
+.metraly-statematrix__cell-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.m-statematrix__cell-label {
+.metraly-statematrix__cell-label {
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-size: 10px;
   letter-spacing: 0.06em;
@@ -49,11 +49,11 @@
   color: var(--m-fg-3);
 }
 
-.m-statematrix__cell-body { min-width: 0; }
+.metraly-statematrix__cell-body { min-width: 0; }
 
 @media (max-width: 960px) {
-  .m-statematrix__grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .metraly-statematrix__grid { grid-template-columns: repeat(2, 1fr) !important; }
 }
 @media (max-width: 520px) {
-  .m-statematrix__grid { grid-template-columns: 1fr !important; }
+  .metraly-statematrix__grid { grid-template-columns: 1fr !important; }
 }

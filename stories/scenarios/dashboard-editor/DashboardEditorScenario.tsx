@@ -254,7 +254,7 @@ function ScenarioSidebar() {
         </div>
       </div>
       <div style={{ display: "inline-flex", alignItems: "center", gap: 6, width: "fit-content", borderRadius: 999, border: "1px solid var(--m-line-faint)", background: "var(--m-ok-bg)", padding: "4px 10px", color: "var(--m-ok)", fontFamily: "var(--m-font-mono)", fontSize: "var(--m-fs-9)" }}>
-        <span className="m-pulse-dot" style={{ width: 6, height: 6, borderRadius: 999, background: "currentColor" }} />
+        <span className="metraly-pulse-dot" style={{ width: 6, height: 6, borderRadius: 999, background: "currentColor" }} />
         All systems nominal
       </div>
     </div>

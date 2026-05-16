@@ -155,35 +155,35 @@ export const AIProviderConnectorCard: React.FC<AIProviderConnectorCardProps> = (
       <article
         id={rootId}
         className={[
-          "m-ai-provider",
-          `m-ai-provider--${state}`,
-          pluginAttribution ? "m-ai-provider--from-plugin" : "",
+          "metraly-ai-provider",
+          `metraly-ai-provider--${state}`,
+          pluginAttribution ? "metraly-ai-provider--from-plugin" : "",
           className ?? "",
         ]
           .filter(Boolean)
           .join(" ")}
       >
-        <header className="m-ai-provider__head">
-          <div className="m-ai-provider__head-text">
-            <div className="m-ai-provider__name-row">
-              <span className="m-ai-provider__name">{name}</span>
-              <span className="m-ai-provider__kind">{KIND_LABEL[kind]}</span>
+        <header className="metraly-ai-provider__head">
+          <div className="metraly-ai-provider__head-text">
+            <div className="metraly-ai-provider__name-row">
+              <span className="metraly-ai-provider__name">{name}</span>
+              <span className="metraly-ai-provider__kind">{KIND_LABEL[kind]}</span>
               {pluginAttribution ? (
-                <span className="m-ai-provider__plugin" title={pluginAttribution.pluginId}>
+                <span className="metraly-ai-provider__plugin" title={pluginAttribution.pluginId}>
                   via Plugin · {pluginAttribution.pluginName}
                 </span>
               ) : null}
             </div>
-            {description ? <p className="m-ai-provider__desc">{description}</p> : null}
+            {description ? <p className="metraly-ai-provider__desc">{description}</p> : null}
             {endpoint ? (
-              <code className="m-ai-provider__endpoint" title={endpoint}>{endpoint}</code>
+              <code className="metraly-ai-provider__endpoint" title={endpoint}>{endpoint}</code>
             ) : null}
           </div>
           <StatusBadge status={meta.status} label={meta.label} />
         </header>
 
         {showTokenEntry && token ? (
-          <div className="m-ai-provider__token">
+          <div className="metraly-ai-provider__token">
             <TokenInput
               label="API token"
               kind={kind === "anthropic-compatible" ? "provider-token" : kind === "openai-compatible" ? "provider-token" : "api-key"}
@@ -199,25 +199,25 @@ export const AIProviderConnectorCard: React.FC<AIProviderConnectorCardProps> = (
         ) : null}
 
         {models && models.length > 0 ? (
-          <div className="m-ai-provider__models" aria-label="available models">
-            <span className="m-ai-provider__models-label">Models</span>
-            <ul className="m-ai-provider__models-list">
+          <div className="metraly-ai-provider__models" aria-label="available models">
+            <span className="metraly-ai-provider__models-label">Models</span>
+            <ul className="metraly-ai-provider__models-list">
               {models.map((m) => {
                 const isDefault = m.id === defaultModelId;
                 return (
                   <li
                     key={m.id}
                     className={[
-                      "m-ai-provider__model",
-                      isDefault ? "m-ai-provider__model--default" : "",
+                      "metraly-ai-provider__model",
+                      isDefault ? "metraly-ai-provider__model--default" : "",
                     ]
                       .filter(Boolean)
                       .join(" ")}
                   >
-                    <span className="m-ai-provider__model-label">{m.label}</span>
-                    {m.meta ? <span className="m-ai-provider__model-meta">{m.meta}</span> : null}
+                    <span className="metraly-ai-provider__model-label">{m.label}</span>
+                    {m.meta ? <span className="metraly-ai-provider__model-meta">{m.meta}</span> : null}
                     {isDefault ? (
-                      <span className="m-ai-provider__model-default-tag">default</span>
+                      <span className="metraly-ai-provider__model-default-tag">default</span>
                     ) : null}
                   </li>
                 );
@@ -227,37 +227,37 @@ export const AIProviderConnectorCard: React.FC<AIProviderConnectorCardProps> = (
         ) : null}
 
         {privacy ? (
-          <p className="m-ai-provider__privacy">
-            <span className="m-ai-provider__privacy-label">Privacy</span>
-            <span className="m-ai-provider__privacy-text">{privacy}</span>
+          <p className="metraly-ai-provider__privacy">
+            <span className="metraly-ai-provider__privacy-label">Privacy</span>
+            <span className="metraly-ai-provider__privacy-text">{privacy}</span>
           </p>
         ) : null}
 
-        <footer className="m-ai-provider__footer">
-          <span className="m-ai-provider__audit">
-            <span className="m-ai-provider__audit-label">Last tested</span>
-            <span className="m-ai-provider__audit-time">{fmtTime(lastTestedAt)}</span>
+        <footer className="metraly-ai-provider__footer">
+          <span className="metraly-ai-provider__audit">
+            <span className="metraly-ai-provider__audit-label">Last tested</span>
+            <span className="metraly-ai-provider__audit-time">{fmtTime(lastTestedAt)}</span>
           </span>
-          <div className="m-ai-provider__actions">
+          <div className="metraly-ai-provider__actions">
             {state === "disabled" && onEnable ? (
-              <button type="button" className="m-ai-provider__btn" onClick={onEnable}>
+              <button type="button" className="metraly-ai-provider__btn" onClick={onEnable}>
                 Enable
               </button>
             ) : null}
             {state !== "disabled" && state !== "gated" && onDisable ? (
-              <button type="button" className="m-ai-provider__btn m-ai-provider__btn--ghost" onClick={onDisable}>
+              <button type="button" className="metraly-ai-provider__btn metraly-ai-provider__btn--ghost" onClick={onDisable}>
                 Disable
               </button>
             ) : null}
             {state === "ready" && onSetDefault ? (
-              <button type="button" className="m-ai-provider__btn" onClick={onSetDefault}>
+              <button type="button" className="metraly-ai-provider__btn" onClick={onSetDefault}>
                 Set as default
               </button>
             ) : null}
             {state !== "gated" && state !== "disabled" && onTest ? (
               <button
                 type="button"
-                className="m-ai-provider__btn m-ai-provider__btn--primary"
+                className="metraly-ai-provider__btn metraly-ai-provider__btn--primary"
                 onClick={onTest}
                 disabled={state === "testing"}
               >

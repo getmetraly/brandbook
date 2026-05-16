@@ -116,8 +116,8 @@ export const StateBoard: React.FC<StateBoardProps> = ({
     <section
       id={rootId}
       className={[
-        "m-board",
-        `m-board--${variant}`,
+        "metraly-board",
+        `metraly-board--${variant}`,
         className ?? "",
       ]
         .filter(Boolean)
@@ -125,19 +125,19 @@ export const StateBoard: React.FC<StateBoardProps> = ({
       aria-busy={state === "loading" || undefined}
     >
       {title || description ? (
-        <header className="m-board__head">
-          <div className="m-board__head-text">
-            {title ? <span className="m-board__title">{title}</span> : null}
-            {description ? <span className="m-board__desc">{description}</span> : null}
+        <header className="metraly-board__head">
+          <div className="metraly-board__head-text">
+            {title ? <span className="metraly-board__title">{title}</span> : null}
+            {description ? <span className="metraly-board__desc">{description}</span> : null}
           </div>
           {showSummary && isReady && items.length > 0 ? (
-            <ul className="m-board__summary" aria-label="status summary">
+            <ul className="metraly-board__summary" aria-label="status summary">
               {(["danger", "warning", "ok"] as StateBoardItemStatus[]).map((s) =>
                 summary[s] > 0 ? (
-                  <li key={s} className={`m-board__summary-chip m-board__summary-chip--${s}`}>
-                    <span className="m-board__summary-dot" aria-hidden="true" />
-                    <span className="m-board__summary-count">{summary[s]}</span>
-                    <span className="m-board__summary-label">{humanStatus(s)}</span>
+                  <li key={s} className={`metraly-board__summary-chip metraly-board__summary-chip--${s}`}>
+                    <span className="metraly-board__summary-dot" aria-hidden="true" />
+                    <span className="metraly-board__summary-count">{summary[s]}</span>
+                    <span className="metraly-board__summary-label">{humanStatus(s)}</span>
                   </li>
                 ) : null,
               )}
@@ -155,9 +155,9 @@ export const StateBoard: React.FC<StateBoardProps> = ({
       ) : items.length === 0 ? (
         <StateBlock variant="empty" title={emptyLabel} />
       ) : (
-        <ul className={`m-board__items m-board__items--${variant}`} role="list">
+        <ul className={`metraly-board__items metraly-board__items--${variant}`} role="list">
           {items.map((it) => (
-            <li key={it.id} className="m-board__item-wrap">
+            <li key={it.id} className="metraly-board__item-wrap">
               <BoardItem item={it} variant={variant} />
             </li>
           ))}
@@ -166,7 +166,7 @@ export const StateBoard: React.FC<StateBoardProps> = ({
     </section>
   );
 
-  return frame ? <CardShell className="m-board-frame">{inner}</CardShell> : inner;
+  return frame ? <CardShell className="metraly-board-frame">{inner}</CardShell> : inner;
 };
 
 StateBoard.displayName = "StateBoard";
@@ -178,22 +178,22 @@ const BoardItem: React.FC<{ item: StateBoardItem; variant: "grid" | "list" }> = 
       type={item.onActivate ? "button" : undefined}
       onClick={item.onActivate}
       className={[
-        "m-board__item",
-        `m-board__item--${item.status}`,
-        item.onActivate ? "m-board__item--interactive" : "",
+        "metraly-board__item",
+        `metraly-board__item--${item.status}`,
+        item.onActivate ? "metraly-board__item--interactive" : "",
       ]
         .filter(Boolean)
         .join(" ")}
     >
-      <div className="m-board__item-head">
-        <span className={`m-board__dot m-board__dot--${item.status}`} aria-hidden="true" />
-        <span className="m-board__item-label">{item.label}</span>
+      <div className="metraly-board__item-head">
+        <span className={`metraly-board__dot metraly-board__dot--${item.status}`} aria-hidden="true" />
+        <span className="metraly-board__item-label">{item.label}</span>
         <StatusBadge status={STATUS_TO_BADGE[item.status]} label={item.statusLabel ?? humanStatus(item.status)} />
       </div>
-      {item.hint ? <p className="m-board__item-hint">{item.hint}</p> : null}
-      <div className="m-board__item-meta">
-        {item.meter ? <span className="m-board__item-meter">{item.meter}</span> : null}
-        {item.timestamp ? <span className="m-board__item-time">{item.timestamp}</span> : null}
+      {item.hint ? <p className="metraly-board__item-hint">{item.hint}</p> : null}
+      <div className="metraly-board__item-meta">
+        {item.meter ? <span className="metraly-board__item-meter">{item.meter}</span> : null}
+        {item.timestamp ? <span className="metraly-board__item-time">{item.timestamp}</span> : null}
       </div>
     </Wrap>
   );

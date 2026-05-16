@@ -247,11 +247,11 @@ export const MetralyGauge: React.FC<MetralyGaugeProps> = ({
     <div
       id={rootId}
       className={[
-        "m-gauge",
-        `m-gauge--${variant}`,
-        bare ? "m-gauge--bare" : "m-gauge--card",
-        `m-gauge--tone-${activeTone}`,
-        state !== "ready" ? `m-gauge--state-${state}` : "",
+        "metraly-gauge",
+        `metraly-gauge--${variant}`,
+        bare ? "metraly-gauge--bare" : "metraly-gauge--card",
+        `metraly-gauge--tone-${activeTone}`,
+        state !== "ready" ? `metraly-gauge--state-${state}` : "",
         className ?? "",
       ]
         .filter(Boolean)
@@ -266,8 +266,8 @@ export const MetralyGauge: React.FC<MetralyGaugeProps> = ({
       aria-busy={state === "loading" || undefined}
     >
       {label ? (
-        <header className="m-gauge__head">
-          <span className="m-gauge__label">{label}</span>
+        <header className="metraly-gauge__head">
+          <span className="metraly-gauge__label">{label}</span>
           {state !== "ready" ? (
             <StatusBadge status={stateMeta.status} label={stateMeta.label} />
           ) : null}
@@ -275,12 +275,12 @@ export const MetralyGauge: React.FC<MetralyGaugeProps> = ({
       ) : null}
 
       {description || summary ? (
-        <p id={descId} className="m-gauge__desc">
+        <p id={descId} className="metraly-gauge__desc">
           {[description, summary].filter(Boolean).join(" · ")}
         </p>
       ) : null}
 
-      <div className="m-gauge__body">
+      <div className="metraly-gauge__body">
         {showStateBlock ? (
           <StateBlock
             variant={state === "loading" ? "loading" : state === "empty" ? "empty" : state === "source_disconnected" ? "disconnected" : "error"}
@@ -343,17 +343,17 @@ const SemicircleDial: React.FC<SemicircleDialProps> = ({
   accent,
 }) => {
   return (
-    <div className={`m-gauge__dial${compact ? " m-gauge__dial--compact" : ""}`}>
-      <div className="m-gauge__dial-figure">
+    <div className={`metraly-gauge__dial${compact ? " metraly-gauge__dial--compact" : ""}`}>
+      <div className="metraly-gauge__dial-figure">
         <svg
-          className="m-gauge__svg"
+          className="metraly-gauge__svg"
           viewBox="0 0 200 110"
           aria-hidden="true"
           focusable="false"
         >
           {/* track */}
           <path
-            className="m-gauge__track"
+            className="metraly-gauge__track"
             d={trackPath}
             fill="none"
             strokeWidth={compact ? 6 : 8}
@@ -361,7 +361,7 @@ const SemicircleDial: React.FC<SemicircleDialProps> = ({
           />
           {/* filled arc */}
           <path
-            className="m-gauge__arc"
+            className="metraly-gauge__arc"
             d={trackPath}
             fill="none"
             stroke={accent}
@@ -378,23 +378,23 @@ const SemicircleDial: React.FC<SemicircleDialProps> = ({
               y1={t.y1}
               x2={t.x2}
               y2={t.y2}
-              className={`m-gauge__tick m-gauge__tick--${t.tone}`}
+              className={`metraly-gauge__tick metraly-gauge__tick--${t.tone}`}
               strokeWidth={2}
               strokeLinecap="round"
             />
           ))}
         </svg>
-        <div className="m-gauge__readout">
-          <span className="m-gauge__value">{displayValue}</span>
+        <div className="metraly-gauge__readout">
+          <span className="metraly-gauge__value">{displayValue}</span>
         </div>
       </div>
       {ticks.length > 0 && !compact ? (
-        <ul className="m-gauge__legend" aria-hidden="true">
+        <ul className="metraly-gauge__legend" aria-hidden="true">
           {ticks.map((t, i) => (
-            <li key={`lg-${i}`} className={`m-gauge__legend-item m-gauge__legend-item--${t.tone}`}>
-              <span className="m-gauge__legend-dot" />
-              <span className="m-gauge__legend-label">{t.label}</span>
-              <span className="m-gauge__legend-value">{t.value}</span>
+            <li key={`lg-${i}`} className={`metraly-gauge__legend-item metraly-gauge__legend-item--${t.tone}`}>
+              <span className="metraly-gauge__legend-dot" />
+              <span className="metraly-gauge__legend-label">{t.label}</span>
+              <span className="metraly-gauge__legend-value">{t.value}</span>
             </li>
           ))}
         </ul>
@@ -409,14 +409,14 @@ const InlineMeter: React.FC<{ pct: number; accent: string; value: string }> = ({
   value,
 }) => {
   return (
-    <div className="m-gauge__inline">
-      <span className="m-gauge__inline-value">{value}</span>
+    <div className="metraly-gauge__inline">
+      <span className="metraly-gauge__inline-value">{value}</span>
       <span
-        className="m-gauge__inline-track"
+        className="metraly-gauge__inline-track"
         aria-hidden="true"
       >
         <span
-          className="m-gauge__inline-fill"
+          className="metraly-gauge__inline-fill"
           style={{ width: `${Math.round(pct * 100)}%`, background: accent }}
         />
       </span>

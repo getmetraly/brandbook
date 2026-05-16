@@ -64,26 +64,26 @@ export function WidgetStateMatrix<S extends string = WidgetStateStatus>({
   return (
     <section
       className={[
-        "m-statematrix",
-        `m-statematrix--cols-${columns}`,
+        "metraly-statematrix",
+        `metraly-statematrix--cols-${columns}`,
         className ?? "",
       ]
         .filter(Boolean)
         .join(" ")}
     >
       {title || description ? (
-        <header className="m-statematrix__head">
-          {title ? <h2 className="m-statematrix__title">{title}</h2> : null}
-          {description ? <p className="m-statematrix__desc">{description}</p> : null}
+        <header className="metraly-statematrix__head">
+          {title ? <h2 className="metraly-statematrix__title">{title}</h2> : null}
+          {description ? <p className="metraly-statematrix__desc">{description}</p> : null}
         </header>
       ) : null}
-      <ul className="m-statematrix__grid">
+      <ul className="metraly-statematrix__grid">
         {order.map((s) => (
-          <li key={s} className="m-statematrix__cell">
-            <header className="m-statematrix__cell-head">
-              <span className="m-statematrix__cell-label">{s as string}</span>
+          <li key={s} className="metraly-statematrix__cell">
+            <header className="metraly-statematrix__cell-head">
+              <span className="metraly-statematrix__cell-label">{s as string}</span>
             </header>
-            <div className="m-statematrix__cell-body">{render(s)}</div>
+            <div className="metraly-statematrix__cell-body">{render(s)}</div>
           </li>
         ))}
       </ul>

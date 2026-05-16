@@ -154,7 +154,7 @@
 
 /* Defensive layout baseline for every package surface.
    Components must fit their parent without relying on Storybook wrappers.
-   Covers both naming conventions: legacy `metraly-*` and short-form `m-*`. */
+   All active component classes use the canonical `metraly-*` prefix. */
 .metraly-theme,
 .metraly-theme *,
 .metraly-theme *::before,
@@ -164,20 +164,12 @@
 [class^="metraly-"]::after,
 [class*=" metraly-"],
 [class*=" metraly-"]::before,
-[class*=" metraly-"]::after,
-[class^="m-"],
-[class^="m-"]::before,
-[class^="m-"]::after,
-[class*=" m-"],
-[class*=" m-"]::before,
-[class*=" m-"]::after {
+[class*=" metraly-"]::after {
   box-sizing: border-box;
 }
 
 [class^="metraly-"],
-[class*=" metraly-"],
-[class^="m-"],
-[class*=" m-"] {
+[class*=" metraly-"] {
   min-width: 0;
 }
 
@@ -198,7 +190,7 @@
 
 .metraly-focus-ring:focus-visible,
 .metraly-focus:focus-visible,
-.m-focusable:focus-visible {
+.metraly-focusable:focus-visible {
   outline: none;
   box-shadow: var(--m-glow-focus);
 }
@@ -235,8 +227,8 @@
   to { stroke-dashoffset: 0; }
 }
 
-[data-pulse="off"] .m-pulse,
-[data-pulse="off"] .m-pulse-dot {
+[data-pulse="off"] .metraly-pulse,
+[data-pulse="off"] .metraly-pulse-dot {
   animation: none !important;
   opacity: 0.7 !important;
 }

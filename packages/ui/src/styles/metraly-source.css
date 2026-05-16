@@ -2,16 +2,16 @@
 
 /* ── TokenInput ─────────────────────────────────────────────────── */
 
-.m-token { min-width: 0; }
+.metraly-token { min-width: 0; }
 
-.m-token__row,
-.m-token__stored {
+.metraly-token__row,
+.metraly-token__stored {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.m-token__input {
+.metraly-token__input {
   flex: 1;
   min-width: 0;
   height: 32px;
@@ -26,15 +26,15 @@
   letter-spacing: 0;
 }
 
-.m-token__input::placeholder { color: var(--m-fg-3); font-family: var(--m-font-ui, "Inter", sans-serif); }
+.metraly-token__input::placeholder { color: var(--m-fg-3); font-family: var(--m-font-ui, "Inter", sans-serif); }
 
-.m-token__input:focus-visible {
+.metraly-token__input:focus-visible {
   outline: none;
   border-color: var(--m-cyan-500);
   box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500));
 }
 
-.m-token__preview {
+.metraly-token__preview {
   flex: 1;
   display: inline-flex;
   align-items: center;
@@ -51,21 +51,21 @@
   user-select: none;
 }
 
-.m-token__validation {
+.metraly-token__validation {
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-size: 10.5px;
   color: var(--m-fg-3);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
-.m-token__validation--validating { color: var(--m-fg-2); }
-.m-token__validation--valid      { color: var(--m-ok); }
-.m-token__validation--invalid    { color: var(--m-err); }
-.m-token__validation--rate_limited { color: var(--m-warn); }
+.metraly-token__validation--validating { color: var(--m-fg-2); }
+.metraly-token__validation--valid      { color: var(--m-ok); }
+.metraly-token__validation--invalid    { color: var(--m-err); }
+.metraly-token__validation--rate_limited { color: var(--m-warn); }
 
-.m-token__stored-actions { display: inline-flex; gap: 4px; }
+.metraly-token__stored-actions { display: inline-flex; gap: 4px; }
 
-.m-token__btn {
+.metraly-token__btn {
   height: 32px;
   padding: 0 10px;
   border-radius: 6px;
@@ -78,18 +78,18 @@
   white-space: nowrap;
 }
 
-.m-token__btn:hover { background: var(--m-bg-3); border-color: var(--m-line-strong); }
-.m-token__btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.m-token__btn:focus-visible { outline: none; box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500)); }
-.m-token__btn--ghost { background: transparent; }
-.m-token__btn--primary {
+.metraly-token__btn:hover { background: var(--m-bg-3); border-color: var(--m-line-strong); }
+.metraly-token__btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.metraly-token__btn:focus-visible { outline: none; box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500)); }
+.metraly-token__btn--ghost { background: transparent; }
+.metraly-token__btn--primary {
   background: color-mix(in oklch, var(--m-cyan-500) 18%, transparent);
   border-color: color-mix(in oklch, var(--m-cyan-500) 50%, transparent);
   color: var(--m-cyan-500);
 }
-.m-token__btn--primary:hover { background: color-mix(in oklch, var(--m-cyan-500) 28%, transparent); }
+.metraly-token__btn--primary:hover { background: color-mix(in oklch, var(--m-cyan-500) 28%, transparent); }
 
-.m-token__sr {
+.metraly-token__sr {
   position: absolute;
   width: 1px; height: 1px;
   padding: 0; margin: -1px;
@@ -101,31 +101,31 @@
 
 /* ── PermissionExplainer ─────────────────────────────────────────── */
 
-.m-perm { display: flex; flex-direction: column; gap: 10px; }
+.metraly-perm { display: flex; flex-direction: column; gap: 10px; }
 
-.m-perm__head {
+.metraly-perm__head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
 }
-.m-perm__head-text { display: flex; flex-direction: column; gap: 2px; }
-.m-perm__title { font-size: 13px; font-weight: 600; color: var(--m-fg-0); }
-.m-perm__desc { font-size: 11.5px; color: var(--m-fg-2); }
+.metraly-perm__head-text { display: flex; flex-direction: column; gap: 2px; }
+.metraly-perm__title { font-size: 13px; font-weight: 600; color: var(--m-fg-0); }
+.metraly-perm__desc { font-size: 11.5px; color: var(--m-fg-2); }
 
-.m-perm__summary { display: inline-flex; align-items: center; gap: 8px; }
-.m-perm__summary-counts {
+.metraly-perm__summary { display: inline-flex; align-items: center; gap: 8px; }
+.metraly-perm__summary-counts {
   display: inline-flex;
   align-items: baseline;
   gap: 3px;
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-feature-settings: "tnum";
 }
-.m-perm__summary-num   { color: var(--m-fg-0); font-size: 14px; font-weight: 600; }
-.m-perm__summary-sep   { color: var(--m-fg-3); }
-.m-perm__summary-total { color: var(--m-fg-2); }
-.m-perm__summary-label {
+.metraly-perm__summary-num   { color: var(--m-fg-0); font-size: 14px; font-weight: 600; }
+.metraly-perm__summary-sep   { color: var(--m-fg-3); }
+.metraly-perm__summary-total { color: var(--m-fg-2); }
+.metraly-perm__summary-label {
   margin-left: 4px;
   font-family: var(--m-font-ui, "Inter", sans-serif);
   font-size: 10.5px;
@@ -134,7 +134,7 @@
   color: var(--m-fg-3);
 }
 
-.m-perm__list {
+.metraly-perm__list {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -143,7 +143,7 @@
   gap: 6px;
 }
 
-.m-perm__item {
+.metraly-perm__item {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -153,18 +153,18 @@
   background: var(--m-bg-1);
 }
 
-.m-perm__item--missing { border-color: color-mix(in oklch, var(--m-err) 45%, var(--m-line)); }
-.m-perm__item--deprecated,
-.m-perm__item--extra   { border-color: color-mix(in oklch, var(--m-warn) 40%, var(--m-line)); }
+.metraly-perm__item--missing { border-color: color-mix(in oklch, var(--m-err) 45%, var(--m-line)); }
+.metraly-perm__item--deprecated,
+.metraly-perm__item--extra   { border-color: color-mix(in oklch, var(--m-warn) 40%, var(--m-line)); }
 
-.m-perm__item-head {
+.metraly-perm__item-head {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
 }
 
-.m-perm__scope {
+.metraly-perm__scope {
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-feature-settings: "tnum";
   font-size: 11.5px;
@@ -175,29 +175,29 @@
   color: var(--m-fg-0);
 }
 
-.m-perm__req {
+.metraly-perm__req {
   font-size: 10px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--m-fg-3);
 }
-.m-perm__req--required { color: var(--m-warn); }
+.metraly-perm__req--required { color: var(--m-warn); }
 
-.m-perm__reason {
+.metraly-perm__reason {
   margin: 0;
   font-size: 12px;
   color: var(--m-fg-1);
   line-height: 1.45;
 }
 
-.m-perm__metrics { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
-.m-perm__metrics-label {
+.metraly-perm__metrics { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.metraly-perm__metrics-label {
   font-size: 10px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--m-fg-3);
 }
-.m-perm__metrics-list {
+.metraly-perm__metrics-list {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -205,7 +205,7 @@
   flex-wrap: wrap;
   gap: 4px;
 }
-.m-perm__metrics-chip {
+.metraly-perm__metrics-chip {
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-size: 10.5px;
   color: var(--m-fg-1);
@@ -215,20 +215,20 @@
   border-radius: 4px;
 }
 
-.m-perm--compact .m-perm__item { padding: 6px 8px; }
+.metraly-perm--compact .metraly-perm__item { padding: 6px 8px; }
 
 /* ── BackfillRangePicker ─────────────────────────────────────────── */
 
-.m-backfill { display: flex; flex-direction: column; gap: 8px; }
+.metraly-backfill { display: flex; flex-direction: column; gap: 8px; }
 
-.m-backfill__row {
+.metraly-backfill__row {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
 }
 
-.m-backfill__presets {
+.metraly-backfill__presets {
   display: inline-flex;
   background: var(--m-bg-2);
   border: 1px solid var(--m-line);
@@ -237,7 +237,7 @@
   gap: 0;
 }
 
-.m-backfill__preset {
+.metraly-backfill__preset {
   height: 26px;
   padding: 0 10px;
   border-radius: 6px;
@@ -249,20 +249,20 @@
   cursor: pointer;
 }
 
-.m-backfill__preset:hover { color: var(--m-fg-0); }
+.metraly-backfill__preset:hover { color: var(--m-fg-0); }
 
-.m-backfill__preset--active {
+.metraly-backfill__preset--active {
   background: var(--m-bg-1);
   color: var(--m-fg-0);
   box-shadow: 0 0 0 1px var(--m-line-strong) inset;
 }
 
-.m-backfill__preset:focus-visible {
+.metraly-backfill__preset:focus-visible {
   outline: none;
   box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500));
 }
 
-.m-backfill__custom {
+.metraly-backfill__custom {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -272,7 +272,7 @@
   border: 1px solid var(--m-line);
 }
 
-.m-backfill__custom-input {
+.metraly-backfill__custom-input {
   width: 64px;
   height: 22px;
   border: 0;
@@ -284,10 +284,10 @@
   text-align: right;
 }
 
-.m-backfill__custom-input:focus { outline: none; }
-.m-backfill__custom-unit { color: var(--m-fg-3); font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase; }
+.metraly-backfill__custom-input:focus { outline: none; }
+.metraly-backfill__custom-unit { color: var(--m-fg-3); font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase; }
 
-.m-backfill__estimate {
+.metraly-backfill__estimate {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -297,32 +297,32 @@
   border: 1px solid var(--m-line-faint);
 }
 
-.m-backfill__estimate-row {
+.metraly-backfill__estimate-row {
   display: flex;
   align-items: baseline;
   gap: 8px;
 }
 
-.m-backfill__estimate-label {
+.metraly-backfill__estimate-label {
   font-size: 10.5px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--m-fg-3);
 }
 
-.m-backfill__estimate-value {
+.metraly-backfill__estimate-value {
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-feature-settings: "tnum";
   font-size: 12.5px;
   color: var(--m-fg-0);
 }
 
-.m-backfill__estimate-note {
+.metraly-backfill__estimate-note {
   font-size: 10.5px;
   color: var(--m-fg-3);
 }
 
-.m-backfill__warning {
+.metraly-backfill__warning {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -330,13 +330,13 @@
   border-top: 1px solid var(--m-line-faint);
 }
 
-.m-backfill__warning-text { font-size: 11.5px; color: var(--m-fg-1); }
+.metraly-backfill__warning-text { font-size: 11.5px; color: var(--m-fg-1); }
 
 /* ── ConnectionTestPanel ─────────────────────────────────────────── */
 
-.m-conntest { display: flex; flex-direction: column; gap: 10px; }
+.metraly-conntest { display: flex; flex-direction: column; gap: 10px; }
 
-.m-conntest__head {
+.metraly-conntest__head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -344,11 +344,11 @@
   flex-wrap: wrap;
 }
 
-.m-conntest__head-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.m-conntest__title { font-size: 13px; font-weight: 600; color: var(--m-fg-0); }
-.m-conntest__help  { font-size: 11.5px; color: var(--m-fg-2); line-height: 1.45; }
+.metraly-conntest__head-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.metraly-conntest__title { font-size: 13px; font-weight: 600; color: var(--m-fg-0); }
+.metraly-conntest__help  { font-size: 11.5px; color: var(--m-fg-2); line-height: 1.45; }
 
-.m-conntest__meta {
+.metraly-conntest__meta {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -357,27 +357,27 @@
   flex-wrap: wrap;
 }
 
-.m-conntest__meta-row {
+.metraly-conntest__meta-row {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.m-conntest__meta-key {
+.metraly-conntest__meta-key {
   font-size: 10px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--m-fg-3);
 }
 
-.m-conntest__meta-val {
+.metraly-conntest__meta-val {
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-feature-settings: "tnum";
   font-size: 12px;
   color: var(--m-fg-0);
 }
 
-.m-conntest__checks {
+.metraly-conntest__checks {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -386,7 +386,7 @@
   gap: 2px;
 }
 
-.m-conntest__check {
+.metraly-conntest__check {
   display: grid;
   grid-template-columns: 12px 1fr auto auto;
   gap: 8px;
@@ -397,19 +397,19 @@
   border: 1px solid var(--m-line-faint);
 }
 
-.m-conntest__check-dot {
+.metraly-conntest__check-dot {
   width: 8px;
   height: 8px;
   border-radius: 999px;
   background: var(--m-fg-3);
 }
-.m-conntest__check-dot--ok   { background: var(--m-ok); }
-.m-conntest__check-dot--fail { background: var(--m-err); }
-.m-conntest__check-dot--skip { background: var(--m-fg-3); }
+.metraly-conntest__check-dot--ok   { background: var(--m-ok); }
+.metraly-conntest__check-dot--fail { background: var(--m-err); }
+.metraly-conntest__check-dot--skip { background: var(--m-fg-3); }
 
-.m-conntest__check-label { font-size: 12px; color: var(--m-fg-0); }
-.m-conntest__check-detail { font-size: 11.5px; color: var(--m-fg-2); }
-.m-conntest__check-result {
+.metraly-conntest__check-label { font-size: 12px; color: var(--m-fg-0); }
+.metraly-conntest__check-detail { font-size: 11.5px; color: var(--m-fg-2); }
+.metraly-conntest__check-result {
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-size: 10.5px;
   letter-spacing: 0.04em;
@@ -417,9 +417,9 @@
   color: var(--m-fg-3);
 }
 
-.m-conntest__footer { display: flex; justify-content: flex-end; }
+.metraly-conntest__footer { display: flex; justify-content: flex-end; }
 
-.m-conntest__btn {
+.metraly-conntest__btn {
   height: 30px;
   padding: 0 12px;
   border-radius: 6px;
@@ -430,29 +430,29 @@
   font-size: 12px;
   cursor: pointer;
 }
-.m-conntest__btn:hover { background: var(--m-bg-3); }
-.m-conntest__btn:focus-visible { outline: none; box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500)); }
+.metraly-conntest__btn:hover { background: var(--m-bg-3); }
+.metraly-conntest__btn:focus-visible { outline: none; box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500)); }
 
 /* ── SyncProgressPanel ───────────────────────────────────────────── */
 
-.m-sync { display: flex; flex-direction: column; gap: 10px; }
+.metraly-sync { display: flex; flex-direction: column; gap: 10px; }
 
-.m-sync__head {
+.metraly-sync__head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
 }
 
-.m-sync__head-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.m-sync__source-label { font-size: 13px; font-weight: 600; color: var(--m-fg-0); }
-.m-sync__source-id {
+.metraly-sync__head-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.metraly-sync__source-label { font-size: 13px; font-weight: 600; color: var(--m-fg-0); }
+.metraly-sync__source-id {
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-size: 10.5px;
   color: var(--m-fg-3);
 }
 
-.m-sync__progress {
+.metraly-sync__progress {
   position: relative;
   height: 4px;
   border-radius: 999px;
@@ -460,16 +460,16 @@
   overflow: hidden;
 }
 
-.m-sync__bar {
+.metraly-sync__bar {
   height: 100%;
   background: var(--m-cyan-500);
   transition: width 220ms ease;
 }
 
-.m-sync__bar--rate-limited { background: var(--m-warn); }
-.m-sync__bar--failed       { background: var(--m-err); }
+.metraly-sync__bar--rate-limited { background: var(--m-warn); }
+.metraly-sync__bar--failed       { background: var(--m-err); }
 
-.m-sync__bar--indeterminate {
+.metraly-sync__bar--indeterminate {
   width: 35% !important;
   background: linear-gradient(90deg,
     color-mix(in oklch, var(--m-cyan-500) 20%, var(--m-bg-3)),
@@ -485,11 +485,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .m-sync__bar { transition: none; }
-  .m-sync__bar--indeterminate { animation: none; opacity: 0.7; }
+  .metraly-sync__bar { transition: none; }
+  .metraly-sync__bar--indeterminate { animation: none; opacity: 0.7; }
 }
 
-.m-sync__progress-sr {
+.metraly-sync__progress-sr {
   position: absolute;
   width: 1px; height: 1px;
   padding: 0; margin: -1px;
@@ -499,7 +499,7 @@
   border: 0;
 }
 
-.m-sync__meta {
+.metraly-sync__meta {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -508,24 +508,24 @@
   gap: 8px 16px;
 }
 
-.m-sync__meta-row { display: flex; flex-direction: column; gap: 2px; }
-.m-sync__meta-key {
+.metraly-sync__meta-row { display: flex; flex-direction: column; gap: 2px; }
+.metraly-sync__meta-key {
   font-size: 10px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--m-fg-3);
 }
-.m-sync__meta-val {
+.metraly-sync__meta-val {
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-feature-settings: "tnum";
   font-size: 12px;
   color: var(--m-fg-0);
 }
-.m-sync__meta-val-est { color: var(--m-fg-3); }
+.metraly-sync__meta-val-est { color: var(--m-fg-3); }
 
-.m-sync__footer { display: flex; justify-content: flex-end; gap: 6px; }
+.metraly-sync__footer { display: flex; justify-content: flex-end; gap: 6px; }
 
-.m-sync__btn {
+.metraly-sync__btn {
   height: 30px;
   padding: 0 12px;
   border-radius: 6px;
@@ -536,33 +536,29 @@
   font-size: 12px;
   cursor: pointer;
 }
-.m-sync__btn:hover { background: var(--m-bg-3); }
-.m-sync__btn--ghost { background: transparent; }
-.m-sync__btn--primary {
+.metraly-sync__btn:hover { background: var(--m-bg-3); }
+.metraly-sync__btn--ghost { background: transparent; }
+.metraly-sync__btn--primary {
   background: color-mix(in oklch, var(--m-cyan-500) 18%, transparent);
   border-color: color-mix(in oklch, var(--m-cyan-500) 50%, transparent);
   color: var(--m-cyan-500);
 }
-.m-sync__btn:focus-visible { outline: none; box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500)); }
+.metraly-sync__btn:focus-visible { outline: none; box-shadow: var(--m-glow-focus, 0 0 0 2px var(--m-cyan-500)); }
 
 /* ── visual stabilization ─────────────────────────────────────────── */
-.m-token,
-.m-perm,
-.m-backfill,
-.m-connection-test,
-.m-sync-progress {
+.metraly-token,
+.metraly-perm,
+.metraly-backfill,
+.metraly-conntest,
+.metraly-sync {
   max-width: 760px;
 }
 
-.m-backfill__row {
+.metraly-backfill__row {
   align-items: stretch;
 }
 
-.m-backfill__presets {
+.metraly-backfill__presets {
   max-width: 100%;
   overflow-x: auto;
-}
-.m-conntest,
-.m-sync {
-  max-width: 760px;
 }
