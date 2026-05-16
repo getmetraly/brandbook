@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import { TokenInput } from "../../packages/ui/src/source/TokenInput";
+import { MetralyStoryFrame } from "../_shared/MetralyStoryFrame";
 
 const meta: Meta<typeof TokenInput> = {
   title: "Source/TokenInput",
@@ -111,4 +112,28 @@ export const WebhookSecret: Story = {
     kind: "webhook-secret",
     helper: "Shared secret used to verify signatures on inbound webhooks.",
   },
+};
+
+export const ProductPreview: Story = {
+  name: "Product Preview",
+  parameters: { layout: "padded" },
+  render: () => (
+    <MetralyStoryFrame
+      category="Source"
+      title="TokenInput"
+      description="Credential entry primitive. Token is masked once committed; only a preview remains. Drafts may be revealed for verification, but reveal closes on blur."
+      status="Ready"
+      tags={["token", "credential", "PAT", "secret", "masked"]}
+    >
+      <TokenInput
+        label="GitHub PAT"
+        kind="github-pat"
+        committed={true}
+        maskedPreview="ghp_••••••••abcd"
+        validation="valid"
+        onReplace={() => {}}
+        onClear={() => {}}
+      />
+    </MetralyStoryFrame>
+  ),
 };

@@ -3,6 +3,7 @@ import * as React from "react";
 import { ActivityFeed, type ActivityItem } from "../../packages/ui/src/components/ActivityFeed";
 import { ActivityWidgetExample } from "../../packages/ui/src/dashboard/DashboardWidgetExamples";
 import { WidgetStateMatrix } from "../../packages/ui/src/components/WidgetStateMatrix";
+import { MetralyStoryFrame } from "../_shared/MetralyStoryFrame";
 
 const meta: Meta<typeof ActivityFeed> = {
   title: "Components/ActivityFeed",
@@ -149,5 +150,26 @@ export const FullStateMatrix: Story = {
         />
       )}
     />
+  ),
+};
+
+export const ProductPreview: Story = {
+  name: "Product Preview",
+  parameters: { layout: "padded" },
+  render: () => (
+    <MetralyStoryFrame
+      category="Components"
+      title="ActivityFeed"
+      description="Chronological event feed that surfaces deploys, alerts, and CI signals across all connected sources."
+      status="Ready"
+      tags={["feed", "events", "timeline", "monitoring"]}
+    >
+      <ActivityFeed
+        items={ITEMS}
+        mode="feed"
+        title="Recent activity"
+        description="All sources"
+      />
+    </MetralyStoryFrame>
   ),
 };

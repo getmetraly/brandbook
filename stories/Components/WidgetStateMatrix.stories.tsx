@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import { WidgetStateMatrix } from "../../packages/ui/src/components/WidgetStateMatrix";
 import { MetralyGauge } from "../../packages/ui/src/charts/MetralyGauge";
+import { MetralyStoryFrame } from "../_shared/MetralyStoryFrame";
 
 const meta: Meta<typeof WidgetStateMatrix> = {
   title: "Components/WidgetStateMatrix",
@@ -58,5 +59,39 @@ export const ThreeColumnLayout: Story = {
         />
       )}
     />
+  ),
+};
+
+export const ProductPreview: Story = {
+  name: "Product Preview",
+  parameters: { layout: "padded" },
+  render: () => (
+    <MetralyStoryFrame
+      category="Components"
+      title="WidgetStateMatrix"
+      description="Documentation utility that renders any widget-capable component under every WidgetState status in a uniform grid."
+      status="Ready"
+      tags={["testing", "states", "matrix", "documentation"]}
+    >
+      <WidgetStateMatrix
+        title="MetralyGauge — state coverage"
+        description="Lead time score · same data, every state."
+        columns={4}
+        render={(s) => (
+          <MetralyGauge
+            label="Lead time score"
+            value={s === "ready" || s === "partial" || s === "stale" ? 78 : undefined}
+            unit="%"
+            variant="compact"
+            state={s}
+            thresholds={[
+              { value: 0, tone: "danger" },
+              { value: 60, tone: "warning" },
+              { value: 80, tone: "success" },
+            ]}
+          />
+        )}
+      />
+    </MetralyStoryFrame>
   ),
 };

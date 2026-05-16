@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import { PermissionExplainer, type PermissionScope } from "../../packages/ui/src/source/PermissionExplainer";
+import { MetralyStoryFrame } from "../_shared/MetralyStoryFrame";
 
 const meta: Meta<typeof PermissionExplainer> = {
   title: "Source/PermissionExplainer",
@@ -84,4 +85,24 @@ const JIRA_SCOPES: PermissionScope[] = [
 
 export const JiraMixed: Story = {
   args: { title: "Jira permissions", scopes: JIRA_SCOPES },
+};
+
+export const ProductPreview: Story = {
+  name: "Product Preview",
+  parameters: { layout: "padded" },
+  render: () => (
+    <MetralyStoryFrame
+      category="Source"
+      title="PermissionExplainer"
+      description="Audits the OAuth scopes on a stored token — surfaces missing required scopes, extra scopes, and which metrics each scope unlocks."
+      status="Ready"
+      tags={["permissions", "scopes", "OAuth", "audit", "GitHub"]}
+    >
+      <PermissionExplainer
+        title="GitHub permissions"
+        description="Audit of the token currently configured for github · acme"
+        scopes={GITHUB_SCOPES}
+      />
+    </MetralyStoryFrame>
+  ),
 };

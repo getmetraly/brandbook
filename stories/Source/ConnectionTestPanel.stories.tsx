@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import { ConnectionTestPanel } from "../../packages/ui/src/source/ConnectionTestPanel";
+import { MetralyStoryFrame } from "../_shared/MetralyStoryFrame";
 
 const meta: Meta<typeof ConnectionTestPanel> = {
   title: "Source/ConnectionTestPanel",
@@ -93,4 +94,26 @@ export const Degraded: Story = {
       { id: "history",  label: "Historical events",        result: "fail", detail: "Only last 30 days available on this plan" },
     ],
   },
+};
+
+export const ProductPreview: Story = {
+  name: "Product Preview",
+  parameters: { layout: "padded" },
+  render: () => (
+    <MetralyStoryFrame
+      category="Source"
+      title="ConnectionTestPanel"
+      description="Runs a suite of connectivity checks against a configured source and surfaces the result — auth, scopes, rate-limit window, and egress — with per-check status."
+      status="Ready"
+      tags={["connection", "test", "health", "checks", "source"]}
+    >
+      <ConnectionTestPanel
+        status="ready"
+        lastTestedAt="2026-05-15T10:42:00Z"
+        latencyMs={218}
+        checks={READY_CHECKS}
+        onRetry={() => {}}
+      />
+    </MetralyStoryFrame>
+  ),
 };

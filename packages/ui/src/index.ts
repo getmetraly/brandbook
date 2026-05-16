@@ -329,3 +329,44 @@ export type {
   DashboardWizardStep,
   DashboardWizardStepId,
 } from "./dashboard/DashboardWizardSplitBuilder";
+
+// ── App Kit (screen-level composition components) ────────────────────────────
+export {
+  AppSidebar,
+} from "./app-kit/AppSidebar";
+export type {
+  AppSidebarProps,
+  AppSidebarNavItem,
+  AppSidebarNavSection,
+  AppSidebarUser,
+} from "./app-kit/AppSidebar";
+
+export { AppTopbar } from "./app-kit/AppTopbar";
+export type { AppTopbarProps } from "./app-kit/AppTopbar";
+
+export { AppWidget, AppSparkline, AppMetric, AppMetricDelta } from "./app-kit/AppWidget";
+export type {
+  AppWidgetProps,
+  AppWidgetHealth,
+  AppSparklineProps,
+  AppMetricProps,
+  AppMetricDeltaProps,
+} from "./app-kit/AppWidget";
+
+export { AppMetricStrip } from "./app-kit/AppMetricStrip";
+export type { AppMetricStripProps, AppMetricStripItem } from "./app-kit/AppMetricStrip";
+
+export { AppDashboardScreen } from "./app-kit/AppDashboardScreen";
+export type { AppDashboardScreenProps } from "./app-kit/AppDashboardScreen";
+
+export { AppAIWorkspaceScreen } from "./app-kit/AppAIWorkspaceScreen";
+export type { AppAIWorkspaceScreenProps } from "./app-kit/AppAIWorkspaceScreen";
+
+export { AppPluginsScreen } from "./app-kit/AppPluginsScreen";
+export type { AppPluginsScreenProps, PluginsScreenPlugin } from "./app-kit/AppPluginsScreen";
+
+export { AppConnectorWizardScreen } from "./app-kit/AppConnectorWizardScreen";
+export type { AppConnectorWizardScreenProps } from "./app-kit/AppConnectorWizardScreen";
+
+export { AppIconLibrary } from "./app-kit/AppIconLibrary";
+export type { AppIconLibraryProps } from "./app-kit/AppIconLibrary";

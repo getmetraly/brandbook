@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
+import { MetralyStoryFrame } from "../_shared/MetralyStoryFrame";
 import {
   DashboardWizardSplitBuilder,
   type DashboardWizardStepId,
@@ -217,3 +218,54 @@ function prev(a: DashboardWizardStepId): DashboardWizardStepId {
   const i = order.indexOf(a);
   return order[Math.max(0, i - 1)];
 }
+
+export const ProductPreview: Story = {
+  name: "Product Preview",
+  parameters: { layout: "padded" },
+  render: () => (
+    <MetralyStoryFrame
+      category="Dashboard"
+      title="DashboardWizardSplitBuilder"
+      description="Split-pane wizard for creating dashboards — step rail on the left, step body in the center, live preview on the right. Supports locked steps, error states, and a sticky footer for navigation."
+      status="Ready"
+      tags={["dashboard", "wizard", "split", "builder", "onboarding"]}
+    >
+      <div style={{ minHeight: 560 }}>
+        <DashboardWizardSplitBuilder
+          steps={STEPS_BASE.map((s, i) => ({ ...s, complete: i < 2 }))}
+          activeStepId="template"
+          onSelectStep={() => {}}
+          stepBody={
+            <div style={{ display: "grid", gap: 10 }}>
+              <span style={{ fontSize: 13, color: "var(--m-fg-0)", fontWeight: 600 }}>Pick a template</span>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 6 }}>
+                {["DORA overview", "Source health board", "Sprint burndown", "Incident heatmap"].map((t, i) => (
+                  <li key={t}>
+                    <button
+                      type="button"
+                      style={{
+                        width: "100%", padding: "8px 10px", borderRadius: 8,
+                        border: "1px solid var(--m-line)",
+                        background: i === 0 ? "color-mix(in srgb, var(--m-cyan-500) 14%, var(--m-bg-2))" : "var(--m-bg-2)",
+                        color: "var(--m-fg-0)", fontFamily: "inherit", textAlign: "left", cursor: "pointer",
+                      }}
+                    >
+                      {t}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          }
+          preview={<PreviewDORA />}
+          footer={
+            <>
+              <button type="button" style={btn()}>Back</button>
+              <button type="button" style={btn("primary")}>Continue</button>
+            </>
+          }
+        />
+      </div>
+    </MetralyStoryFrame>
+  ),
+};

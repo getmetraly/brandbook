@@ -3,6 +3,7 @@ import * as React from "react";
 import { StateBoard, type StateBoardItem } from "../../packages/ui/src/components/StateBoard";
 import { StateBoardWidgetExample } from "../../packages/ui/src/dashboard/DashboardWidgetExamples";
 import { WidgetStateMatrix } from "../../packages/ui/src/components/WidgetStateMatrix";
+import { MetralyStoryFrame } from "../_shared/MetralyStoryFrame";
 
 const meta: Meta<typeof StateBoard> = {
   title: "Components/StateBoard",
@@ -95,5 +96,21 @@ export const FullStateMatrix: Story = {
         />
       )}
     />
+  ),
+};
+
+export const ProductPreview: Story = {
+  name: "Product Preview",
+  parameters: { layout: "padded" },
+  render: () => (
+    <MetralyStoryFrame
+      category="Components"
+      title="StateBoard"
+      description="Grid or list board that renders labelled status indicators for sources, services, or plugin runtimes at a glance."
+      status="Ready"
+      tags={["status", "health", "grid", "monitoring"]}
+    >
+      <StateBoard title="Source health" items={SOURCE_HEALTH} variant="grid" />
+    </MetralyStoryFrame>
   ),
 };
