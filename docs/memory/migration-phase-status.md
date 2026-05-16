@@ -302,3 +302,135 @@ Remaining risks:
 - raw-color cleanup still remains in product feature screens (`App.tsx`, `PluginScreen.tsx`, charts, and metrics panels);
 - AI/Plugins component implementation remains deferred to Phase 9;
 - visual/a11y coverage should expand as more real screens migrate onto the compat barrel.
+
+## 2026-05-15 — Phase 3 compat continuation + P2-1/P2-2/P2-3 resolution
+
+Status: Phase 3 extended; P2-1, P2-2, P2-3 closed.
+
+Done:
+
+- **StatCardCompat → MetralyMetricCard** (Phase 3 compat):
+  - `brandbook-legacy.ts` now exports a real `StatCardCompat` function that wraps `MetralyMetricCard` from `@metraly/ui`.
+  - Prop mapping: `label`→`title`, `sub`→`description`, `color`→`variant` (LegacyColorKey→MetralyMetricCardVariant), trend→`TrendBadge` in `footer`.
+  - `widgetRegistry.tsx` now imports `StatCardCompat as StatCard` and `Leaderboard` from the compat barrel instead of local `components/ui/`.
+  - `MetricsScreen.tsx` now imports `Leaderboard` from the compat barrel instead of local `components/ui/`.
+  - `StatCard.tsx` is no longer imported anywhere outside its own file; production bundle no longer includes it.
+- **P2-1 (JS file duplication)**: Verified closed — no `.js`/`.jsx` files remain in `src/`. All modules are `.ts`/`.tsx`. Concern was pre-emptive; prior sessions already converted all files.
+- **P2-2 (Types duplication)**: Verified closed — `types/api.ts` and `types/widgets.ts` are the single canonical locations; `api/types/` does not exist. `api/client.ts` imports FROM `types/api.ts` with no duplication.
+- **P2-3 (DraggableTweaksPanel production bundle)** (COMPLETED):
+  - `DraggableTweaksPanel` rendering was already gated with `{import.meta.env.DEV && <DraggableTweaksPanel />}`.
+  - `TweaksProvider` now also gated: `return import.meta.env.DEV ? <TweaksProvider>{shell}</TweaksProvider> : shell`.
+  - Production bundle (`npm run build`) verified: neither `DraggableTweaksPanel` nor `TweaksProvider` appear in `dist/assets/*.js`.
+- **DashboardScreen.tsx raw colors** (partial cleanup):
+  - All `rgba(0,229,255,...)` occurrences replaced with `color-mix(in srgb, var(--cyan) X%, transparent)`.
+  - All `rgba(255,82,82,...)` occurrences replaced with `color-mix(in srgb, var(--error) X%, transparent)`.
+  - `#FF8A8A` replaced with `var(--error)`.
+  - Remaining raw colors in other feature screens (`PluginScreen.tsx`, `MetricsScreen.tsx`, `DashboardWizardScreen.tsx`, `AIScreen.tsx`) are tracked as non-blocking — they need full screen-level migration, not spot fixes.
+- Validation: `npm run typecheck` passes (0 errors), `npm run build` passes, `npm run test` passes (28/28).
+
+Next:
+
+- Continue Phase 3: migrate `Widget.tsx` → `DashboardWidget` from `@metraly/ui` via compat barrel.
+- Raw color cleanup in remaining feature screens (`PluginScreen.tsx`, `MetricsScreen.tsx`, `DashboardWizardScreen.tsx`).
+- **P2-4 (AI/Plugins/Trust components)**: Deferred to Phase 9 — tracked in `docs/migration/ai-plugin-component-spec.md`.
+- Add `@metraly/ui` `TrendBadge` import to `brandbook-legacy.ts` test coverage.
+
+## 2026-05-15 — Phase 3: WidgetCompat + raw color sweep
+
+Status: Phase 3 extended; raw color sweep completed across all major feature screens.
+
+Done:
+
+- **WidgetCompat → DashboardWidget** (Phase 3 compat):
+  - `brandbook-legacy.ts`: replaced dead `export { Widget as WidgetCompat }` with a real `WidgetCompat` function that forwards to `DashboardWidget` from `@metraly/ui`.
+  - Accepts full `DashboardWidgetProps` subset: `id, title, subtitle, state, selected, dragging, resizing, resizable, loading, fullWidth, children, footer, stateTitle, stateDescription, stateAction, className, onSelect, onRemove, onDragStart`.
+  - Local `Widget.tsx` (which depended on `TweaksContext`) is no longer imported by anything; production bundle excludes it.
+- **Raw color sweep** — all 4 target files now use CSS token vars:
+  - `DraggableDashboardRenderer.tsx`: `rgba(0,229,255,...)` → `color-mix(in srgb, var(--cyan) N%, transparent)`.
+  - `PluginScreen.tsx`: filter buttons, installed badge, install button — all cleaned.
+  - `MetricsScreen.tsx`: timeRange/compareMode/chartType controls, delta indicators, formula box, breakdown buttons — all cleaned.
+  - `DashboardWizardScreen.tsx`: step dots, category filters, time range, widget size toggles, save button, error color — all cleaned.
+  - Preserved: white overlays `rgba(255,255,255,A)`, app bg `rgba(11,15,25,A)`, pure black shadows, third-party brand colors in data arrays, `#0B0F19` icon contrast.
+- Validation: `npm run typecheck` (0 errors), `npm run build` (406 KB bundle, 0 errors), `npm run test` (28/28 passed).
+
+Remaining raw color work:
+
+- `AIScreen.tsx` — inline `linear-gradient(rgba(...))` values.
+- `WizardScreen.tsx` — onboarding wizard inline styles.
+- `BreakdownTable.tsx` — delta color indicators.
+- Charts (`AreaChart.tsx`, `BarChart.tsx`, etc.) — recharts stroke/fill colors (low priority; chart colors are data-driven).
+
+Next:
+
+- Migrate `DashboardRenderer.tsx` / `DraggableDashboardRenderer.tsx` grid shell to use `DashboardGrid` from `@metraly/ui`.
+- Clean remaining raw colors in `AIScreen.tsx` and `WizardScreen.tsx`.
+- Phase 4: `SidebarCompat` / `TopbarCompat` → upstream `MetralySidebar` / `MetralyTopbar` (requires design QA).
+
+## 2026-05-15 — Tasks 1+2+3: final raw color sweep + DashboardGrid compat + TrendBadge tests
+
+Status: All three tracks complete.
+
+Done:
+
+- **Raw color sweep — final batch**:
+  - `AIScreen.tsx`: 2× gradient strings + 2× purple border + 1× hover handler → `color-mix()`.
+  - `WizardScreen.tsx`: 14 occurrences across StepIndicator, SourceSelectionStep, AuthenticateStep, ReviewStep, OnboardingChecklist, and main WizardScreen render — cyan (6), purple (4), success (4) → `color-mix()`.
+  - `BreakdownTable.tsx`: `#00C853` → `var(--success)`, `#FF9100` → `var(--warning)` in delta indicator.
+  - Preserved: `rgba(255,255,255,...)` white overlays, `rgba(0,0,0,...)` black, `rgba(11,15,25,...)` app bg, `${src.color}` connector brand template literals.
+- **DashboardGrid compat swap** (Phase 3 complete):
+  - `src/index.tsx`: added `import '@metraly/ui/styles/metraly-dashboard.css'` to cover `metraly-dashboard-grid` CSS classes.
+  - `brandbook-legacy.ts`: exports `DashboardGrid` and `DashboardGridProps` direct from `@metraly/ui`.
+  - `DashboardRendererCompat` implemented: maps `dashboard.widgets` → `DashboardGrid` via `instanceId → id` bridge; uses local `widgetRegistry` for widget lookup; type-safe via `DashboardGridWidget = DashboardWidgetInstance & { id: string }` + concrete cast `ConcreteDashboardGrid`.
+  - `DraggableDashboardRenderer` still re-exported (no brandbook drag equivalent yet — Phase 4).
+  - Local `DashboardRenderer.tsx` is now superseded by `DashboardRendererCompat` in the compat barrel.
+- **TrendBadge test coverage** (2 new tests in `brandbook-legacy.test.tsx`):
+  - `StatCardCompat` with `trend`/`trendDir="up"` — verifies TrendBadge value visible + a11y.
+  - `StatCardCompat` without trend — verifies title renders + a11y.
+  - Total tests: 30/30 (was 28/28).
+- Validation: `npm run typecheck` (0 errors), `npm run build` (0 errors), `npm run test` (30/30).
+
+Remaining raw color work:
+
+- Charts (`AreaChart.tsx`, `BarChart.tsx`, etc.) — recharts stroke/fill colors (low priority; chart colors are data-driven, not semantic).
+
+Next:
+
+- Phase 4: `SidebarCompat`/`TopbarCompat` → `MetralySidebar`/`MetralyTopbar` (requires design QA).
+- Wire `DashboardScreen.tsx` to use `DashboardRendererCompat` instead of local `DashboardRenderer`.
+- P2-4 (Phase 9): implement AI/Plugins/Trust components in Brandbook.
+
+## 2026-05-15 — Phase 3 cutover, Phase 4 complete, P2-4 / Phase 9 complete
+
+Status: All three tracks complete. Typecheck 0 errors both repos. 30/30 tests.
+
+### Track 1 — DashboardScreen cutover
+- `DashboardScreen.tsx`: import changed from local `DashboardRenderer` → `DashboardRendererCompat as DashboardRenderer` from `../../design-system`.
+- Local `DashboardRenderer.tsx` is now unused by all product screens (Phase 3 cutover complete).
+
+### Track 2 — Phase 4: SidebarCompat / TopbarCompat → brandbook
+- **`src/design-system/compat/SidebarCompat.tsx`** (new): full adapter using `MetralySidebar` + `MetralySidebarSection` + `MetralySidebarItem`. Keeps all app business logic: localStorage pinning, density-aware (from `useTweaks`), collapsed state, sections/items map, accent "New Dashboard" item, "NEW" badge on AI Workspace. No raw colors.
+- **`src/design-system/compat/TopbarCompat.tsx`** (new): wraps `MetralyTopbar` with density from `useTweaks`. Search box and notification bell in `actions` slot.
+- **`brandbook-legacy.ts`**: old `export { Sidebar as SidebarCompat }` and `export { Topbar as TopbarCompat }` re-exports replaced with `export { SidebarCompat } from "./SidebarCompat"` and `export { TopbarCompat } from "./TopbarCompat"`.
+- **`src/index.tsx`**: added 13 missing brandbook CSS imports (`metraly-shell.css`, `metraly-card.css`, `metraly-metric-card.css`, `metraly-trend-badge.css`, `metraly-button.css`, `metraly-input.css`, `metraly-forms.css`, `metraly-wizard.css`, `metraly-widget-picker.css`, `metraly-pulse-marker.css`, `metraly-badge.css`, `metraly-skeleton.css`, `metraly-widget-shell.css`).
+- **Pending design QA**: `App.tsx` still imports from `./components/layout/Sidebar` and `./components/layout/Topbar` directly. Switching it to the compat barrel requires visual sign-off.
+
+### Track 3 — P2-4 / Phase 9: AI/Plugin components in brandbook
+
+**8 new components in `packages/ui/src/components/`**:
+- `PermissionBadge` — maps `read-only/write/admin` level to `StateBadge` ok/warning/error.
+- `SigningBanner` — `CardShell` surface with tone+icon per `verified/unverified/community` status.
+- `AnswerCard` — `CardShell` wrapping AI reply text, optional evidence chips (label+value+TrendBadge), "Show reasoning" link, loading state via 3× `PulseMarker`.
+- `EvidencePanel` — `CardShell` with metric citation grid; empty state via `StateBlock`.
+- `TraceDrawer` — `MetralyDrawer` (right, min(480px,100vw)) wrapping `StepRail orientation="vertical"`; maps `pending→next`, `running→current`, `done→done`, `error→warning`.
+- `AIWorkspaceLayout` — full-height flex column chat UI: messages area (user bubbles + `AnswerCard` for assistant), sticky input bar with `MetralyInput` + `MetralyButton` + sparkles indicator, quick-prompt chips, disclaimer. Respects `prefers-reduced-motion`.
+- `PluginCatalog` — search (`MetralyInput`) + category filter buttons + responsive grid of `CardShell` plugin cards with `StateBadge` (installed/preview) + Install/Review/Manage CTAs via `MetralyButton`. Empty state via `StateBlock variant="no-results"`.
+- `PluginReviewDrawer` — `MetralyDrawer` (right, min(440px,100vw)) with plugin summary, `PermissionBadge` (max-risk), `SigningBanner`, `ReviewPanel` of permission rows, `StickyWizardFooter` with Cancel+Install.
+
+All exported from `packages/ui/src/index.ts` and re-exported from `brandbook-legacy.ts`.
+
+Build: 408.56 kB JS / 96.12 kB CSS (gzip: 119.19 kB / 15.20 kB). CSS growth due to all 18 brandbook stylesheets now loaded.
+
+### Remaining migration work
+- **App.tsx shell wiring**: switch `import { Sidebar }` → `import { SidebarCompat }` (design QA required).
+- **Phase 5**: `DashboardScreen` and `ConnectorScreen` local screen logic → brandbook patterns (after design QA).
+- **Local dead code**: `src/components/layout/Sidebar.tsx`, `src/components/layout/Topbar.tsx`, `src/components/dashboard/DashboardRenderer.tsx`, `src/components/ui/StatCard.tsx`, `src/components/ui/Leaderboard.tsx` — safe to delete after App.tsx wiring and Phase 5.
