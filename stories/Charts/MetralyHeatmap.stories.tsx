@@ -77,6 +77,20 @@ const deployCells = genCells(WEEKDAYS, HOURS, 7, (r, c) => {
   return dayWeight + hourWeight;
 });
 
+const deployTooltipCells: MetralyHeatmapCell[] = deployCells.map((cell) => ({
+  ...cell,
+  description:
+    cell.value === 0
+      ? "No production deploys in this 2-hour bucket"
+      : `${cell.value} production deploys landed in this bucket`,
+  labels: {
+    source: "deploy-events",
+    environment: "prod",
+    window: "2h",
+    weekday: cell.y,
+  },
+}));
+
 // ── deploy activity ────────────────────────────────────────────────────────
 
 export const DeployActivity: Story = {
@@ -86,7 +100,7 @@ export const DeployActivity: Story = {
       "Last 28 days · production deploys by weekday and 2-hour bucket",
     xLabels: HOURS,
     yLabels: WEEKDAYS,
-    cells: deployCells,
+    cells: deployTooltipCells,
     unit: "deploys",
     ariaLabel: "Deploy activity by weekday and 2-hour bucket",
     colorScale: { min: 0, max: 16, ramp: "cyan" },
@@ -105,6 +119,23 @@ export const ColorRampSystem: Story = {
         unit="deploys"
         colorScale={{ min: 0, max: 16, ramp: "cyan" }}
         ariaLabel="Deploy activity heatmap with cyan intensity ramp"
+      />
+    </HeatmapShowcase>
+  ),
+};
+
+export const TooltipDetails: Story = {
+  render: () => (
+    <HeatmapShowcase>
+      <MetralyHeatmap
+        title="Deploy activity — tooltip details"
+        description="Hover or keyboard-focus a cell to inspect value, status and labels"
+        xLabels={HOURS}
+        yLabels={WEEKDAYS}
+        cells={deployTooltipCells}
+        unit="deploys"
+        colorScale={{ min: 0, max: 16, ramp: "cyan" }}
+        ariaLabel="Deploy activity heatmap with cell tooltips"
       />
     </HeatmapShowcase>
   ),
@@ -186,6 +217,7 @@ const incidentCells: MetralyHeatmapCell[] = (() => {
           v === 0
             ? "no incidents this window"
             : `${v} ${sev} incidents in 30 d`,
+        labels: { service: svc, severity: sev, window: "30d" },
       });
     });
   });
@@ -331,6 +363,7 @@ const syncCells: MetralyHeatmapCell[] = (() => {
                 : "warning",
         description:
           v === null ? "no data" : v === 0 ? "no gap" : `${v} min gap`,
+        labels: { source: s, day: d, sla: "≤ 5 min", status: v === null ? "missing" : v === 0 ? "healthy" : "gap" },
       });
     });
   });
