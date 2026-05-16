@@ -67,6 +67,15 @@
   --m-r-4: 10px;
   --m-r-5: 14px;
 
+  /* Semantic radius aliases — used by wizard.css and Phase 1 component CSS.
+     --m-radius-* bridges the short-form --m-r-* tokens to semantic names
+     so component authors can pick sm/md without memorising step numbers. */
+  --m-radius-sm: var(--m-r-2);   /* 5px  — chips, icon frames, small interactive */
+  --m-radius-md: var(--m-r-3);   /* 7px  — panels, notice boxes, review items */
+
+  /* 22px step — between --m-fs-20 and --m-fs-24, used by large metric displays */
+  --m-fs-22: 22px;
+
   --m-glow-focus: 0 0 0 1px var(--m-cyan-500), 0 0 0 4px var(--m-cyan-glow);
   --m-glow-selected: 0 0 0 1px var(--m-cyan-500), 0 0 12px -2px var(--m-cyan-glow);
   --m-glow-purple: 0 0 0 1px var(--m-purple-500), 0 0 12px -2px var(--m-purple-glow);
@@ -144,7 +153,8 @@
 
 
 /* Defensive layout baseline for every package surface.
-   Components must fit their parent without relying on Storybook wrappers. */
+   Components must fit their parent without relying on Storybook wrappers.
+   Covers both naming conventions: legacy `metraly-*` and short-form `m-*`. */
 .metraly-theme,
 .metraly-theme *,
 .metraly-theme *::before,
@@ -154,12 +164,20 @@
 [class^="metraly-"]::after,
 [class*=" metraly-"],
 [class*=" metraly-"]::before,
-[class*=" metraly-"]::after {
+[class*=" metraly-"]::after,
+[class^="m-"],
+[class^="m-"]::before,
+[class^="m-"]::after,
+[class*=" m-"],
+[class*=" m-"]::before,
+[class*=" m-"]::after {
   box-sizing: border-box;
 }
 
 [class^="metraly-"],
-[class*=" metraly-"] {
+[class*=" metraly-"],
+[class^="m-"],
+[class*=" m-"] {
   min-width: 0;
 }
 

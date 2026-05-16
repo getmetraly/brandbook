@@ -10,6 +10,9 @@ import { HeatmapWidgetExample } from "../../packages/ui/src/dashboard/DashboardW
 const meta: Meta<typeof MetralyHeatmap> = {
   title: "Charts/MetralyHeatmap",
   component: MetralyHeatmap,
+  decorators: [
+    (Story) => React.createElement("div", { style: { maxWidth: 880 } }, React.createElement(Story)),
+  ],
   parameters: {
     layout: "padded",
     docs: {

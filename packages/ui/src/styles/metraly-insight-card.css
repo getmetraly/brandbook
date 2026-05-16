@@ -22,7 +22,7 @@
 .m-insight__head-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 
 .m-insight__title {
-  font-size: 13.5px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--m-fg-0);
   letter-spacing: -0.005em;

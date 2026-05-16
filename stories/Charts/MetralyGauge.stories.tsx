@@ -11,6 +11,9 @@ import { GaugeWidgetExample } from "../../packages/ui/src/dashboard/DashboardWid
 const meta: Meta<typeof MetralyGauge> = {
   title: "Charts/MetralyGauge",
   component: MetralyGauge,
+  decorators: [
+    (Story) => React.createElement("div", { style: { maxWidth: 720 } }, React.createElement(Story)),
+  ],
   parameters: {
     layout: "padded",
     docs: {
