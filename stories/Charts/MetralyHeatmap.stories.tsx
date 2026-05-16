@@ -20,6 +20,10 @@ const meta: Meta<typeof MetralyHeatmap> = {
 export default meta;
 type Story = StoryObj<typeof MetralyHeatmap>;
 
+function HeatmapShowcase({ children, width = 880 }: { children: React.ReactNode; width?: number }) {
+  return <div style={{ maxWidth: width }}>{children}</div>;
+}
+
 // ── realistic fixtures ─────────────────────────────────────────────────────
 
 const HOURS = ["00", "02", "04", "06", "08", "10", "12", "14", "16", "18", "20", "22"];
@@ -53,7 +57,26 @@ export const DeployActivity: Story = {
     yLabels: WEEKDAYS,
     cells: deployCells,
     unit: "deploys",
+    ariaLabel: "Deploy activity by weekday and 2-hour bucket",
+    colorScale: { min: 0, max: 16 },
   },
+};
+
+export const SparseDeployActivity: Story = {
+  render: () => (
+    <HeatmapShowcase>
+      <MetralyHeatmap
+        title="Sparse deploy activity"
+        description="Sparse cells stay compact and do not stretch to fill the full canvas"
+        xLabels={HOURS}
+        yLabels={WEEKDAYS}
+        cells={deployCells.filter((cell) => cell.value !== null && cell.value > 8)}
+        unit="deploys"
+        colorScale={{ min: 0, max: 16 }}
+        ariaLabel="Sparse deploy activity heatmap"
+      />
+    </HeatmapShowcase>
+  ),
 };
 
 // ── incidents by service / severity ────────────────────────────────────────
@@ -92,6 +115,8 @@ export const IncidentHeatmap: Story = {
     yLabels: SERVICES,
     cells: incidentCells,
     unit: "incidents",
+    ariaLabel: "Incidents by service and severity",
+    colorScale: { min: 0, max: 8 },
   },
 };
 
@@ -111,6 +136,8 @@ export const PRAgingByTeam: Story = {
     yLabels: TEAMS,
     cells: prAgingCells,
     unit: "h",
+    ariaLabel: "Median PR age by team and week",
+    colorScale: { min: 0, max: 24 },
   },
 };
 
@@ -130,6 +157,8 @@ export const FlakyTestsBySuite: Story = {
     yLabels: SUITES,
     cells: flakyCells,
     unit: "flakes",
+    ariaLabel: "Flaky tests by suite and weekday",
+    colorScale: { min: 0, max: 14 },
   },
 };
 
@@ -167,6 +196,8 @@ export const ConnectorSyncGaps: Story = {
     yLabels: SOURCES,
     cells: syncCells,
     unit: "min",
+    ariaLabel: "Connector sync gaps by source and day",
+    colorScale: { min: 0, max: 35 },
   },
 };
 
@@ -183,11 +214,41 @@ export const CompactDashboardWidget: Story = {
           yLabels: WEEKDAYS,
           cells: deployCells,
           unit: "deploys",
+          density: "dashboard",
+          colorScale: { min: 0, max: 16 },
+          ariaLabel: "Compact dashboard deploy activity heatmap",
         }}
         onDrilldown={() => {}}
       />
     </div>
   ),
+};
+
+// ── keyboard focus + drilldown ────────────────────────────────────────────
+
+export const SelectedCellDrilldown: Story = {
+  render: () => {
+    const [selected, setSelected] = React.useState<string>("No cell selected yet");
+    return (
+      <HeatmapShowcase>
+        <MetralyHeatmap
+          title="Connector sync gaps"
+          description="Use Tab, arrow keys, Enter or click to inspect a cell"
+          xLabels={SYNC_DAYS}
+          yLabels={SOURCES}
+          cells={syncCells}
+          unit="min"
+          colorScale={{ min: 0, max: 35 }}
+          ariaLabel="Interactive connector sync gaps heatmap"
+          onCellFocus={(cell) => setSelected(cell ? `Focused ${cell.y} · ${cell.x}` : "No cell focused")}
+          onCellActivate={(cell) => setSelected(`Open drilldown for ${cell.y} · ${cell.x}: ${cell.value ?? "no data"} min`)}
+        />
+        <p style={{ margin: "10px 0 0", color: "var(--m-fg-2)", font: "500 12px/1.4 var(--m-font-ui)" }}>
+          {selected}
+        </p>
+      </HeatmapShowcase>
+    );
+  },
 };
 
 // ── states ────────────────────────────────────────────────────────────────
@@ -225,7 +286,9 @@ export const FullStateMatrix: Story = {
           cells={s === "ready" || s === "partial" || s === "stale" ? deployCells.slice(0, 24) : []}
           state={s}
           compact
+          density="compact"
           showLegend={false}
+          colorScale={{ min: 0, max: 16 }}
         />
       )}
     />
@@ -241,7 +304,9 @@ export const MobileNarrow: Story = {
     yLabels: WEEKDAYS,
     cells: deployCells,
     compact: true,
+    density: "compact",
     showLegend: false,
+    colorScale: { min: 0, max: 16 },
   },
   parameters: { viewport: { defaultViewport: "mobile1" } },
 };

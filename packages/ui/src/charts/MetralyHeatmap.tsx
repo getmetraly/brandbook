@@ -37,6 +37,19 @@ export type MetralyHeatmapState =
   | "formula_invalid";
 
 export type MetralyHeatmapCellStatus = "ok" | "warning" | "danger" | "neutral";
+export type MetralyHeatmapDensity = "comfortable" | "compact" | "dashboard";
+export type MetralyHeatmapLegend = "horizontal" | "inline" | "none";
+
+export interface MetralyHeatmapColorScale {
+  /** Explicit visual minimum. When omitted, derived from finite cell values. */
+  min?: number;
+  /** Explicit visual maximum. When omitted, derived from finite cell values. */
+  max?: number;
+  /** Optional midpoint reserved for future diverging scales. */
+  mid?: number;
+  /** Clamp values into the visual min/max range. Defaults to true. */
+  clamp?: boolean;
+}
 
 export interface MetralyHeatmapCell {
   x: string;
@@ -57,12 +70,22 @@ export interface MetralyHeatmapProps {
   state?: MetralyHeatmapState;
   /** Compact widget-shell variant: smaller cells, no legend, single row of x labels. */
   compact?: boolean;
+  /** Density controls cell sizing without changing the data contract. */
+  density?: MetralyHeatmapDensity;
   /** Show legend strip. Defaults to true (false when compact). */
   showLegend?: boolean;
+  /** More explicit legend placement. `showLegend={false}` maps to `none`. */
+  legend?: MetralyHeatmapLegend;
+  /** Optional explicit visual scale for sparse or domain-known data. */
+  colorScale?: MetralyHeatmapColorScale;
+  /** Accessible label for the grid. Defaults to title or a generic label. */
+  ariaLabel?: string;
   /** Format the displayed cell value (in tooltip/aria). */
   formatter?: (value: number) => string;
   emptyLabel?: string;
-  /** Optional click handler — invoked with the cell on Enter / Space / click. */
+  /** Optional focus handler — invoked as keyboard focus moves across cells. */
+  onCellFocus?: (cell: MetralyHeatmapCell | null) => void;
+  /** Optional click / Enter / Space handler. */
   onCellActivate?: (cell: MetralyHeatmapCell) => void;
   className?: string;
   id?: string;
@@ -99,10 +122,21 @@ function defaultFormatter(v: number): string {
   return v.toFixed(d).replace(/\.0$/, "");
 }
 
-function intensity(value: number, min: number, max: number): number {
+function clamp(n: number, lo: number, hi: number): number {
+  return Math.max(lo, Math.min(hi, n));
+}
+
+function intensity(value: number, min: number, max: number, shouldClamp: boolean): number {
   if (!Number.isFinite(value)) return 0;
   if (max <= min) return 0;
-  return Math.max(0, Math.min(1, (value - min) / (max - min)));
+  const normalized = (value - min) / (max - min);
+  return shouldClamp ? clamp(normalized, 0, 1) : normalized;
+}
+
+function intensityLevel(value: number | null, normalized: number, status: MetralyHeatmapCellStatus): number {
+  if (value === null) return 0;
+  if (normalized <= 0) return status === "ok" ? 1 : 0;
+  return clamp(Math.ceil(normalized * 5), 1, 5);
 }
 
 export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
@@ -112,9 +146,14 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
   unit,
   state = "ready",
   compact = false,
+  density,
   showLegend,
+  legend,
+  colorScale,
+  ariaLabel,
   formatter,
   emptyLabel = "No activity recorded yet",
+  onCellFocus,
   onCellActivate,
   className,
   id,
@@ -124,32 +163,40 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
   const reactId = React.useId();
   const rootId = id ?? reactId;
   const summaryId = `${rootId}-sum`;
+  const resolvedDensity: MetralyHeatmapDensity = density ?? (compact ? "compact" : "comfortable");
 
-  // Build a (y,x) lookup and value range
-  const { lookup, minVal, maxVal, total } = React.useMemo(() => {
+  // Build a (y,x) lookup and value range.
+  const { lookup, derivedMin, derivedMax, total, finiteCount } = React.useMemo(() => {
     const lookup = new Map<string, MetralyHeatmapCell>();
     let mn = Infinity;
     let mx = -Infinity;
     let total = 0;
+    let finiteCount = 0;
+
     for (const c of cells) {
       lookup.set(`${c.y}\u0000${c.x}`, c);
       if (typeof c.value === "number" && Number.isFinite(c.value)) {
         if (c.value < mn) mn = c.value;
         if (c.value > mx) mx = c.value;
         total += c.value;
+        finiteCount += 1;
       }
     }
+
     if (!Number.isFinite(mn)) mn = 0;
     if (!Number.isFinite(mx)) mx = 0;
-    return { lookup, minVal: mn, maxVal: mx, total };
+    return { lookup, derivedMin: mn, derivedMax: mx, total, finiteCount };
   }, [cells]);
 
+  const minVal = colorScale?.min ?? derivedMin;
+  const maxVal = colorScale?.max ?? derivedMax;
+  const shouldClamp = colorScale?.clamp ?? true;
   const fmt = formatter ?? defaultFormatter;
   const isReady = state === "ready" || state === "partial" || state === "stale";
 
   // Roving focus is adapted to the existing brandbook hook API.
   // The hook is one-dimensional, so each heatmap cell becomes an item
-  // with a stable value of "row:col" encoded as a flat index string.
+  // with a stable value encoded as a flat index string.
   const colCount = xLabels.length;
   const rowCount = yLabels.length;
   const totalCells = rowCount * colCount;
@@ -157,18 +204,18 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
     () => Array.from({ length: totalCells }, (_, index) => ({ value: String(index) })),
     [totalCells],
   );
-  const activateByIndex = React.useCallback((index: number) => {
-    if (!onCellActivate || colCount <= 0) return;
+  const cellByIndex = React.useCallback((index: number) => {
+    if (colCount <= 0 || index < 0 || index >= totalCells) return null;
     const r = Math.floor(index / colCount);
     const c = index % colCount;
-    const cell = lookup.get(`${yLabels[r]}\u0000${xLabels[c]}`);
-    if (cell) onCellActivate(cell);
-  }, [colCount, lookup, onCellActivate, xLabels, yLabels]);
+    return lookup.get(`${yLabels[r]}\u0000${xLabels[c]}`) ?? null;
+  }, [colCount, lookup, totalCells, xLabels, yLabels]);
+
   const { selectedValue, getItemProps, selectValue } = useRovingSelection({
     items: rovingItems,
     defaultValue: rovingItems[0]?.value,
     mode: "focus-only",
-    onValueChange: (nextValue) => activateByIndex(Number(nextValue)),
+    onValueChange: (nextValue) => onCellFocus?.(cellByIndex(Number(nextValue))),
   });
   const activeCellIndex = selectedValue ? Number(selectedValue) : 0;
 
@@ -179,7 +226,7 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
     return (
       <div
         id={rootId}
-        className={`m-heatmap m-heatmap--state-${state} ${className ?? ""}`.trim()}
+        className={`m-heatmap m-heatmap--density-${resolvedDensity} m-heatmap--state-${state} ${className ?? ""}`.trim()}
         aria-busy={state === "loading" || undefined}
       >
         {title ? <HeatmapHeader title={title} description={description} badge={stateMeta} /> : null}
@@ -187,19 +234,22 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
           variant={state === "loading" ? "loading" : state === "empty" ? "empty" : state === "source_disconnected" ? "disconnected" : "error"}
           title={titleForState(state, emptyLabel)}
           description={hintForState(state)}
+          density={resolvedDensity === "comfortable" ? "comfortable" : "compact"}
         />
       </div>
     );
   }
 
-  const showLegendResolved = showLegend ?? !compact;
+  const resolvedLegend: MetralyHeatmapLegend = legend ?? (showLegend === false || compact ? "none" : "horizontal");
 
   return (
     <div
       id={rootId}
       className={[
         "m-heatmap",
+        `m-heatmap--density-${resolvedDensity}`,
         compact ? "m-heatmap--compact" : "",
+        finiteCount === 0 ? "m-heatmap--empty-data" : "",
         className ?? "",
       ]
         .filter(Boolean)
@@ -213,6 +263,7 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
       <div className="m-heatmap__scroll">
         <div
           role="grid"
+          aria-label={ariaLabel ?? title ?? "Heatmap"}
           aria-rowcount={rowCount}
           aria-colcount={colCount}
           aria-describedby={summaryId}
@@ -243,11 +294,11 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
               {xLabels.map((x, cIdx) => {
                 const cell = lookup.get(`${y}\u0000${x}`);
                 const v = cell?.value ?? null;
-                const i = v === null ? 0 : intensity(v, minVal, maxVal);
-                const level = v === null ? 0 : Math.max(1, Math.min(5, Math.ceil(i * 5)));
+                const i = v === null ? 0 : intensity(v, minVal, maxVal, shouldClamp);
+                const level = intensityLevel(v, i, cell?.status ?? "neutral");
                 const status = cell?.status ?? "neutral";
                 const labelText = cell?.label ?? (v === null ? "no data" : `${fmt(v)}${unit ? ` ${unit}` : ""}`);
-                const ariaLabel = `${y} on ${x}: ${labelText}${cell?.description ? `, ${cell.description}` : ""}`;
+                const ariaCellLabel = `${y} on ${x}: ${labelText}${cell?.description ? `, ${cell.description}` : ""}`;
 
                 const flatIdx = rIdx * colCount + cIdx;
                 const props = getItemProps(flatIdx, { selectOnArrow: false });
@@ -259,8 +310,10 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
                     key={`c-${y}-${x}`}
                     type="button"
                     role="gridcell"
-                    aria-label={ariaLabel}
+                    aria-label={ariaCellLabel}
                     data-intensity={level}
+                    data-status={status}
+                    data-value={v === null ? undefined : v}
                     className={[
                       "m-heatmap__cell",
                       v === null ? "m-heatmap__cell--null" : `m-heatmap__cell--i-${level}`,
@@ -270,9 +323,22 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
                       .filter(Boolean)
                       .join(" ")}
                     style={{
-                      "--m-cell-intensity": i.toFixed(3),
+                      "--m-cell-intensity": clamp(i, 0, 1).toFixed(3),
                     } as React.CSSProperties}
-                    onClick={() => selectValue(String(flatIdx))}
+                    onFocus={() => {
+                      selectValue(String(flatIdx));
+                    }}
+                    onKeyDown={(event) => {
+                      props.onKeyDown?.(event);
+                      if ((event.key === "Enter" || event.key === " ") && cell) {
+                        event.preventDefault();
+                        onCellActivate?.(cell);
+                      }
+                    }}
+                    onClick={() => {
+                      selectValue(String(flatIdx));
+                      if (cell) onCellActivate?.(cell);
+                    }}
                   >
                     {!compact && v !== null ? (
                       <span className="m-heatmap__cell-value">{fmt(v)}</span>
@@ -285,8 +351,8 @@ export const MetralyHeatmap: React.FC<MetralyHeatmapProps> = ({
         </div>
       </div>
 
-      {showLegendResolved ? (
-        <HeatmapLegend minVal={minVal} maxVal={maxVal} unit={unit} formatter={fmt} />
+      {resolvedLegend !== "none" ? (
+        <HeatmapLegend minVal={minVal} maxVal={maxVal} unit={unit} formatter={fmt} variant={resolvedLegend} />
       ) : null}
 
       <p id={summaryId} className="m-heatmap__sr">
@@ -324,9 +390,10 @@ const HeatmapLegend: React.FC<{
   maxVal: number;
   unit?: string;
   formatter: (n: number) => string;
-}> = ({ minVal, maxVal, unit, formatter }) => {
+  variant: Exclude<MetralyHeatmapLegend, "none">;
+}> = ({ minVal, maxVal, unit, formatter, variant }) => {
   return (
-    <div className="m-heatmap__legend" aria-hidden="true">
+    <div className={`m-heatmap__legend m-heatmap__legend--${variant}`} aria-hidden="true">
       <span className="m-heatmap__legend-end">{formatter(minVal)}</span>
       <span className="m-heatmap__legend-bar" />
       <span className="m-heatmap__legend-end">{formatter(maxVal)}{unit ? ` ${unit}` : ""}</span>

@@ -99,6 +99,7 @@ export const HeatmapWidgetExample: React.FC<HeatmapWidgetExampleProps> = ({
     <MetralyHeatmap
       {...heatmap}
       compact
+      density={heatmap.density ?? "dashboard"}
       state={state}
     />
   </DashboardWidget>

@@ -239,6 +239,9 @@ export type {
   MetralyHeatmapState,
   MetralyHeatmapCell,
   MetralyHeatmapCellStatus,
+  MetralyHeatmapDensity,
+  MetralyHeatmapLegend,
+  MetralyHeatmapColorScale,
 } from "./charts/MetralyHeatmap";
 
 export { ActivityFeed } from "./components/ActivityFeed";
