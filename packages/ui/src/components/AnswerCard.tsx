@@ -19,39 +19,56 @@ export interface AnswerCardProps {
   className?: string;
 }
 
-export function AnswerCard({ text, evidence, loading = false, onShowTrace, className }: AnswerCardProps) {
+export function AnswerCard({
+  text,
+  evidence,
+  loading = false,
+  onShowTrace,
+  className,
+}: AnswerCardProps) {
   return (
     <CardShell className={className}>
       {loading ? (
-        <div style={{ display: "flex", gap: 4, padding: "4px 0" }} aria-label="Loading response" aria-busy="true">
+        <div
+          className="metraly-answer-card__loading"
+          aria-label="Loading response"
+          aria-busy="true"
+        >
           <PulseMarker tone="info" />
           <PulseMarker tone="info" />
           <PulseMarker tone="info" />
         </div>
       ) : (
         <>
-          <p style={{ margin: 0, fontSize: "var(--m-fs-13, 13px)", lineHeight: 1.65, whiteSpace: "pre-wrap" }}>{text}</p>
+          <p className="metraly-answer-card__text">{text}</p>
+
           {evidence && evidence.length > 0 && (
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 10 }}>
+            <div className="metraly-answer-card__evidence">
               {evidence.map((c) => (
-                <span
-                  key={c.metricId}
-                  style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: "var(--m-fs-11, 11px)", background: "var(--m-bg-1, var(--glass))", border: "1px solid var(--m-line, var(--border))", borderRadius: 6, padding: "2px 8px" }}
-                >
-                  <span style={{ color: "var(--m-fg-2, var(--muted))" }}>{c.label}</span>
-                  <span style={{ fontFamily: "var(--m-font-mono, var(--font-mono))", color: "var(--m-fg-0, var(--text))" }}>{c.value}</span>
+                <span key={c.metricId} className="metraly-answer-card__chip">
+                  <span className="metraly-answer-card__chip-label">
+                    {c.label}
+                  </span>
+                  <span className="metraly-answer-card__chip-value">
+                    {c.value}
+                  </span>
                   {c.trend && c.trend !== "neutral" && (
-                    <TrendBadge direction={c.trend as TrendBadgeDirection} value="" sentiment="neutral" />
+                    <TrendBadge
+                      direction={c.trend as TrendBadgeDirection}
+                      value=""
+                      sentiment="neutral"
+                    />
                   )}
                 </span>
               ))}
             </div>
           )}
+
           {onShowTrace && (
             <button
               type="button"
+              className="metraly-answer-card__trace-btn"
               onClick={onShowTrace}
-              style={{ background: "none", border: "none", cursor: "pointer", fontSize: "var(--m-fs-11, 11px)", color: "var(--m-cyan-500, var(--cyan))", marginTop: 8, padding: 0, display: "inline-flex", alignItems: "center", gap: 4 }}
             >
               Show reasoning →
             </button>
@@ -61,4 +78,5 @@ export function AnswerCard({ text, evidence, loading = false, onShowTrace, class
     </CardShell>
   );
 }
+
 export default AnswerCard;

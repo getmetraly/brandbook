@@ -1,0 +1,217 @@
+/* metraly-ai-workspace.css
+ * AIWorkspaceLayout — evidence-backed chat layout primitive.
+ * Also covers AnswerCard evidence chips and trace button.
+ *
+ * Classes: metraly-ai-workspace--*, metraly-answer-card--*
+ * Tokens: --m-* only. No raw colors, no raw rgb(). */
+
+/* ---- Container ---- */
+.metraly-ai-workspace {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ---- Message log ---- */
+.metraly-ai-workspace__log {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: var(--m-5) var(--m-7);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0;
+}
+
+/* ---- Individual message row ---- */
+.metraly-ai-workspace__message {
+  display: flex;
+  min-width: 0;
+}
+
+.metraly-ai-workspace__message--user {
+  justify-content: flex-end;
+}
+
+/* ---- User chat bubble ---- */
+.metraly-ai-workspace__bubble {
+  max-width: 70%;
+  background: var(--m-bg-2);
+  border: 1px solid var(--m-line);
+  border-radius: 12px 12px 3px 12px;
+  padding: 10px 14px;
+  font-family: var(--m-font-ui);
+  font-size: var(--m-fs-12);
+  color: var(--m-fg-0);
+  line-height: 1.55;
+}
+
+/* ---- Composer section ---- */
+.metraly-ai-workspace__composer {
+  flex-shrink: 0;
+  padding: 14px var(--m-7);
+  border-top: 1px solid var(--m-line);
+  background: var(--m-bg-0);
+  display: flex;
+  flex-direction: column;
+  gap: var(--m-2);
+}
+
+/* Input pill shell */
+.metraly-ai-workspace__composer-shell {
+  display: flex;
+  gap: var(--m-2);
+  align-items: center;
+  background: var(--m-bg-1);
+  border: 1px solid var(--m-line);
+  border-radius: 12px;
+  padding: 6px 14px;
+  transition:
+    border-color var(--m-dur-2) var(--m-ease),
+    box-shadow var(--m-dur-2) var(--m-ease);
+}
+
+.metraly-ai-workspace__composer-shell:focus-within {
+  border-color: var(--m-cyan-500);
+  box-shadow: var(--m-glow-focus);
+}
+
+/* Sparkles icon wrapper — allows PulseMarker to be absolutely positioned */
+.metraly-ai-workspace__composer-icon {
+  position: relative;
+  flex-shrink: 0;
+  display: inline-flex;
+}
+
+/* Bare input — intentionally unstyled MetralyInput not used here
+   because FieldShell overhead (labels, descriptions) is inappropriate
+   for an embedded composer. */
+.metraly-ai-workspace__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  padding: 8px 0;
+  font-family: var(--m-font-ui);
+  font-size: var(--m-fs-12);
+  color: var(--m-fg-0);
+}
+
+.metraly-ai-workspace__input::placeholder {
+  color: var(--m-fg-3);
+}
+
+.metraly-ai-workspace__input:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ---- Quick prompts ---- */
+.metraly-ai-workspace__prompt-row {
+  display: flex;
+  gap: var(--m-2);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.metraly-ai-workspace__prompt {
+  background: var(--m-bg-1);
+  border: 1px solid var(--m-line);
+  border-radius: 14px;
+  padding: 4px 12px;
+  font-family: var(--m-font-ui);
+  font-size: var(--m-fs-10);
+  color: var(--m-fg-2);
+  cursor: pointer;
+  transition:
+    background var(--m-dur-1) var(--m-ease),
+    color var(--m-dur-1) var(--m-ease);
+}
+
+.metraly-ai-workspace__prompt:hover {
+  background: var(--m-bg-2);
+  color: var(--m-fg-0);
+}
+
+/* ---- Disclaimer text ---- */
+.metraly-ai-workspace__disclaimer {
+  text-align: center;
+  font-family: var(--m-font-ui);
+  font-size: var(--m-fs-10);
+  color: var(--m-fg-3);
+}
+
+/* ---- AnswerCard body styles ---- */
+
+.metraly-answer-card__text {
+  margin: 0;
+  font-family: var(--m-font-ui);
+  font-size: var(--m-fs-12);
+  line-height: 1.65;
+  white-space: pre-wrap;
+  color: var(--m-fg-0);
+}
+
+.metraly-answer-card__evidence {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.metraly-answer-card__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--m-font-ui);
+  font-size: var(--m-fs-10);
+  background: var(--m-bg-1);
+  border: 1px solid var(--m-line);
+  border-radius: var(--m-r-2);
+  padding: 2px 8px;
+}
+
+.metraly-answer-card__chip-label {
+  color: var(--m-fg-2);
+}
+
+.metraly-answer-card__chip-value {
+  font-family: var(--m-font-mono);
+  color: var(--m-fg-0);
+  font-feature-settings: "tnum";
+}
+
+.metraly-answer-card__trace-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--m-font-ui);
+  font-size: var(--m-fs-10);
+  color: var(--m-cyan-500);
+  margin-top: 8px;
+  padding: 0;
+}
+
+.metraly-answer-card__trace-btn:hover {
+  color: var(--m-cyan-400);
+}
+
+.metraly-answer-card__trace-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--m-glow-focus);
+  border-radius: var(--m-r-1);
+}
+
+/* AnswerCard loading dots */
+.metraly-answer-card__loading {
+  display: flex;
+  gap: 4px;
+  padding: 4px 0;
+}
