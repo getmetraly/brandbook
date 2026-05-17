@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import * as React from "react";
 import { StateBoard, type StateBoardItem } from "../../packages/ui/src/components/StateBoard";
 import { StateBoardWidgetExample } from "../../packages/ui/src/dashboard/DashboardWidgetExamples";

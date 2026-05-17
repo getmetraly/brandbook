@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import * as React from "react";
 import { SyncProgressPanel } from "../../packages/ui/src/source/SyncProgressPanel";
 import { MetralyStoryFrame } from "../_shared/MetralyStoryFrame";

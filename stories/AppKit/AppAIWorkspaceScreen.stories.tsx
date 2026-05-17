@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import * as React from "react";
 import { AppAIWorkspaceScreen } from "../../packages/ui/src/app-kit/AppAIWorkspaceScreen";
 import { MetralyStoryFrame } from "../_shared/MetralyStoryFrame";

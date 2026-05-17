@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import * as React from "react";
 import { SettingsSection } from "../../packages/ui/src/settings/SettingsSection";
 import { SettingsAuditRow } from "../../packages/ui/src/settings/SettingsAuditRow";

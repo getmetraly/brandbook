@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import { MetralyButton, MetralyButtonVariant, MetralyIcon } from "@metraly/ui";
 import { ThemeProvider } from "@metraly/ui";
 import React from "react";

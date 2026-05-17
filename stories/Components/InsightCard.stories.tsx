@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import * as React from "react";
 import { InsightCard } from "../../packages/ui/src/components/InsightCard";
 import { InsightWidgetExample } from "../../packages/ui/src/dashboard/DashboardWidgetExamples";

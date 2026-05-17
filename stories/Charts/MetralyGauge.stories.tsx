@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import * as React from "react";
 import { MetralyGauge } from "../../packages/ui/src/charts/MetralyGauge";
 import { CardShell } from "../../packages/ui/src/components/CardShell";

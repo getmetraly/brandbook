@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const swatches = [
   { name: "--m-bg-0", value: "var(--m-bg-0)" },

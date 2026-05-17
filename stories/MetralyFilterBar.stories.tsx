@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import { MetralyBadge, MetralyButton, MetralyFilterBar } from "@metraly/ui";
 
 const meta: Meta<typeof MetralyFilterBar> = {

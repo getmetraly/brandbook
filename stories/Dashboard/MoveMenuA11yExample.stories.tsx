@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import { MoveMenuA11yExample } from "../../packages/ui/src/dashboard/MoveMenuA11yExample";
 import * as React from "react";
 import { MetralyStoryFrame } from "../_shared/MetralyStoryFrame";
