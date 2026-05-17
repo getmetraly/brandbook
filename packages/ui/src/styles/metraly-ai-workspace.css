@@ -85,6 +85,13 @@
   display: inline-flex;
 }
 
+/* PulseMarker live indicator on composer icon */
+.metraly-ai-workspace__composer-pulse {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+}
+
 /* Bare input — intentionally unstyled MetralyInput not used here
    because FieldShell overhead (labels, descriptions) is inappropriate
    for an embedded composer. */

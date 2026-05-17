@@ -152,13 +152,13 @@ npx serve site/storybook-static -p 6007
 - `npm run site:typecheck`: ✅ passes — 0 errors
 - `npm run site:test`: ✅ passes — 44 suites, 254 tests
 - `npm run build-storybook`: ✅ passes — 1245 modules, compiled to `site/storybook-static/`
-- Playwright visual capture: ⚠ not completed — Chromium not installed (sudo required); browser tool has network isolation
+- Playwright visual capture: ✅ completed in follow-up pass — see `docs/appkit-cleanup-visual-verification-report.md`
 
 ## Known limitations
 
-1. **Playwright screenshots** — browser not available in this environment without sudo. Visual verification requires manual `npm run storybook`.
-2. **`AppDashboardScreen` inline styles** — `ServiceHealthTable` and `AtRiskPRList` use `--m-fg` and `--m-fg-muted` (undefined tokens) and raw inline styles. These are screen-level composition helpers, not primitives. Lower priority.
-3. **`metraly-app-sidebar__*` and `metraly-app-topbar__*` CSS** — retained in `metraly-app-kit.css` for backward compat but no longer emitted by the refactored components. Can be removed in a future cleanup pass.
+1. ~~**Playwright screenshots** — browser not available~~ — resolved in follow-up pass; 6 Storybook stories + 2 Claude viewer frames captured.
+2. ~~**`AppDashboardScreen` inline styles**~~ — resolved in follow-up pass; all inline helpers extracted to `metraly-app-kit.css`, undefined tokens replaced.
+3. ~~**Dead `metraly-app-sidebar__*` / `metraly-app-topbar__*` CSS**~~ — resolved in follow-up pass; ~204 dead CSS lines removed.
 
 ## Files changed
 
@@ -190,3 +190,15 @@ fix(ui): promote Claude Design patterns into brandbook primitives
 - AppKit screens now compose canonical shell primitives, not a parallel visual system
 - all validations pass: ui:check, site:typecheck, site:test, build-storybook
 ```
+
+## Follow-up verification update
+
+A follow-up cleanup pass (`fix(ui): complete AppKit cleanup and visual verification`) addressed all three limitations above. See `docs/appkit-cleanup-visual-verification-report.md` for full details.
+
+**Changes applied in follow-up:**
+- Playwright chromium installed; 6 ProductPreview story screenshots + 2 Claude viewer screenshots captured to `.tmp/visual-parity/`
+- Dead CSS removed: `.metraly-app-sidebar`, `__nav`, `__section`, `__item*`, `__foot`, `.metraly-app-topbar`, `__title`, `__subtitle`, entire `metraly-app-ai-*` section (~204 lines)
+- `AppDashboardScreen` inline helpers (`StatusChip`, `ServiceHealthTable`, `AtRiskPRList`) replaced with `metraly-app-status-chip`, `metraly-app-health-table`, `metraly-app-risk-list` CSS classes
+- `var(--m-fg)` and `var(--m-fg-muted)` undefined tokens eliminated — 0 remaining occurrences
+- `AIWorkspaceLayout` PulseMarker `style={{}}` replaced with `metraly-ai-workspace__composer-pulse` CSS class
+- All validations re-pass: `ui:check`, `site:typecheck`, `site:test` (44 suites, 254 tests), `build-storybook` (1245 modules)
