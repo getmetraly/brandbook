@@ -151,7 +151,7 @@ npx serve site/storybook-static -p 6007
 - `npm run ui:check` (typecheck): ✅ passes — 0 errors
 - `npm run site:typecheck`: ✅ passes — 0 errors
 - `npm run site:test`: ✅ passes — 44 suites, 254 tests
-- `npm run build-storybook`: ✅ passes — compiled to `site/storybook-static/`
+- `npm run build-storybook`: ✅ passes — 1245 modules, compiled to `site/storybook-static/`
 - Playwright visual capture: ⚠ not completed — Chromium not installed (sudo required); browser tool has network isolation
 
 ## Known limitations
