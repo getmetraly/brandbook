@@ -22,13 +22,15 @@ export const ProductPreview: Story = {
     <MetralyStoryFrame
       category="AppKit"
       title="AppAIWorkspaceScreen"
-      description="Evidence-backed AI workspace with chat interface, reasoning evidence chips, and quick prompts. Composes AIWorkspaceLayout with the app shell."
+      description="Evidence-backed AI workspace. Composes canonical MetralySidebar, MetralyTopbar, and AIWorkspaceLayout. Sidebar shows active-state, badge variants, and brand header. Topbar renders search, notification bell, and refresh into the MetralyTopbar actions slot."
       status="Preview"
       tags={["AI", "chat", "evidence", "screen", "composition", "app-kit"]}
       fullWidth
       previewVariant="flush"
     >
-      <div style={{ height: 700, overflow: "hidden" }}>
+      {/* Fixed height to show the complete product screen in Storybook.
+          Overflow hidden clips the 100vh shell to this viewport slice. */}
+      <div style={{ height: 680, overflow: "hidden", position: "relative" }}>
         <AppAIWorkspaceScreen />
       </div>
     </MetralyStoryFrame>

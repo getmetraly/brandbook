@@ -1,7 +1,6 @@
 import * as React from "react";
 import { AnswerCard } from "./AnswerCard";
 import { PulseMarker } from "./PulseMarker";
-import { MetralyInput } from "./MetralyInput";
 import { MetralyButton } from "./MetralyButton";
 import { MetralyIcon } from "./MetralyIcon";
 import type { EvidenceCitation } from "./AnswerCard";
@@ -33,12 +32,16 @@ export function AIWorkspaceLayout({
   const [input, setInput] = React.useState("");
   const endRef = React.useRef<HTMLDivElement>(null);
   const prefersReducedMotion = React.useMemo(
-    () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches,
     [],
   );
 
   React.useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: prefersReducedMotion ? "instant" : "smooth" });
+    endRef.current?.scrollIntoView({
+      behavior: prefersReducedMotion ? "instant" : "smooth",
+    });
   }, [messages, loading, prefersReducedMotion]);
 
   const handleSend = () => {
@@ -47,7 +50,7 @@ export function AIWorkspaceLayout({
     setInput("");
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
@@ -57,68 +60,89 @@ export function AIWorkspaceLayout({
   return (
     <div
       className={["metraly-ai-workspace", className].filter(Boolean).join(" ")}
-      style={{ display: "flex", flexDirection: "column", height: "100%", overflow: "hidden" }}
     >
+      {/* Message log */}
       <div
-        style={{ flex: 1, overflowY: "auto", padding: "20px 28px", display: "flex", flexDirection: "column", gap: 14 }}
+        className="metraly-ai-workspace__log"
         role="log"
         aria-live="polite"
         aria-label="Chat messages"
       >
         {messages.map((m, i) =>
           m.role === "user" ? (
-            <div key={i} style={{ display: "flex", justifyContent: "flex-end" }}>
-              <div style={{ maxWidth: "70%", background: "var(--m-bg-1, var(--glass))", border: "1px solid var(--m-line, var(--border))", borderRadius: "12px 12px 3px 12px", padding: "10px 14px", fontSize: "var(--m-fs-13, 13px)", color: "var(--m-fg-0, var(--text))", lineHeight: 1.55 }}>
-                {m.text}
-              </div>
+            <div key={i} className="metraly-ai-workspace__message metraly-ai-workspace__message--user">
+              <div className="metraly-ai-workspace__bubble">{m.text}</div>
             </div>
           ) : (
-            <AnswerCard key={i} text={m.text} evidence={m.evidence} loading={m.loading} />
-          )
+            <div key={i} className="metraly-ai-workspace__message">
+              <AnswerCard
+                text={m.text}
+                evidence={m.evidence}
+                loading={m.loading}
+              />
+            </div>
+          ),
         )}
-        {loading && <AnswerCard text="" loading />}
+        {loading && (
+          <div className="metraly-ai-workspace__message">
+            <AnswerCard text="" loading />
+          </div>
+        )}
         <div ref={endRef} />
       </div>
 
-      <div style={{ padding: "14px 28px", borderTop: "1px solid var(--m-line, var(--border))", background: "var(--m-bg-0, transparent)", flexShrink: 0 }}>
-        <div style={{ display: "flex", gap: 8, alignItems: "center", background: "var(--m-bg-1, var(--glass))", border: "1px solid var(--m-line, var(--border))", borderRadius: 12, padding: "6px 14px" }}>
-          <div style={{ position: "relative", flexShrink: 0 }}>
-            <MetralyIcon name="sparkles" size="sm" color="var(--m-purple-500, var(--purple))" />
-            <PulseMarker tone="live" size="sm" style={{ position: "absolute", top: -3, right: -3 }} />
+      {/* Composer */}
+      <div className="metraly-ai-workspace__composer">
+        <div className="metraly-ai-workspace__composer-shell">
+          <div className="metraly-ai-workspace__composer-icon">
+            <MetralyIcon name="sparkles" size="sm" color="var(--m-purple-500)" />
+            <PulseMarker
+              tone="live"
+              size="sm"
+              style={{ position: "absolute", top: -3, right: -3 }}
+            />
           </div>
-          <MetralyInput
+          <input
+            className="metraly-ai-workspace__input"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown as React.KeyboardEventHandler<HTMLInputElement>}
+            onKeyDown={handleKeyDown}
             placeholder="Ask about your engineering metrics…"
             disabled={loading}
-            style={{ flex: 1, background: "none", border: "none", outline: "none", boxShadow: "none", padding: "8px 0", fontSize: "var(--m-fs-13, 13px)" }}
+            aria-label="Ask AI Workspace"
           />
-          <MetralyButton variant="primary" size="sm" onClick={handleSend} disabled={loading || !input.trim()}>
+          <MetralyButton
+            variant="primary"
+            size="sm"
+            onClick={handleSend}
+            disabled={loading || !input.trim()}
+          >
             Send
           </MetralyButton>
         </div>
+
         {quickPrompts && quickPrompts.length > 0 && (
-          <div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap", justifyContent: "center" }}>
+          <div className="metraly-ai-workspace__prompt-row" role="list">
             {quickPrompts.map((q) => (
               <button
                 key={q}
                 type="button"
+                role="listitem"
+                className="metraly-ai-workspace__prompt"
                 onClick={() => setInput(q)}
-                style={{ background: "var(--m-bg-1)", border: "1px solid var(--m-line)", borderRadius: 14, padding: "4px 12px", fontSize: "var(--m-fs-11, 11px)", color: "var(--m-fg-2)", cursor: "pointer" }}
               >
                 {q}
               </button>
             ))}
           </div>
         )}
+
         {disclaimer && (
-          <div style={{ textAlign: "center", marginTop: 8, fontSize: "var(--m-fs-11, 11px)", color: "var(--m-fg-3, var(--muted))" }}>
-            {disclaimer}
-          </div>
+          <div className="metraly-ai-workspace__disclaimer">{disclaimer}</div>
         )}
       </div>
     </div>
   );
 }
+
 export default AIWorkspaceLayout;

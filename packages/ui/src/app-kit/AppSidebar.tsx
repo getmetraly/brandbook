@@ -1,4 +1,9 @@
 import React from "react";
+import {
+  MetralySidebar,
+  MetralySidebarSection,
+  MetralySidebarItem,
+} from "../shell/MetralySidebar";
 import { MetralyIcon, type MetralyIconName } from "../components/MetralyIcon";
 
 export interface AppSidebarNavItem {
@@ -6,6 +11,7 @@ export interface AppSidebarNavItem {
   icon?: MetralyIconName;
   label: string;
   href?: string;
+  /** Marks this item active regardless of activeId */
   active?: boolean;
   variant?: "default" | "accent";
   badge?: "preview" | "gated";
@@ -30,73 +36,60 @@ export interface AppSidebarProps {
   sections?: AppSidebarNavSection[];
   user?: AppSidebarUser;
   footerAction?: React.ReactNode;
+  /** Controlled active item by id */
   activeId?: string;
   onNav?: (id: string) => void;
   className?: string;
   "aria-label"?: string;
 }
 
-function NavItem({
-  item,
-  activeId,
-  onNav,
-}: {
-  item: AppSidebarNavItem;
-  activeId: string | undefined;
-  onNav: ((id: string) => void) | undefined;
-}): React.ReactElement {
-  const isActive = item.active || item.id === activeId;
+// ---- Sub-elements rendered into MetralySidebar slots ----
 
-  const classNames = [
-    "metraly-app-sidebar__item",
-    isActive ? "is-active" : "",
-    item.variant === "accent" ? "is-accent" : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
-
-  const inner = (
-    <>
-      {item.icon && (
-        <span className="metraly-app-sidebar__item__icon">
-          <MetralyIcon name={item.icon} size={15} aria-hidden />
-        </span>
-      )}
-      <span>{item.label}</span>
-      {item.badge && (
-        <span
-          className={`metraly-app-sidebar__item-badge is-${item.badge}`}
-        >
-          {item.badge === "preview" ? "Preview" : "Gated"}
-        </span>
-      )}
-    </>
-  );
-
-  if (item.href && !item.disabled) {
-    return (
-      <a
-        href={item.href}
-        className={classNames}
-        aria-current={isActive ? "page" : undefined}
-      >
-        {inner}
-      </a>
-    );
-  }
-
+function SidebarBrand({
+  logo,
+  brandName,
+  healthLabel,
+}: Pick<AppSidebarProps, "logo" | "brandName" | "healthLabel">) {
+  if (!logo && !brandName && !healthLabel) return null;
   return (
-    <button
-      type="button"
-      className={classNames}
-      aria-current={isActive ? "page" : undefined}
-      disabled={item.disabled}
-      onClick={() => onNav?.(item.id)}
-    >
-      {inner}
-    </button>
+    <div className="metraly-app-sidebar__head">
+      {(logo || brandName) && (
+        <div className="metraly-app-sidebar__brand">
+          {logo && (
+            <div className="metraly-app-sidebar__brand-logo">{logo}</div>
+          )}
+          {brandName && (
+            <span className="metraly-app-sidebar__brand-name">{brandName}</span>
+          )}
+        </div>
+      )}
+      {healthLabel && (
+        <div className="metraly-app-sidebar__health">
+          <span className="dot" />
+          {healthLabel}
+        </div>
+      )}
+    </div>
   );
 }
+
+function SidebarUserFooter({
+  user,
+  footerAction,
+}: { user: AppSidebarUser; footerAction?: React.ReactNode }) {
+  return (
+    <div className="metraly-app-sidebar__foot-inner">
+      <div className="metraly-app-avatar">{user.initials}</div>
+      <div>
+        <div className="metraly-app-sidebar__foot-name">{user.name}</div>
+        <div className="metraly-app-sidebar__foot-role">{user.role}</div>
+      </div>
+      {footerAction != null && <div>{footerAction}</div>}
+    </div>
+  );
+}
+
+// ---- AppSidebar ----
 
 export function AppSidebar({
   logo,
@@ -111,60 +104,61 @@ export function AppSidebar({
   "aria-label": ariaLabel,
 }: AppSidebarProps): React.ReactElement {
   return (
-    <aside
-      className={["metraly-app-sidebar", className].filter(Boolean).join(" ")}
+    <MetralySidebar
+      className={className}
+      header={
+        <SidebarBrand
+          logo={logo}
+          brandName={brandName}
+          healthLabel={healthLabel}
+        />
+      }
+      footer={
+        user ? (
+          <SidebarUserFooter user={user} footerAction={footerAction} />
+        ) : null
+      }
       aria-label={ariaLabel ?? "Primary navigation"}
     >
-      <div className="metraly-app-sidebar__head">
-        {(logo || brandName) && (
-          <div className="metraly-app-sidebar__brand">
-            {logo && (
-              <div className="metraly-app-sidebar__brand-logo">{logo}</div>
-            )}
-            {brandName && (
-              <span className="metraly-app-sidebar__brand-name">
-                {brandName}
-              </span>
-            )}
-          </div>
-        )}
-        {healthLabel && (
-          <div className="metraly-app-sidebar__health">
-            <span className="metraly-app-sidebar__health dot" />
-            {healthLabel}
-          </div>
-        )}
-      </div>
+      {sections.map((section) => (
+        <MetralySidebarSection key={section.label} label={section.label}>
+          {section.items.map((item) => {
+            const isActive = item.active === true || item.id === activeId;
 
-      <nav className="metraly-app-sidebar__nav">
-        {sections.map((section) => (
-          <div key={section.label} className="metraly-app-sidebar__section">
-            <span className="metraly-app-sidebar__section-title">
-              {section.label}
-            </span>
-            {section.items.map((item) => (
-              <NavItem
+            const badge =
+              item.badge != null ? (
+                <span
+                  className={`metraly-app-sidebar__item-badge is-${item.badge}`}
+                >
+                  {item.badge === "preview" ? "Preview" : "Gated"}
+                </span>
+              ) : null;
+
+            return (
+              <MetralySidebarItem
                 key={item.id}
-                item={item}
-                activeId={activeId}
-                onNav={onNav}
+                label={item.label}
+                icon={
+                  item.icon != null ? (
+                    <MetralyIcon name={item.icon} size={15} aria-hidden />
+                  ) : undefined
+                }
+                active={isActive}
+                disabled={item.disabled}
+                href={item.href}
+                variant={item.variant}
+                meta={badge}
+                onClick={
+                  item.href == null && item.disabled !== true
+                    ? () => onNav?.(item.id)
+                    : undefined
+                }
               />
-            ))}
-          </div>
-        ))}
-      </nav>
-
-      {user && (
-        <div className="metraly-app-sidebar__foot">
-          <div className="metraly-app-avatar">{user.initials}</div>
-          <div>
-            <div className="metraly-app-sidebar__foot-name">{user.name}</div>
-            <div className="metraly-app-sidebar__foot-role">{user.role}</div>
-          </div>
-          {footerAction && <div>{footerAction}</div>}
-        </div>
-      )}
-    </aside>
+            );
+          })}
+        </MetralySidebarSection>
+      ))}
+    </MetralySidebar>
   );
 }
 

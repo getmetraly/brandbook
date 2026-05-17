@@ -117,7 +117,7 @@ export function AppAIWorkspaceScreen({
           onRefresh={() => {}}
         />
       </div>
-      <main className="metraly-app-shell__main">
+      <main className="metraly-app-shell__main metraly-app-shell__main--flush">
         <AIWorkspaceLayout
           messages={messages}
           onSend={handleSend}

@@ -1,4 +1,5 @@
 import React from "react";
+import { MetralyTopbar } from "../shell/MetralyTopbar";
 import { MetralyIcon } from "../components/MetralyIcon";
 
 export interface AppTopbarProps {
@@ -22,18 +23,8 @@ export function AppTopbar({
   actions,
   className,
 }: AppTopbarProps): React.ReactElement {
-  return (
-    <header
-      className={["metraly-app-topbar", className].filter(Boolean).join(" ")}
-      role="banner"
-    >
-      <div className="metraly-app-topbar__title">
-        {title}
-        {subtitle && (
-          <span className="metraly-app-topbar__subtitle">{subtitle}</span>
-        )}
-      </div>
-
+  const actionContent = (
+    <>
       {searchPlaceholder && (
         <div className="metraly-app-topbar__search">
           <span className="metraly-app-topbar__search-icon">
@@ -44,6 +35,7 @@ export function AppTopbar({
             className="metraly-app-topbar__search-input"
             placeholder={searchPlaceholder}
             onChange={(e) => onSearchChange?.(e.currentTarget.value)}
+            aria-label={searchPlaceholder}
           />
         </div>
       )}
@@ -75,7 +67,17 @@ export function AppTopbar({
       )}
 
       {actions}
-    </header>
+    </>
+  );
+
+  return (
+    <MetralyTopbar
+      title={title}
+      subtitle={subtitle}
+      density="compact"
+      className={className}
+      actions={actionContent}
+    />
   );
 }
 

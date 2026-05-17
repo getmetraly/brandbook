@@ -24,6 +24,12 @@
   padding: 18px 24px 32px;
 }
 
+/* Flush variant: no padding, overflow hidden — for full-height content like AIWorkspaceLayout */
+.metraly-app-shell__main--flush {
+  overflow: hidden;
+  padding: 0;
+}
+
 /* ============================
    AppSidebar
    ============================ */
@@ -172,6 +178,15 @@
 .metraly-app-sidebar__foot-role {
   font: 500 10px/1 var(--m-font-mono);
   color: var(--m-fg-3);
+}
+
+/* foot-inner: used when footer is rendered inside MetralySidebar's footer slot,
+   which already provides border-top and padding. */
+.metraly-app-sidebar__foot-inner {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  align-items: center;
+  gap: 10px;
 }
 
 /* ============================
