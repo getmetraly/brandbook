@@ -99,7 +99,7 @@ export function AIWorkspaceLayout({
             <PulseMarker
               tone="live"
               size="sm"
-              style={{ position: "absolute", top: -3, right: -3 }}
+              className="metraly-ai-workspace__composer-pulse"
             />
           </div>
           <input

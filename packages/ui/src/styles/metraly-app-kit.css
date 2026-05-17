@@ -33,13 +33,6 @@
 /* ============================
    AppSidebar
    ============================ */
-.metraly-app-sidebar {
-  background: var(--m-bg-1);
-  border-right: 1px solid var(--m-line);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
 .metraly-app-sidebar__head {
   padding: 14px 14px 12px;
   border-bottom: 1px solid var(--m-line-faint);
@@ -82,69 +75,6 @@
   animation: m-pulse-dot 1.6s var(--m-ease) infinite;
 }
 
-.metraly-app-sidebar__nav {
-  flex: 1;
-  overflow: auto;
-  padding: 12px 10px;
-  display: grid;
-  gap: 16px;
-  align-content: start;
-}
-.metraly-app-sidebar__section { display: grid; gap: 2px; }
-.metraly-app-sidebar__section-title {
-  font: 700 10px/1 var(--m-font-ui);
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  color: var(--m-fg-3);
-  padding: 0 8px;
-  margin-bottom: 4px;
-}
-.metraly-app-sidebar__item {
-  position: relative;
-  display: grid;
-  grid-template-columns: 18px 1fr auto;
-  align-items: center;
-  gap: 9px;
-  padding: 7px 10px;
-  border-radius: var(--m-r-3);
-  border: 1px solid transparent;
-  background: transparent;
-  color: var(--m-fg-1);
-  cursor: pointer;
-  font: 500 13px/1 var(--m-font-ui);
-  text-align: left;
-  width: 100%;
-  transition: background var(--m-dur-1) var(--m-ease),
-              color var(--m-dur-1) var(--m-ease);
-}
-.metraly-app-sidebar__item:hover {
-  background: var(--m-bg-2);
-  color: var(--m-fg-0);
-}
-.metraly-app-sidebar__item.is-active {
-  background: var(--m-cyan-bg);
-  color: var(--m-cyan-500);
-  font-weight: 600;
-}
-.metraly-app-sidebar__item.is-active::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3px;
-  height: 18px;
-  border-radius: 2px;
-  background: var(--m-cyan-500);
-  box-shadow: 0 0 8px var(--m-cyan-glow);
-}
-.metraly-app-sidebar__item.is-accent {
-  border: 1px dashed color-mix(in srgb, var(--m-cyan-500) 40%, transparent);
-  color: var(--m-cyan-500);
-  margin-top: 6px;
-}
-.metraly-app-sidebar__item.is-accent:hover { background: var(--m-cyan-bg); }
-.metraly-app-sidebar__item__icon { display: inline-flex; }
 .metraly-app-sidebar__item-badge {
   font: 700 9px/1 var(--m-font-ui);
   letter-spacing: 0.4px;
@@ -163,14 +93,6 @@
   border: 1px solid var(--m-line);
 }
 
-.metraly-app-sidebar__foot {
-  padding: 10px 12px;
-  border-top: 1px solid var(--m-line-faint);
-  display: grid;
-  grid-template-columns: 28px 1fr 26px;
-  align-items: center;
-  gap: 10px;
-}
 .metraly-app-sidebar__foot-name {
   font: 500 12px/1.2 var(--m-font-ui);
   color: var(--m-fg-0);
@@ -192,25 +114,6 @@
 /* ============================
    AppTopbar
    ============================ */
-.metraly-app-topbar {
-  background: var(--m-bg-1);
-  border-bottom: 1px solid var(--m-line);
-  display: grid;
-  grid-template-columns: 1fr auto auto auto;
-  align-items: center;
-  gap: 10px;
-  padding: 0 16px;
-}
-.metraly-app-topbar__title {
-  font: 600 14px/1 var(--m-font-ui);
-  color: var(--m-fg-0);
-}
-.metraly-app-topbar__subtitle {
-  display: block;
-  margin-top: 4px;
-  font: 500 11px/1 var(--m-font-mono);
-  color: var(--m-fg-3);
-}
 .metraly-app-topbar__search {
   width: 280px;
   height: 30px;
@@ -475,114 +378,6 @@
 .metraly-app-metric-delta.is-flat { color: var(--m-fg-3); }
 
 /* ============================
-   AI Workspace screen
-   ============================ */
-.metraly-app-ai-workspace {
-  display: grid;
-  grid-template-rows: 1fr auto;
-  overflow: hidden;
-}
-.metraly-app-ai-messages {
-  overflow: auto;
-  padding: 16px 24px;
-  display: grid;
-  gap: 14px;
-  align-content: start;
-}
-.metraly-app-ai-bubble {
-  max-width: 720px;
-  background: var(--m-bg-2);
-  border: 1px solid var(--m-line);
-  border-radius: var(--m-r-4);
-  padding: 14px 16px;
-  display: grid;
-  gap: 8px;
-}
-.metraly-app-ai-bubble.is-user {
-  background: var(--m-bg-3);
-  margin-left: auto;
-}
-.metraly-app-ai-bubble__author {
-  font: 700 10px/1 var(--m-font-ui);
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-  color: var(--m-fg-3);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.metraly-app-ai-bubble__text {
-  font: 400 13px/1.6 var(--m-font-ui);
-  color: var(--m-fg-0);
-}
-.metraly-app-ai-evidence {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 6px;
-}
-.metraly-app-ai-evidence-chip {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 8px;
-  border-radius: var(--m-r-2);
-  background: var(--m-bg-3);
-  border: 1px solid var(--m-line);
-  font: 500 11px/1 var(--m-font-mono);
-  color: var(--m-fg-1);
-}
-.metraly-app-ai-evidence-chip__label { font-family: var(--m-font-ui); color: var(--m-fg-2); }
-.metraly-app-ai-evidence-chip__trend { color: var(--m-ok); }
-.metraly-app-ai-evidence-chip__trend.is-down { color: var(--m-err); }
-.metraly-app-ai-input {
-  border-top: 1px solid var(--m-line);
-  padding: 12px 24px;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 8px;
-  align-items: center;
-  background: var(--m-bg-1);
-}
-.metraly-app-ai-input__field {
-  height: 34px;
-  padding: 0 12px;
-  border-radius: var(--m-r-3);
-  background: var(--m-bg-2);
-  border: 1px solid var(--m-line);
-  color: var(--m-fg-0);
-  font: 500 13px/1 var(--m-font-ui);
-  outline: none;
-  width: 100%;
-  box-sizing: border-box;
-}
-.metraly-app-ai-input__field:focus {
-  box-shadow: var(--m-glow-focus);
-  border-color: var(--m-cyan-500);
-}
-.metraly-app-ai-prompts {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-top: 6px;
-  grid-column: 1 / -1;
-}
-.metraly-app-ai-prompt {
-  padding: 4px 10px;
-  border-radius: var(--m-r-pill);
-  font: 500 11px/1 var(--m-font-ui);
-  color: var(--m-fg-2);
-  background: transparent;
-  border: 1px solid var(--m-line);
-  cursor: pointer;
-}
-.metraly-app-ai-prompt:hover {
-  background: var(--m-bg-2);
-  color: var(--m-fg-0);
-}
-
-/* ============================
    Plugin grid
    ============================ */
 .metraly-app-plugin-grid {
@@ -812,4 +607,81 @@
   background: var(--m-bg-3);
   color: var(--m-fg-0);
   box-shadow: 0 0 0 1px var(--m-line-strong);
+}
+
+/* ============================
+   AppDashboardScreen helpers
+   ============================ */
+
+/* Status chip — inline health/risk indicator */
+.metraly-app-status-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--m-r-pill);
+  font: 600 10px/1 var(--m-font-ui);
+}
+.metraly-app-status-chip.is-ok {
+  color: var(--m-ok);
+  background: var(--m-ok-bg);
+}
+.metraly-app-status-chip.is-warn {
+  color: var(--m-warn);
+  background: var(--m-warn-bg);
+}
+.metraly-app-status-chip.is-err {
+  color: var(--m-err);
+  background: var(--m-err-bg);
+}
+
+/* Service health table */
+.metraly-app-health-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.metraly-app-health-table th {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--m-line-faint);
+  text-align: left;
+  font: 600 11px/1 var(--m-font-ui);
+  color: var(--m-fg-3);
+}
+.metraly-app-health-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--m-line-faint);
+  font: 400 12px/1 var(--m-font-mono);
+  color: var(--m-fg-0);
+}
+.metraly-app-health-table td.is-mono {
+  font-family: var(--m-font-mono);
+  font-size: 12px;
+  color: var(--m-fg-0);
+}
+
+/* At-risk PR list */
+.metraly-app-risk-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.metraly-app-risk-list__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--m-line-faint);
+  gap: 8px;
+}
+.metraly-app-risk-list__id {
+  font: 500 11px/1 var(--m-font-mono);
+  color: var(--m-fg-3);
+  flex-shrink: 0;
+}
+.metraly-app-risk-list__title {
+  font: 400 12px/1 var(--m-font-ui);
+  color: var(--m-fg-0);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
