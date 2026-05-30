@@ -1,15 +1,25 @@
 import type { StorybookConfig } from "@storybook/react-vite";
 import path from "path";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
 import { mergeConfig } from "vite";
+
+function getAbsolutePath(value: string) {
+  return dirname(fileURLToPath(import.meta.resolve(`${value}/package.json`)));
+}
+const configDir = dirname(fileURLToPath(import.meta.url));
 
 const config: StorybookConfig = {
   stories: ["../stories/**/*.mdx", "../stories/**/*.stories.@(ts|tsx)"],
   addons: [
-    "@storybook/addon-essentials",
-    "@storybook/addon-a11y",
+    getAbsolutePath("@storybook/addon-a11y"),
+    getAbsolutePath("@storybook/addon-docs"),
+    getAbsolutePath("@storybook/addon-vitest"),
+    getAbsolutePath("@storybook/addon-mcp"),
+    getAbsolutePath("@chromatic-com/storybook"),
   ],
   framework: {
-    name: "@storybook/react-vite",
+    name: getAbsolutePath("@storybook/react-vite"),
     options: {},
   },
   docs: {
@@ -19,7 +29,7 @@ const config: StorybookConfig = {
     return mergeConfig(cfg, {
       resolve: {
         alias: {
-          "@metraly/ui": path.resolve(__dirname, "../../packages/ui/src/index.ts"),
+          "@metraly/ui": path.resolve(configDir, "../../packages/ui/src/index.ts"),
         },
       },
     });

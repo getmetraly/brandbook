@@ -30,6 +30,22 @@
   padding: 0;
 }
 
+@media (max-width: 767px) {
+  .metraly-app-shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: 52px 1fr;
+    grid-template-areas: "topbar" "main";
+  }
+
+  .metraly-app-shell__sidebar {
+    display: none;
+  }
+
+  .metraly-app-shell__main {
+    padding: 14px 16px 24px;
+  }
+}
+
 /* ============================
    AppSidebar
    ============================ */
@@ -115,7 +131,8 @@
    AppTopbar
    ============================ */
 .metraly-app-topbar__search {
-  width: 280px;
+  width: min(280px, 100%);
+  max-width: 280px;
   height: 30px;
   padding: 0 10px;
   background: var(--m-bg-2);
@@ -446,6 +463,12 @@
   padding: 0;
   list-style: none;
   margin: 0 0 8px;
+}
+
+@media (max-width: 640px) {
+  .metraly-app-wizard__rail {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 .metraly-app-wizard__step {
   display: grid;
