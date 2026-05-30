@@ -142,11 +142,11 @@
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-feature-settings: "tnum";
   font-size: 10.5px;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 .metraly-board__item-meter { color: var(--m-fg-1); }
-.metraly-board__item-time  { color: var(--m-fg-3); }
+.metraly-board__item-time  { color: var(--m-fg-2); }
 
 .metraly-board__item--interactive { cursor: pointer; }
 .metraly-board__item--interactive:hover { background: var(--m-bg-2); border-color: var(--m-line-strong); }

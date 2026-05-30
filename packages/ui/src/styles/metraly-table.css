@@ -41,7 +41,7 @@
   font-size: var(--m-fs-9);
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   border-bottom: 1px solid var(--m-line);
 }
 
@@ -120,7 +120,7 @@
 .metraly-table-empty td {
   padding: 1.5rem 1rem;
   text-align: center;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   font-family: var(--m-font-mono);
   font-size: var(--m-fs-10);
   letter-spacing: 0.04em;
@@ -144,7 +144,7 @@
   min-height: 28px;
   padding: 0 8px;
   border-top: 1px solid var(--m-line-faint);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   font-family: var(--m-font-mono);
   font-size: var(--m-fs-10);
   letter-spacing: 0.04em;
@@ -243,7 +243,7 @@
   .metraly-table.is-mobile-stacked td::before {
     content: attr(data-column-label);
     padding-top: 1px;
-    color: var(--m-fg-3);
+    color: var(--m-fg-2);
     font-family: var(--m-font-mono);
     font-size: var(--m-fs-9);
     letter-spacing: 0.04em;

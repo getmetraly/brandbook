@@ -31,7 +31,7 @@
 }
 
 .metraly-control-description {
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   font-size: var(--m-fs-10);
   line-height: 1.45;
 }
@@ -252,7 +252,7 @@
 }
 
 .metraly-select-button-icon {
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 .metraly-select-list {
@@ -308,7 +308,7 @@
 
 .metraly-select-option:disabled {
   cursor: not-allowed;
-  color: var(--m-fg-4);
+  color: var(--m-fg-2);
 }
 
 .metraly-select-option span:first-child {
@@ -320,7 +320,7 @@
 
 .metraly-select-empty {
   padding: 12px 8px;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   font-size: var(--m-fs-11);
   text-align: center;
 }
@@ -394,7 +394,7 @@
   min-width: 18px;
   text-align: center;
   background: var(--m-bg-3);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   transition: background var(--m-dur-2) var(--m-ease), color var(--m-dur-2) var(--m-ease);
 }
 

@@ -86,7 +86,7 @@
 
 .metraly-widget-shell-subtitle {
   min-width: 0;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   font-family: var(--m-font-mono);
   font-size: var(--m-fs-9);
   letter-spacing: 0.04em;
@@ -138,12 +138,12 @@
 }
 
 .metraly-widget-shell-state--empty {
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 .metraly-widget-shell-state--empty .metraly-widget-shell-state-icon {
   border: 0;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 .metraly-widget-shell-state-title {
@@ -156,7 +156,7 @@
 
 .metraly-widget-shell-state-description {
   max-width: 100%;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   font-family: var(--m-font-mono);
   font-size: var(--m-fs-10);
   line-height: 1.45;
@@ -176,7 +176,7 @@
   justify-content: center;
   padding: 3px 2px;
   border-radius: var(--m-r-1);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   cursor: grab;
   user-select: none;
 }

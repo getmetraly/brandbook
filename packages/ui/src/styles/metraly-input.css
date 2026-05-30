@@ -68,7 +68,7 @@
 
 .metraly-input__icon {
   flex-shrink: 0;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   display: flex;
   align-items: center;
 }
@@ -88,7 +88,7 @@
 }
 
 .metraly-input__field::placeholder {
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 .metraly-input__field:disabled {

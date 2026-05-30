@@ -26,7 +26,7 @@
   letter-spacing: 0;
 }
 
-.metraly-token__input::placeholder { color: var(--m-fg-3); font-family: var(--m-font-ui, "Inter", sans-serif); }
+.metraly-token__input::placeholder { color: var(--m-fg-2); font-family: var(--m-font-ui, "Inter", sans-serif); }
 
 .metraly-token__input:focus-visible {
   outline: none;
@@ -54,7 +54,7 @@
 .metraly-token__validation {
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-size: 10.5px;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -123,7 +123,7 @@
   font-feature-settings: "tnum";
 }
 .metraly-perm__summary-num   { color: var(--m-fg-0); font-size: 14px; font-weight: 600; }
-.metraly-perm__summary-sep   { color: var(--m-fg-3); }
+.metraly-perm__summary-sep   { color: var(--m-fg-2); }
 .metraly-perm__summary-total { color: var(--m-fg-2); }
 .metraly-perm__summary-label {
   margin-left: 4px;
@@ -131,7 +131,7 @@
   font-size: 10.5px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 .metraly-perm__list {
@@ -179,7 +179,7 @@
   font-size: 10px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 .metraly-perm__req--required { color: var(--m-warn); }
 
@@ -195,7 +195,7 @@
   font-size: 10px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 .metraly-perm__metrics-list {
   list-style: none;
@@ -285,7 +285,7 @@
 }
 
 .metraly-backfill__custom-input:focus { outline: none; }
-.metraly-backfill__custom-unit { color: var(--m-fg-3); font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase; }
+.metraly-backfill__custom-unit { color: var(--m-fg-2); font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase; }
 
 .metraly-backfill__estimate {
   display: flex;
@@ -307,7 +307,7 @@
   font-size: 10.5px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 .metraly-backfill__estimate-value {
@@ -319,7 +319,7 @@
 
 .metraly-backfill__estimate-note {
   font-size: 10.5px;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 .metraly-backfill__warning {
@@ -367,7 +367,7 @@
   font-size: 10px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 .metraly-conntest__meta-val {
@@ -414,7 +414,7 @@
   font-size: 10.5px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 .metraly-conntest__footer { display: flex; justify-content: flex-end; }
@@ -449,7 +449,7 @@
 .metraly-sync__source-id {
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-size: 10.5px;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 .metraly-sync__progress {
@@ -513,7 +513,7 @@
   font-size: 10px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 .metraly-sync__meta-val {
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
@@ -521,7 +521,7 @@
   font-size: 12px;
   color: var(--m-fg-0);
 }
-.metraly-sync__meta-val-est { color: var(--m-fg-3); }
+.metraly-sync__meta-val-est { color: var(--m-fg-2); }
 
 .metraly-sync__footer { display: flex; justify-content: flex-end; gap: 6px; }
 

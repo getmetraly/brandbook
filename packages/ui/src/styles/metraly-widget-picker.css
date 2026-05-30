@@ -97,7 +97,7 @@ button.metraly-widget-picker-card:active {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   font-family: var(--m-font-mono);
   font-size: var(--m-fs-9);
   letter-spacing: 0.03em;

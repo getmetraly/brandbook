@@ -224,7 +224,7 @@
   padding-top: var(--m-2);
   margin-top: auto;
   border-top: 1px solid var(--m-line);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   font-size: var(--m-fs-10);
 }
 
@@ -265,7 +265,7 @@
   min-height: 3rem;
   display: grid;
   place-items: center;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   font-style: italic;
   text-align: center;
 }

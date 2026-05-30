@@ -115,7 +115,7 @@
 .metraly-navigation-tree__chevron {
   width: 12px;
   justify-content: center;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 .metraly-navigation-tree__marker {
@@ -144,7 +144,7 @@
 }
 
 .metraly-navigation-tree__meta {
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   font-family: var(--m-font-mono);
   font-size: var(--m-fs-9);
   white-space: nowrap;

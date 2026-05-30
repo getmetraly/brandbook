@@ -101,7 +101,7 @@
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-feature-settings: "tnum";
   font-size: 10px;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   text-align: center;
   padding: 1px 0 3px;
   white-space: nowrap;
@@ -538,7 +538,7 @@
 .metraly-heatmap__tooltip-value span {
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-size: 10.5px;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   white-space: nowrap;
 }
 
@@ -585,7 +585,7 @@
 }
 
 .metraly-heatmap__tooltip-list dt {
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

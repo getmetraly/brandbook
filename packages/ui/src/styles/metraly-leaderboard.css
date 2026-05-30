@@ -38,7 +38,7 @@
   font-family: var(--m-font-mono);
   font-feature-settings: "tnum";
   font-size: var(--m-fs-10);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 .metraly-leaderboard__name {

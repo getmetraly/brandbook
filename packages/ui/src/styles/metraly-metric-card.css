@@ -64,7 +64,7 @@
 .metraly-metric-card-description {
   min-width: 0;
   overflow-wrap: anywhere;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   font-size: var(--m-fs-10);
 }
 
@@ -80,7 +80,7 @@
   margin-top: auto;
   padding-top: var(--m-2);
   border-top: 1px solid var(--m-line);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   font-size: var(--m-fs-10);
 }
 

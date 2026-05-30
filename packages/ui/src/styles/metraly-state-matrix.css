@@ -46,7 +46,7 @@
   font-size: 10px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 .metraly-statematrix__cell-body { min-width: 0; }

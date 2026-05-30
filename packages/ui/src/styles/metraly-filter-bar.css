@@ -53,7 +53,7 @@
   text-transform: uppercase;
   letter-spacing: 0.04em;
   line-height: 1.2;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 .metraly-filter-bar__control {

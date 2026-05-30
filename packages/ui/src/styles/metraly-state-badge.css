@@ -75,7 +75,7 @@
 }
 
 .metraly-state-badge.is-noData {
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   background: oklch(0.225 0.014 250 / 0.6);
   border-color: var(--m-line);
 }
@@ -93,7 +93,7 @@
 }
 
 .metraly-state-badge.is-disabled {
-  color: var(--m-fg-4);
+  color: var(--m-fg-2);
   background: oklch(0.225 0.014 250 / 0.6);
   border-color: var(--m-line);
 }

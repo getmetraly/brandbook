@@ -86,7 +86,7 @@
 .metraly-state-block__icon {
   display: inline-grid;
   place-items: center;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 .metraly-state-block__copy {
@@ -103,7 +103,7 @@
 
 .metraly-state-block__copy > p {
   margin: 0;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   font-size: var(--m-fs-10);
   line-height: 1.45;
 }

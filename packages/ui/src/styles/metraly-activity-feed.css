@@ -68,7 +68,7 @@
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-feature-settings: "tnum";
   font-size: 10.5px;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   white-space: nowrap;
 }
 
@@ -77,7 +77,7 @@
   font-size: 9.5px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 .metraly-feed__row-body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
@@ -126,8 +126,8 @@
   color: var(--m-fg-1);
 }
 
-.metraly-feed__chip-key { color: var(--m-fg-3); }
-.metraly-feed__chip-sep { color: var(--m-fg-3); }
+.metraly-feed__chip-key { color: var(--m-fg-2); }
+.metraly-feed__chip-sep { color: var(--m-fg-2); }
 .metraly-feed__chip-val { color: var(--m-fg-0); }
 
 /* grouped */
@@ -141,7 +141,7 @@
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-feature-settings: "tnum";
   font-size: 10.5px;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 .metraly-feed__group-label { letter-spacing: 0.04em; text-transform: uppercase; }
 .metraly-feed__group-count { color: var(--m-fg-2); }

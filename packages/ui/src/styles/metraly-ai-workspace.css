@@ -109,7 +109,7 @@
 }
 
 .metraly-ai-workspace__input::placeholder {
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 .metraly-ai-workspace__input:disabled {
@@ -149,7 +149,7 @@
   text-align: center;
   font-family: var(--m-font-ui);
   font-size: var(--m-fs-10);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 /* ---- AnswerCard body styles ---- */
