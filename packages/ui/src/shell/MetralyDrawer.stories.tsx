@@ -43,8 +43,11 @@ export const Interactive: Story = {
     await userEvent.click(
       canvas.getByRole("button", { name: /open review drawer/i }),
     );
-    await expect(canvas.getByRole("dialog", { name: /connector review/i })).toBeVisible();
-    await userEvent.click(canvas.getByRole("button", { name: /close panel/i }));
+    const dialog = canvas.getByRole("dialog", { name: /connector review/i });
+    await expect(dialog).toBeVisible();
+    await userEvent.click(
+      dialog.querySelector<HTMLButtonElement>(".metraly-overlay-shell__close")!,
+    );
     await expect(canvas.queryByRole("dialog", { name: /connector review/i })).toBeNull();
   },
 };

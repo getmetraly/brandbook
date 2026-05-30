@@ -10,7 +10,8 @@
     "check": "npm run ui:check",
     "storybook": "storybook dev -p 6006 -c storybook/.storybook",
     "build-storybook": "storybook build -c storybook/.storybook -o storybook-static",
-    "storybook:check": "npm run build-storybook"
+    "storybook:check": "npm run build-storybook",
+    "test-storybook": "vitest --project=storybook"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^5.2.1",
