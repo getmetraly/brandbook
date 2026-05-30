@@ -1,0 +1,180 @@
+/* AIInsightCard + InlineInsight — AI-authored insight surfaces */
+
+/* ── AIInsightCard ─────────────────────────────────────────────────── */
+.metraly-ai-insight {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--m-3);
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 18px 20px;
+  border-radius: var(--m-r-5);
+  border: 1px solid var(--m-line);
+  border-left: 3px solid transparent;
+  background: var(--m-bg-2);
+  font-family: var(--m-font-ui);
+  transition:
+    background var(--m-dur-3) var(--m-ease),
+    border-color var(--m-dur-3) var(--m-ease),
+    transform var(--m-dur-3) var(--m-ease),
+    box-shadow var(--m-dur-3) var(--m-ease);
+}
+
+.metraly-ai-insight:hover {
+  background: var(--m-bg-3);
+  border-left-color: color-mix(in oklch, var(--m-purple-500) 55%, transparent);
+  transform: translateY(-2px);
+  box-shadow: var(--m-shadow-3);
+}
+
+.metraly-ai-insight__avatar {
+  position: relative;
+  flex-shrink: 0;
+  margin-top: 2px;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--m-r-3);
+  background: linear-gradient(135deg, var(--m-cyan-bg), var(--m-purple-bg));
+  border: 1px solid color-mix(in oklch, var(--m-purple-500) 30%, transparent);
+}
+
+.metraly-ai-insight__avatar-icon { color: var(--m-purple-400); }
+
+.metraly-ai-insight__dot {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--m-r-pill);
+  background: var(--m-cyan-500);
+  border: 1.5px solid var(--m-bg-2);
+}
+
+.metraly-ai-insight__dot.metraly-pulse-dot {
+  animation: m-pulse-dot 2s var(--m-ease) infinite;
+}
+
+.metraly-ai-insight__body { flex: 1; min-width: 0; }
+
+.metraly-ai-insight__head {
+  display: flex;
+  align-items: center;
+  gap: var(--m-2);
+  margin-bottom: 5px;
+}
+
+.metraly-ai-insight__title {
+  font-family: var(--m-font-display);
+  font-size: var(--m-fs-12);
+  font-weight: 600;
+  color: var(--m-fg-0);
+  letter-spacing: -0.005em;
+}
+
+.metraly-ai-insight__tag {
+  flex-shrink: 0;
+  padding: 1px 6px;
+  border-radius: var(--m-r-1);
+  font-family: var(--m-font-mono);
+  font-size: var(--m-fs-9);
+  letter-spacing: 0.04em;
+  color: var(--m-purple-400);
+  background: var(--m-purple-bg);
+  border: 1px solid color-mix(in oklch, var(--m-purple-500) 25%, transparent);
+}
+
+.metraly-ai-insight__text {
+  margin: 0;
+  font-size: var(--m-fs-12);
+  line-height: 1.55;
+  color: var(--m-fg-1);
+  text-wrap: pretty;
+}
+
+.metraly-ai-insight__action {
+  margin-top: var(--m-3);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--m-1);
+  height: 28px;
+  padding: 0 var(--m-3);
+  border-radius: var(--m-r-3);
+  font-family: inherit;
+  font-size: var(--m-fs-11);
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--m-cyan-500);
+  background: var(--m-cyan-bg);
+  border: 1px solid color-mix(in oklch, var(--m-cyan-500) 35%, transparent);
+  transition: background var(--m-dur-2) var(--m-ease);
+}
+
+.metraly-ai-insight__action:hover {
+  background: color-mix(in oklch, var(--m-cyan-500) 22%, transparent);
+}
+
+.metraly-ai-insight__action:focus-visible {
+  outline: none;
+  box-shadow: var(--m-glow-focus);
+}
+
+/* ── InlineInsight ─────────────────────────────────────────────────── */
+.metraly-inline-insight {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--m-2);
+  box-sizing: border-box;
+  min-width: 0;
+  padding: var(--m-3) 14px;
+  border-radius: var(--m-r-4);
+  background: color-mix(in oklch, var(--m-purple-500) 6%, transparent);
+  border: 1px solid color-mix(in oklch, var(--m-purple-500) 18%, transparent);
+  font-family: var(--m-font-ui);
+}
+
+.metraly-inline-insight__icon {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--m-r-2);
+  color: var(--m-purple-400);
+  background: var(--m-purple-bg);
+}
+
+.metraly-inline-insight__body { flex: 1; min-width: 0; }
+
+.metraly-inline-insight__text {
+  margin: 0;
+  font-size: var(--m-fs-11);
+  line-height: 1.55;
+  color: var(--m-fg-1);
+  text-wrap: pretty;
+}
+
+.metraly-inline-insight__action {
+  margin-top: var(--m-2);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--m-1);
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--m-fs-10);
+  font-weight: 500;
+  color: var(--m-cyan-500);
+}
+
+.metraly-inline-insight__action:hover { color: var(--m-cyan-400); }
+
+.metraly-inline-insight__action:focus-visible {
+  outline: none;
+  border-radius: var(--m-r-1);
+  box-shadow: var(--m-glow-focus);
+}

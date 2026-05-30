@@ -1,0 +1,85 @@
+/* Leaderboard — ranked horizontal bar list */
+
+.metraly-leaderboard {
+  --m-lb-accent: var(--m-cyan-500);
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  font-family: var(--m-font-ui);
+}
+
+.metraly-leaderboard__title {
+  margin-bottom: var(--m-3);
+  font-family: var(--m-font-display);
+  font-size: var(--m-fs-11);
+  font-weight: 600;
+  color: var(--m-fg-0);
+  letter-spacing: -0.005em;
+}
+
+.metraly-leaderboard__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.metraly-leaderboard__row {
+  display: grid;
+  grid-template-columns: 18px minmax(56px, 90px) 1fr 56px;
+  align-items: center;
+  gap: var(--m-2);
+}
+
+.metraly-leaderboard__rank {
+  text-align: right;
+  font-family: var(--m-font-mono);
+  font-feature-settings: "tnum";
+  font-size: var(--m-fs-10);
+  color: var(--m-fg-3);
+}
+
+.metraly-leaderboard__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--m-fs-11);
+  color: var(--m-fg-1);
+}
+
+.metraly-leaderboard__track {
+  height: 6px;
+  border-radius: var(--m-r-1);
+  background: var(--m-bg-4);
+  overflow: hidden;
+}
+
+.metraly-leaderboard__bar {
+  display: block;
+  height: 100%;
+  width: var(--m-lb-fill, 0%);
+  border-radius: var(--m-r-1);
+  background: var(--m-lb-accent);
+  opacity: var(--m-lb-opacity, 1);
+  transition: width var(--m-dur-3) var(--m-ease);
+}
+
+.metraly-leaderboard__value {
+  text-align: right;
+  font-family: var(--m-font-mono);
+  font-feature-settings: "tnum";
+  font-size: var(--m-fs-11);
+  color: var(--m-fg-2);
+}
+
+/* leading row — accent gradient + full strength */
+.metraly-leaderboard__row--lead .metraly-leaderboard__bar {
+  opacity: 1;
+  background: linear-gradient(90deg, var(--m-lb-accent), var(--m-purple-500));
+}
+
+.metraly-leaderboard__row--lead .metraly-leaderboard__value {
+  color: var(--m-lb-accent);
+}

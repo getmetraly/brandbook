@@ -288,6 +288,15 @@ export type { PermissionExplainerProps, PermissionScope, ScopeRequirement, Scope
 export { BackfillRangePicker } from "./source/BackfillRangePicker";
 export type { BackfillRangePickerProps, BackfillPresetId, BackfillEstimate, EstimateConfidence } from "./source/BackfillRangePicker";
 
+export { AIInsightCard } from "./components/AIInsightCard";
+export type { AIInsightCardProps } from "./components/AIInsightCard";
+
+export { InlineInsight } from "./components/InlineInsight";
+export type { InlineInsightProps } from "./components/InlineInsight";
+
+export { Leaderboard } from "./components/Leaderboard";
+export type { LeaderboardProps, LeaderboardItem } from "./components/Leaderboard";
+
 export { ConnectionTestPanel } from "./source/ConnectionTestPanel";
 export type { ConnectionTestPanelProps, ConnectionTestStatus, ConnectionCheck } from "./source/ConnectionTestPanel";
 
