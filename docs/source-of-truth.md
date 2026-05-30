@@ -1,30 +1,42 @@
 # Source of Truth
 
-`../docs/prototypes/brandbook/*` is the canonical visual and behavioral reference for the Metraly brandbook rebuild.
+`packages/ui` is the canonical implementation of the Metraly framework UI.
 
-## Working boundaries
+Claude Design and prototype files may be used as visual references, but the source of truth in this cleaned repository is:
 
-- This repository is the only codebase to modify for the rebuild.
-- `../docs` is read-only.
-- `../website` and `../metraly` are read-only.
+```text
+packages/ui/src
+packages/ui/src/styles/metraly-ui.css
+```
 
-## Repo roles
+## Repository scope
 
-- `packages/ui` contains the production React primitives translated from the prototype.
-- `site` is a clean docs and showcase host for `@metraly/ui`.
-- `stories` is the conformance harness for prototype states and scenarios.
-- Markdown docs in this repo describe the current contract only.
+This cleaned repository contains only:
+
+- reusable React components and TypeScript helpers in `packages/ui/src`;
+- CSS files in `packages/ui/src/styles`;
+- package metadata needed to type-check and consume `@metraly/ui`;
+- canonical Markdown documents describing the design system.
+
+It intentionally excludes Storybook, site, e2e tests, visual parity artifacts, migration history, temporary patches, and old implementation reports.
+
+## Package roles
+
+- `components` — base primitives and reusable UI controls.
+- `shell` — application frame, sidebar, topbar, overlays.
+- `dashboard` — dashboard/editor primitives.
+- `charts` — chart wrappers and chart-specific UI.
+- `source` — data/source connection primitives.
+- `settings` — settings/provider primitives.
+- `app-kit` — product-level compositions built from canonical primitives.
+- `styles` — design tokens and component CSS.
 
 ## Validation
 
-Run the repo checks from the root:
+The minimal validation command is:
 
 ```bash
 npm run ui:check
-npm run site:typecheck
-npm run site:test
-npm run build-storybook
-npm run test:e2e
 ```
 
-Use `npm run check` when you want the core type and test pass for `packages/ui` and `site`.
+Storybook and visual tests should live outside this cleaned baseline or be reintroduced later as a deliberate docs/demo layer.
