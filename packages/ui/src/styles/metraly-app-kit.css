@@ -104,7 +104,7 @@
   border: 1px solid color-mix(in srgb, var(--m-purple-500) 35%, transparent);
 }
 .metraly-app-sidebar__item-badge.is-gated {
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   background: var(--m-bg-2);
   border: 1px solid var(--m-line);
 }
@@ -115,7 +115,7 @@
 }
 .metraly-app-sidebar__foot-role {
   font: 500 10px/1 var(--m-font-mono);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 /* foot-inner: used when footer is rendered inside MetralySidebar's footer slot,
@@ -144,7 +144,7 @@
   align-items: center;
   gap: 8px;
 }
-.metraly-app-topbar__search-icon { color: var(--m-fg-3); flex-shrink: 0; }
+.metraly-app-topbar__search-icon { color: var(--m-fg-2); flex-shrink: 0; }
 .metraly-app-topbar__search-input {
   flex: 1;
   border: 0;
@@ -243,7 +243,7 @@
 }
 .metraly-app-widget__sub {
   font: 500 10px/1 var(--m-font-mono);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   letter-spacing: 0.3px;
   text-transform: uppercase;
   margin-top: 3px;
@@ -286,7 +286,7 @@
   justify-content: space-between;
   align-items: center;
   font: 500 10px/1 var(--m-font-mono);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   letter-spacing: 0.3px;
 }
 
@@ -312,7 +312,7 @@
   font: 700 10px/1 var(--m-font-mono);
   text-transform: uppercase;
   letter-spacing: 0.4px;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 .metraly-app-metric-strip__value {
   font: 600 28px/1 var(--m-font-mono);
@@ -322,7 +322,7 @@
 }
 .metraly-app-metric-strip__delta {
   font: 500 11px/1 var(--m-font-mono);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 .metraly-app-metric-strip__delta.is-up   { color: var(--m-ok); }
 .metraly-app-metric-strip__delta.is-down { color: var(--m-err); }
@@ -388,11 +388,11 @@
 .metraly-app-metric--lg { font-size: 40px; }
 .metraly-app-metric-delta {
   font: 500 11px/1 var(--m-font-mono);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 .metraly-app-metric-delta.is-up   { color: var(--m-ok); }
 .metraly-app-metric-delta.is-down { color: var(--m-err); }
-.metraly-app-metric-delta.is-flat { color: var(--m-fg-3); }
+.metraly-app-metric-delta.is-flat { color: var(--m-fg-2); }
 
 /* ============================
    Plugin grid
@@ -431,7 +431,7 @@
 }
 .metraly-app-plugin-meta__cat {
   font: 500 10px/1 var(--m-font-mono);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   margin-top: 4px;
   letter-spacing: 0.3px;
   text-transform: uppercase;
@@ -484,7 +484,7 @@
 }
 .metraly-app-wizard__step-num {
   font: 700 10px/1 var(--m-font-mono);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   letter-spacing: 0.4px;
 }
 .metraly-app-wizard__step-label {
@@ -511,7 +511,7 @@
 .metraly-app-wizard__cadence-note {
   margin: 0;
   font: 500 11px/1.5 var(--m-font-ui);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 .metraly-app-wizard__card-title {
   margin: 0;
@@ -541,7 +541,7 @@
 }
 .metraly-app-wizard__review-row-value {
   font: 500 11px/1 var(--m-font-mono);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 .metraly-app-wizard__review-ic {
   width: 28px;
@@ -566,7 +566,7 @@
 }
 .metraly-app-wizard__footer-status {
   font: 500 11px/1 var(--m-font-mono);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 /* ============================
@@ -604,7 +604,7 @@
 }
 .metraly-app-icon-item__name {
   font: 500 9px/1.3 var(--m-font-mono);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   text-align: center;
   letter-spacing: 0.3px;
   word-break: break-all;
@@ -678,7 +678,7 @@
   border-bottom: 1px solid var(--m-line-faint);
   text-align: left;
   font: 600 11px/1 var(--m-font-ui);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 .metraly-app-health-table td {
   padding: 8px 12px;
@@ -708,7 +708,7 @@
 }
 .metraly-app-risk-list__id {
   font: 500 11px/1 var(--m-font-mono);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   flex-shrink: 0;
 }
 .metraly-app-risk-list__title {

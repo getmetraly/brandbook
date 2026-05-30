@@ -55,7 +55,7 @@
 
 .metraly-sidebar-section__label {
   padding: 0 var(--m-2);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   font-size: var(--m-fs-9);
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -205,7 +205,7 @@
 }
 
 .metraly-topbar__breadcrumb {
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   font-family: var(--m-font-mono);
   font-size: var(--m-fs-9);
   letter-spacing: 0.04em;
@@ -304,7 +304,7 @@
 }
 
 .metraly-drawer__description {
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   font-family: var(--m-font-mono);
   font-size: var(--m-fs-9);
   letter-spacing: 0.04em;
@@ -419,7 +419,7 @@
 }
 
 .metraly-bottom-sheet__description {
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   font-family: var(--m-font-mono);
   font-size: var(--m-fs-9);
   letter-spacing: 0.04em;
@@ -665,7 +665,7 @@
 }
 
 .metraly-overlay-shell__description {
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   font-family: var(--m-font-mono);
   font-size: var(--m-fs-9);
   letter-spacing: 0.04em;

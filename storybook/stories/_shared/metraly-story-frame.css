@@ -56,7 +56,7 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 .msf__section-title {
@@ -65,7 +65,7 @@
 
 .msf__eyebrow {
   font-size: var(--m-fs-10);
-  color: var(--m-fg-4);
+  color: var(--m-fg-2);
 }
 
 .msf__title {
@@ -118,7 +118,7 @@
   padding: 2px var(--m-2);
   border-radius: var(--m-r-2);
   background: var(--m-bg-2);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
 }
 
 /* Content area */
@@ -263,7 +263,7 @@
   flex: 1;
   padding: var(--m-6);
   background: var(--m-bg-1);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   font-size: var(--m-fs-12);
 }
 
@@ -325,7 +325,7 @@
 
 .msf__icon-name {
   font-size: var(--m-fs-9);
-  color: var(--m-fg-3);
+  color: var(--m-fg-2);
   text-align: center;
   word-break: break-all;
 }
