@@ -1,17 +1,16 @@
-import type { Preview } from "@storybook/react";
+import type { Preview } from "@storybook/react-vite";
 import React from "react";
-
+import { initialize, mswLoader } from "msw-storybook-addon";
 // ── 1. Design-system CSS entrypoint ─────────────────────────────────────────
 // This is the ONLY CSS source that should style components. Individual
 // component stylesheets are already @import-ed by metraly-ui.css.
 import "../../packages/ui/src/styles/metraly-ui.css";
-
 // ── 2. Storybook canvas helpers (background, padding, frame utilities) ───────
 import "./preview.css";
-
+import { mswHandlers } from "./msw-handlers";
 // ── 3. ThemeProvider decorator ───────────────────────────────────────────────
 import { ThemeProvider } from "@metraly/ui";
-
+initialize({ onUnhandledRequest: "bypass" });
 const withTheme = (Story: React.ComponentType) =>
   React.createElement(
     ThemeProvider,
@@ -21,7 +20,11 @@ const withTheme = (Story: React.ComponentType) =>
 
 const preview: Preview = {
   decorators: [withTheme],
+  loaders: [mswLoader],
   parameters: {
+    msw: {
+      handlers: mswHandlers,
+    },
     backgrounds: {
       // Match the Metraly dark canvas; light mode can be toggled via toolbar
       default: "dark",

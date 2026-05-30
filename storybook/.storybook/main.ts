@@ -10,7 +10,11 @@ function getAbsolutePath(value: string) {
 const configDir = dirname(fileURLToPath(import.meta.url));
 
 const config: StorybookConfig = {
-  stories: ["../stories/**/*.mdx", "../stories/**/*.stories.@(ts|tsx)"],
+  stories: [
+    "../stories/**/*.mdx",
+    "../stories/**/*.stories.tsx",
+    "../../packages/ui/src/**/*.stories.tsx",
+  ],
   addons: [
     getAbsolutePath("@storybook/addon-a11y"),
     getAbsolutePath("@storybook/addon-docs"),
@@ -22,6 +26,7 @@ const config: StorybookConfig = {
     name: getAbsolutePath("@storybook/react-vite"),
     options: {},
   },
+  staticDirs: ["../../public"],
   docs: {
     autodocs: "tag",
   },

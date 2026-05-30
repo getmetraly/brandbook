@@ -22,6 +22,8 @@
     "@vitejs/plugin-react": "^4.5.2",
     "@vitest/browser-playwright": "^4.1.7",
     "@vitest/coverage-v8": "^4.1.7",
+    "msw": "^2.14.6",
+    "msw-storybook-addon": "^2.0.7",
     "playwright": "^1.60.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -30,5 +32,10 @@
     "typescript": "^5.8.3",
     "vite": "^6.3.5",
     "vitest": "^4.1.7"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }
