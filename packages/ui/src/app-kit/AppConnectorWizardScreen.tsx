@@ -62,7 +62,7 @@ export function AppConnectorWizardScreen({
           </ol>
 
           <section className="metraly-app-wizard__card" aria-labelledby="wiz-heading">
-            <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
+            <header className="metraly-app-wizard__card-head">
               <div>
                 <h2 id="wiz-heading" className="metraly-app-wizard__card-title">
                   Review GitHub scope
@@ -88,7 +88,7 @@ export function AppConnectorWizardScreen({
               ))}
             </div>
 
-            <p style={{ font: "500 11px/1.5 var(--m-font-ui)", color: "var(--m-fg-3)", margin: 0 }}>
+            <p className="metraly-app-wizard__cadence-note">
               Sync cadence will be set in the next step…
             </p>
           </section>

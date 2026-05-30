@@ -46,3 +46,4 @@
 /* App Kit screen-level composition components */
 @import "./metraly-app-kit.css";
 @import "./metraly-ai-workspace.css";
+@import "./metraly-plugins.css";

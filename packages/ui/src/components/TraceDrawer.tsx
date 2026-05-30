@@ -40,9 +40,9 @@ export function TraceDrawer({ open, onClose, steps, title = "AI reasoning" }: Tr
   return (
     <MetralyDrawer open={open} onOpenChange={(o) => { if (!o) onClose(); }} title={title} side="right" width="min(480px, 100vw)">
       {isRunning && (
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, padding: "6px 10px", borderRadius: 8, background: "color-mix(in srgb, var(--m-cyan-500, var(--cyan)) 8%, transparent)" }}>
+        <div className="metraly-trace__running">
           <PulseMarker tone="live" />
-          <span style={{ fontSize: "var(--m-fs-12, 12px)", color: "var(--m-cyan-500, var(--cyan))" }}>Analysing…</span>
+          <span className="metraly-trace__running-label">Analysing…</span>
         </div>
       )}
       <StepRail steps={railSteps} orientation="vertical" ariaLabel="AI reasoning steps" />

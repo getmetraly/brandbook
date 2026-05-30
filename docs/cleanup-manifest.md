@@ -1,57 +1,95 @@
-# Repository Cleanup Manifest
+# Cleanup Manifest
 
-Generated from `brandbook-main(2).zip`.
+Records what the V2 baseline keeps and removes, anchored to `getmetraly/brandbook@main`
+(commit `940013a`). This supersedes the earlier manifest, which was generated from a
+`.zip` snapshot and is no longer the reference.
 
-## Goal
-
-Create a minimal brandbook repository that keeps only:
-
-- `packages/ui` React/TypeScript source and CSS;
-- package metadata required for the UI package;
-- canonical Markdown files that describe the design system.
-
-## Kept content
+## Kept paths
 
 ```text
 README.md
 package.json
-packages/ui/package.json
-packages/ui/tsconfig.json
-packages/ui/src/**/*.ts
-packages/ui/src/**/*.tsx
-packages/ui/src/**/*.css
+.gitignore
 docs/source-of-truth.md
-docs/design-principles.md
+docs/style-contract.md
+docs/component-model.md
+docs/component-inventory.md
 docs/component-contract.md
-docs/component-design-recipes.md
 docs/composition-patterns.md
+docs/design-principles.md
 docs/responsive-contract.md
 docs/prototype-visual-spec.md
-docs/style-contract.md
+docs/component-design-recipes.md
+docs/contribution-guide.md
+docs/storybook-roadmap.md
 docs/cleanup-manifest.md
+docs/v2-cleanup-audit.md
+docs/v2-readiness-report.md
+packages/ui/package.json
+packages/ui/tsconfig.json
+packages/ui/.gitignore
+packages/ui/src/index.ts
+packages/ui/src/{components,shell,dashboard,charts,source,settings,app-kit,wizard}/**/*.{ts,tsx}
+packages/ui/src/styles/**/*.css
 ```
 
-## Removed content categories
+## Deleted paths
 
-- `.tmp` visual parity artifacts and screenshots;
-- Storybook stories and story-only helpers;
-- `site` docs/showcase app;
-- e2e and test harnesses;
-- root Jest/Vitest/Playwright configs;
-- package lock files;
-- scripts and generated patch history;
-- migration reports, phase notes, old audit backlogs, and temporary implementation documents;
-- `packages/ui/assets` because current components inline their SVG/logo surfaces and the asset export was removed;
-- `packages/ui/migration` because it is migration history, not current design system source.
+```text
+test-results/                     (generated Playwright run metadata)
+```
 
-## Counts
+## Deleted because temporary
 
-- Original files: 410
-- Kept files in cleaned repo: 151
-- Removed original files: 264
+```text
+(none remaining — temporary artifacts were removed by the prior cleanup pass)
+```
+
+## Deleted because legacy report / audit
+
+```text
+(none remaining in repo — audit/report backlog was removed by the prior pass;
+ the canonical audit now lives at docs/v2-cleanup-audit.md)
+```
+
+## Deleted because Storybook / site scaffold not part of V2 core
+
+```text
+(none remaining — Storybook host, stories, and site app already removed.
+ Reintroduction plan: docs/storybook-roadmap.md)
+```
+
+## Deleted because generated
+
+```text
+test-results/.last-run.json
+```
+
+## Changed (not deleted) on the way to V2
+
+```text
+packages/ui/src/components/EvidencePanel.tsx        inline styles → metraly-evidence-* CSS
+packages/ui/src/components/PluginCatalog.tsx        inline styles → metraly-plugins.css
+packages/ui/src/components/PluginReviewDrawer.tsx   inline styles → metraly-plugin-review-* CSS
+packages/ui/src/components/TraceDrawer.tsx          inline styles → metraly-trace__running CSS
+packages/ui/src/app-kit/AppConnectorWizardScreen.tsx inline styles → metraly-app-wizard-* CSS
+packages/ui/src/styles/metraly-ai-workspace.css     + evidence/trace rules
+packages/ui/src/styles/metraly-app-kit.css          + card-head / cadence-note rules
+packages/ui/src/styles/metraly-plugins.css          NEW — plugins surface stylesheet
+packages/ui/src/styles/metraly-ui.css               + @import metraly-plugins.css
+```
+
+## Review later
+
+```text
+docs/component-design-recipes.md   small; consider folding into contribution-guide.md
+prototype-visual-spec.md           large; verify it still matches V2 tokens before each prototype
+[data-theme="light"] tokens        defined but not verified across the component set
+```
 
 ## Notes
 
-This cleanup intentionally removes Storybook and site commands from the root package because those folders are no longer present in the minimal baseline.
-
-Future Storybook/docs work should be reintroduced as a deliberate layer, not mixed with the package source baseline.
+This baseline removes Storybook and site commands from the root `package.json` because
+those folders are no longer present. The root scripts are `ui:check` and `check` only.
+Future Storybook/docs work returns as a separate `apps/` workspace, never inside
+`packages/ui/src`.

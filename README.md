@@ -1,29 +1,44 @@
 # Metraly Brandbook
 
-Minimal source for the Metraly framework UI package.
+Canonical design-system source for the **Metraly** UI — a privacy-first, self-hosted
+Engineering Intelligence platform. Dark engineering dashboards, composable React
+primitives, and a single CSS token contract.
 
-This repository intentionally keeps only:
+This repository is the **source of truth** for the visual system. It ships one package
+(`@metraly/ui`) and the canonical docs that govern it. It deliberately contains **no**
+Storybook host, site app, test harness, migration history, or generated artifacts —
+those are reintroduced later as deliberate layers, never mixed into the package source.
 
-- `packages/ui` source files: React components, TypeScript helpers, and CSS;
-- canonical Markdown documents that describe the design system contract.
+## Layout
 
-Removed from this cleaned baseline:
-
-- Storybook host and stories;
-- site/docs application;
-- e2e and test harnesses;
-- temporary visual parity artifacts;
-- migration reports, audit backlog, old phase notes, and generated patch history.
+```text
+.
+├── README.md
+├── package.json                  ← workspace root (runs ui:check)
+├── docs/                         ← canonical V2 documentation (see below)
+└── packages/
+    └── ui/                       ← @metraly/ui — the only published surface
+        ├── package.json
+        ├── tsconfig.json
+        └── src/
+            ├── index.ts          ← single public export barrel
+            ├── components/       ← primitives, foundations, controls, badges
+            ├── shell/            ← app frame: shell, sidebar, topbar, overlays
+            ├── dashboard/        ← dashboard / editor / widget primitives
+            ├── charts/           ← chart wrappers, gauge, heatmap
+            ├── source/           ← connector / data-source primitives
+            ├── settings/         ← settings + AI-provider primitives
+            ├── app-kit/          ← screen-level compositions of the primitives
+            └── styles/           ← tokens + per-component CSS (one entrypoint)
+```
 
 ## Package
-
-The production package lives in:
 
 ```text
 packages/ui
 ```
 
-Public CSS entrypoint:
+Public CSS entrypoint (import once, get every component's styles):
 
 ```text
 packages/ui/src/styles/metraly-ui.css
@@ -36,10 +51,35 @@ npm install
 npm run ui:check
 ```
 
-## Design system rules
+## The five rules
 
-- Active classes use `metraly-*`.
-- Design tokens use `--m-*`.
-- `packages/ui/src/styles/metraly-ui.css` is the single public CSS entrypoint.
-- Components should be improved in-place before adding parallel AppKit-only implementations.
-- AppKit screens are composition examples built from canonical primitives.
+1. **Tokens, not literals.** Use `--m-*` design tokens. No raw hex / `rgb()` / `hsl()` in
+   active UI. `--metraly-*` aliases exist only as compatibility bridges.
+2. **`metraly-*` classes only.** No `m-*`, `brand-*`, `claude-*` active classes.
+   (`@keyframes m-*` names are exempt — keyframes are not a class contract.)
+3. **One CSS entrypoint.** Every new component stylesheet is `@import`ed into
+   `styles/metraly-ui.css`.
+4. **Foundations first.** Build on `CardShell` / `FieldShell` / `OverlayShell` /
+   `StateBlock` / `NavigationItemFrame` before forking new structure. Semantic
+   components compose foundations; they do not duplicate them.
+5. **AppKit composes, never forks.** `app-kit/*` screens are examples assembled from
+   the canonical primitives — they add no parallel visual system.
+
+## Documentation
+
+| Doc | Purpose |
+| --- | --- |
+| [`docs/source-of-truth.md`](docs/source-of-truth.md) | What is canonical and what this repo excludes. |
+| [`docs/style-contract.md`](docs/style-contract.md) | Token / class / CSS / inline-style rules. |
+| [`docs/component-model.md`](docs/component-model.md) | Foundation → semantic → composition layering. |
+| [`docs/component-inventory.md`](docs/component-inventory.md) | Every exported component, its path and CSS. |
+| [`docs/component-contract.md`](docs/component-contract.md) | Per-component API & behavior contract (reference). |
+| [`docs/composition-patterns.md`](docs/composition-patterns.md) | How primitives compose into screens. |
+| [`docs/design-principles.md`](docs/design-principles.md) | The visual personality in prose. |
+| [`docs/responsive-contract.md`](docs/responsive-contract.md) | Breakpoints and overflow rules. |
+| [`docs/prototype-visual-spec.md`](docs/prototype-visual-spec.md) | Visual spec for building Metraly-flavored prototypes. |
+| [`docs/contribution-guide.md`](docs/contribution-guide.md) | How to add or change a component without breaking the contract. |
+| [`docs/storybook-roadmap.md`](docs/storybook-roadmap.md) | Plan to reintroduce Storybook as a deliberate layer. |
+| [`docs/cleanup-manifest.md`](docs/cleanup-manifest.md) | What was kept / removed to reach this baseline. |
+| [`docs/v2-cleanup-audit.md`](docs/v2-cleanup-audit.md) | The V2 audit this baseline was verified against. |
+| [`docs/v2-readiness-report.md`](docs/v2-readiness-report.md) | V2 readiness summary + validation results. |

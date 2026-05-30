@@ -1,15 +1,5 @@
-# dependencies
 node_modules/
-
-# build outputs
 dist/
 build/
-.storybook-static/
-storybook-static/
-.next/
-coverage/
-
-# local temp
-.tmp/
+*.tsbuildinfo
 .DS_Store
-.env*

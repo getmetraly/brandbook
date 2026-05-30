@@ -479,6 +479,17 @@
   display: grid;
   gap: 16px;
 }
+.metraly-app-wizard__card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.metraly-app-wizard__cadence-note {
+  margin: 0;
+  font: 500 11px/1.5 var(--m-font-ui);
+  color: var(--m-fg-3);
+}
 .metraly-app-wizard__card-title {
   margin: 0;
   font: 700 20px/1.2 var(--m-font-display);

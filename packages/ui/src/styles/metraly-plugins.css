@@ -1,0 +1,121 @@
+/* metraly-plugins.css
+ * Plugins surface — PluginCatalog grid + filter toolbar and PluginReviewDrawer.
+ *
+ * Classes: metraly-plugin-catalog__*, metraly-plugin-review__*
+ * Tokens: --m-* only. No raw colors, no raw rgb(). */
+
+/* ---- Catalog container ---- */
+.metraly-plugin-catalog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m-4);
+}
+
+/* ---- Filter toolbar ---- */
+.metraly-plugin-catalog__toolbar {
+  display: flex;
+  gap: var(--m-3);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.metraly-plugin-catalog__search {
+  flex: 1 1 200px;
+  min-width: 160px;
+}
+
+.metraly-plugin-catalog__cats {
+  display: flex;
+  gap: var(--m-1);
+  flex-wrap: wrap;
+}
+
+/* ---- Category filter chip ---- */
+.metraly-plugin-catalog__cat {
+  padding: 7px 14px;
+  border-radius: var(--m-r-3);
+  cursor: pointer;
+  border: 1px solid var(--m-line);
+  background: var(--m-bg-1);
+  color: var(--m-fg-2);
+  font-family: var(--m-font-ui);
+  font-size: var(--m-fs-12);
+  transition:
+    background var(--m-dur-1) var(--m-ease),
+    border-color var(--m-dur-1) var(--m-ease),
+    color var(--m-dur-1) var(--m-ease);
+}
+
+.metraly-plugin-catalog__cat:hover {
+  background: var(--m-bg-2);
+  color: var(--m-fg-0);
+}
+
+.metraly-plugin-catalog__cat[data-active="true"] {
+  border-color: color-mix(in srgb, var(--m-cyan-500) 40%, transparent);
+  background: var(--m-cyan-bg);
+  color: var(--m-cyan-500);
+}
+
+.metraly-plugin-catalog__cat:focus-visible {
+  outline: none;
+  box-shadow: var(--m-glow-focus);
+}
+
+/* ---- Plugin grid ---- */
+.metraly-plugin-catalog__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--m-3);
+}
+
+/* ---- Plugin icon tile (color driven by --m-plugin-icon override) ---- */
+.metraly-plugin-catalog__icon {
+  --m-plugin-icon: var(--m-cyan-500);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--m-r-4);
+  background: color-mix(in srgb, var(--m-plugin-icon) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--m-plugin-icon) 20%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-weight: 700;
+  font-size: var(--m-fs-13);
+  color: var(--m-plugin-icon);
+}
+
+/* ---- Card footer actions ---- */
+.metraly-plugin-catalog__actions {
+  display: flex;
+  gap: var(--m-2);
+  justify-content: flex-end;
+}
+
+/* ---- Card description ---- */
+.metraly-plugin-catalog__desc {
+  margin: 0;
+  font-size: var(--m-fs-11);
+  color: var(--m-fg-2);
+  line-height: 1.5;
+}
+
+/* ---- Review drawer ---- */
+.metraly-plugin-review {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m-4);
+}
+
+.metraly-plugin-review__head {
+  display: flex;
+  align-items: center;
+  gap: var(--m-2);
+}
+
+.metraly-plugin-review__category {
+  flex: 1;
+  font-size: var(--m-fs-12);
+  color: var(--m-fg-1);
+}

@@ -1,39 +1,4 @@
-# UI package dependencies
 node_modules/
-
-# Build output
-build/
 dist/
-lib/
-.tmp/
-.cache/
-
-# Storybook generated output
-storybook-static/
-
-# Tests and coverage
-coverage/
-
-# TypeScript cache
+build/
 *.tsbuildinfo
-
-# Logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-*.log
-
-# Local environment
-.env
-.env.*
-!.env.example
-!.env.sample
-
-# Local machine / editor files
-.DS_Store
-Thumbs.db
-.idea/
-.vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json

@@ -50,33 +50,22 @@ export function PluginCatalog({
   });
 
   return (
-    <div className={["metraly-plugin-catalog", className].filter(Boolean).join(" ")} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
+    <div className={["metraly-plugin-catalog", className].filter(Boolean).join(" ")}>
+      <div className="metraly-plugin-catalog__toolbar">
         <MetralyInput
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search plugins…"
-          style={{ flex: 1, minWidth: 160 }}
+          wrapperClassName="metraly-plugin-catalog__search"
         />
-        <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+        <div className="metraly-plugin-catalog__cats">
           {allCategories.map((cat) => (
             <button
               key={cat}
               type="button"
+              className="metraly-plugin-catalog__cat"
+              data-active={activeCategory === cat ? "true" : undefined}
               onClick={() => setActiveCategory(cat)}
-              style={{
-                padding: "7px 14px",
-                borderRadius: 8,
-                cursor: "pointer",
-                border: activeCategory === cat
-                  ? "1px solid color-mix(in srgb, var(--m-cyan-500, var(--cyan)) 40%, transparent)"
-                  : "1px solid var(--m-line, var(--border))",
-                background: activeCategory === cat
-                  ? "color-mix(in srgb, var(--m-cyan-500, var(--cyan)) 10%, transparent)"
-                  : "var(--m-bg-1, var(--glass))",
-                color: activeCategory === cat ? "var(--m-cyan-500, var(--cyan))" : "var(--m-fg-2, var(--muted2))",
-                fontSize: 13,
-              }}
             >
               {cat}
             </button>
@@ -87,27 +76,15 @@ export function PluginCatalog({
       {filtered.length === 0 ? (
         <StateBlock variant="no-results" description="Try a different search or category." />
       ) : (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 14 }}>
+        <div className="metraly-plugin-catalog__grid">
           {filtered.map((p) => (
             <CardShell
               key={p.id}
               density="compact"
               leading={
                 <span
-                  style={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: 10,
-                    background: `color-mix(in srgb, ${p.iconColor ?? "var(--m-cyan-500, var(--cyan))"} 12%, transparent)`,
-                    border: `1px solid color-mix(in srgb, ${p.iconColor ?? "var(--m-cyan-500, var(--cyan))"} 20%, transparent)`,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                    fontWeight: 700,
-                    fontSize: 14,
-                    color: p.iconColor ?? "var(--m-cyan-500, var(--cyan))",
-                  }}
+                  className="metraly-plugin-catalog__icon"
+                  style={p.iconColor ? ({ "--m-plugin-icon": p.iconColor } as React.CSSProperties) : undefined}
                   aria-hidden="true"
                 >
                   {p.name.charAt(0)}
@@ -127,7 +104,7 @@ export function PluginCatalog({
                   : undefined
               }
               footer={
-                <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
+                <div className="metraly-plugin-catalog__actions">
                   {onReview && !p.installed && (
                     <MetralyButton variant="ghost" size="sm" onClick={() => onReview(p.id)}>
                       Review
@@ -143,7 +120,7 @@ export function PluginCatalog({
                 </div>
               }
             >
-              <p style={{ margin: 0, fontSize: "var(--m-fs-12, 12px)", color: "var(--m-fg-2, var(--muted))", lineHeight: 1.5 }}>
+              <p className="metraly-plugin-catalog__desc">
                 {p.description}
               </p>
             </CardShell>

@@ -222,3 +222,49 @@
   gap: 4px;
   padding: 4px 0;
 }
+
+/* ---- EvidencePanel grid (AnswerCard / AI Workspace evidence) ---- */
+.metraly-evidence-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--m-2);
+}
+
+.metraly-evidence-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px;
+  border-radius: var(--m-r-3);
+  background: var(--m-bg-1);
+  border: 1px solid var(--m-line);
+}
+
+.metraly-evidence-cell__label {
+  font-size: var(--m-fs-10);
+  color: var(--m-fg-2);
+}
+
+.metraly-evidence-cell__value {
+  font-size: var(--m-fs-14);
+  font-weight: 600;
+  color: var(--m-fg-0);
+  font-family: var(--m-font-mono);
+  font-feature-settings: "tnum";
+}
+
+/* ---- TraceDrawer running banner ---- */
+.metraly-trace__running {
+  display: flex;
+  align-items: center;
+  gap: var(--m-2);
+  margin-bottom: var(--m-3);
+  padding: 6px 10px;
+  border-radius: var(--m-r-3);
+  background: var(--m-cyan-bg);
+}
+
+.metraly-trace__running-label {
+  font-size: var(--m-fs-11);
+  color: var(--m-cyan-500);
+}

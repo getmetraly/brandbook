@@ -60,9 +60,9 @@ export function PluginReviewDrawer({ open, plugin, permissions, onInstall, onClo
       side="right"
       width="min(440px, 100vw)"
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <div style={{ flex: 1, fontSize: "var(--m-fs-13, 13px)", color: "var(--m-fg-1, var(--muted2))" }}>
+      <div className="metraly-plugin-review">
+        <div className="metraly-plugin-review__head">
+          <div className="metraly-plugin-review__category">
             {plugin.category}
           </div>
           <PermissionBadge level={riskToLevel(maxRisk)} />
