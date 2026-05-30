@@ -36,6 +36,14 @@ export function MetralyCheckbox({
   className,
   onChange,
 }: MetralyCheckboxProps) {
+  const inputRef = React.useRef<HTMLInputElement | null>(null);
+
+  React.useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.indeterminate = indeterminate;
+    }
+  }, [indeterminate]);
+
   return (
     <FieldShell
       as="label"
@@ -53,6 +61,7 @@ export function MetralyCheckbox({
       {({ controlId, descriptionId, helperText, hasError, isDisabled }) => (
         <>
           <input
+            ref={inputRef}
             id={controlId}
             name={name}
             value={value}
@@ -61,7 +70,6 @@ export function MetralyCheckbox({
             checked={checked}
             defaultChecked={defaultChecked}
             disabled={isDisabled}
-            aria-checked={indeterminate ? "mixed" : undefined}
             aria-invalid={hasError || undefined}
             aria-describedby={descriptionId}
             aria-busy={loading || undefined}

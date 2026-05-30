@@ -53,8 +53,8 @@ export const Overview: Story = {
           <MetralyButton variant="secondary" iconRight={<MetralyIcon name="chevronDown" size="sm" />}>
             Open menu
           </MetralyButton>
-          <MetralyButton variant="ghost" iconLeft={<MetralyIcon name="search" size="sm" />} />
-          <MetralyButton variant="neutral" iconLeft={<MetralyIcon name="settings" size="sm" />} />
+          <MetralyButton variant="ghost" iconLeft={<MetralyIcon name="search" size="sm" />} aria-label="Search" />
+          <MetralyButton variant="neutral" iconLeft={<MetralyIcon name="settings" size="sm" />} aria-label="Open settings" />
         </div>
       </section>
 

@@ -37,12 +37,17 @@ export const MetralyButton = React.forwardRef<
       children,
       className,
       type,
+      title,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy,
       ...props
     },
     ref,
   ) => {
     const isDisabled = disabled || loading;
     const iconOnly = !children && (iconLeft || iconRight || loading);
+    const accessibleName = ariaLabel || ariaLabelledBy || title;
+    const fallbackIconLabel = iconOnly && !accessibleName ? "Icon button" : undefined;
 
     const classes = [
       "metraly-button",
@@ -61,7 +66,10 @@ export const MetralyButton = React.forwardRef<
         className={classes}
         disabled={isDisabled}
         aria-disabled={isDisabled || undefined}
+        aria-label={ariaLabel || fallbackIconLabel}
+        aria-labelledby={ariaLabelledBy}
         data-loading={loading ? "true" : "false"}
+        title={title}
         type={type ?? "button"}
         {...props}
       >
