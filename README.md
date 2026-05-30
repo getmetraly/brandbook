@@ -1,32 +1,45 @@
-# Metraly PluginCatalog Storybook filter refinement
+# Metraly Brandbook
 
-Commit message:
+Minimal source for the Metraly framework UI package.
 
-```bash
-fix(storybook): align plugin catalog filters with app preview
+This repository intentionally keeps only:
+
+- `packages/ui` source files: React components, TypeScript helpers, and CSS;
+- canonical Markdown documents that describe the design system contract.
+
+Removed from this cleaned baseline:
+
+- Storybook host and stories;
+- site/docs application;
+- e2e and test harnesses;
+- temporary visual parity artifacts;
+- migration reports, audit backlog, old phase notes, and generated patch history.
+
+## Package
+
+The production package lives in:
+
+```text
+packages/ui
 ```
 
-Copy from the extracted archive root into `getmetraly/brandbook` on branch `docs/metraly-ui-ux-migration-plan`:
+Public CSS entrypoint:
+
+```text
+packages/ui/src/styles/metraly-ui.css
+```
+
+Type check:
 
 ```bash
-cp -R stories/* ./stories/
-
+npm install
 npm run ui:check
-npm run site:typecheck
-npm run site:test
-npm run build-storybook
 ```
 
-Files included:
+## Design system rules
 
-- `stories/PluginCatalog.stories.tsx`
-- `DELETE_FILES.md`
-
-What changed:
-
-- Removed the FilterBar/Category/Search wrapper from the PluginCatalog scenario.
-- Replaced it with an app-like toolbar: long search input first, compact category chips after it.
-- Removed visible `Search` and `Category` labels.
-- Removed the heavy outer catalog border/container so the story feels like the app preview surface.
-- Constrained the scenario width to keep fullscreen Storybook compact.
-- Kept mobile behavior readable: search stacks above horizontally scrollable category chips.
+- Active classes use `metraly-*`.
+- Design tokens use `--m-*`.
+- `packages/ui/src/styles/metraly-ui.css` is the single public CSS entrypoint.
+- Components should be improved in-place before adding parallel AppKit-only implementations.
+- AppKit screens are composition examples built from canonical primitives.

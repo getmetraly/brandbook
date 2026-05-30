@@ -18,7 +18,6 @@
     "./styles/*": "./src/styles/*",
     "./source/*": "./src/source/*.tsx",
     "./settings/*": "./src/settings/*.tsx",
-    "./assets/*": "./assets/*",
     "./charts": "./src/charts/index.ts",
     "./dashboard": "./src/dashboard/WidgetRegistry.ts",
     "./dashboard/types": "./src/dashboard/types.ts",

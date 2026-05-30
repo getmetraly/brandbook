@@ -1,27 +1,12 @@
 {
   "private": true,
-  "name": "metraly-brandbook-root",
+  "name": "metraly-brandbook",
   "version": "0.1.0",
-  "scripts": {
-    "clean:install": "rm -rf node_modules site/node_modules packages/ui/node_modules package-lock.json site/package-lock.json packages/ui/package-lock.json",
-    "install:safe": "npm install --no-audit --no-fund",
-    "site:typecheck": "npm --prefix site run typecheck",
-    "site:test": "npm --prefix site run test",
-    "site:build": "npm --prefix site run build",
-    "site:dev": "npm --prefix site run dev",
-    "ui:check": "npm --prefix packages/ui run typecheck",
-    "check": "npm run ui:check && npm run site:typecheck && npm run site:test",
-    "e2e:install": "playwright install chromium",
-    "test:e2e": "playwright test --config=playwright.config.ts",
-    "storybook": "npm --prefix site run storybook",
-    "build-storybook": "npm --prefix site run build-storybook",
-    "clean:legacy": "bash scripts/clean-legacy.sh"
-  },
   "workspaces": [
-    "packages/ui",
-    "site"
+    "packages/ui"
   ],
-  "devDependencies": {
-    "@playwright/test": "1.59.1"
+  "scripts": {
+    "ui:check": "npm --prefix packages/ui run typecheck",
+    "check": "npm run ui:check"
   }
 }
