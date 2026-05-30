@@ -1,0 +1,115 @@
+/* MetralyStoryFrame — Storybook visual documentation wrapper.
+ * Only controls story layout, not component appearance.
+ */
+
+.msf {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  box-sizing: border-box;
+}
+
+.msf--full-width {
+  max-width: none;
+}
+
+.msf--fullscreen {
+  max-width: none;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Header */
+.msf__header {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-bottom: 1px solid var(--m-border, rgba(255,255,255,0.08));
+  padding-bottom: 16px;
+}
+
+.msf__category {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--m-fg-muted2, rgba(255,255,255,0.4));
+}
+
+.msf__title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--m-fg, rgba(255,255,255,0.9));
+  margin: 0;
+}
+
+.msf__description {
+  font-size: 13px;
+  color: var(--m-fg-muted, rgba(255,255,255,0.55));
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Tags row */
+.msf__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.msf__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--m-ok-bg, rgba(74,222,128,0.12));
+  color: var(--m-ok, #4ade80);
+}
+
+.msf__status--wip {
+  background: rgba(251,191,36,0.12);
+  color: #fbbf24;
+}
+
+.msf__status--planned {
+  background: rgba(148,163,184,0.12);
+  color: rgba(148,163,184,0.8);
+}
+
+.msf__tag {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.5);
+}
+
+/* Content area */
+.msf__content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Product preview — full-width, bounded frame */
+.msf__product-preview {
+  border: 1px solid var(--m-border, rgba(255,255,255,0.08));
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--m-bg-raised, #131920);
+}
+
+/* No-header variant for fullscreen stories */
+.msf--fullscreen .msf__header {
+  display: none;
+}

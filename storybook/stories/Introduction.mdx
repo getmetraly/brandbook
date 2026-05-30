@@ -1,0 +1,54 @@
+{/* Introduction.mdx */}
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Introduction" />
+
+# Metraly Design System — V2
+
+This Storybook documents every component exported from `@metraly/ui`.
+
+It is a **clean documentation layer** that sits on top of the package — no story code
+lives inside `packages/ui/src`, and no component API is altered by Storybook.
+
+## CSS entrypoint
+
+All stories load a single CSS file:
+
+```
+packages/ui/src/styles/metraly-ui.css
+```
+
+This aggregator `@import`s every component stylesheet. Individual stylesheets remain
+importable but stories do not use them directly — a component missing from the
+aggregator is a bug in the package, not the story.
+
+## Structure
+
+| Group | Contents |
+| --- | --- |
+| **Core** | Buttons, inputs, badges, cards, icons, empty states, skeletons, segmented controls, filter bars, pulse markers |
+| **Shell** | Application shell, sidebar, topbar, navigation tree |
+| **Dashboard** | Widget grid, widget picker, wizard builder, move-menu a11y |
+| **Charts** | Gauge, heatmap |
+| **Source** | Token input, permission explainer, backfill picker, connection test, sync progress |
+| **Settings** | Settings section, audit row, AI provider connector, BYO-LLM panel |
+| **AppKit** | Full-screen screen compositions (Dashboard, AI Workspace, Plugins, Connector Wizard, Icon Library) |
+
+## Story conventions
+
+- **Finished state** — stories show realistic, production-representative data; they are not raw prop playgrounds.
+- **No copied HTML** — every story imports from `@metraly/ui` directly.
+- **No inline layout styles** — layout is controlled by `metraly-*` CSS classes or the `MetralyStoryFrame` helper.
+- **ProductPreview** — App-kit stories render the full screen inside a bounded, overflow-safe frame.
+
+## Packages
+
+| Package | Role |
+| --- | --- |
+| `@metraly/ui` | Source of truth — components, styles, types |
+| `storybook/` | Documentation layer — stories, helpers, canvas config |
+
+## Theme
+
+Stories render inside a `ThemeProvider` set to `dark` mode. Switch to light mode
+via the Storybook toolbar → background toggle.

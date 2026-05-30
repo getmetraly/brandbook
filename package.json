@@ -7,6 +7,21 @@
   ],
   "scripts": {
     "ui:check": "npm --prefix packages/ui run typecheck",
-    "check": "npm run ui:check"
+    "check": "npm run ui:check",
+    "storybook": "storybook dev -p 6006 -c storybook/.storybook",
+    "build-storybook": "storybook build -c storybook/.storybook -o storybook-static",
+    "storybook:check": "npm run build-storybook"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "^8.6.12",
+    "@storybook/addon-essentials": "^8.6.12",
+    "@storybook/react-vite": "^8.6.12",
+    "@vitejs/plugin-react": "^4.5.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "recharts": "^3.8.1",
+    "storybook": "^8.6.12",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
   }
 }

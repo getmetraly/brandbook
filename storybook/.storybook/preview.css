@@ -1,0 +1,33 @@
+/* Storybook canvas helpers — DO NOT replace design-system CSS.
+ * metraly-ui.css is the design-system entrypoint (imported in preview.ts).
+ * This file only controls the Storybook canvas wrapper itself.
+ */
+
+/* Dark canvas baseline so stories render on the correct surface */
+.sb-show-main {
+  background-color: var(--m-bg, #0e1117);
+  min-height: 100vh;
+}
+
+/* Default story padding */
+.sb-story-wrapper {
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* Full-screen story helper: apply to a story div to strip canvas padding */
+.sb-story-fullscreen {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Bounded preview wrapper used by ProductPreview stories */
+.sb-story-bounded {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px;
+  box-sizing: border-box;
+}
