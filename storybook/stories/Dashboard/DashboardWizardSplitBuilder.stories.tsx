@@ -42,8 +42,17 @@ function WizardDemo() {
       }
       preview={
         <div className="msf__split-pad">
-          <GaugeWidgetExample />
-          <GaugeWidgetExample />
+          <GaugeWidgetExample
+            title="DORA score"
+            subtitle="Template preview"
+            gauge={{ value: 88, max: 100, unit: "%", tone: "success", label: "DORA score", summary: "Good" }}
+          />
+          <GaugeWidgetExample
+            title="Review queue"
+            subtitle="Potential bottleneck"
+            state="stale"
+            gauge={{ value: 64, max: 100, unit: "%", tone: "warning", label: "Reviewer load", summary: "Delayed" }}
+          />
         </div>
       }
       previewState="preview"

@@ -159,6 +159,9 @@ Required rules:
 - use `MetralyStoryFrame` and shared `msf__*` helpers for documentation layout;
 - do not add per-story visual language with raw colors, raw spacing, or inline layout objects;
 - add direct stories for primitives instead of relying only on AppKit/composition screens;
+- every story must pass complete, realistic props for required component contracts;
+- exported demo composition components must be runtime-safe when rendered without args in Storybook;
+- do not nest a demo composition that already renders its own shell inside a second shell;
 - regenerate `storybook-static/` only after source stories pass local checks.
 
 ## Generated artifacts
@@ -201,10 +204,11 @@ If a command cannot run because dependencies are missing, state that honestly in
 
 ## Commit discipline
 
-Use focused commits. Recommended commit name for this cleanup:
+Use focused commits. Recommended commit names for this cleanup stream:
 
 ```text
 fix(brandbook): align storybook with metraly design-system tokens
+fix(brandbook): stabilize storybook demo states
 ```
 
 A good commit includes:

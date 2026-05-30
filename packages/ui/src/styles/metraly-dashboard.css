@@ -207,6 +207,34 @@
   overflow: hidden;
 }
 
+.metraly-dashboard-widget-skeleton {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  padding: 14px;
+}
+
+.metraly-dashboard-widget-skeleton-bar {
+  height: 10px;
+  border-radius: var(--m-r-1);
+  background: linear-gradient(90deg, var(--m-bg-3) 0%, var(--m-bg-4) 50%, var(--m-bg-3) 100%);
+  background-size: 200% 100%;
+  animation: m-shimmer 1.4s linear infinite;
+}
+
+.metraly-dashboard-widget-skeleton-bar--sm { width: 45%; }
+.metraly-dashboard-widget-skeleton-bar--md { width: 60%; }
+.metraly-dashboard-widget-skeleton-bar--base { width: 70%; }
+.metraly-dashboard-widget-skeleton-bar--lg { width: 85%; }
+
+.metraly-dashboard-widget-skeleton-spacer { flex: 1 1 auto; min-height: 16px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .metraly-dashboard-widget-skeleton-bar { animation: none; }
+}
+
 .metraly-dashboard-widget-footer {
   flex: 0 0 auto;
   min-width: 0;

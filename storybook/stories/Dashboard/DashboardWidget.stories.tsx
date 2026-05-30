@@ -8,7 +8,7 @@ import {
   InsightWidgetExample,
   StateBoardWidgetExample,
 } from "@metraly/ui";
-import { MetralyStoryFrame, ProductPreview } from "../_shared/MetralyStoryFrame";
+import { MetralyStoryFrame } from "../_shared/MetralyStoryFrame";
 
 const meta: Meta = {
   title: "Dashboard/DashboardWidget",
@@ -67,15 +67,10 @@ export const Overview: Story = {
       <section>
         <div className="msf__section-title">Widget examples (from registry)</div>
         <div className="msf__grid msf__grid--metric">
-          <DashboardWidget id="activity" title="Activity Feed" subtitle="Live">
-            <ActivityWidgetExample />
-          </DashboardWidget>
-          <DashboardWidget id="insight" title="AI Insight" subtitle="Latest">
-            <InsightWidgetExample />
-          </DashboardWidget>
-          <DashboardWidget id="state-board" title="Service health" subtitle="5 services">
-            <StateBoardWidgetExample />
-          </DashboardWidget>
+          <GaugeWidgetExample />
+          <ActivityWidgetExample />
+          <InsightWidgetExample />
+          <StateBoardWidgetExample />
         </div>
       </section>
     </MetralyStoryFrame>

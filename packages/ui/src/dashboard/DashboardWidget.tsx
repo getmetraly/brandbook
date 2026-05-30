@@ -55,26 +55,13 @@ function DragHandle({ canDrag, id, onDragStart }: { canDrag: boolean; id?: strin
 }
 
 function LoadingSkeleton() {
-  const bar = (w: string) => (
-    <div
-      style={{
-        height: 10,
-        width: w,
-        background: "linear-gradient(90deg, var(--m-bg-3) 0%, var(--m-bg-4) 50%, var(--m-bg-3) 100%)",
-        backgroundSize: "200% 100%",
-        animation: "m-shimmer 1.4s linear infinite",
-        borderRadius: 4,
-      }}
-    />
-  );
-
   return (
-    <div style={{ padding: 14, display: "flex", flexDirection: "column", gap: 10, flex: 1 }}>
-      {bar("60%")}
-      {bar("85%")}
-      {bar("45%")}
-      <div style={{ flex: 1 }} />
-      {bar("70%")}
+    <div className="metraly-dashboard-widget-skeleton" aria-hidden="true">
+      <div className="metraly-dashboard-widget-skeleton-bar metraly-dashboard-widget-skeleton-bar--md" />
+      <div className="metraly-dashboard-widget-skeleton-bar metraly-dashboard-widget-skeleton-bar--lg" />
+      <div className="metraly-dashboard-widget-skeleton-bar metraly-dashboard-widget-skeleton-bar--sm" />
+      <div className="metraly-dashboard-widget-skeleton-spacer" />
+      <div className="metraly-dashboard-widget-skeleton-bar metraly-dashboard-widget-skeleton-bar--base" />
     </div>
   );
 }

@@ -127,7 +127,7 @@ function dayBucket(iso: string): string {
 }
 
 export const ActivityFeed: React.FC<ActivityFeedProps> = ({
-  items,
+  items = [],
   state = "ready",
   mode = "feed",
   groupBy = "none",

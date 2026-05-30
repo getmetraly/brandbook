@@ -97,8 +97,8 @@ const CONFIDENCE_TONE: Record<InsightConfidence, React.ComponentProps<typeof Sta
 };
 
 export const InsightCard: React.FC<InsightCardProps> = ({
-  title,
-  summary,
+  title = "Insight",
+  summary = "No insight summary provided",
   tone = "info",
   state = "ready",
   source = "rules",

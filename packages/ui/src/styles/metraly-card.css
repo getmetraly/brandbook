@@ -16,6 +16,30 @@
   transition: background var(--m-dur-2) var(--m-ease), border-color var(--m-dur-2) var(--m-ease), box-shadow var(--m-dur-2) var(--m-ease), opacity var(--m-dur-2) var(--m-ease), transform var(--m-dur-2) var(--m-ease);
 }
 
+.metraly-card-shell:not(.metraly-widget-shell) {
+  height: auto;
+  padding: var(--m-3);
+}
+
+.metraly-card-shell--compact:not(.metraly-widget-shell) {
+  padding: var(--m-2);
+}
+
+.metraly-card-shell.is-tone-cyan { border-color: color-mix(in oklch, var(--m-cyan-500) 42%, var(--m-line)); }
+.metraly-card-shell.is-tone-success { border-color: color-mix(in oklch, var(--m-ok) 46%, var(--m-line)); }
+.metraly-card-shell.is-tone-warning { border-color: color-mix(in oklch, var(--m-warn) 48%, var(--m-line)); }
+.metraly-card-shell.is-tone-danger { border-color: color-mix(in oklch, var(--m-err) 48%, var(--m-line)); }
+.metraly-card-shell.is-tone-info,
+.metraly-card-shell.is-tone-purple { border-color: color-mix(in oklch, var(--m-purple-500) 42%, var(--m-line)); }
+
+.metraly-card-shell.is-tone-cyan,
+.metraly-card-shell.is-tone-success,
+.metraly-card-shell.is-tone-warning,
+.metraly-card-shell.is-tone-danger,
+.metraly-card-shell.is-tone-info,
+.metraly-card-shell.is-tone-purple {
+  background: color-mix(in oklch, var(--m-bg-2) 92%, var(--m-bg-3));
+}
 
 .metraly-card-shell.is-selected {
   border-color: var(--m-cyan-500);
@@ -72,12 +96,28 @@
   overflow-wrap: anywhere;
 }
 
+.metraly-card-shell__title {
+  color: var(--m-fg-0);
+  font-size: var(--m-fs-13);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.metraly-card-shell__subtitle {
+  color: var(--m-fg-2);
+  font-size: var(--m-fs-12);
+  line-height: 1.45;
+}
+
 .metraly-card-shell__body {
   min-width: 0;
   max-width: 100%;
   flex: 1 1 auto;
   min-height: 0;
   overflow-wrap: anywhere;
+  color: var(--m-fg-1);
+  font-size: var(--m-fs-12);
+  line-height: 1.5;
 }
 
 .metraly-card-shell__footer {

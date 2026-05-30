@@ -91,7 +91,7 @@ function humanStatus(s: StateBoardItemStatus): string {
 export const StateBoard: React.FC<StateBoardProps> = ({
   title,
   description,
-  items,
+  items = [],
   variant = "grid",
   state = "ready",
   frame = true,

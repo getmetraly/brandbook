@@ -47,23 +47,95 @@ function drilldownFooter(onDrilldown?: () => void) {
   ) : undefined;
 }
 
+const DEFAULT_GAUGE: Omit<MetralyGaugeProps, "state" | "bare"> = {
+  value: 72,
+  max: 100,
+  unit: "%",
+  tone: "success",
+  label: "Deployment frequency",
+  description: "Last 14 days",
+  summary: "Target 70%",
+};
+
+const DEFAULT_HEATMAP: Omit<MetralyHeatmapProps, "state" | "compact"> = {
+  title: "PR review load",
+  description: "Last 14 days",
+  xLabels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+  yLabels: ["Payments", "Platform", "Infra"],
+  unit: "PRs",
+  cells: [
+    { x: "Mon", y: "Payments", value: 12 },
+    { x: "Tue", y: "Payments", value: 18 },
+    { x: "Wed", y: "Platform", value: 9 },
+    { x: "Thu", y: "Platform", value: 15 },
+    { x: "Fri", y: "Infra", value: 6 },
+  ],
+};
+
+const DEFAULT_FEED: Omit<ActivityFeedProps, "state" | "mode" | "frame"> = {
+  items: [
+    {
+      id: "evt-1",
+      timestamp: "2026-05-30T10:12:00Z",
+      kind: "deploy",
+      title: "Payments API deployed",
+      description: "Production rollout completed without incidents",
+      severity: "ok",
+      meta: [{ key: "env", value: "prod" }],
+    },
+    {
+      id: "evt-2",
+      timestamp: "2026-05-30T09:44:00Z",
+      kind: "pull_request",
+      title: "Review queue crossed target",
+      description: "Two reviewers carry most of the open PR load",
+      severity: "warning",
+      meta: [{ key: "open", value: "31" }],
+    },
+  ],
+};
+
+const DEFAULT_INSIGHT: Omit<InsightCardProps, "state" | "frame" | "compact"> = {
+  title: "Review bottleneck detected",
+  summary: "Cycle time increased because review queue time grew while open PR count stayed flat.",
+  tone: "warning",
+  source: "ai",
+  confidence: "high",
+  freshness: "2026-05-30T10:18:00Z",
+  evidence: [
+    { id: "ev-1", kind: "metric", label: "Review p50", caption: "22h" },
+    { id: "ev-2", kind: "team", label: "Payments reviewers", caption: "64% load" },
+  ],
+};
+
+const DEFAULT_BOARD: Omit<StateBoardProps, "state" | "frame"> = {
+  title: "Service health",
+  description: "Current connector status",
+  variant: "list",
+  items: [
+    { id: "github", label: "GitHub", hint: "Sync healthy", status: "ok", meter: "48 ms" },
+    { id: "jira", label: "Jira", hint: "Partial scope", status: "warning", meter: "2 scopes" },
+    { id: "slack", label: "Slack", hint: "Not configured", status: "disabled" },
+  ],
+};
+
 // ───────────────────────────────────────────────────────────────────────────
 // Gauge in a widget shell — DORA / Source Health / SLO
 
 export interface GaugeWidgetExampleProps {
-  title: string;
+  title?: string;
   subtitle?: string;
   state?: WidgetStateStatus;
-  gauge: Omit<MetralyGaugeProps, "state" | "bare">;
+  gauge?: Omit<MetralyGaugeProps, "state" | "bare">;
   onDrilldown?: () => void;
   compact?: boolean;
 }
 
 export const GaugeWidgetExample: React.FC<GaugeWidgetExampleProps> = ({
-  title,
-  subtitle,
+  title = "Deployment frequency",
+  subtitle = "DORA · Last 14d",
   state = "ready",
-  gauge,
+  gauge = DEFAULT_GAUGE,
   onDrilldown,
   compact,
 }) => (
@@ -81,18 +153,18 @@ export const GaugeWidgetExample: React.FC<GaugeWidgetExampleProps> = ({
 // Heatmap in a widget shell — Activity / Incidents / Sync gaps
 
 export interface HeatmapWidgetExampleProps {
-  title: string;
+  title?: string;
   subtitle?: string;
   state?: WidgetStateStatus;
-  heatmap: Omit<MetralyHeatmapProps, "state" | "compact">;
+  heatmap?: Omit<MetralyHeatmapProps, "state" | "compact">;
   onDrilldown?: () => void;
 }
 
 export const HeatmapWidgetExample: React.FC<HeatmapWidgetExampleProps> = ({
-  title,
-  subtitle,
+  title = "Review load",
+  subtitle = "Team heatmap",
   state = "ready",
-  heatmap,
+  heatmap = DEFAULT_HEATMAP,
   onDrilldown,
 }) => (
   <DashboardWidget title={title} subtitle={subtitle} state={mapWidgetStateToBadgeState(state)} footer={drilldownFooter(onDrilldown)}>
@@ -109,18 +181,18 @@ export const HeatmapWidgetExample: React.FC<HeatmapWidgetExampleProps> = ({
 // ActivityFeed in a widget shell — Recent activity
 
 export interface ActivityWidgetExampleProps {
-  title: string;
+  title?: string;
   subtitle?: string;
   state?: WidgetStateStatus;
-  feed: Omit<ActivityFeedProps, "state" | "mode" | "frame">;
+  feed?: Omit<ActivityFeedProps, "state" | "mode" | "frame">;
   onDrilldown?: () => void;
 }
 
 export const ActivityWidgetExample: React.FC<ActivityWidgetExampleProps> = ({
-  title,
-  subtitle,
+  title = "Activity feed",
+  subtitle = "Live source events",
   state = "ready",
-  feed,
+  feed = DEFAULT_FEED,
   onDrilldown,
 }) => (
   <DashboardWidget title={title} subtitle={subtitle} state={mapWidgetStateToBadgeState(state)} footer={drilldownFooter(onDrilldown)}>
@@ -132,18 +204,18 @@ export const ActivityWidgetExample: React.FC<ActivityWidgetExampleProps> = ({
 // InsightCard in a widget shell — DORA bottleneck / anomaly summary
 
 export interface InsightWidgetExampleProps {
-  title: string;
+  title?: string;
   subtitle?: string;
   state?: WidgetStateStatus;
-  insight: Omit<InsightCardProps, "state" | "frame" | "compact">;
+  insight?: Omit<InsightCardProps, "state" | "frame" | "compact">;
   onDrilldown?: () => void;
 }
 
 export const InsightWidgetExample: React.FC<InsightWidgetExampleProps> = ({
-  title,
-  subtitle,
+  title = "AI insight",
+  subtitle = "Latest analysis",
   state = "ready",
-  insight,
+  insight = DEFAULT_INSIGHT,
   onDrilldown,
 }) => (
   <DashboardWidget title={title} subtitle={subtitle} state={mapWidgetStateToBadgeState(state)} footer={drilldownFooter(onDrilldown)}>
@@ -155,18 +227,18 @@ export const InsightWidgetExample: React.FC<InsightWidgetExampleProps> = ({
 // StateBoard in a widget shell — Service status / provider status
 
 export interface StateBoardWidgetExampleProps {
-  title: string;
+  title?: string;
   subtitle?: string;
   state?: WidgetStateStatus;
-  board: Omit<StateBoardProps, "state" | "frame">;
+  board?: Omit<StateBoardProps, "state" | "frame">;
   onDrilldown?: () => void;
 }
 
 export const StateBoardWidgetExample: React.FC<StateBoardWidgetExampleProps> = ({
-  title,
-  subtitle,
+  title = "Service health",
+  subtitle = "3 services",
   state = "ready",
-  board,
+  board = DEFAULT_BOARD,
   onDrilldown,
 }) => (
   <DashboardWidget title={title} subtitle={subtitle} state={mapWidgetStateToBadgeState(state)} footer={drilldownFooter(onDrilldown)}>
