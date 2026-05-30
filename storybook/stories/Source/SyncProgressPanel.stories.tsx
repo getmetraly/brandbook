@@ -21,8 +21,8 @@ export const Overview: Story = {
       tags={["connector", "live"]}
     >
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Backfilling</div>
-        <div style={{ maxWidth: 560 }}>
+        <div className="msf__section-title">Backfilling</div>
+        <div className="msf__constrained-xl">
           <SyncProgressPanel
             sourceLabel="GitHub · acme-org"
             sourceId="github-acme"
@@ -37,8 +37,8 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Incremental (live)</div>
-        <div style={{ maxWidth: 560 }}>
+        <div className="msf__section-title">Incremental (live)</div>
+        <div className="msf__constrained-xl">
           <SyncProgressPanel
             sourceLabel="GitHub · acme-org"
             sourceId="github-acme"
@@ -51,8 +51,8 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Rate limited</div>
-        <div style={{ maxWidth: 560 }}>
+        <div className="msf__section-title">Rate limited</div>
+        <div className="msf__constrained-xl">
           <SyncProgressPanel
             sourceLabel="GitHub · acme-org"
             sourceId="github-acme"
@@ -67,8 +67,8 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Completed</div>
-        <div style={{ maxWidth: 560 }}>
+        <div className="msf__section-title">Completed</div>
+        <div className="msf__constrained-xl">
           <SyncProgressPanel
             sourceLabel="Jira · acme"
             sourceId="jira-acme"
@@ -81,8 +81,8 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Failed</div>
-        <div style={{ maxWidth: 560 }}>
+        <div className="msf__section-title">Failed</div>
+        <div className="msf__constrained-xl">
           <SyncProgressPanel
             sourceLabel="Linear · acme"
             sourceId="linear-acme"

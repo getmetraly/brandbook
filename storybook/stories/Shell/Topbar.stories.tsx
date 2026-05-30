@@ -21,13 +21,13 @@ export const Overview: Story = {
       tags={["shell", "a11y"]}
     >
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Comfortable (default)</div>
+        <div className="msf__section-title">Comfortable (default)</div>
         <ProductPreview>
           <MetralyTopbar
             title="VP Engineering Dashboard"
             subtitle="Last updated · just now"
             actions={
-              <div style={{ display: "flex", gap: 8 }}>
+              <div className="msf__row msf__row--gap-sm">
                 <MetralyButton variant="ghost" size="sm" iconLeft={<MetralyIcon name="filter" size="sm" />}>Filter</MetralyButton>
                 <MetralyButton variant="primary" size="sm" iconLeft={<MetralyIcon name="plus" size="sm" />}>Add widget</MetralyButton>
               </div>
@@ -37,18 +37,18 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>With breadcrumb</div>
+        <div className="msf__section-title">With breadcrumb</div>
         <ProductPreview>
           <MetralyTopbar
             breadcrumb={
-              <span style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>
+              <span className="msf__text-muted">
                 Settings / Connectors / GitHub
               </span>
             }
             title="GitHub connector"
             subtitle="github.com · 47 repos synced"
             actions={
-              <div style={{ display: "flex", gap: 8 }}>
+              <div className="msf__row msf__row--gap-sm">
                 <MetralyButton variant="ghost" size="sm">Test connection</MetralyButton>
                 <MetralyButton variant="danger" size="sm">Disconnect</MetralyButton>
               </div>
@@ -58,7 +58,7 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Compact — with inline search</div>
+        <div className="msf__section-title">Compact — with inline search</div>
         <ProductPreview>
           <MetralyTopbar
             density="compact"
@@ -71,7 +71,7 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Spacious</div>
+        <div className="msf__section-title">Spacious</div>
         <ProductPreview>
           <MetralyTopbar
             density="spacious"

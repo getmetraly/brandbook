@@ -36,19 +36,19 @@ function WizardDemo() {
       onSelectStep={(id) => setActiveStep(id)}
       title="Build a dashboard"
       stepBody={
-        <div style={{ padding: "16px 0", color: "rgba(255,255,255,0.6)", fontSize: 13 }}>
+        <div className="msf__wizard-note">
           Step body for "{activeStep}" renders here.
         </div>
       }
       preview={
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, padding: 16 }}>
+        <div className="msf__split-pad">
           <GaugeWidgetExample />
           <GaugeWidgetExample />
         </div>
       }
       previewState="preview"
       footer={
-        <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
+        <div className="msf__actions-end">
           <MetralyButton variant="ghost">Back</MetralyButton>
           <MetralyButton variant="primary">Next</MetralyButton>
         </div>
@@ -68,7 +68,7 @@ export const Overview: Story = {
       fullWidth
     >
       <ProductPreview>
-        <div style={{ height: 600 }}>
+        <div className="msf__fixed-h-xl">
           <WizardDemo />
         </div>
       </ProductPreview>

@@ -53,12 +53,12 @@ export const Overview: Story = {
       tags={["interactive", "a11y"]}
     >
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Segmented control</div>
+        <div className="msf__section-title">Segmented control</div>
         <SegmentedDemo />
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Tabs</div>
+        <div className="msf__section-title">Tabs</div>
         <TabsDemo />
       </section>
     </MetralyStoryFrame>

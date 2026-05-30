@@ -28,7 +28,7 @@ export const ProductPreviewStory: Story = {
       fullscreen
     >
       <ProductPreview>
-        <div style={{ height: "100vh" }}>
+        <div className="msf__viewport-h">
           <AppDashboardScreen />
         </div>
       </ProductPreview>
@@ -47,7 +47,7 @@ export const CustomNav: Story = {
       fullscreen
     >
       <ProductPreview>
-        <div style={{ height: "100vh" }}>
+        <div className="msf__viewport-h">
           <AppDashboardScreen
             title="DevOps / SRE"
             subtitle="Incident & reliability view"

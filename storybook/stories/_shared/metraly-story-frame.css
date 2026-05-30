@@ -1,5 +1,7 @@
 /* MetralyStoryFrame — Storybook visual documentation wrapper.
- * Only controls story layout, not component appearance.
+ * This file controls Storybook documentation layout only. It must use the
+ * canonical tokens from packages/ui/src/styles/metraly-theme.css and must not
+ * introduce component-level visual language outside the design system.
  */
 
 .msf {
@@ -8,7 +10,7 @@
   gap: 0;
   max-width: 960px;
   margin: 0 auto;
-  padding: 32px 24px;
+  padding: var(--m-7) var(--m-6);
   box-sizing: border-box;
 }
 
@@ -25,32 +27,43 @@
 
 /* Header */
 .msf__header {
-  margin-bottom: 24px;
+  margin-bottom: var(--m-6);
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  border-bottom: 1px solid var(--m-border, rgba(255,255,255,0.08));
-  padding-bottom: 16px;
+  gap: var(--m-2);
+  border-bottom: 1px solid var(--m-line);
+  padding-bottom: var(--m-4);
 }
 
-.msf__category {
-  font-size: 11px;
+.msf__category,
+.msf__section-title,
+.msf__eyebrow {
+  font-size: var(--m-fs-11);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--m-fg-muted2, rgba(255,255,255,0.4));
+  color: var(--m-fg-3);
+}
+
+.msf__section-title {
+  margin-bottom: var(--m-3);
+}
+
+.msf__eyebrow {
+  font-size: var(--m-fs-10);
+  color: var(--m-fg-4);
 }
 
 .msf__title {
-  font-size: 20px;
+  font-size: var(--m-fs-20);
   font-weight: 600;
-  color: var(--m-fg, rgba(255,255,255,0.9));
+  color: var(--m-fg-0);
   margin: 0;
 }
 
 .msf__description {
-  font-size: 13px;
-  color: var(--m-fg-muted, rgba(255,255,255,0.55));
+  font-size: var(--m-fs-12);
+  color: var(--m-fg-2);
   line-height: 1.6;
   margin: 0;
 }
@@ -59,57 +72,294 @@
 .msf__meta {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--m-2);
   flex-wrap: wrap;
-  margin-top: 4px;
+  margin-top: var(--m-1);
 }
 
 .msf__status {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  font-size: 11px;
+  gap: var(--m-1);
+  font-size: var(--m-fs-10);
   font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 4px;
-  background: var(--m-ok-bg, rgba(74,222,128,0.12));
-  color: var(--m-ok, #4ade80);
+  padding: 2px var(--m-2);
+  border-radius: var(--m-r-2);
+  background: var(--m-ok-bg);
+  color: var(--m-ok);
 }
 
 .msf__status--wip {
-  background: rgba(251,191,36,0.12);
-  color: #fbbf24;
+  background: var(--m-warn-bg);
+  color: var(--m-warn);
 }
 
 .msf__status--planned {
-  background: rgba(148,163,184,0.12);
-  color: rgba(148,163,184,0.8);
+  background: var(--m-bg-2);
+  color: var(--m-fg-2);
 }
 
 .msf__tag {
-  font-size: 11px;
-  padding: 2px 8px;
-  border-radius: 4px;
-  background: rgba(255,255,255,0.06);
-  color: rgba(255,255,255,0.5);
+  font-size: var(--m-fs-10);
+  padding: 2px var(--m-2);
+  border-radius: var(--m-r-2);
+  background: var(--m-bg-2);
+  color: var(--m-fg-3);
 }
 
 /* Content area */
 .msf__content {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: var(--m-7);
 }
 
 /* Product preview — full-width, bounded frame */
 .msf__product-preview {
-  border: 1px solid var(--m-border, rgba(255,255,255,0.08));
-  border-radius: 10px;
+  border: 1px solid var(--m-line);
+  border-radius: var(--m-r-4);
   overflow: hidden;
-  background: var(--m-bg-raised, #131920);
+  background: var(--m-bg-2);
 }
 
 /* No-header variant for fullscreen stories */
 .msf--fullscreen .msf__header {
   display: none;
+}
+
+/* Shared story layout utilities. These replace ad hoc inline styles in stories. */
+.msf__row {
+  display: flex;
+  align-items: center;
+  gap: var(--m-3);
+}
+
+.msf__row--wrap {
+  flex-wrap: wrap;
+}
+
+.msf__row--gap-sm {
+  gap: var(--m-2);
+}
+
+.msf__row--gap-lg {
+  gap: var(--m-4);
+}
+
+.msf__stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m-4);
+}
+
+.msf__stack--sm {
+  gap: var(--m-3);
+}
+
+.msf__stack--lg {
+  gap: var(--m-5);
+}
+
+.msf__grid {
+  display: grid;
+  gap: var(--m-4);
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.msf__grid--compact {
+  gap: var(--m-3);
+}
+
+.msf__grid--wide {
+  gap: var(--m-6);
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.msf__grid--icons {
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+}
+
+.msf__grid--cards {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.msf__constrained-sm {
+  max-width: 320px;
+}
+
+.msf__constrained-md {
+  max-width: 400px;
+}
+
+.msf__constrained-lg {
+  max-width: 480px;
+}
+
+.msf__constrained-xl {
+  max-width: 560px;
+}
+
+.msf__constrained-2xl {
+  max-width: 600px;
+}
+
+.msf__constrained-3xl {
+  max-width: 720px;
+}
+
+.msf__pad-sm {
+  padding: var(--m-2);
+}
+
+.msf__pad-md {
+  padding: var(--m-4);
+}
+
+.msf__pad-lg {
+  padding: var(--m-5);
+}
+
+.msf__section-gap-sm {
+  padding: var(--m-2) 0 var(--m-4);
+}
+
+.msf__fixed-h-md {
+  height: 480px;
+}
+
+.msf__fixed-h-lg {
+  height: 520px;
+}
+
+.msf__viewport-h {
+  height: 100vh;
+}
+
+.msf__shell-demo,
+.msf__split-demo {
+  display: flex;
+  height: 480px;
+}
+
+.msf__shell-demo--large {
+  height: 520px;
+}
+
+.msf__shell-main {
+  flex: 1;
+  padding: var(--m-6);
+  background: var(--m-bg-1);
+  color: var(--m-fg-3);
+  font-size: var(--m-fs-12);
+}
+
+.msf__flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.msf__flex-1 {
+  flex: 1;
+}
+
+.msf__overflow-hidden {
+  overflow: hidden;
+}
+
+.msf__sidebar-header,
+.msf__sidebar-header-collapsed {
+  display: flex;
+  align-items: center;
+}
+
+.msf__sidebar-header {
+  padding: var(--m-4) var(--m-5);
+  gap: var(--m-2);
+}
+
+.msf__sidebar-header-collapsed {
+  justify-content: center;
+  padding: var(--m-3) 0;
+}
+
+.msf__brand-name {
+  font-weight: 700;
+  font-size: var(--m-fs-13);
+  color: var(--m-fg-0);
+}
+
+.msf__preview-pill {
+  font-size: var(--m-fs-9);
+  padding: 1px 6px;
+  border-radius: var(--m-r-2);
+  background: var(--m-purple-bg);
+  color: var(--m-purple-400);
+}
+
+.msf__icon-cell {
+  min-height: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--m-2);
+  padding: var(--m-3);
+  background: var(--m-bg-2);
+  border: 1px solid var(--m-line);
+  border-radius: var(--m-r-3);
+}
+
+.msf__icon-name {
+  font-size: var(--m-fs-9);
+  color: var(--m-fg-3);
+  text-align: center;
+  word-break: break-all;
+}
+
+.msf__card-emoji {
+  font-size: var(--m-fs-20);
+}
+
+.msf__grid--metric {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.msf__grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.msf__actions-end {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--m-2);
+}
+
+.msf__split-pad {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--m-3);
+  padding: var(--m-4);
+}
+
+.msf__text-muted {
+  color: var(--m-fg-2);
+  font-size: var(--m-fs-12);
+}
+
+.msf__wizard-note {
+  padding: var(--m-4) 0;
+  color: var(--m-fg-2);
+  font-size: var(--m-fs-12);
+}
+
+.msf__fixed-h-xl {
+  height: 600px;
+}
+
+.msf__nav-preview {
+  max-width: 280px;
+  background: var(--m-bg-2);
+  border: 1px solid var(--m-line);
+  border-radius: var(--m-r-3);
+  padding: var(--m-2);
 }

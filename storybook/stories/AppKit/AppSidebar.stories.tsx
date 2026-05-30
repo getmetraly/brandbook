@@ -61,9 +61,9 @@ export const Overview: Story = {
       tags={["appkit", "navigation", "interactive"]}
     >
       <ProductPreview>
-        <div style={{ display: "flex", height: 520 }}>
+        <div className="msf__split-demo msf__shell-demo--large">
           <SidebarDemo />
-          <div style={{ flex: 1, background: "rgba(255,255,255,0.02)", padding: 24, color: "rgba(255,255,255,0.3)", fontSize: 13 }}>
+          <div className="msf__shell-main">
             Page content area
           </div>
         </div>

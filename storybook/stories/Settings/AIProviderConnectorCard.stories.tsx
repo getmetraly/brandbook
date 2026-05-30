@@ -33,9 +33,9 @@ export const Overview: Story = {
       tags={["settings", "AI", "interactive"]}
     >
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Ready</div>
+        <div className="msf__section-title">Ready</div>
         <ProductPreview>
-          <div style={{ padding: 20 }}>
+          <div className="msf__pad-lg">
             <AIProviderConnectorCard
               name="OpenAI"
               kind="openai-compatible"
@@ -56,9 +56,9 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Not configured</div>
+        <div className="msf__section-title">Not configured</div>
         <ProductPreview>
-          <div style={{ padding: 20 }}>
+          <div className="msf__pad-lg">
             <AIProviderConnectorCard
               name="Anthropic"
               kind="anthropic-compatible"
@@ -74,9 +74,9 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Auth failed</div>
+        <div className="msf__section-title">Auth failed</div>
         <ProductPreview>
-          <div style={{ padding: 20 }}>
+          <div className="msf__pad-lg">
             <AIProviderConnectorCard
               name="Custom endpoint"
               kind="custom"
@@ -90,9 +90,9 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Via plugin attribution</div>
+        <div className="msf__section-title">Via plugin attribution</div>
         <ProductPreview>
-          <div style={{ padding: 20 }}>
+          <div className="msf__pad-lg">
             <AIProviderConnectorCard
               name="Groq (via plugin)"
               kind="openai-compatible"

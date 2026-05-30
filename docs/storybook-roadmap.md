@@ -91,11 +91,11 @@ brandbook/
 | Phase | Status | Notes |
 | --- | --- | --- |
 | **0 — Harness** | ✅ Complete | `storybook/` layer, metraly-ui.css loaded, ThemeProvider dark decorator |
-| **1 — Foundations + primitives** | ✅ Complete | All Core + Shell stories |
-| **2 — Data display + shell** | ✅ Complete | Charts, DashboardWidget, Shell stories |
-| **3 — Dashboard + wizard + source + settings** | ✅ Complete | All groups covered |
-| **4 — AI Workspace + Plugins + App Kit** | ✅ Complete | All AppKit screens + Source + Settings |
-| **5 — CI + visual baseline** | ⬜ Planned | Add `build-storybook` to CI; optional Chromatic/Percy |
+| **1 — Foundations + primitives** | ◐ Partial | Core/Shell examples exist, but several form primitives still need direct stories |
+| **2 — Data display + shell** | ◐ Partial | Gauge/Heatmap and shell examples exist; table, metric card and chart wrappers need direct stories |
+| **3 — Dashboard + wizard + source + settings** | ◐ Partial | Source/Settings coverage exists; wizard primitives and dashboard internals still need direct stories |
+| **4 — AI Workspace + Plugins + App Kit** | ◐ Partial | Product screens exist; AI/plugin primitives still need direct contract stories |
+| **5 — CI + visual baseline** | ⬜ Planned | Add `build-storybook`, static grep checks, a11y pass and visual snapshots |
 
 ## Not yet covered (follow-up)
 
@@ -111,6 +111,7 @@ brandbook/
 
 ## Visual QA next steps
 
+0. Keep Storybook wrappers token-only: no inline story CSS, no raw colors, no legacy tokens.
 1. Run `npm run build-storybook` — verify zero build errors.
 2. Open storybook dev server and visually inspect each group.
 3. Run a11y addon checks on `Core/Button`, `Core/Input`, `Shell/Sidebar`, `Shell/NavigationTree`.

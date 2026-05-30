@@ -28,8 +28,8 @@ export const Overview: Story = {
       tags={["connector", "a11y"]}
     >
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>GitHub scopes — mixed state</div>
-        <div style={{ maxWidth: 640 }}>
+        <div className="msf__section-title">GitHub scopes — mixed state</div>
+        <div className="msf__constrained-2xl">
           <PermissionExplainer
             title="GitHub OAuth scopes"
             description="Metraly requests the minimum scopes needed to compute DORA metrics."
@@ -39,8 +39,8 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Compact mode</div>
-        <div style={{ maxWidth: 640 }}>
+        <div className="msf__section-title">Compact mode</div>
+        <div className="msf__constrained-2xl">
           <PermissionExplainer scopes={GITHUB_SCOPES} compact />
         </div>
       </section>

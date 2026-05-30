@@ -70,7 +70,7 @@ export const Overview: Story = {
       fullWidth
     >
       <ProductPreview>
-        <div style={{ padding: 20 }}>
+        <div className="msf__pad-lg">
           <BYOLLMConnectorPanel
             providers={PROVIDERS}
             pluginContributedProviders={PLUGIN_PROVIDERS}

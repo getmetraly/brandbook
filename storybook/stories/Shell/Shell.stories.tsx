@@ -29,13 +29,13 @@ export const Overview: Story = {
       tags={["shell", "layout"]}
     >
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Shell + Sidebar + Topbar composition</div>
+        <div className="msf__section-title">Shell + Sidebar + Topbar composition</div>
         <ProductPreview>
-          <div style={{ height: 520 }}>
+          <div className="msf__fixed-h-lg">
             <MetralyShell>
               <MetralySidebar
                 header={
-                  <div style={{ padding: "16px 20px", fontWeight: 700, fontSize: 14, color: "rgba(255,255,255,0.9)" }}>
+                  <div className="msf__sidebar-header msf__brand-name">
                     Metraly
                   </div>
                 }
@@ -49,7 +49,7 @@ export const Overview: Story = {
                 </MetralySidebarSection>
               </MetralySidebar>
 
-              <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+              <div className="msf__flex-1 msf__flex-column msf__overflow-hidden">
                 <MetralyTopbar
                   title="Overview"
                   subtitle="All teams · Last 14 days"
@@ -59,7 +59,7 @@ export const Overview: Story = {
                     </MetralyButton>
                   }
                 />
-                <div style={{ flex: 1, padding: 24, background: "rgba(255,255,255,0.01)", color: "rgba(255,255,255,0.2)", fontSize: 13 }}>
+                <div className="msf__shell-main">
                   Dashboard grid renders here
                 </div>
               </div>

@@ -22,8 +22,8 @@ export const Overview: Story = {
     >
       {/* Basic */}
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Basic</div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 16, maxWidth: 400 }}>
+        <div className="msf__section-title">Basic</div>
+        <div className="msf__stack msf__constrained-md">
           <MetralyInput label="Repository name" placeholder="my-org/my-repo" />
           <MetralyInput label="Base URL" description="Include the https:// prefix." placeholder="https://api.example.com" />
         </div>
@@ -31,16 +31,16 @@ export const Overview: Story = {
 
       {/* Search */}
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Search</div>
-        <div style={{ maxWidth: 400 }}>
+        <div className="msf__section-title">Search</div>
+        <div className="msf__constrained-md">
           <MetralyInput search placeholder="Search connectors…" fullWidth />
         </div>
       </section>
 
       {/* States */}
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>States</div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 16, maxWidth: 400 }}>
+        <div className="msf__section-title">States</div>
+        <div className="msf__stack msf__constrained-md">
           <MetralyInput label="API key" error="Token is invalid or expired." defaultValue="ghp_bad-token" />
           <MetralyInput label="Disabled field" defaultValue="read-only" disabled />
           <MetralyInput

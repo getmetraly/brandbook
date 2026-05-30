@@ -35,15 +35,15 @@ export const Overview: Story = {
       tags={["connector", "a11y"]}
     >
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Not tested</div>
-        <div style={{ maxWidth: 560 }}>
+        <div className="msf__section-title">Not tested</div>
+        <div className="msf__constrained-xl">
           <ConnectionTestPanel status="not_tested" onRetry={() => undefined} />
         </div>
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Ready</div>
-        <div style={{ maxWidth: 560 }}>
+        <div className="msf__section-title">Ready</div>
+        <div className="msf__constrained-xl">
           <ConnectionTestPanel
             status="ready"
             checks={CHECKS_OK}
@@ -56,8 +56,8 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Degraded (partial scope)</div>
-        <div style={{ maxWidth: 560 }}>
+        <div className="msf__section-title">Degraded (partial scope)</div>
+        <div className="msf__constrained-xl">
           <ConnectionTestPanel
             status="degraded"
             checks={CHECKS_DEGRADED}
@@ -69,8 +69,8 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Auth failed</div>
-        <div style={{ maxWidth: 560 }}>
+        <div className="msf__section-title">Auth failed</div>
+        <div className="msf__constrained-xl">
           <ConnectionTestPanel
             status="auth_failed"
             nextStep="Generate a new PAT and paste it above."

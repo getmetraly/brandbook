@@ -24,8 +24,8 @@ export const Overview: Story = {
       fullWidth
     >
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Health states</div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 16 }}>
+        <div className="msf__section-title">Health states</div>
+        <div className="msf__grid msf__grid--metric">
           <AppWidget title="Deploy frequency" subtitle="DORA · Last 14d" health="live">
             <AppMetric value="8.4 / wk" size="lg" />
             <AppMetricDelta direction="up">▲ +1.2 vs prev period</AppMetricDelta>
@@ -48,7 +48,7 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>AppMetricStrip</div>
+        <div className="msf__section-title">AppMetricStrip</div>
         <AppMetricStrip
           items={[
             { id: "deploys",   label: "Deploy frequency",    value: "8.4/wk",  delta: "▲ +1.2",   deltaDirection: "up" },

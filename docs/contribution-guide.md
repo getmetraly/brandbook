@@ -51,6 +51,17 @@ How to add or change a component without breaking the V2 contract.
   color into CSS, set a custom property and consume it in the stylesheet (see
   `--m-plugin-icon` in `PluginCatalog` / `metraly-plugins.css`).
 
+## Storybook rules
+
+Storybook is a validation layer and must not introduce its own visual language.
+
+- Import only the public design-system entrypoint in `.storybook/preview.ts`: `packages/ui/src/styles/metraly-ui.css`.
+- Use `ThemeProvider` with the canonical `theme` prop.
+- Use shared `msf__*` classes from `storybook/stories/_shared/metraly-story-frame.css` for story layout.
+- Do not use inline `style=` in Storybook stories.
+- Do not use raw colors, raw spacing, or legacy tokens in Storybook wrappers.
+- Add direct stories for primitives that need contract validation; AppKit screens are not a substitute for component-level stories.
+
 ## Pulse, motion, focus
 
 - **Pulse is semantic.** Allowed only on: logo mark, live/new badge dot, toolbar sync
@@ -73,14 +84,16 @@ See [`responsive-contract.md`](responsive-contract.md).
 npm run ui:check
 
 # contract greps (all should return nothing)
-grep -RnE "var\(--(glass|border|text|muted|muted2|cyan|purple|font-mono)\)" packages/ui/src
-grep -RnE "#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\(" packages/ui/src   # ignore demo PR-ids / comments
-grep -RnE 'className="[^"]*\bm-[a-z]' packages/ui/src
+grep -RnE "var\(--m-(bg\)|bg-raised|border|fg\)|fg-muted|fg-muted2|cyan\)|purple\))|var\(--(glass|border|text|muted|muted2|font-mono)" packages/ui/src storybook
+grep -RnE "#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\(" packages/ui/src storybook   # ignore demo PR-ids / comments
+grep -RnE 'className="[^"]*\bm-[a-z]' packages/ui/src storybook
+grep -RnE "style=" storybook/stories storybook/.storybook
 ```
 
 - [ ] New CSS `@import`ed into `metraly-ui.css`.
 - [ ] Component + types exported from `index.ts`.
 - [ ] `package.json` `exports` updated if a new subpath is needed.
 - [ ] No forbidden tokens / classes / raw colors.
-- [ ] Inline styles only in allowed categories.
+- [ ] Inline styles only in allowed categories for `packages/ui/src`.
+- [ ] No inline styles in Storybook stories.
 - [ ] `npm run ui:check` passes.

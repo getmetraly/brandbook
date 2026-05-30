@@ -22,8 +22,8 @@ export const Overview: Story = {
     >
       {/* StatusBadge — uses StatusBadgeStatus strings */}
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>StatusBadge</div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
+        <div className="msf__section-title">StatusBadge</div>
+        <div className="msf__row msf__row--wrap msf__row--gap-sm">
           <StatusBadge status="Live" />
           <StatusBadge status="Preview" />
           <StatusBadge status="In progress" />
@@ -37,8 +37,8 @@ export const Overview: Story = {
 
       {/* StateBadge — uses StateBadgeState */}
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>StateBadge</div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
+        <div className="msf__section-title">StateBadge</div>
+        <div className="msf__row msf__row--wrap msf__row--gap-sm">
           <StateBadge state="live" />
           <StateBadge state="ok" />
           <StateBadge state="new" />
@@ -53,8 +53,8 @@ export const Overview: Story = {
 
       {/* MetralyBadge — freeform label with semantic variant */}
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>MetralyBadge</div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
+        <div className="msf__section-title">MetralyBadge</div>
+        <div className="msf__row msf__row--wrap msf__row--gap-sm">
           <MetralyBadge>preview</MetralyBadge>
           <MetralyBadge variant="success">stable</MetralyBadge>
           <MetralyBadge variant="warning">beta</MetralyBadge>
@@ -66,8 +66,8 @@ export const Overview: Story = {
 
       {/* TrendBadge — direction + sentiment */}
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>TrendBadge</div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
+        <div className="msf__section-title">TrendBadge</div>
+        <div className="msf__row msf__row--wrap msf__row--gap-sm">
           <TrendBadge direction="up"   sentiment="positive" value="+12%" />
           <TrendBadge direction="up"   sentiment="negative" value="+5.2%" />
           <TrendBadge direction="down" sentiment="positive" value="-8%" />
@@ -78,8 +78,8 @@ export const Overview: Story = {
 
       {/* PulseMarker — tone: live | new | info | warning | error */}
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>PulseMarker</div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 16, alignItems: "center" }}>
+        <div className="msf__section-title">PulseMarker</div>
+        <div className="msf__row msf__row--wrap msf__row--gap-lg">
           <PulseMarker tone="live"    ariaLabel="Live" />
           <PulseMarker tone="new"     ariaLabel="New" />
           <PulseMarker tone="info"    ariaLabel="Info" />

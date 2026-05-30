@@ -23,8 +23,8 @@ export const Overview: Story = {
     >
       {/* Tones */}
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Tones (semicircle, default)</div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 24 }}>
+        <div className="msf__section-title">Tones (semicircle, default)</div>
+        <div className="msf__grid msf__grid--wide">
           <MetralyGauge value={94} label="Uptime" unit="%" tone="success"  description="30-day rolling" />
           <MetralyGauge value={72} label="Deploy frequency" unit="/wk" tone="neutral"  description="DORA metric" />
           <MetralyGauge value={4.2} max={10} label="Change failure rate" unit="%" tone="warning" description="Target < 5%" />
@@ -34,8 +34,8 @@ export const Overview: Story = {
 
       {/* Threshold-driven */}
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Threshold-driven coloring</div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 24 }}>
+        <div className="msf__section-title">Threshold-driven coloring</div>
+        <div className="msf__grid msf__grid--wide">
           <MetralyGauge
             value={68}
             label="Error rate"
@@ -64,18 +64,18 @@ export const Overview: Story = {
 
       {/* Variants */}
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Variants</div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 20, maxWidth: 600 }}>
+        <div className="msf__section-title">Variants</div>
+        <div className="msf__stack msf__stack--lg msf__constrained-2xl">
           <div>
-            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginBottom: 8 }}>semicircle</div>
+            <div className="msf__eyebrow">semicircle</div>
             <MetralyGauge value={78} label="Confidence" unit="%" variant="semicircle" tone="success" />
           </div>
           <div>
-            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginBottom: 8 }}>compact</div>
+            <div className="msf__eyebrow">compact</div>
             <MetralyGauge value={78} label="Confidence" unit="%" variant="compact" tone="success" />
           </div>
           <div>
-            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginBottom: 8 }}>inline</div>
+            <div className="msf__eyebrow">inline</div>
             <MetralyGauge value={78} label="Confidence" unit="%" variant="inline" tone="success" />
           </div>
         </div>
@@ -83,8 +83,8 @@ export const Overview: Story = {
 
       {/* Widget states */}
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Widget states</div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 16 }}>
+        <div className="msf__section-title">Widget states</div>
+        <div className="msf__grid">
           <MetralyGauge value={undefined} state="loading" label="Loading" />
           <MetralyGauge value={undefined} state="empty"   label="No data" />
           <MetralyGauge value={undefined} state="error"   label="Error"   onRetry={() => undefined} />

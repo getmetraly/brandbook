@@ -21,23 +21,15 @@ export const Library: Story = {
       fullWidth
     >
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>All icons (md)</div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))", gap: 16 }}>
+        <div className="msf__section-title">All icons (md)</div>
+        <div className="msf__grid msf__grid--icons">
           {(Object.keys(metralyIconPaths) as Array<keyof typeof metralyIconPaths>).map((name) => (
             <div
               key={name}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: 6,
-                padding: "10px 4px",
-                background: "rgba(255,255,255,0.03)",
-                borderRadius: 6,
-              }}
+              className="msf__icon-cell"
             >
               <MetralyIcon name={name} size="md" />
-              <span style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", textAlign: "center", wordBreak: "break-all" }}>
+              <span className="msf__icon-name">
                 {name}
               </span>
             </div>
@@ -46,8 +38,8 @@ export const Library: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Sizes</div>
-        <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+        <div className="msf__section-title">Sizes</div>
+        <div className="msf__row msf__row--gap-lg">
           <MetralyIcon name="home" size="xs" />
           <MetralyIcon name="home" size="sm" />
           <MetralyIcon name="home" size="md" />

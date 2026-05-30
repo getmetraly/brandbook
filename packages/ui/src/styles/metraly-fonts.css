@@ -1,0 +1,28 @@
+/* metraly-fonts.css — self-hosted brand families.
+ * Imported first by metraly-ui.css so the --m-font-* tokens resolve to bundled
+ * woff2 files with no Google Fonts / CDN dependency. Paths are relative to this
+ * stylesheet (packages/ui/src/styles/), pointing at the bundled fonts. */
+
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/Inter.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("../fonts/JetBrainsMono.woff2") format("woff2");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("../fonts/SpaceGrotesk.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}

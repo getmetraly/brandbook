@@ -55,9 +55,9 @@ export const Overview: Story = {
       fullWidth
     >
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Deploy frequency · teams × weeks</div>
+        <div className="msf__section-title">Deploy frequency · teams × weeks</div>
         <ProductPreview>
-          <div style={{ padding: 20 }}>
+          <div className="msf__pad-lg">
             <MetralyHeatmap
               title="Deploy frequency"
               description="Deployments per team per week"
@@ -74,9 +74,9 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>PR age by team · warning ramp</div>
+        <div className="msf__section-title">PR age by team · warning ramp</div>
         <ProductPreview>
-          <div style={{ padding: 20 }}>
+          <div className="msf__pad-lg">
             <MetralyHeatmap
               title="Open PR age"
               description="Number of open PRs by age bucket per team"
@@ -92,8 +92,8 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Widget states</div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+        <div className="msf__section-title">Widget states</div>
+        <div className="msf__grid msf__grid--two">
           <MetralyHeatmap xLabels={DEPLOY_X} yLabels={DEPLOY_Y} cells={[]} state="loading" />
           <MetralyHeatmap xLabels={DEPLOY_X} yLabels={DEPLOY_Y} cells={[]} state="error" />
         </div>

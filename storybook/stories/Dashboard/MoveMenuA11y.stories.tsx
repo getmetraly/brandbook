@@ -33,7 +33,7 @@ export const Overview: Story = {
       fullWidth
     >
       <ProductPreview>
-        <div style={{ padding: 24 }}>
+        <div className="msf__pad-lg">
           <MoveMenuA11yExample initial={INITIAL_WIDGETS} rows={3} cols={3} />
         </div>
       </ProductPreview>

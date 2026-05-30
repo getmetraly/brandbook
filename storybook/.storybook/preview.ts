@@ -15,7 +15,7 @@ import { ThemeProvider } from "@metraly/ui";
 const withTheme = (Story: React.ComponentType) =>
   React.createElement(
     ThemeProvider,
-    { mode: "dark" },
+    { theme: "dark" },
     React.createElement(Story),
   );
 
@@ -26,8 +26,8 @@ const preview: Preview = {
       // Match the Metraly dark canvas; light mode can be toggled via toolbar
       default: "dark",
       values: [
-        { name: "dark",  value: "#0e1117" },
-        { name: "light", value: "#f8fafc" },
+        { name: "dark", value: "var(--m-bg-0)" },
+        { name: "light", value: "oklch(0.97 0.006 250)" },
       ],
     },
     layout: "padded",

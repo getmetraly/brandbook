@@ -29,8 +29,8 @@ export const Overview: Story = {
       fullWidth
     >
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Ready state with content</div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 16 }}>
+        <div className="msf__section-title">Ready state with content</div>
+        <div className="msf__grid msf__grid--metric">
           <DashboardWidget id="gauge-demo" title="Deployment frequency" subtitle="DORA · Last 14d">
             <MetralyGauge value={72} max={100} unit="%" tone="success" bare label="Deploy frequency" />
           </DashboardWidget>
@@ -46,8 +46,8 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Widget states</div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 16 }}>
+        <div className="msf__section-title">Widget states</div>
+        <div className="msf__grid msf__grid--cards">
           <DashboardWidget id="loading" title="Cycle time" loading />
           <DashboardWidget id="stale" title="PR throughput" state="stale" stateTitle="Data is stale" stateDescription="Last synced 6h ago" />
           <DashboardWidget id="error" title="Deploy count" state="error" stateTitle="Source error" stateDescription="GitHub connector returned 401" />
@@ -56,8 +56,8 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Selected state</div>
-        <div style={{ maxWidth: 300 }}>
+        <div className="msf__section-title">Selected state</div>
+        <div className="msf__constrained-sm">
           <DashboardWidget id="selected" title="DORA Overview" subtitle="Last 14d" selected>
             <MetralyGauge value={88} max={100} unit="%" tone="success" bare label="Overall score" />
           </DashboardWidget>
@@ -65,8 +65,8 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Widget examples (from registry)</div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 16 }}>
+        <div className="msf__section-title">Widget examples (from registry)</div>
+        <div className="msf__grid msf__grid--metric">
           <DashboardWidget id="activity" title="Activity Feed" subtitle="Live">
             <ActivityWidgetExample />
           </DashboardWidget>

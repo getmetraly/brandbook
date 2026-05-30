@@ -5,13 +5,13 @@
 
 /* Dark canvas baseline so stories render on the correct surface */
 .sb-show-main {
-  background-color: var(--m-bg, #0e1117);
+  background-color: var(--m-bg-0);
   min-height: 100vh;
 }
 
 /* Default story padding */
 .sb-story-wrapper {
-  padding: 24px;
+  padding: var(--m-6);
   box-sizing: border-box;
 }
 
@@ -28,6 +28,6 @@
 .sb-story-bounded {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 24px;
+  padding: var(--m-6);
   box-sizing: border-box;
 }

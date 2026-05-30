@@ -39,15 +39,15 @@ export const Overview: Story = {
       tags={["connector", "interactive"]}
     >
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Interactive</div>
-        <div style={{ maxWidth: 480 }}>
+        <div className="msf__section-title">Interactive</div>
+        <div className="msf__constrained-lg">
           <PickerDemo />
         </div>
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>No estimate (unknown confidence)</div>
-        <div style={{ maxWidth: 480 }}>
+        <div className="msf__section-title">No estimate (unknown confidence)</div>
+        <div className="msf__constrained-lg">
           <BackfillRangePicker
             preset="90d"
             onChange={() => undefined}

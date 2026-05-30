@@ -25,8 +25,8 @@ function SidebarDemo({ collapsed = false }: { collapsed?: boolean }) {
       collapsed={collapsed}
       header={
         collapsed
-          ? <div style={{ padding: "12px 0", display: "flex", justifyContent: "center" }}><MetralyIcon name="home" size="md" /></div>
-          : <div style={{ padding: "16px 20px", display: "flex", alignItems: "center", gap: 8 }}><MetralyLogo /><span style={{ fontWeight: 700, fontSize: 14, color: "rgba(255,255,255,0.9)" }}>Metraly</span></div>
+          ? <div className="msf__sidebar-header-collapsed"><MetralyIcon name="home" size="md" /></div>
+          : <div className="msf__sidebar-header"><MetralyLogo /><span className="msf__brand-name">Metraly</span></div>
       }
     >
       <MetralySidebarSection label="Dashboards">
@@ -53,7 +53,7 @@ function SidebarDemo({ collapsed = false }: { collapsed?: boolean }) {
         <MetralySidebarItem
           icon={<MetralyIcon name="brain" size="sm" />}
           label="AI Workspace"
-          meta={<span style={{ fontSize: 10, padding: "1px 6px", borderRadius: 4, background: "rgba(139,92,246,0.2)", color: "#a78bfa" }}>preview</span>}
+          meta={<span className="msf__preview-pill">preview</span>}
           active={active === "ai"}
           onClick={() => setActive("ai")}
         />
@@ -98,11 +98,11 @@ export const Overview: Story = {
       tags={["shell", "navigation", "a11y"]}
     >
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Expanded</div>
+        <div className="msf__section-title">Expanded</div>
         <ProductPreview>
-          <div style={{ height: 480, display: "flex" }}>
+          <div className="msf__split-demo">
             <SidebarDemo />
-            <div style={{ flex: 1, background: "rgba(255,255,255,0.02)", padding: 24, color: "rgba(255,255,255,0.3)", fontSize: 13 }}>
+            <div className="msf__shell-main">
               Page content area
             </div>
           </div>
@@ -110,11 +110,11 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Collapsed</div>
+        <div className="msf__section-title">Collapsed</div>
         <ProductPreview>
-          <div style={{ height: 480, display: "flex" }}>
+          <div className="msf__split-demo">
             <SidebarDemo collapsed />
-            <div style={{ flex: 1, background: "rgba(255,255,255,0.02)", padding: 24, color: "rgba(255,255,255,0.3)", fontSize: 13 }}>
+            <div className="msf__shell-main">
               Page content area
             </div>
           </div>

@@ -6,6 +6,7 @@
  * miss their styles.
  */
 
+@import "./metraly-fonts.css";
 @import "./metraly-theme.css";
 @import "./metraly-badge.css";
 @import "./metraly-button.css";

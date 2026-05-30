@@ -22,8 +22,8 @@ export const Overview: Story = {
     >
       {/* Tones — neutral | cyan | purple | success | warning | danger | info */}
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Tones</div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 16 }}>
+        <div className="msf__section-title">Tones</div>
+        <div className="msf__grid">
           {(["neutral", "cyan", "success", "warning", "danger", "info"] as const).map((tone) => (
             <CardShell
               key={tone}
@@ -37,8 +37,8 @@ export const Overview: Story = {
 
       {/* Density */}
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Density</div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 400 }}>
+        <div className="msf__section-title">Density</div>
+        <div className="msf__stack msf__stack--sm msf__constrained-md">
           <CardShell density="comfortable" title="density=comfortable" subtitle="More breathing room" />
           <CardShell density="compact"     title="density=compact"     subtitle="Tight dashboard grid" />
         </div>
@@ -46,8 +46,8 @@ export const Overview: Story = {
 
       {/* States */}
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>States</div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 12 }}>
+        <div className="msf__section-title">States</div>
+        <div className="msf__grid msf__grid--compact">
           {(["default", "selected", "error", "stale", "loading"] as const).map((state) => (
             <CardShell key={state} state={state} title={`state="${state}"`} />
           ))}
@@ -56,10 +56,10 @@ export const Overview: Story = {
 
       {/* Composed example */}
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Composed — connector card</div>
+        <div className="msf__section-title">Composed — connector card</div>
         <CardShell
-          style={{ maxWidth: 320 }}
-          leading={<span style={{ fontSize: 20 }}>🐙</span>}
+          className="msf__constrained-sm"
+          leading={<span className="msf__card-emoji">🐙</span>}
           title="GitHub"
           subtitle="github.com/acme-org"
           trailing={<StatusBadge status="Live" />}

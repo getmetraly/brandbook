@@ -22,8 +22,8 @@ export const Overview: Story = {
     >
       {/* Variants */}
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Variants</div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
+        <div className="msf__section-title">Variants</div>
+        <div className="msf__row msf__row--wrap">
           <MetralyButton variant="primary">Primary</MetralyButton>
           <MetralyButton variant="secondary">Secondary</MetralyButton>
           <MetralyButton variant="ghost">Ghost</MetralyButton>
@@ -35,8 +35,8 @@ export const Overview: Story = {
 
       {/* Sizes */}
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Sizes</div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
+        <div className="msf__section-title">Sizes</div>
+        <div className="msf__row msf__row--wrap">
           <MetralyButton variant="primary" size="sm">Small</MetralyButton>
           <MetralyButton variant="primary" size="md">Medium</MetralyButton>
           <MetralyButton variant="primary" size="lg">Large</MetralyButton>
@@ -45,8 +45,8 @@ export const Overview: Story = {
 
       {/* Icon slots */}
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Icon slots</div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
+        <div className="msf__section-title">Icon slots</div>
+        <div className="msf__row msf__row--wrap">
           <MetralyButton variant="primary" iconLeft={<MetralyIcon name="plus" size="sm" />}>
             Add widget
           </MetralyButton>
@@ -60,8 +60,8 @@ export const Overview: Story = {
 
       {/* States */}
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>States</div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
+        <div className="msf__section-title">States</div>
+        <div className="msf__row msf__row--wrap">
           <MetralyButton variant="primary" loading>Saving…</MetralyButton>
           <MetralyButton variant="primary" disabled>Disabled</MetralyButton>
           <MetralyButton variant="primary" fullWidth>Full width</MetralyButton>
@@ -70,8 +70,8 @@ export const Overview: Story = {
 
       {/* Danger confirmation pattern */}
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Danger confirmation</div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
+        <div className="msf__section-title">Danger confirmation</div>
+        <div className="msf__row msf__row--wrap">
           <MetralyButton variant="ghost">Cancel</MetralyButton>
           <MetralyButton variant="danger" iconLeft={<MetralyIcon name="trash" size="sm" />}>
             Delete connector

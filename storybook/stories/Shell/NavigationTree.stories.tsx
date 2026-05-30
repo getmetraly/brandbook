@@ -53,8 +53,8 @@ export const Overview: Story = {
       tags={["navigation", "a11y", "interactive"]}
     >
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Two-level tree (defaultExpanded)</div>
-        <div style={{ maxWidth: 280, background: "rgba(255,255,255,0.03)", borderRadius: 8, padding: 8 }}>
+        <div className="msf__section-title">Two-level tree (defaultExpanded)</div>
+        <div className="msf__nav-preview">
           <MetralyNavigationTree
             items={TREE_ITEMS}
             defaultValue="overview"

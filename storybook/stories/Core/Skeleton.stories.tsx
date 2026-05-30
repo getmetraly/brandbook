@@ -22,28 +22,28 @@ export const Overview: Story = {
       status="stable"
     >
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Text (3 lines)</div>
-        <div style={{ maxWidth: 320 }}>
+        <div className="msf__section-title">Text (3 lines)</div>
+        <div className="msf__constrained-sm">
           <MetralySkeleton variant="text" lines={3} />
         </div>
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Card</div>
-        <div style={{ maxWidth: 300 }}>
+        <div className="msf__section-title">Card</div>
+        <div className="msf__constrained-sm">
           <MetralySkeleton variant="card" />
         </div>
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Widget</div>
-        <div style={{ maxWidth: 300 }}>
+        <div className="msf__section-title">Widget</div>
+        <div className="msf__constrained-sm">
           <MetralySkeleton variant="widget" />
         </div>
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Table</div>
+        <div className="msf__section-title">Table</div>
         <MetralySkeleton variant="table" />
       </section>
     </MetralyStoryFrame>

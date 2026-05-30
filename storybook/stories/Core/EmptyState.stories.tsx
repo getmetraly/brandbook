@@ -20,7 +20,7 @@ export const Overview: Story = {
       status="stable"
     >
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Default — no data</div>
+        <div className="msf__section-title">Default — no data</div>
         <MetralyEmptyState
           title="No dashboards yet"
           description="Create your first dashboard to start tracking your engineering metrics."
@@ -29,7 +29,7 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Error</div>
+        <div className="msf__section-title">Error</div>
         <MetralyEmptyState
           variant="error"
           title="Failed to load data"
@@ -39,7 +39,7 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>No results</div>
+        <div className="msf__section-title">No results</div>
         <MetralyEmptyState
           variant="no-results"
           title='No results for "deploy"'
@@ -48,7 +48,7 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Gated</div>
+        <div className="msf__section-title">Gated</div>
         <MetralyEmptyState
           variant="gated"
           title="Feature not available"

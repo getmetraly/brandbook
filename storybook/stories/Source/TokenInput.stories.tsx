@@ -21,8 +21,8 @@ export const Overview: Story = {
       tags={["security", "form", "a11y"]}
     >
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Draft — not yet committed</div>
-        <div style={{ maxWidth: 480 }}>
+        <div className="msf__section-title">Draft — not yet committed</div>
+        <div className="msf__constrained-lg">
           <TokenInput
             label="GitHub Personal Access Token"
             helper="Requires repo and read:org scopes."
@@ -33,8 +33,8 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Committed (stored)</div>
-        <div style={{ maxWidth: 480 }}>
+        <div className="msf__section-title">Committed (stored)</div>
+        <div className="msf__constrained-lg">
           <TokenInput
             label="GitHub Personal Access Token"
             committed
@@ -46,8 +46,8 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Validating</div>
-        <div style={{ maxWidth: 480 }}>
+        <div className="msf__section-title">Validating</div>
+        <div className="msf__constrained-lg">
           <TokenInput
             label="API key"
             kind="api-key"
@@ -58,8 +58,8 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Invalid token</div>
-        <div style={{ maxWidth: 480 }}>
+        <div className="msf__section-title">Invalid token</div>
+        <div className="msf__constrained-lg">
           <TokenInput
             label="API key"
             kind="api-key"
@@ -71,8 +71,8 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Webhook secret</div>
-        <div style={{ maxWidth: 480 }}>
+        <div className="msf__section-title">Webhook secret</div>
+        <div className="msf__constrained-lg">
           <TokenInput
             label="Webhook secret"
             kind="webhook-secret"

@@ -24,7 +24,7 @@ export const Overview: Story = {
       tags={["interactive", "form"]}
     >
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Connector filter bar</div>
+        <div className="msf__section-title">Connector filter bar</div>
         <MetralyFilterBar
           filters={[
             { id: "state",    label: "State",    control: <MetralySelect options={[{ value: "all", label: "All" }, { value: "active", label: "Active" }, { value: "paused", label: "Paused" }]} defaultValue="all" /> },
@@ -37,7 +37,7 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Collapsed</div>
+        <div className="msf__section-title">Collapsed</div>
         <MetralyFilterBar
           collapsed
           filters={[

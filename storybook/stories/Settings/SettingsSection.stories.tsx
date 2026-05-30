@@ -28,8 +28,8 @@ export const Overview: Story = {
       tags={["settings"]}
     >
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Configured state with audit log</div>
-        <div style={{ maxWidth: 720 }}>
+        <div className="msf__section-title">Configured state with audit log</div>
+        <div className="msf__constrained-3xl">
           <SettingsSection
             title="AI Provider Connectors"
             description="Connect OpenAI-compatible and Anthropic-compatible endpoints. Metraly routes AI features to the configured default."
@@ -40,7 +40,7 @@ export const Overview: Story = {
               </MetralyButton>
             }
           >
-            <div style={{ padding: "8px 0 16px" }}>
+            <div className="msf__section-gap-sm">
               {AUDIT_ROWS.map((row, i) => (
                 <SettingsAuditRow key={i} {...row} />
               ))}
@@ -50,8 +50,8 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Not configured (gated)</div>
-        <div style={{ maxWidth: 720 }}>
+        <div className="msf__section-title">Not configured (gated)</div>
+        <div className="msf__constrained-3xl">
           <SettingsSection
             title="SSO / SAML"
             description="Single Sign-On is available on Enterprise plans."
@@ -62,8 +62,8 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Compact mode</div>
-        <div style={{ maxWidth: 720 }}>
+        <div className="msf__section-title">Compact mode</div>
+        <div className="msf__constrained-3xl">
           <SettingsSection
             title="Audit log"
             badge={{ status: "Live", label: "Active" }}

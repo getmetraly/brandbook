@@ -23,7 +23,7 @@ export const ProductPreviewStory: Story = {
       fullscreen
     >
       <ProductPreview>
-        <div style={{ height: "100vh" }}>
+        <div className="msf__viewport-h">
           <AppConnectorWizardScreen />
         </div>
       </ProductPreview>

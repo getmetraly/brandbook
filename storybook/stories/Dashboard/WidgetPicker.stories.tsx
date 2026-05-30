@@ -32,9 +32,9 @@ export const Overview: Story = {
       tags={["dashboard", "interactive", "a11y"]}
     >
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Widget catalog</div>
+        <div className="msf__section-title">Widget catalog</div>
         <ProductPreview>
-          <div style={{ padding: 16 }}>
+          <div className="msf__pad-md">
             <WidgetPickerList ariaLabel="Widget catalog">
               {WIDGET_CATALOG.map((w) => (
                 <WidgetPickerCard
@@ -52,8 +52,8 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <div style={{ marginBottom: 12, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>States</div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 12 }}>
+        <div className="msf__section-title">States</div>
+        <div className="msf__grid msf__grid--cards msf__grid--compact">
           <WidgetPickerCard title="Default" description="No selection" kind="dora/deploy-frequency" />
           <WidgetPickerCard title="Selected" description="Added to dashboard" kind="dora/lead-time" selected />
           <WidgetPickerCard title="Loading" description="Fetching preview" kind="ai/insight-card" loading />
