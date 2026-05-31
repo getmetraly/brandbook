@@ -334,3 +334,34 @@
   font-size: var(--m-fs-11);
   color: var(--m-cyan-500);
 }
+
+@media (max-width: 360px) {
+  .metraly-ai-workspace__message--user {
+    justify-content: stretch;
+  }
+
+  .metraly-ai-workspace__bubble {
+    width: 100%;
+    max-width: 100%;
+    border-radius: var(--m-r-4);
+  }
+
+  .metraly-ai-workspace__composer-shell {
+    border-radius: var(--m-r-4);
+  }
+
+  .metraly-answer-card__evidence {
+    gap: var(--m-2);
+  }
+
+  .metraly-answer-card__chip {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .metraly-answer-card__chip-value {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+}
+
