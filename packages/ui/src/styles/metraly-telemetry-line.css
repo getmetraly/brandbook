@@ -1,0 +1,30 @@
+/* metraly-telemetry-line.css
+ * Pulse-line telemetry visualiser.
+ * Classes: metraly-telemetry-line__*, variants: is-primary … is-info
+ * Tokens: --m-* only. No raw colors. */
+
+.metraly-telemetry-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.metraly-telemetry-line__pulse {
+  display: block;
+  width: 28px;
+  height: 12px;
+  clip-path: polygon(
+    0 52%, 20% 52%, 26% 25%, 36% 82%, 47% 8%,
+    58% 52%, 100% 52%, 100% 66%, 52% 66%, 47% 48%,
+    37% 100%, 27% 55%, 23% 66%, 0 66%
+  );
+  background: var(--m-telemetry-color, var(--m-cyan-500));
+}
+
+/* ── Tone variants ──────────────────────────────────────────────────── */
+.metraly-telemetry-line.is-primary   { --m-telemetry-color: var(--m-cyan-500); }
+.metraly-telemetry-line.is-secondary { --m-telemetry-color: var(--m-purple-500); }
+.metraly-telemetry-line.is-success   { --m-telemetry-color: var(--m-ok); }
+.metraly-telemetry-line.is-warning   { --m-telemetry-color: var(--m-warn); }
+.metraly-telemetry-line.is-error     { --m-telemetry-color: var(--m-err); }
+.metraly-telemetry-line.is-info      { --m-telemetry-color: var(--m-fg-2); }

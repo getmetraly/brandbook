@@ -18,7 +18,7 @@
 }
 
 .metraly-board__head-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.metraly-board__title { font-size: 13px; font-weight: 600; color: var(--m-fg-0); }
+.metraly-board__title { font-size: var(--m-fs-12); font-weight: 600; color: var(--m-fg-0); }
 .metraly-board__desc  { font-size: 11.5px; color: var(--m-fg-2); }
 
 .metraly-board__summary {
@@ -85,7 +85,7 @@
   color: inherit;
   font: inherit;
   text-align: left;
-  transition: background 100ms ease, border-color 100ms ease;
+  transition: background var(--m-dur-1) var(--m-ease), border-color var(--m-dur-1) var(--m-ease);
 }
 
 .metraly-board--list .metraly-board__item {

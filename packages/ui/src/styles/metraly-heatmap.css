@@ -51,7 +51,7 @@
   min-width: 0;
 }
 .metraly-heatmap__title {
-  font-size: 13px;
+  font-size: var(--m-fs-12);
   font-weight: 600;
   color: var(--m-fg-0);
 }
@@ -100,7 +100,7 @@
 .metraly-heatmap__xlabel {
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-feature-settings: "tnum";
-  font-size: 10px;
+  font-size: var(--m-fs-9);
   color: var(--m-fg-2);
   text-align: center;
   padding: 1px 0 3px;
@@ -112,7 +112,7 @@
 
 .metraly-heatmap__ylabel {
   font-family: var(--m-font-ui, "Inter", sans-serif);
-  font-size: 11px;
+  font-size: var(--m-fs-10);
   color: var(--m-fg-2);
   display: flex;
   align-items: center;
@@ -147,9 +147,9 @@
   outline: none;
   overflow: hidden;
   transition:
-    transform 100ms ease,
-    border-color 100ms ease,
-    box-shadow 100ms ease;
+    transform var(--m-dur-1) var(--m-ease),
+    border-color var(--m-dur-1) var(--m-ease),
+    box-shadow var(--m-dur-1) var(--m-ease);
 }
 
 .metraly-heatmap--density-dashboard .metraly-heatmap__cell,
@@ -178,7 +178,7 @@
   z-index: 1;
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-feature-settings: "tnum";
-  font-size: 10px;
+  font-size: var(--m-fs-9);
   color: var(--m-fg-0);
   opacity: 0.94;
   pointer-events: none;
@@ -402,7 +402,7 @@
   padding: 6px 8px;
   text-align: right;
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
-  font-size: 11px;
+  font-size: var(--m-fs-10);
   color: var(--m-fg-1);
 }
 
@@ -529,7 +529,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 12px;
+  font-size: var(--m-fs-11);
   font-weight: 600;
   color: var(--m-fg-0);
 }
@@ -553,7 +553,7 @@
 
 .metraly-heatmap__tooltip-value b {
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
-  font-size: 14px;
+  font-size: var(--m-fs-13);
   color: var(--m-fg-0);
 }
 

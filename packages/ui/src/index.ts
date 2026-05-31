@@ -321,6 +321,9 @@ export type {
 export { BYOLLMConnectorPanel } from "./settings/BYOLLMConnectorPanel";
 export type { BYOLLMConnectorPanelProps, BYOLLMProviderEntry } from "./settings/BYOLLMConnectorPanel";
 
+// ── Fixtures / documentation examples (not design-system primitives) ─────────
+// These are provided for Storybook and integration demos. Do not use them in
+// production application code — they may change without a semver bump.
 export {
   GaugeWidgetExample,
   HeatmapWidgetExample,
@@ -329,6 +332,7 @@ export {
   StateBoardWidgetExample,
 } from "./dashboard/DashboardWidgetExamples";
 
+// Keyboard accessibility demonstration fixture — not a production primitive.
 export { MoveMenuA11yExample } from "./dashboard/MoveMenuA11yExample";
 export type { MoveMenuA11yExampleProps, MoveMenuA11yWidget } from "./dashboard/MoveMenuA11yExample";
 

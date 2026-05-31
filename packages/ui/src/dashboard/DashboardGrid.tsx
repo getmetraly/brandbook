@@ -34,7 +34,7 @@ export function DashboardGrid<TWidget extends { id: string }>({
             style={
               {
                 ["--m-dashboard-grid-span" as const]: String(item ? Math.max(1, item.w) : 4),
-                minHeight: item ? `${Math.max(1, item.h) * 96}px` : undefined,
+                ["--m-dashboard-widget-rows" as const]: String(item ? Math.max(1, item.h) : 1),
               } as React.CSSProperties
             }
           >

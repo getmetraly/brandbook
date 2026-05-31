@@ -94,6 +94,13 @@
   --m-dur-2: 140ms;
   --m-dur-3: 220ms;
 
+  /* Mobile shell — scrim and off-canvas drawer shadow */
+  --m-scrim: oklch(0.04 0.012 250 / 0.58);
+  --m-shadow-drawer: 24px 0 60px oklch(0.04 0.012 250 / 0.64);
+
+  /* Dashboard grid row height — single source of truth */
+  --m-dashboard-row-height: 96px;
+
   --m-row-h: 32px;
   --m-control-h: 30px;
   --m-pad-x: 12px;

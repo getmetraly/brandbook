@@ -520,7 +520,7 @@
     width: min(286px, calc(100vw - 56px));
     max-width: calc(100vw - 56px);
     transform: translateX(-104%);
-    box-shadow: 24px 0 60px oklch(0.04 0.012 250 / 0.64);
+    box-shadow: var(--m-shadow-drawer);
     transition: transform var(--m-dur-2) var(--m-ease);
   }
 
@@ -534,7 +534,7 @@
     z-index: 20;
     display: block;
     border: 0;
-    background: oklch(0.04 0.012 250 / 0.58);
+    background: var(--m-scrim);
     opacity: 0;
     pointer-events: none;
     transition: opacity var(--m-dur-2) var(--m-ease);

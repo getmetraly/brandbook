@@ -256,7 +256,7 @@ export const MetralyGauge: React.FC<MetralyGaugeProps> = ({
       ]
         .filter(Boolean)
         .join(" ")}
-      style={{ "--m-gauge-accent": accent } as React.CSSProperties}
+      style={{ "--m-gauge-accent": accent, "--m-gauge-fill-pct": `${Math.round(pct * 100)}%` } as React.CSSProperties}
       role={showStateBlock ? undefined : "meter"}
       aria-label={showStateBlock ? undefined : label ?? "Gauge"}
       aria-valuemin={showStateBlock ? undefined : min}
@@ -418,7 +418,6 @@ const InlineMeter: React.FC<{ pct: number; accent: string; value: string }> = ({
       >
         <span
           className="metraly-gauge__inline-fill"
-          style={{ width: `${Math.round(pct * 100)}%`, background: accent }}
         />
       </span>
     </div>

@@ -22,7 +22,7 @@
 .metraly-insight__head-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 
 .metraly-insight__title {
-  font-size: 15px;
+  font-size: var(--m-fs-14);
   font-weight: 600;
   color: var(--m-fg-0);
   letter-spacing: -0.005em;
@@ -58,7 +58,7 @@
   background: var(--m-bg-2);
   color: var(--m-fg-2);
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
-  font-size: 10px;
+  font-size: var(--m-fs-9);
   letter-spacing: 0.04em;
 }
 
@@ -132,7 +132,7 @@
 
 .metraly-insight__evidence-kind {
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
-  font-size: 10px;
+  font-size: var(--m-fs-9);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--m-fg-2);
@@ -185,13 +185,13 @@
   padding: 0 12px;
   border-radius: 6px;
   font-family: inherit;
-  font-size: 12px;
+  font-size: var(--m-fs-11);
   font-weight: 500;
   border: 1px solid var(--m-line);
   background: var(--m-bg-2);
   color: var(--m-fg-1);
   cursor: pointer;
-  transition: background 100ms ease, border-color 100ms ease;
+  transition: background var(--m-dur-1) var(--m-ease), border-color var(--m-dur-1) var(--m-ease);
 }
 
 .metraly-insight__btn:hover { background: var(--m-bg-3); border-color: var(--m-line-strong); }

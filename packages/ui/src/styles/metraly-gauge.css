@@ -77,7 +77,7 @@
 
 .metraly-gauge__arc {
   /* color comes inline from --m-gauge-accent / direct stroke */
-  transition: stroke-dashoffset 220ms ease-out;
+  transition: stroke-dashoffset var(--m-dur-3) ease-out;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -112,7 +112,7 @@
 }
 
 .metraly-gauge__dial--compact .metraly-gauge__svg { max-width: 160px; }
-.metraly-gauge__dial--compact .metraly-gauge__value { font-size: 18px; }
+.metraly-gauge__dial--compact .metraly-gauge__value { font-size: var(--m-fs-18); }
 
 /* ── legend ────────────────────────────────────────────────────────── */
 
@@ -181,8 +181,10 @@
 .metraly-gauge__inline-fill {
   display: block;
   height: 100%;
+  width: var(--m-gauge-fill-pct, 0%);
   border-radius: inherit;
-  transition: width 220ms ease-out;
+  background: var(--m-gauge-accent, var(--m-cyan-500));
+  transition: width var(--m-dur-3) ease-out;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -204,7 +206,7 @@
 
 /* narrow layouts */
 @media (max-width: 360px) {
-  .metraly-gauge__value { font-size: 22px; }
+  .metraly-gauge__value { font-size: var(--m-fs-22); }
   .metraly-gauge__svg { max-width: 200px; }
 }
 

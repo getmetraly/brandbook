@@ -189,6 +189,7 @@
 .metraly-dashboard-grid-item {
   min-width: 0;
   grid-column: span var(--m-dashboard-grid-span, 4);
+  min-height: calc(var(--m-dashboard-widget-rows, 1) * var(--m-dashboard-row-height));
 }
 
 .metraly-dashboard-widget {

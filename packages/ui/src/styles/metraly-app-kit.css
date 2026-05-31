@@ -387,7 +387,7 @@
 }
 .metraly-app-metric--lg { font-size: 40px; }
 .metraly-app-metric-delta {
-  font: 500 11px/1 var(--m-font-mono);
+  font: 500 var(--m-fs-10)/1 var(--m-font-mono);
   color: var(--m-fg-2);
 }
 .metraly-app-metric-delta.is-up   { color: var(--m-ok); }
@@ -683,12 +683,12 @@
 .metraly-app-health-table td {
   padding: 8px 12px;
   border-bottom: 1px solid var(--m-line-faint);
-  font: 400 12px/1 var(--m-font-mono);
+  font: 400 var(--m-fs-11)/1 var(--m-font-mono);
   color: var(--m-fg-0);
 }
 .metraly-app-health-table td.is-mono {
   font-family: var(--m-font-mono);
-  font-size: 12px;
+  font-size: var(--m-fs-11);
   color: var(--m-fg-0);
 }
 

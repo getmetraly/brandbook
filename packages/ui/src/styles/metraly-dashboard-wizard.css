@@ -22,12 +22,12 @@
 .metraly-dwiz__rail-head { display: flex; flex-direction: column; gap: 2px; }
 .metraly-dwiz__title {
   margin: 0;
-  font-size: 15px;
+  font-size: var(--m-fs-14);
   font-weight: 600;
   color: var(--m-fg-0);
   letter-spacing: -0.005em;
 }
-.metraly-dwiz__desc { margin: 0; font-size: 12px; color: var(--m-fg-2); line-height: 1.5; }
+.metraly-dwiz__desc { margin: 0; font-size: var(--m-fs-11); color: var(--m-fg-2); line-height: 1.5; }
 
 .metraly-dwiz__steps {
   list-style: none;
@@ -81,7 +81,7 @@
   border: 1px solid var(--m-line-strong);
   font-family: var(--m-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-feature-settings: "tnum";
-  font-size: 11px;
+  font-size: var(--m-fs-10);
   color: var(--m-fg-1);
 }
 
@@ -108,7 +108,7 @@
 }
 
 .metraly-dwiz__step-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.metraly-dwiz__step-label { font-size: 13px; color: var(--m-fg-0); font-weight: 500; }
+.metraly-dwiz__step-label { font-size: var(--m-fs-12); color: var(--m-fg-0); font-weight: 500; }
 .metraly-dwiz__step-helper { font-size: 11.5px; color: var(--m-fg-2); }
 .metraly-dwiz__step-error { font-size: 11.5px; color: var(--m-err); }
 
@@ -177,7 +177,7 @@
 }
 
 .metraly-a11y-editor__head { display: flex; flex-direction: column; gap: 2px; }
-.metraly-a11y-editor__title { font-size: 13px; font-weight: 600; color: var(--m-fg-0); }
+.metraly-a11y-editor__title { font-size: var(--m-fs-12); font-weight: 600; color: var(--m-fg-0); }
 .metraly-a11y-editor__hint { font-size: 11.5px; color: var(--m-fg-2); }
 
 .metraly-a11y-editor__grid {
@@ -191,7 +191,7 @@
   display: block;
   border-radius: 10px;
   outline: none;
-  transition: box-shadow 100ms ease;
+  transition: box-shadow var(--m-dur-1) var(--m-ease);
 }
 
 .metraly-a11y-editor__cell:focus-visible {
