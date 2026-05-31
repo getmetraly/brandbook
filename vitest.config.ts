@@ -11,13 +11,21 @@ export default defineConfig({
   test: {
     projects: [
       {
+        extends: true,
+        root: dirname,
         plugins: [
           storybookTest({
             configDir: storybookConfigDir,
             storybookScript: "npm run storybook -- --no-open",
+            tags: {
+              include: ["test"],
+              exclude: [],
+              skip: [],
+            },
           }),
         ],
         test: {
+          dir: dirname,
           name: "storybook",
           browser: {
             enabled: true,
