@@ -7,10 +7,14 @@
 
 /* ---- Container ---- */
 .metraly-ai-workspace {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 100%;
   height: 100%;
   min-height: 0;
+  min-width: 0;
   overflow: hidden;
 }
 
@@ -50,7 +54,9 @@
 
 /* ---- Composer section ---- */
 .metraly-ai-workspace__composer {
+  box-sizing: border-box;
   flex-shrink: 0;
+  min-width: 0;
   padding: 14px var(--m-7);
   border-top: 1px solid var(--m-line);
   background: var(--m-bg-0);
@@ -61,9 +67,11 @@
 
 /* Input pill shell */
 .metraly-ai-workspace__composer-shell {
+  box-sizing: border-box;
   display: flex;
   gap: var(--m-2);
   align-items: center;
+  min-width: 0;
   background: var(--m-bg-1);
   border: 1px solid var(--m-line);
   border-radius: 12px;
@@ -157,6 +165,57 @@
   font-family: var(--m-font-ui);
   font-size: var(--m-fs-10);
   color: var(--m-fg-2);
+}
+
+@media (max-width: 640px) {
+  .metraly-ai-workspace__log {
+    padding: var(--m-4);
+    gap: var(--m-3);
+  }
+
+  .metraly-ai-workspace__bubble {
+    max-width: 88%;
+  }
+
+  .metraly-ai-workspace__message > .metraly-card-shell {
+    max-width: 100%;
+  }
+
+  .metraly-ai-workspace__composer {
+    padding: var(--m-3) var(--m-4);
+  }
+
+  .metraly-ai-workspace__composer-shell {
+    padding: 6px var(--m-2);
+  }
+
+  .metraly-ai-workspace__prompt-row {
+    justify-content: flex-start;
+  }
+
+  .metraly-ai-workspace__prompt {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    text-align: left;
+  }
+}
+
+@media (max-width: 360px) {
+  .metraly-ai-workspace__log {
+    padding: var(--m-3);
+  }
+
+  .metraly-ai-workspace__composer {
+    padding: var(--m-3);
+  }
+
+  .metraly-ai-workspace__composer-icon {
+    display: none;
+  }
+
+  .metraly-ai-workspace__input {
+    font-size: var(--m-fs-11);
+  }
 }
 
 /* ---- AnswerCard body styles ---- */

@@ -9,17 +9,25 @@
    App Shell Layout
    ============================ */
 .metraly-app-shell {
+  box-sizing: border-box;
   display: grid;
-  grid-template-columns: 240px 1fr;
-  grid-template-rows: 52px 1fr;
+  grid-template-columns: 240px minmax(0, 1fr);
+  grid-template-rows: 52px minmax(0, 1fr);
   grid-template-areas: "sidebar topbar" "sidebar main";
+  width: 100%;
+  max-width: 100%;
   height: 100vh;
   min-height: 0;
+  min-width: 0;
+  overflow: hidden;
 }
-.metraly-app-shell__sidebar { grid-area: sidebar; }
-.metraly-app-shell__topbar  { grid-area: topbar; }
+.metraly-app-shell__sidebar { grid-area: sidebar; min-width: 0; }
+.metraly-app-shell__topbar  { grid-area: topbar; min-width: 0; }
 .metraly-app-shell__main {
+  box-sizing: border-box;
   grid-area: main;
+  min-width: 0;
+  min-height: 0;
   overflow: auto;
   padding: 18px 24px 32px;
 }
@@ -166,6 +174,18 @@
   font: 700 9px/14px var(--m-font-ui);
   text-align: center;
   pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .metraly-app-topbar__search {
+    flex: 1 1 160px;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .metraly-app-topbar__search-input {
+    min-width: 0;
+  }
 }
 
 /* ============================
@@ -333,7 +353,8 @@
 .metraly-app-board {
   display: grid;
   gap: 14px;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  min-width: 0;
 }
 .metraly-app-board > .metraly-app-widget { min-height: 180px; }
 .metraly-app-board > .span-3  { grid-column: span 3; }
@@ -527,21 +548,25 @@
 .metraly-app-wizard__review-panel { display: grid; gap: 8px; }
 .metraly-app-wizard__review-row {
   display: grid;
-  grid-template-columns: 32px 1fr auto;
+  grid-template-columns: 32px minmax(112px, 0.7fr) minmax(0, 1fr) auto;
   gap: 10px;
   align-items: center;
   padding: 10px 12px;
   background: var(--m-bg-3);
   border: 1px solid var(--m-line-faint);
   border-radius: var(--m-r-3);
+  min-width: 0;
 }
 .metraly-app-wizard__review-row-label {
+  min-width: 0;
   font: 600 12px/1.2 var(--m-font-ui);
   color: var(--m-fg-0);
 }
 .metraly-app-wizard__review-row-value {
-  font: 500 11px/1 var(--m-font-mono);
+  min-width: 0;
+  font: 500 11px/1.35 var(--m-font-mono);
   color: var(--m-fg-2);
+  overflow-wrap: anywhere;
 }
 .metraly-app-wizard__review-ic {
   width: 28px;
@@ -567,6 +592,160 @@
 .metraly-app-wizard__footer-status {
   font: 500 11px/1 var(--m-font-mono);
   color: var(--m-fg-2);
+}
+
+
+@media (max-width: 767px) {
+  .metraly-app-shell {
+    height: 100dvh;
+  }
+
+  .metraly-app-shell__main {
+    padding: var(--m-4) var(--m-4) var(--m-5);
+  }
+
+  .metraly-app-shell__main--flush {
+    padding: 0;
+  }
+
+  .metraly-app-board {
+    gap: var(--m-4);
+  }
+
+  .metraly-app-board > .metraly-app-widget {
+    min-height: 0;
+  }
+
+  .metraly-app-widget__head {
+    align-items: flex-start;
+    gap: var(--m-2);
+    padding: var(--m-3);
+  }
+
+  .metraly-app-widget__body {
+    padding: var(--m-3);
+  }
+
+  .metraly-app-widget__health {
+    max-width: 100%;
+  }
+
+  .metraly-app-metric,
+  .metraly-app-metric--lg {
+    font-size: 32px;
+  }
+
+  .metraly-app-sparkline {
+    height: 52px;
+  }
+
+  .metraly-app-health-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .metraly-app-risk-list__item {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .metraly-app-risk-list__title {
+    flex-basis: calc(100% - 52px);
+    white-space: normal;
+    line-height: 1.35;
+  }
+}
+
+@media (max-width: 480px) {
+  .metraly-app-shell__main {
+    padding: var(--m-3);
+  }
+
+  .metraly-app-shell__main--flush {
+    padding: 0;
+  }
+
+  .metraly-app-wizard {
+    gap: var(--m-3);
+    max-width: 100%;
+  }
+
+  .metraly-app-wizard__rail {
+    grid-template-columns: 1fr;
+    gap: var(--m-2);
+    margin-bottom: 0;
+  }
+
+  .metraly-app-wizard__step {
+    padding: var(--m-2) var(--m-3);
+  }
+
+  .metraly-app-wizard__card {
+    padding: var(--m-4);
+    gap: var(--m-4);
+  }
+
+  .metraly-app-wizard__card-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .metraly-app-wizard__card-title {
+    font-size: var(--m-fs-18);
+  }
+
+  .metraly-app-wizard__review-row {
+    grid-template-columns: 28px minmax(0, 1fr);
+    align-items: start;
+    gap: var(--m-2) var(--m-3);
+    padding: var(--m-3);
+  }
+
+  .metraly-app-wizard__review-ic {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+  }
+
+  .metraly-app-wizard__review-row-label {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .metraly-app-wizard__review-row-value {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .metraly-app-wizard__review-row > :last-child {
+    grid-column: 2;
+    grid-row: 3;
+    justify-self: start;
+  }
+
+  .metraly-app-wizard__footer {
+    align-items: stretch;
+    bottom: var(--m-3);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: var(--m-3);
+  }
+
+  .metraly-app-wizard__footer-status {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    line-height: 1.35;
+  }
+
+  .metraly-app-wizard__footer > .metraly-button:first-child {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .metraly-app-wizard__footer > .metraly-button:last-child {
+    grid-column: 2;
+    grid-row: 2;
+  }
 }
 
 /* ============================
