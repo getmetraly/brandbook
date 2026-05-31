@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import * as React from "react";
 
 const COLOR_SWATCHES = [
   { name: "--m-bg-0", group: "Background" },

@@ -66,7 +66,7 @@ export interface MetralyTableProps<T extends Record<string, any>> {
  */
 export function MetralyTable<T extends Record<string, any>>({
   columns,
-  data,
+  data = [] as T[],
   loading = false,
   emptyText = "No records",
   rowKey,
