@@ -113,8 +113,7 @@
 }
 
 .metraly-checkbox[data-state="loading"] .metraly-checkbox-box,
-.metraly-radio[data-state="loading"] .metraly-radio-dot,
-.metraly-switch[data-state="loading"] .metraly-switch-knob {
+.metraly-radio[data-state="loading"] .metraly-radio-dot {
   opacity: 0.9;
 }
 
@@ -133,6 +132,7 @@
 }
 
 .metraly-control-spinner {
+  box-sizing: border-box;
   width: 10px;
   height: 10px;
   border-radius: 999px;
@@ -164,6 +164,11 @@
   opacity: 0.72;
 }
 
+.metraly-switch-row.is-loading .metraly-switch {
+  opacity: 1;
+  cursor: progress;
+}
+
 .metraly-switch-row {
   gap: 10px;
 }
@@ -193,6 +198,8 @@
   height: 12px;
   border-radius: 999px;
   background: var(--m-fg-2);
+  display: grid;
+  place-items: center;
   transition: left var(--m-dur-2) var(--m-ease), background var(--m-dur-2) var(--m-ease);
 }
 
@@ -205,6 +212,24 @@
 .metraly-switch[aria-checked="true"] .metraly-switch-knob {
   left: 15px;
   background: var(--m-bg-0);
+}
+
+.metraly-switch-row[data-state="loading"] .metraly-switch-knob {
+  opacity: 1;
+  background: var(--m-bg-0);
+  color: var(--m-cyan-500);
+  box-shadow: 0 0 0 1px color-mix(in oklch, currentColor 58%, transparent);
+}
+
+.metraly-switch-row[data-state="loading"] .metraly-switch-knob .metraly-control-spinner {
+  width: 8px;
+  height: 8px;
+  border-color: currentColor;
+  border-top-color: transparent;
+}
+
+.metraly-switch-row[data-accent="purple"][data-state="loading"] .metraly-switch-knob {
+  color: var(--m-purple-500);
 }
 
 .metraly-switch-row[data-accent="purple"] .metraly-switch[aria-checked="true"] {
