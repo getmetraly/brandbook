@@ -25,7 +25,6 @@ export default defineConfig({
             headless: true,
             instances: [{ browser: "chromium" }],
           },
-          setupFiles: [path.join(storybookConfigDir, "vitest.setup.ts")],
         },
       },
     ],
