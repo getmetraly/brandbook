@@ -48,9 +48,16 @@ function InteractiveAIWorkspaceLayout() {
   );
 }
 
+const withWorkspaceFrame = (Story: React.ComponentType) => (
+  <div className="sb-story-workspace-frame">
+    <Story />
+  </div>
+);
+
 const meta = {
   component: AIWorkspaceLayout,
   tags: ["ai-generated"],
+  decorators: [withWorkspaceFrame],
 } satisfies Meta<typeof AIWorkspaceLayout>;
 
 export default meta;

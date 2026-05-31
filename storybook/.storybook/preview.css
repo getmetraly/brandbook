@@ -44,3 +44,34 @@
   color: var(--m-fg-2);
   font-size: var(--m-fs-12);
 }
+
+/* Panel story frame — constrains canvas to panel-appropriate width.
+ * Used by MetralyPanel component stories (packages/ui/src/components). */
+.sb-story-panel-frame {
+  max-width: 600px;
+  padding: var(--m-5);
+  box-sizing: border-box;
+}
+
+/* Card-level story frame — for single card / insight components. */
+.sb-story-card-frame {
+  max-width: 480px;
+  padding: var(--m-5);
+  box-sizing: border-box;
+}
+
+/* Workspace shell frame — gives AIWorkspaceLayout a fixed height context. */
+.sb-story-workspace-frame {
+  height: 600px;
+  width: 100%;
+  max-width: 900px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Leaderboard story frame — constrains bar component to readable width. */
+.sb-story-leaderboard-frame {
+  max-width: 520px;
+  padding: var(--m-5);
+  box-sizing: border-box;
+}

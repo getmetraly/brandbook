@@ -99,6 +99,23 @@
   border: 0;
 }
 
+@media (max-width: 640px) {
+  .metraly-token__stored {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .metraly-token__preview {
+    flex-basis: 100%;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .metraly-token__validation {
+    white-space: nowrap;
+  }
+}
+
 /* ── PermissionExplainer ─────────────────────────────────────────── */
 
 .metraly-perm { display: flex; flex-direction: column; gap: 10px; }

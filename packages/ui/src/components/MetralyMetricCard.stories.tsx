@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import React from "react";
 import { expect } from "storybook/test";
 import { MetralyIcon } from "./MetralyIcon";
 import { MetralyMetricCard } from "./MetralyMetricCard";
@@ -7,6 +8,9 @@ import { TrendBadge } from "./TrendBadge";
 const meta = {
   component: MetralyMetricCard,
   tags: ["ai-generated", "needs-work"],
+  decorators: [(Story: React.ComponentType) => (
+    <div className="sb-story-card-frame"><Story /></div>
+  )],
 } satisfies Meta<typeof MetralyMetricCard>;
 
 export default meta;

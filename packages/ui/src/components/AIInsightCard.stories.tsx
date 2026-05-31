@@ -26,6 +26,9 @@ function ActionableAIInsightCard() {
 const meta = {
   component: AIInsightCard,
   tags: ["ai-generated"],
+  decorators: [(Story: React.ComponentType) => (
+    <div className="sb-story-card-frame"><Story /></div>
+  )],
 } satisfies Meta<typeof AIInsightCard>;
 
 export default meta;

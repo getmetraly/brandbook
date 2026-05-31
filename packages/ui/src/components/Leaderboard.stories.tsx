@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import React from "react";
 import { Leaderboard } from "./Leaderboard";
 
 const contributors = [
@@ -18,6 +19,9 @@ const pipelines = [
 const meta = {
   component: Leaderboard,
   tags: ["ai-generated"],
+  decorators: [(Story: React.ComponentType) => (
+    <div className="sb-story-leaderboard-frame"><Story /></div>
+  )],
 } satisfies Meta<typeof Leaderboard>;
 
 export default meta;

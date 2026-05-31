@@ -72,6 +72,7 @@
   font-feature-settings: "tnum";
   font-size: var(--m-fs-11);
   color: var(--m-fg-2);
+  white-space: nowrap;
 }
 
 /* leading row — accent gradient + full strength */
