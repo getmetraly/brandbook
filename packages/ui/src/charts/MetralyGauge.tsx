@@ -257,12 +257,13 @@ export const MetralyGauge: React.FC<MetralyGaugeProps> = ({
         .filter(Boolean)
         .join(" ")}
       style={{ "--m-gauge-accent": accent } as React.CSSProperties}
-      role="meter"
-      aria-valuemin={min}
-      aria-valuemax={safeMax}
-      aria-valuenow={hasValue ? v : undefined}
-      aria-valuetext={ariaText}
-      aria-describedby={description || summary ? descId : undefined}
+      role={showStateBlock ? undefined : "meter"}
+      aria-label={showStateBlock ? undefined : label ?? "Gauge"}
+      aria-valuemin={showStateBlock ? undefined : min}
+      aria-valuemax={showStateBlock ? undefined : safeMax}
+      aria-valuenow={showStateBlock ? undefined : v}
+      aria-valuetext={showStateBlock ? undefined : ariaText}
+      aria-describedby={!showStateBlock && (description || summary) ? descId : undefined}
       aria-busy={state === "loading" || undefined}
     >
       {label ? (

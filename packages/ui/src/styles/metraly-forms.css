@@ -143,8 +143,25 @@
 
 .metraly-control-row.is-disabled,
 .metraly-switch-row.is-disabled {
-  opacity: 0.45;
+  opacity: 1;
   pointer-events: none;
+  cursor: not-allowed;
+}
+
+.metraly-control-row.is-disabled .metraly-control-label,
+.metraly-switch-row.is-disabled .metraly-control-label {
+  color: var(--m-fg-2);
+}
+
+.metraly-control-row.is-disabled .metraly-control-description,
+.metraly-switch-row.is-disabled .metraly-control-description {
+  color: var(--m-fg-2);
+}
+
+.metraly-control-row.is-disabled .metraly-checkbox-box,
+.metraly-control-row.is-disabled .metraly-radio-dot,
+.metraly-switch-row.is-disabled .metraly-switch {
+  opacity: 0.72;
 }
 
 .metraly-switch-row {

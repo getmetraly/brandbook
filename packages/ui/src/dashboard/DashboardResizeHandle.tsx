@@ -56,7 +56,6 @@ export function DashboardResizeHandle({
       active={active}
       focusable={active}
       className={["metraly-dashboard-resize-handle", className].filter(Boolean).join(" ")}
-      role="separator"
     />
   );
 }

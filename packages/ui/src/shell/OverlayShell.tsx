@@ -94,6 +94,10 @@ export function OverlayShell({
   } as React.CSSProperties;
   const classes = cx("metraly-overlay-shell", `metraly-overlay-shell--${placement}`, className);
   const hasHeader = Boolean(title || description);
+  const providedAriaLabel = (rest as React.AriaAttributes)["aria-label"];
+  const providedAriaLabelledBy = (rest as React.AriaAttributes)["aria-labelledby"];
+  const providedAriaDescribedBy = (rest as React.AriaAttributes)["aria-describedby"];
+  const dialogAriaLabel = title || providedAriaLabelledBy ? providedAriaLabel : providedAriaLabel ?? "Panel";
 
   return (
     <div className={cx("metraly-overlay-shell-root", rootClassName)} data-placement={placement}>
@@ -111,8 +115,9 @@ export function OverlayShell({
         style={panelStyle}
         role="dialog"
         aria-modal="true"
-        aria-labelledby={title ? titleId : undefined}
-        aria-describedby={description ? descriptionId : undefined}
+        aria-label={dialogAriaLabel}
+        aria-labelledby={title ? titleId : providedAriaLabelledBy}
+        aria-describedby={description ? descriptionId : providedAriaDescribedBy}
       >
         {withGrabber ? <div className="metraly-overlay-shell__grabber" aria-hidden="true" /> : null}
         {hasHeader ? (

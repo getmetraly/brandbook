@@ -43,7 +43,6 @@ export function StateBlock({
 }: StateBlockProps) {
   const resolvedTitle = title ?? defaultTitle(variant);
   const isLoading = variant === "loading";
-  const ariaLabel = (rest as { ["aria-label"]?: string })["aria-label"] ?? (typeof resolvedTitle === "string" ? resolvedTitle : "State");
   const classes = cx(
     "metraly-state-block",
     `is-${variant}`,
@@ -59,7 +58,6 @@ export function StateBlock({
       data-variant={variant}
       data-density={density}
       data-align={align}
-      aria-label={ariaLabel}
       aria-busy={isLoading || undefined}
     >
       {isLoading ? <MetralySkeleton variant="text" lines={loadingLines} aria-label="Loading state" /> : icon ? (
