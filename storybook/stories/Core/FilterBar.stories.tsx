@@ -27,8 +27,8 @@ export const Overview: Story = {
         <div className="msf__section-title">Connector filter bar</div>
         <MetralyFilterBar
           filters={[
-            { id: "state",    label: "State",    control: <MetralySelect options={[{ value: "all", label: "All" }, { value: "active", label: "Active" }, { value: "paused", label: "Paused" }]} defaultValue="all" /> },
-            { id: "source",   label: "Source",   control: <MetralySelect options={[{ value: "all", label: "All" }, { value: "github", label: "GitHub" }, { value: "jira", label: "Jira" }]} defaultValue="all" /> },
+            { id: "state",    label: "State",    control: <MetralySelect label="State" options={[{ value: "all", label: "All" }, { value: "active", label: "Active" }, { value: "paused", label: "Paused" }]} defaultValue="all" /> },
+            { id: "source",   label: "Source",   control: <MetralySelect label="Source" options={[{ value: "all", label: "All" }, { value: "github", label: "GitHub" }, { value: "jira", label: "Jira" }]} defaultValue="all" /> },
             { id: "synced",   label: "Last sync", meta: "Today" },
           ]}
           onReset={() => undefined}
@@ -46,6 +46,7 @@ export const Overview: Story = {
             { id: "date",   label: "Date",     meta: "Last 30d" },
           ]}
           onReset={() => undefined}
+          actions={<MetralyButton variant="ghost" size="sm">Edit filters</MetralyButton>}
         />
       </section>
     </MetralyStoryFrame>

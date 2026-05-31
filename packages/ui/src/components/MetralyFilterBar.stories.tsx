@@ -11,6 +11,7 @@ const filters = [
     label: "State",
     control: (
       <MetralySelect
+        label="State"
         options={[
           { label: "All", value: "all" },
           { label: "Active", value: "active" },
@@ -25,6 +26,7 @@ const filters = [
     label: "Source",
     control: (
       <MetralySelect
+        label="Source"
         options={[
           { label: "All", value: "all" },
           { label: "GitHub", value: "github" },
@@ -37,23 +39,34 @@ const filters = [
   },
 ] as const;
 
+function FilterBarStoryFrame({ children }: { children: React.ReactNode }) {
+  return <div className="sb-story-filterbar">{children}</div>;
+}
+
 function ResettableFilterBar() {
   const [resetCount, setResetCount] = React.useState(0);
 
   return (
-    <div>
+    <>
       <MetralyFilterBar
         actions={<MetralyButton variant="primary">Apply filters</MetralyButton>}
         filters={filters.map((filter) => ({ ...filter }))}
         onReset={() => setResetCount((count) => count + 1)}
       />
-      <p>Reset count: {resetCount}</p>
-    </div>
+      <p className="sb-story-note">Reset count: {resetCount}</p>
+    </>
   );
 }
 
 const meta = {
   component: MetralyFilterBar,
+  decorators: [
+    (Story) => (
+      <FilterBarStoryFrame>
+        <Story />
+      </FilterBarStoryFrame>
+    ),
+  ],
   tags: ["ai-generated"],
 } satisfies Meta<typeof MetralyFilterBar>;
 
@@ -69,6 +82,7 @@ export const Overview: Story = {
 
 export const Collapsed: Story = {
   args: {
+    actions: <MetralyButton variant="ghost" size="sm">Edit filters</MetralyButton>,
     collapsed: true,
     filters: [
       { id: "status", label: "Status", meta: "Active" },

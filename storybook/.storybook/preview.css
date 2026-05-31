@@ -32,35 +32,15 @@
   box-sizing: border-box;
 }
 
-/* Narrow component harness for simple surface primitives.
- * Keeps single-panel stories from stretching to the full Storybook canvas while
- * leaving production component CSS untouched. */
-.sb-story-panel-frame {
-  width: min(100%, 640px);
+/* Bounded wrapper for wide controls such as filter bars. */
+.sb-story-filterbar {
+  width: min(100%, 960px);
+  margin: 0 auto;
   box-sizing: border-box;
 }
 
-.sb-story-panel-content {
-  display: grid;
-  gap: var(--m-1);
-  min-width: 0;
-}
-
-.sb-story-panel-title {
-  font-size: var(--m-fs-14);
-  line-height: 1.35;
-  font-weight: 600;
-  color: var(--m-fg-0);
-}
-
-.sb-story-panel-copy {
-  margin: 0;
-  font-size: var(--m-fs-12);
-  line-height: 1.5;
+.sb-story-note {
+  margin: var(--m-3) 0 0;
   color: var(--m-fg-2);
-}
-
-.sb-story-panel-inner-surface {
-  padding: var(--m-3);
-  color: var(--m-fg-1);
+  font-size: var(--m-fs-12);
 }
