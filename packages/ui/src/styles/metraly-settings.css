@@ -618,3 +618,56 @@
   }
 }
 
+/* ── Provider card visual normalization ────────────────────────────────
+   Provider state is communicated by StatusBadge and local actions. The card
+   surface stays neutral by default; only destructive/attention states tint
+   the outer shell. Plugin attribution is a badge, not a structural rail. */
+
+.metraly-ai-provider-card--from-plugin {
+  border-color: var(--m-line);
+}
+
+.metraly-ai-provider-card--from-plugin::before {
+  content: none;
+  display: none;
+}
+
+.metraly-ai-provider-card--configured,
+.metraly-ai-provider-card--ready,
+.metraly-ai-provider-card--testing,
+.metraly-ai-provider-card--gated,
+.metraly-ai-provider-card--not_configured,
+.metraly-ai-provider-card--disabled {
+  box-shadow: none;
+}
+
+.metraly-ai-provider__plugin {
+  align-self: center;
+  border-radius: var(--m-r-pill);
+  padding: 2px var(--m-2);
+  background: color-mix(in oklch, var(--m-purple-500) 12%, var(--m-bg-2));
+  border-color: color-mix(in oklch, var(--m-purple-500) 34%, var(--m-line));
+  color: var(--m-purple-300);
+  white-space: nowrap;
+}
+
+.metraly-ai-provider__head {
+  border-bottom-color: color-mix(in oklch, var(--m-line-faint) 76%, transparent);
+}
+
+.metraly-ai-provider__token {
+  background: color-mix(in oklch, var(--m-bg-2) 90%, var(--m-bg-1));
+}
+
+.metraly-ai-provider__models-list,
+.metraly-ai-provider__actions {
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .metraly-ai-provider__plugin {
+    align-self: flex-start;
+    white-space: normal;
+  }
+}
+

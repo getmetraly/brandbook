@@ -94,7 +94,7 @@ export const Overview: Story = {
         <ProductPreview>
           <div className="msf__pad-lg">
             <AIProviderConnectorCard
-              name="Groq (via plugin)"
+              name="Groq"
               kind="openai-compatible"
               state="ready"
               description="Fast LPU inference via api.groq.com."

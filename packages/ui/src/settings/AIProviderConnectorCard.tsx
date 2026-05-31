@@ -116,13 +116,13 @@ const KIND_LABEL: Record<AIProviderKind, string> = {
 
 const CARD_TONE: Record<AIProviderState, React.ComponentProps<typeof CardShell>["tone"]> = {
   not_configured: "neutral",
-  configured: "info",
-  testing: "cyan",
-  ready: "success",
+  configured: "neutral",
+  testing: "neutral",
+  ready: "neutral",
   auth_failed: "danger",
   rate_limited: "warning",
   disabled: "neutral",
-  gated: "purple",
+  gated: "neutral",
 };
 
 const CARD_STATE: Record<AIProviderState, React.ComponentProps<typeof CardShell>["state"]> = {
