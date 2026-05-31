@@ -25,6 +25,10 @@ const withTheme = (Story: React.ComponentType) =>
   );
 
 const preview: Preview = {
+  // Storybook's Vitest addon runs stories tagged with "test" by default.
+  // Keep this project-wide so every CSF story remains part of the smoke/a11y pass
+  // unless a story explicitly opts out with !test or a configured exclude tag.
+  tags: ["test"],
   decorators: [withTheme],
   loaders: isVitestRuntime ? [] : [mswLoader],
   parameters: {
