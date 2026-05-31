@@ -86,7 +86,11 @@ export function AppPluginsScreen({
               <div className="metraly-app-plugin-head">
                 <div
                   className="metraly-app-plugin-icon"
-                  style={{ background: plugin.iconColor, color: "var(--m-bg-0)" }}
+                  style={{
+                    background: `color-mix(in oklch, ${plugin.iconColor} 18%, var(--m-bg-2))`,
+                    border: `1px solid color-mix(in oklch, ${plugin.iconColor} 48%, transparent)`,
+                    color: "var(--m-fg-0)",
+                  }}
                   aria-hidden="true"
                 >
                   {plugin.initials}

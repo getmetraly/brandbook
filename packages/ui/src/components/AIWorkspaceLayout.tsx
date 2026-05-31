@@ -122,19 +122,19 @@ export function AIWorkspaceLayout({
         </div>
 
         {quickPrompts && quickPrompts.length > 0 && (
-          <div className="metraly-ai-workspace__prompt-row" role="list">
+          <ul className="metraly-ai-workspace__prompt-row">
             {quickPrompts.map((q) => (
-              <button
-                key={q}
-                type="button"
-                role="listitem"
-                className="metraly-ai-workspace__prompt"
-                onClick={() => setInput(q)}
-              >
-                {q}
-              </button>
+              <li key={q} className="metraly-ai-workspace__prompt-item">
+                <button
+                  type="button"
+                  className="metraly-ai-workspace__prompt"
+                  onClick={() => setInput(q)}
+                >
+                  {q}
+                </button>
+              </li>
             ))}
-          </div>
+          </ul>
         )}
 
         {disclaimer && (

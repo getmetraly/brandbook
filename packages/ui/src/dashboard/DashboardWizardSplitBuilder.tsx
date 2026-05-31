@@ -89,11 +89,11 @@ export const DashboardWizardSplitBuilder: React.FC<DashboardWizardSplitBuilderPr
       role="region"
       aria-label={title}
     >
-      <aside className="metraly-dwiz__rail" aria-label="Builder rail">
-        <header className="metraly-dwiz__rail-head">
+      <div className="metraly-dwiz__rail" aria-label="Builder rail">
+        <div className="metraly-dwiz__rail-head">
           <h2 className="metraly-dwiz__title">{title}</h2>
           {description ? <p className="metraly-dwiz__desc">{description}</p> : null}
-        </header>
+        </div>
 
         <ol className="metraly-dwiz__steps" aria-label="Builder steps">
           {steps.map((s, i) => {
@@ -153,8 +153,8 @@ export const DashboardWizardSplitBuilder: React.FC<DashboardWizardSplitBuilderPr
           <div className="metraly-dwiz__body">{stepBody}</div>
         </CardShell>
 
-        {footer ? <footer className="metraly-dwiz__rail-foot">{footer}</footer> : null}
-      </aside>
+        {footer ? <div className="metraly-dwiz__rail-foot">{footer}</div> : null}
+      </div>
 
       <section className="metraly-dwiz__canvas" aria-label="Dashboard preview">
         <header className="metraly-dwiz__canvas-head">

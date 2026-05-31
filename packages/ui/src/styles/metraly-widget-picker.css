@@ -31,7 +31,7 @@
 }
 
 .metraly-widget-picker-card.is-disabled {
-  opacity: 0.55;
+  opacity: 1;
 }
 
 button.metraly-widget-picker-card {

@@ -25,9 +25,8 @@ export interface WidgetPickerCardProps {
 
 export interface WidgetPickerListProps {
   children: React.ReactNode;
-  /** Accessible label for the listbox. Defaults to "Widget catalog". */
+  /** Accessible label for the picker group. Defaults to "Widget catalog". */
   ariaLabel?: string;
-  /** Whether multiple options can be selected simultaneously. Defaults to true. */
   multiSelect?: boolean;
   className?: string;
   style?: React.CSSProperties;
@@ -136,8 +135,7 @@ const BADGE_STATES = new Set<StateBadgeState>([
 /**
  * A catalog selection card for the widget picker panel.
  *
- * Use inside `WidgetPickerList` to provide the required `role="listbox"` parent
- * context for correct ARIA semantics:
+ * Use inside `WidgetPickerList` to provide a labelled grouping container:
  *
  * ```tsx
  * <WidgetPickerList ariaLabel="Widget catalog">
@@ -231,8 +229,7 @@ export function WidgetPickerCard({
       <button
         type="button"
         className={classes}
-        role="option"
-        aria-selected={selected}
+        aria-pressed={selected}
         aria-disabled={disabled || loading || undefined}
         disabled={disabled || loading}
         data-state={effectiveVisualState}
@@ -247,11 +244,7 @@ export function WidgetPickerCard({
   return (
     <article
       className={classes}
-      role="option"
-      aria-selected={selected}
-      aria-disabled={disabled || undefined}
-      // focusable so keyboard users can reach items that lack an onSelect handler
-      tabIndex={disabled ? -1 : 0}
+      data-selected={selected ? "true" : "false"}
       data-state={effectiveVisualState}
       data-kind={typeof effectiveKind === "string" ? effectiveKind : undefined}
     >
@@ -263,14 +256,10 @@ export function WidgetPickerCard({
 // ─── WidgetPickerList ─────────────────────────────────────────────────────────
 
 /**
- * Required `role="listbox"` container for `WidgetPickerCard` items.
- *
- * Provides the ARIA listbox context that makes `role="option"` on each card
- * semantically valid. Without this wrapper, screen readers may not announce
- * the selection state correctly.
+ * Labelled grouping container for widget picker cards.
  *
  * ```tsx
- * <WidgetPickerList ariaLabel="Available widgets" multiSelect>
+ * <WidgetPickerList ariaLabel="Available widgets">
  *   {widgets.map(w => <WidgetPickerCard key={w.id} ... />)}
  * </WidgetPickerList>
  * ```
@@ -282,11 +271,12 @@ export function WidgetPickerList({
   className,
   style,
 }: WidgetPickerListProps) {
+  void multiSelect;
+
   return (
     <div
-      role="listbox"
+      role="group"
       aria-label={ariaLabel}
-      aria-multiselectable={multiSelect}
       className={["metraly-widget-picker-list", className].filter(Boolean).join(" ")}
       style={style}
     >

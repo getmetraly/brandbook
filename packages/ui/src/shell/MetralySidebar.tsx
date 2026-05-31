@@ -85,18 +85,17 @@ export function MetralySidebarSection({
   ...rest
 }: MetralySidebarSectionProps) {
   const { collapsed } = React.useContext(SidebarContext);
-  const ariaLabel = typeof label === "string" ? label : undefined;
   const classes = ["metraly-sidebar-section", className].filter(Boolean).join(" ");
 
   return (
-    <section {...rest} className={classes} aria-label={ariaLabel}>
+    <div {...rest} className={classes} role="group" aria-label={typeof label === "string" ? label : undefined}>
       {label ? (
         <div className="metraly-sidebar-section__label" aria-hidden={collapsed}>
           {collapsed ? <span className="metraly-visually-hidden">{label}</span> : label}
         </div>
       ) : null}
       <div className="metraly-sidebar-section__items">{children}</div>
-    </section>
+    </div>
   );
 }
 

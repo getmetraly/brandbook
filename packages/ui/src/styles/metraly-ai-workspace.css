@@ -119,10 +119,17 @@
 
 /* ---- Quick prompts ---- */
 .metraly-ai-workspace__prompt-row {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   gap: var(--m-2);
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.metraly-ai-workspace__prompt-item {
+  display: block;
 }
 
 .metraly-ai-workspace__prompt {

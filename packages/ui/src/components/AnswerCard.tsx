@@ -31,6 +31,7 @@ export function AnswerCard({
       {loading ? (
         <div
           className="metraly-answer-card__loading"
+          role="status"
           aria-label="Loading response"
           aria-busy="true"
         >

@@ -141,82 +141,96 @@ export const TokenInput: React.FC<TokenInputProps> = ({
       error={errorText}
       className={["metraly-token", className ?? ""].filter(Boolean).join(" ")}
     >
-      {committed ? (
-        <div className="metraly-token__stored" role="group" aria-label={`${label} — stored`}>
-          <span className="metraly-token__preview" title="Stored token preview">
-            {maskedPreview ?? "••••••••"}
-          </span>
-          <span className={`metraly-token__validation metraly-token__validation--${validation}`}>
+      {({ descriptionId, helperText, hasError }) => (
+        <>
+          {label ? <label className="metraly-control-label" htmlFor={inputId}>{label}</label> : null}
+          {helperText ? (
+            <span
+              id={descriptionId}
+              className={hasError ? "metraly-control-description is-error" : "metraly-control-description"}
+              role={hasError ? "alert" : undefined}
+            >
+              {helperText}
+            </span>
+          ) : null}
+          {committed ? (
+            <div className="metraly-token__stored" role="group" aria-label={`${label} — stored`}>
+              <span className="metraly-token__preview" title="Stored token preview">
+                {maskedPreview ?? "••••••••"}
+              </span>
+              <span className={`metraly-token__validation metraly-token__validation--${validation}`}>
+                {validationMsg}
+              </span>
+              <span className="metraly-token__stored-actions">
+                <button
+                  type="button"
+                  className="metraly-token__btn metraly-token__btn--ghost"
+                  onClick={onReplace}
+                  disabled={disabled}
+                >
+                  Replace
+                </button>
+                <button
+                  type="button"
+                  className="metraly-token__btn metraly-token__btn--ghost"
+                  onClick={onClear}
+                  disabled={disabled}
+                >
+                  Clear
+                </button>
+              </span>
+            </div>
+          ) : (
+            <div className="metraly-token__row">
+              <input
+                id={inputId}
+                name={name}
+                type={revealed ? "text" : "password"}
+                className="metraly-token__input"
+                placeholder={placeholder}
+                autoComplete="off"
+                spellCheck={false}
+                autoCorrect="off"
+                autoCapitalize="off"
+                value={current}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                disabled={disabled}
+                required={required}
+                aria-invalid={errorText ? true : undefined}
+                aria-describedby={validationMsg ? liveId : descriptionId}
+                data-1p-ignore="true"
+                data-lpignore="true"
+              />
+              <button
+                type="button"
+                className="metraly-token__btn metraly-token__btn--ghost"
+                onClick={() => setRevealed((r) => !r)}
+                aria-pressed={revealed}
+                aria-label={revealed ? "Hide token" : "Reveal token"}
+                disabled={disabled || !current}
+                title={revealed ? "Hide token" : "Reveal token"}
+              >
+                {revealed ? "Hide" : "Show"}
+              </button>
+              {onValidate ? (
+                <button
+                  type="button"
+                  className="metraly-token__btn metraly-token__btn--primary"
+                  onClick={() => onValidate(current)}
+                  disabled={disabled || !current || validation === "validating"}
+                >
+                  {validation === "validating" ? "Checking…" : "Validate"}
+                </button>
+              ) : null}
+            </div>
+          )}
+
+          <span id={liveId} aria-live="polite" className="metraly-token__sr">
             {validationMsg}
           </span>
-          <span className="metraly-token__stored-actions">
-            <button
-              type="button"
-              className="metraly-token__btn metraly-token__btn--ghost"
-              onClick={onReplace}
-              disabled={disabled}
-            >
-              Replace
-            </button>
-            <button
-              type="button"
-              className="metraly-token__btn metraly-token__btn--ghost"
-              onClick={onClear}
-              disabled={disabled}
-            >
-              Clear
-            </button>
-          </span>
-        </div>
-      ) : (
-        <div className="metraly-token__row">
-          <input
-            id={inputId}
-            name={name}
-            type={revealed ? "text" : "password"}
-            className="metraly-token__input"
-            placeholder={placeholder}
-            autoComplete="off"
-            spellCheck={false}
-            autoCorrect="off"
-            autoCapitalize="off"
-            value={current}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            disabled={disabled}
-            required={required}
-            aria-invalid={errorText ? true : undefined}
-            aria-describedby={validationMsg ? liveId : undefined}
-            data-1p-ignore="true"
-            data-lpignore="true"
-          />
-          <button
-            type="button"
-            className="metraly-token__btn metraly-token__btn--ghost"
-            onClick={() => setRevealed((r) => !r)}
-            aria-pressed={revealed}
-            aria-label={revealed ? "Hide token" : "Reveal token"}
-            disabled={disabled || !current}
-            title={revealed ? "Hide token" : "Reveal token"}
-          >
-            {revealed ? "Hide" : "Show"}
-          </button>
-          {onValidate ? (
-            <button
-              type="button"
-              className="metraly-token__btn metraly-token__btn--primary"
-              onClick={() => onValidate(current)}
-              disabled={disabled || !current || validation === "validating"}
-            >
-              {validation === "validating" ? "Checking…" : "Validate"}
-            </button>
-          ) : null}
-        </div>
+        </>
       )}
-
-      <span id={liveId} aria-live="polite" className="metraly-token__sr">
-        {validationMsg}
-      </span>
     </FieldShell>
   );
 };

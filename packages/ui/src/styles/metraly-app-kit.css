@@ -99,9 +99,9 @@
   border-radius: var(--m-r-2);
 }
 .metraly-app-sidebar__item-badge.is-preview {
-  color: var(--m-purple-500);
-  background: var(--m-purple-bg);
-  border: 1px solid color-mix(in srgb, var(--m-purple-500) 35%, transparent);
+  color: var(--m-purple-400);
+  background: color-mix(in oklch, var(--m-purple-500) 16%, var(--m-bg-2));
+  border: 1px solid color-mix(in srgb, var(--m-purple-500) 45%, transparent);
 }
 .metraly-app-sidebar__item-badge.is-gated {
   color: var(--m-fg-2);

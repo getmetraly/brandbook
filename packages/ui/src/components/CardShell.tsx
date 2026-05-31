@@ -129,7 +129,7 @@ export function CardShell({
 
       {hasBody ? <div className={cx("metraly-card-shell__body", bodyClassName)}>{children}</div> : null}
 
-      {footer ? <footer className={cx("metraly-card-shell__footer", footerClassName)}>{footer}</footer> : null}
+      {footer ? <div className={cx("metraly-card-shell__footer", footerClassName)}>{footer}</div> : null}
       {overlay ? <div className="metraly-card-shell__overlay">{overlay}</div> : null}
     </MetralyPanel>
   );

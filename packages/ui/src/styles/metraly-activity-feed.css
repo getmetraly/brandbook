@@ -74,10 +74,17 @@
 
 .metraly-feed__time { color: var(--m-fg-2); }
 .metraly-feed__kind {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: var(--m-bg-3);
+  border: 1px solid var(--m-line-faint);
   font-size: 9.5px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--m-fg-2);
+  color: var(--m-fg-0);
 }
 
 .metraly-feed__row-body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }

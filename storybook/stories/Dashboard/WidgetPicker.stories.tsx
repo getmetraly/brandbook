@@ -53,12 +53,12 @@ export const Overview: Story = {
 
       <section>
         <div className="msf__section-title">States</div>
-        <div className="msf__grid msf__grid--cards msf__grid--compact">
+        <WidgetPickerList ariaLabel="Widget picker state examples" className="msf__grid msf__grid--cards msf__grid--compact">
           <WidgetPickerCard title="Default" description="No selection" kind="dora/deploy-frequency" />
           <WidgetPickerCard title="Selected" description="Added to dashboard" kind="dora/lead-time" selected />
           <WidgetPickerCard title="Loading" description="Fetching preview" kind="ai/insight-card" loading />
           <WidgetPickerCard title="Disabled" description="Requires Pro plan" kind="system/activity-feed" disabled />
-        </div>
+        </WidgetPickerList>
       </section>
     </MetralyStoryFrame>
   ),

@@ -43,6 +43,9 @@ export function TrendBadge({
     .filter(Boolean)
     .join(" ");
 
+  const hasValue = typeof value === "string" && value.length > 0;
+  const accessibleLabel = rest["aria-label"] ?? label ?? defaultLabel(direction, value);
+
   return (
     <span
       {...rest}
@@ -50,10 +53,11 @@ export function TrendBadge({
       data-direction={direction}
       data-sentiment={sentiment}
       data-size={size}
-      aria-label={rest["aria-label"] ?? label ?? defaultLabel(direction, value)}
+      role={hasValue ? rest.role : rest.role ?? "img"}
+      aria-label={hasValue ? rest["aria-label"] ?? label : accessibleLabel}
     >
       <span className="metraly-trend-badge__glyph" aria-hidden="true">{directionGlyph[direction]}</span>
-      {value ? <span className="metraly-trend-badge__value">{value}</span> : null}
+      {hasValue ? <span className="metraly-trend-badge__value">{value}</span> : null}
     </span>
   );
 }

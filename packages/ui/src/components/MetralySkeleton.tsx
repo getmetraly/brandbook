@@ -15,6 +15,7 @@ export function MetralySkeleton({
   className,
   ...rest
 }: MetralySkeletonProps) {
+  const accessibleLabel = rest["aria-label"];
   const classes = [
     "metraly-skeleton",
     `is-${variant}`,
@@ -25,7 +26,12 @@ export function MetralySkeleton({
 
   if (variant === "text") {
     return (
-      <div {...rest} className={classes} data-variant={variant}>
+      <div
+        {...rest}
+        className={classes}
+        data-variant={variant}
+        role={accessibleLabel ? rest.role ?? "status" : rest.role}
+      >
         {Array.from({ length: lines }).map((_, index) => (
           <span
             key={index}
@@ -42,6 +48,7 @@ export function MetralySkeleton({
       {...rest}
       className={classes}
       data-variant={variant}
+      role={accessibleLabel ? rest.role ?? "status" : rest.role}
       style={height ? { ...rest.style, height } : rest.style}
     >
       <span className="metraly-skeleton__block" />

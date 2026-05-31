@@ -29,6 +29,9 @@ const preview: Preview = {
   decorators: [withTheme],
   loaders: isVitestRuntime ? [] : [mswLoader],
   parameters: {
+    a11y: {
+      test: "error",
+    },
     ...(isVitestRuntime
       ? {}
       : {

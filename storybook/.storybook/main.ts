@@ -32,6 +32,9 @@ const config: StorybookConfig = {
   },
   async viteFinal(cfg) {
     return mergeConfig(cfg, {
+      optimizeDeps: {
+        include: ["react/jsx-dev-runtime"],
+      },
       resolve: {
         alias: {
           "@metraly/ui": path.resolve(configDir, "../../packages/ui/src/index.ts"),

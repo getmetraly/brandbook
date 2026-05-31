@@ -31,7 +31,7 @@
 }
 
 .metraly-control-description {
-  color: var(--m-fg-2);
+  color: var(--m-fg-1);
   font-size: var(--m-fs-10);
   line-height: 1.45;
 }
@@ -150,12 +150,12 @@
 
 .metraly-control-row.is-disabled .metraly-control-label,
 .metraly-switch-row.is-disabled .metraly-control-label {
-  color: var(--m-fg-2);
+  color: var(--m-fg-1);
 }
 
 .metraly-control-row.is-disabled .metraly-control-description,
 .metraly-switch-row.is-disabled .metraly-control-description {
-  color: var(--m-fg-2);
+  color: var(--m-fg-1);
 }
 
 .metraly-control-row.is-disabled .metraly-checkbox-box,
@@ -487,7 +487,7 @@
 }
 
 .metraly-field-shell.is-disabled {
-  opacity: 0.45;
+  opacity: 1;
   pointer-events: none;
 }
 

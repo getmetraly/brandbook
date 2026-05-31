@@ -171,6 +171,7 @@ export const SyncProgressPanel: React.FC<SyncProgressPanelProps> = ({
       <div
         className="metraly-sync__progress-sr"
         role="progressbar"
+        aria-label={`${sourceLabel} sync progress`}
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={showIndeterminate ? undefined : Math.round(pct * 100)}

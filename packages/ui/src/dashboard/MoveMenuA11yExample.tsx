@@ -110,12 +110,12 @@ export const MoveMenuA11yExample: React.FC<MoveMenuA11yExampleProps> = ({
       aria-label="Dashboard editor — keyboard movement example"
       onKeyDown={onKeyDown}
     >
-      <header className="metraly-a11y-editor__head">
+      <div className="metraly-a11y-editor__head">
         <span className="metraly-a11y-editor__title">Dashboard editor — keyboard movement</span>
         <span className="metraly-a11y-editor__hint">
           Tab to select. Arrow keys to move. Move menu also exposes per-step actions.
         </span>
-      </header>
+      </div>
 
       <div
         className="metraly-a11y-editor__grid"
@@ -138,8 +138,7 @@ export const MoveMenuA11yExample: React.FC<MoveMenuA11yExampleProps> = ({
                 .join(" ")}
               style={cellStyle(w)}
               tabIndex={0}
-              role="button"
-              aria-pressed={selectedHere}
+              role="group"
               aria-label={`${w.title}, row ${w.position.row + 1}, column ${w.position.col + 1}${selectedHere ? ", selected" : ""}`}
               onFocus={() => setSelectedId(w.id)}
               onClick={() => setSelectedId(w.id)}
@@ -148,27 +147,6 @@ export const MoveMenuA11yExample: React.FC<MoveMenuA11yExampleProps> = ({
                 title={w.title}
                 subtitle={w.subtitle}
                 state="live"
-                footer={
-                  <div className="metraly-a11y-editor__chrome">
-                    <HandlePrimitive
-                      kind="drag"
-                      label={`Drag handle for ${w.title}`}
-                      focusable={false}
-                      /* Pulse glyph is NEVER used here — HandlePrimitive renders the neutral grip dots. */
-                    />
-                    <MoveMenu
-                      aria-label={`Move ${w.title}`}
-                      disabledDirections={[
-                        !isFree({ row: w.position.row - 1, col: w.position.col }, w.id) ? "up" : null,
-                        !isFree({ row: w.position.row + 1, col: w.position.col }, w.id) ? "down" : null,
-                        !isFree({ row: w.position.row, col: w.position.col - 1 }, w.id) ? "left" : null,
-                        !isFree({ row: w.position.row, col: w.position.col + 1 }, w.id) ? "right" : null,
-                      ].filter(Boolean) as Array<"up" | "down" | "left" | "right">}
-                      onMove={(direction) => { setSelectedId(w.id); move(direction); }}
-                      onCancel={() => setSelectedId(null)}
-                    />
-                  </div>
-                }
               >
                 <div className="metraly-a11y-editor__placeholder">
                   <span className="metraly-a11y-editor__placeholder-label">{w.title}</span>
@@ -182,16 +160,34 @@ export const MoveMenuA11yExample: React.FC<MoveMenuA11yExampleProps> = ({
         })}
       </div>
 
-      <footer className="metraly-a11y-editor__foot" aria-live="polite">
+      <div className="metraly-a11y-editor__foot" aria-live="polite">
         {selected ? (
-          <span>
-            Selected: <strong>{selected.title}</strong> at row {selected.position.row + 1}, column {selected.position.col + 1}.
-            Use the Move menu or arrow keys to reposition.
-          </span>
+          <div className="metraly-a11y-editor__chrome">
+            <span>
+              Selected: <strong>{selected.title}</strong> at row {selected.position.row + 1}, column {selected.position.col + 1}.
+              Use the Move menu or arrow keys to reposition.
+            </span>
+            <HandlePrimitive
+              kind="drag"
+              label={`Drag handle for ${selected.title}`}
+              focusable={false}
+            />
+            <MoveMenu
+              aria-label={`Move ${selected.title}`}
+              disabledDirections={[
+                !isFree({ row: selected.position.row - 1, col: selected.position.col }, selected.id) ? "up" : null,
+                !isFree({ row: selected.position.row + 1, col: selected.position.col }, selected.id) ? "down" : null,
+                !isFree({ row: selected.position.row, col: selected.position.col - 1 }, selected.id) ? "left" : null,
+                !isFree({ row: selected.position.row, col: selected.position.col + 1 }, selected.id) ? "right" : null,
+              ].filter(Boolean) as Array<"up" | "down" | "left" | "right">}
+              onMove={(direction) => move(direction)}
+              onCancel={() => setSelectedId(null)}
+            />
+          </div>
         ) : (
           <span>No widget selected. Tab into the grid to begin.</span>
         )}
-      </footer>
+      </div>
     </div>
   );
 };
