@@ -445,6 +445,12 @@
   color: var(--m-cyan-500);
 }
 
+.metraly-tab-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .metraly-tab-icon {
   display: inline-flex;
   align-items: center;
