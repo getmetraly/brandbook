@@ -9,18 +9,6 @@ function getAbsolutePath(value: string) {
 }
 const configDir = dirname(fileURLToPath(import.meta.url));
 
-const storybookOptimizeDeps = [
-  "@storybook/addon-vitest",
-  "@storybook/react",
-  "@storybook/react-vite",
-  "react",
-  "react-dom",
-  "react-dom/client",
-  "react/jsx-runtime",
-  "recharts",
-  "storybook/test",
-];
-
 const config: StorybookConfig = {
   stories: [
     "../stories/**/*.mdx",
@@ -44,9 +32,6 @@ const config: StorybookConfig = {
   },
   async viteFinal(cfg) {
     return mergeConfig(cfg, {
-      optimizeDeps: {
-        include: storybookOptimizeDeps,
-      },
       resolve: {
         alias: {
           "@metraly/ui": path.resolve(configDir, "../../packages/ui/src/index.ts"),

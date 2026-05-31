@@ -35,7 +35,7 @@ export const Compact: Story = {
   },
 };
 
-export const CssCheck: Story = {
+export const SuccessState: Story = {
   args: {
     title: "Active services",
     value: "128",
