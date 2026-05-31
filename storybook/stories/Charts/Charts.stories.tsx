@@ -198,6 +198,45 @@ export const AreaCharts: Story = {
   ),
 };
 
+export const AreaChartsNarrow: Story = {
+  render: () => (
+    <MetralyStoryFrame
+      category="Charts"
+      title="MetralyAreaChart"
+      description="Narrow/mobile state with long labels and compare series."
+      status="stable"
+      tags={["charts", "data", "mobile", "narrow"]}
+    >
+      <section>
+        <div className="msf__section-title">Narrow width · long labels</div>
+        <div style={{ maxWidth: 340 }}>
+          <MetralyChartCard
+            title="Deployment Frequency by Service Grouping"
+            description="Trailing 30 days · compare mode"
+            summary="Ensures labels and legend stay readable at narrow widths."
+            badge={<StateBadge state="live" label="Live" />}
+          >
+            <MetralyAreaChart
+              data={DEPLOY_FREQ.map((row) => ({
+                sprint: `Sprint ${row.sprint} · Platform`,
+                deploys: row.deploys,
+                baseline: Math.max(row.deploys - 2, 0),
+              }))}
+              xKey="sprint"
+              series={[
+                { dataKey: "deploys", name: "Deploys", tone: "primary" },
+                { dataKey: "baseline", name: "Baseline", tone: "secondary" },
+              ]}
+              ariaLabel="Deployment frequency narrow chart"
+              summary="Narrow/mobile compare state."
+            />
+          </MetralyChartCard>
+        </div>
+      </section>
+    </MetralyStoryFrame>
+  ),
+};
+
 export const ComposedCharts: Story = {
   render: () => (
     <MetralyStoryFrame
