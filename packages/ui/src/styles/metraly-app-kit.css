@@ -973,3 +973,99 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* AppKit shell/sidebar spacing polish — generated patch
+ * Keeps the app sidebar, topbar, and main area on the same visual rhythm.
+ * Scoped to AppKit shell composition; does not change component APIs or tokens.
+ */
+.metraly-app-shell {
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.metraly-app-shell__topbar {
+  align-self: stretch;
+  min-height: 0;
+}
+
+.metraly-app-shell__topbar > .metraly-topbar {
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 56px;
+}
+
+.metraly-app-shell__sidebar > .metraly-sidebar {
+  height: 100%;
+}
+
+.metraly-app-sidebar__head {
+  box-sizing: border-box;
+  min-height: 56px;
+  padding: 0 var(--m-4);
+  align-content: center;
+}
+
+.metraly-app-sidebar__brand {
+  min-width: 0;
+}
+
+.metraly-app-sidebar__brand-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metraly-app-shell__topbar .metraly-topbar__actions {
+  min-width: 0;
+}
+
+@media (max-width: 767px) {
+  .metraly-app-shell {
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .metraly-app-shell__topbar > .metraly-topbar {
+    height: auto;
+    min-height: 0;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: var(--m-3);
+    padding: var(--m-3);
+  }
+
+  .metraly-app-shell__topbar .metraly-topbar__copy {
+    flex: 1 1 12rem;
+  }
+
+  .metraly-app-shell__topbar .metraly-topbar__actions {
+    flex: 1 1 auto;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+  }
+
+  .metraly-app-shell__topbar .metraly-app-topbar__search {
+    flex: 1 1 12rem;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .metraly-app-shell__topbar > .metraly-topbar {
+    gap: var(--m-2);
+    padding: var(--m-3);
+  }
+
+  .metraly-app-shell__topbar .metraly-topbar__copy {
+    flex-basis: 100%;
+  }
+
+  .metraly-app-shell__topbar .metraly-topbar__actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .metraly-app-shell__topbar .metraly-app-topbar__search {
+    flex: 1 1 auto;
+    width: auto;
+  }
+}
