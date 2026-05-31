@@ -77,7 +77,21 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
     </section>
   );
 
-  return frame ? <CardShell>{inner}</CardShell> : inner;
+  return frame ? (
+    <CardShell
+      className={[
+        "metraly-settings-section-card",
+        compact ? "metraly-settings-section-card--compact" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      density={compact ? "compact" : "comfortable"}
+    >
+      {inner}
+    </CardShell>
+  ) : (
+    inner
+  );
 };
 
 SettingsSection.displayName = "SettingsSection";

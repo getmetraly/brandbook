@@ -114,6 +114,28 @@ const KIND_LABEL: Record<AIProviderKind, string> = {
   "custom": "Custom endpoint",
 };
 
+const CARD_TONE: Record<AIProviderState, React.ComponentProps<typeof CardShell>["tone"]> = {
+  not_configured: "neutral",
+  configured: "info",
+  testing: "cyan",
+  ready: "success",
+  auth_failed: "danger",
+  rate_limited: "warning",
+  disabled: "neutral",
+  gated: "purple",
+};
+
+const CARD_STATE: Record<AIProviderState, React.ComponentProps<typeof CardShell>["state"]> = {
+  not_configured: "empty",
+  configured: "default",
+  testing: "loading",
+  ready: "default",
+  auth_failed: "error",
+  rate_limited: "stale",
+  disabled: "stale",
+  gated: "empty",
+};
+
 function fmtTime(iso?: string): string {
   if (!iso) return "—";
   try {
@@ -151,14 +173,24 @@ export const AIProviderConnectorCard: React.FC<AIProviderConnectorCardProps> = (
   const meta = STATE_BADGE[state];
 
   return (
-    <CardShell>
+    <CardShell
+      className={[
+        "metraly-ai-provider-card",
+        `metraly-ai-provider-card--${state}`,
+        pluginAttribution ? "metraly-ai-provider-card--from-plugin" : "",
+        className ?? "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      tone={CARD_TONE[state]}
+      state={CARD_STATE[state]}
+    >
       <article
         id={rootId}
         className={[
           "metraly-ai-provider",
           `metraly-ai-provider--${state}`,
           pluginAttribution ? "metraly-ai-provider--from-plugin" : "",
-          className ?? "",
         ]
           .filter(Boolean)
           .join(" ")}
