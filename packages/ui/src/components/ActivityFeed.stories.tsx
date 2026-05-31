@@ -24,7 +24,6 @@ const items: ActivityItem[] = [
     title: "Review queue exceeded target",
     description: "Median review wait time is up 37% over the last 24 hours.",
     severity: "warning",
-    href: "/reviews/queue",
   },
   {
     id: "incident-1",
