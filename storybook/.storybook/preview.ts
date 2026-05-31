@@ -10,7 +10,13 @@ import "./preview.css";
 import { mswHandlers } from "./msw-handlers";
 // ── 3. ThemeProvider decorator ───────────────────────────────────────────────
 import { ThemeProvider } from "@metraly/ui";
-initialize({ onUnhandledRequest: "bypass" });
+
+const isVitestRuntime = import.meta.env.VITEST === "true" || import.meta.env.MODE === "test";
+
+if (!isVitestRuntime) {
+  initialize({ onUnhandledRequest: "bypass" });
+}
+
 const withTheme = (Story: React.ComponentType) =>
   React.createElement(
     ThemeProvider,
@@ -20,11 +26,15 @@ const withTheme = (Story: React.ComponentType) =>
 
 const preview: Preview = {
   decorators: [withTheme],
-  loaders: [mswLoader],
+  loaders: isVitestRuntime ? [] : [mswLoader],
   parameters: {
-    msw: {
-      handlers: mswHandlers,
-    },
+    ...(isVitestRuntime
+      ? {}
+      : {
+          msw: {
+            handlers: mswHandlers,
+          },
+        }),
     backgrounds: {
       // Match the Metraly dark canvas; light mode can be toggled via toolbar
       default: "dark",

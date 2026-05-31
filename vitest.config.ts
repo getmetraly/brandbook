@@ -5,21 +5,19 @@ import { defineConfig } from "vitest/config";
 import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
+const storybookConfigDir = path.join(dirname, "storybook/.storybook");
 
 export default defineConfig({
   test: {
     projects: [
       {
-        extends: true,
-        root: dirname,
         plugins: [
           storybookTest({
-            configDir: path.join(dirname, "storybook/.storybook"),
-            storybookScript: "npm run storybook -- --ci",
+            configDir: storybookConfigDir,
+            storybookScript: "npm run storybook -- --no-open",
           }),
         ],
         test: {
-          dir: dirname,
           name: "storybook",
           browser: {
             enabled: true,
@@ -27,6 +25,7 @@ export default defineConfig({
             headless: true,
             instances: [{ browser: "chromium" }],
           },
+          setupFiles: [path.join(storybookConfigDir, "vitest.setup.ts")],
         },
       },
     ],
