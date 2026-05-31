@@ -38,6 +38,7 @@
   --m-new: oklch(0.78 0.13 200);
 
   --m-font-ui: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --m-font-sans: var(--m-font-ui);
   --m-font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
   /* Display font — currently aliases ui font; override with Space Grotesk when loaded */
   --m-font-display: "Space Grotesk", var(--m-font-ui);

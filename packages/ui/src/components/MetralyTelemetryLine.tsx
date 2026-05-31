@@ -1,5 +1,4 @@
 import * as React from "react";
-import "../styles/metraly-telemetry-line.css";
 
 /**
  * Horizontal line composed of repeating telemetry pulse markers.
