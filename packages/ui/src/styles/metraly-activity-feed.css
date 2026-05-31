@@ -3,15 +3,15 @@
 .metraly-feed {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--m-3);
   font-family: var(--m-font-ui, "Inter", sans-serif);
   color: var(--m-fg-1);
   min-width: 0;
 }
 
-.metraly-feed__head { display: flex; flex-direction: column; gap: 2px; }
+.metraly-feed__head { display: flex; flex-direction: column; gap: var(--m-1); }
 .metraly-feed__title { font-size: var(--m-fs-12); font-weight: 600; color: var(--m-fg-0); }
-.metraly-feed__desc { font-size: 11.5px; color: var(--m-fg-2); }
+.metraly-feed__desc { font-size: 11.5px; color: var(--m-fg-2); line-height: 1.45; max-width: 72ch; }
 
 .metraly-feed__list {
   list-style: none;
@@ -29,10 +29,12 @@
 
 .metraly-feed__row {
   display: grid;
-  grid-template-columns: minmax(120px, max-content) 1fr;
-  gap: 12px;
+  grid-template-columns: minmax(116px, max-content) minmax(0, 1fr) auto;
+  grid-template-areas: "meta body status";
+  column-gap: var(--m-3);
+  row-gap: var(--m-2);
   align-items: start;
-  padding: 10px 0;
+  padding: var(--m-3) 0;
   width: 100%;
   text-align: left;
   background: transparent;
@@ -42,15 +44,15 @@
 }
 
 .metraly-feed--widget .metraly-feed__row {
-  padding: 8px 0;
-  grid-template-columns: minmax(96px, max-content) 1fr;
+  padding: var(--m-2) 0;
+  grid-template-columns: minmax(96px, max-content) minmax(0, 1fr) auto;
 }
 
 .metraly-feed__row--interactive {
   cursor: pointer;
-  border-radius: 6px;
-  padding-inline: 8px;
-  margin-inline: -8px;
+  border-radius: var(--m-r-3);
+  padding-inline: var(--m-2);
+  margin-inline: calc(var(--m-2) * -1);
   transition: background var(--m-dur-1) var(--m-ease);
 }
 
@@ -62,6 +64,7 @@
 }
 
 .metraly-feed__row-meta {
+  grid-area: meta;
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -87,13 +90,27 @@
   color: var(--m-fg-0);
 }
 
-.metraly-feed__row-body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.metraly-feed__row-body {
+  grid-area: body;
+  display: flex;
+  flex-direction: column;
+  gap: var(--m-1);
+  min-width: 0;
+}
 
 .metraly-feed__row-title {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--m-2);
   flex-wrap: wrap;
+}
+
+.metraly-feed__row-status {
+  grid-area: status;
+  justify-self: end;
+  align-self: start;
+  padding-top: 1px;
+  white-space: nowrap;
 }
 
 .metraly-feed__row-title-text {
@@ -167,16 +184,67 @@
 .metraly-feed__footer {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--m-2);
   padding-top: 6px;
   border-top: 1px solid var(--m-line-faint);
 }
 .metraly-feed__footer-note { font-size: 11.5px; color: var(--m-fg-2); }
 
 /* narrow */
-@media (max-width: 480px) {
-  .metraly-feed__row { grid-template-columns: 1fr; gap: 4px; }
-  .metraly-feed__row-meta { flex-direction: row; gap: 8px; }
+@media (max-width: 640px) {
+  .metraly-feed { gap: var(--m-3); }
+
+  .metraly-feed__row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "meta status"
+      "body body";
+    column-gap: var(--m-2);
+    row-gap: var(--m-2);
+    padding: var(--m-3) 0;
+  }
+
+  .metraly-feed__row-meta {
+    min-width: 0;
+    flex-flow: row wrap;
+    align-items: center;
+    gap: var(--m-1) var(--m-2);
+    white-space: normal;
+  }
+
+  .metraly-feed__row-status {
+    align-self: center;
+  }
+
+  .metraly-feed__row-title {
+    align-items: flex-start;
+  }
+
+  .metraly-feed__row-title-text {
+    width: 100%;
+  }
+
+  .metraly-feed__row-desc {
+    max-width: none;
+  }
+
+  .metraly-feed__row-meta-chips {
+    gap: var(--m-1);
+  }
+}
+
+@media (max-width: 360px) {
+  .metraly-feed__row {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "meta"
+      "status"
+      "body";
+  }
+
+  .metraly-feed__row-status {
+    justify-self: start;
+  }
 }
 
 /* ── visual stabilization ───────────────────────────────────────────
@@ -194,7 +262,7 @@
 }
 
 .metraly-feed--feed .metraly-feed__row {
-  grid-template-columns: minmax(116px, 148px) minmax(0, 1fr);
+  grid-template-columns: minmax(116px, 148px) minmax(0, 1fr) auto;
 }
 
 .metraly-feed--feed .metraly-feed__row-title-text,
@@ -208,4 +276,18 @@
 
 .metraly-feed--widget .metraly-feed__head {
   padding-bottom: 2px;
+}
+
+@media (max-width: 640px) {
+  .metraly-feed--feed .metraly-feed__row,
+  .metraly-feed--widget .metraly-feed__row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+@media (max-width: 360px) {
+  .metraly-feed--feed .metraly-feed__row,
+  .metraly-feed--widget .metraly-feed__row {
+    grid-template-columns: 1fr;
+  }
 }

@@ -284,6 +284,9 @@ const ActivityRow: React.FC<{
 }> = ({ item, mode, onActivate }) => {
   const severity = item.severity ?? "neutral";
   const interactive = !!onActivate || !!item.href;
+  const statusBadge = severity !== "neutral" ? (
+    <StatusBadge status={SEVERITY_TO_BADGE[severity]} label={severityLabel(severity)} />
+  ) : null;
 
   const inner = (
     <>
@@ -294,9 +297,6 @@ const ActivityRow: React.FC<{
       <div className="metraly-feed__row-body">
         <div className="metraly-feed__row-title">
           <span className="metraly-feed__row-title-text">{item.title}</span>
-          {severity !== "neutral" ? (
-            <StatusBadge status={SEVERITY_TO_BADGE[severity]} label={severityLabel(severity)} />
-          ) : null}
         </div>
         {item.description && mode === "feed" ? (
           <p className="metraly-feed__row-desc">{item.description}</p>
@@ -313,6 +313,7 @@ const ActivityRow: React.FC<{
           </ul>
         ) : null}
       </div>
+      {statusBadge ? <div className="metraly-feed__row-status">{statusBadge}</div> : null}
     </>
   );
 
