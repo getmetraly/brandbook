@@ -95,3 +95,184 @@ export const Overview: Story = {
     </MetralyStoryFrame>
   ),
 };
+
+// ─── Individual state stories ─────────────────────────────────────────────────
+//
+// One story per SyncStage so Storybook's Controls panel is usable
+// and each state can be visually diffed independently.
+//
+// Stage order: queued → discovering → backfilling → incremental
+//              → paused → rate_limited → completed → failed → cancelled
+
+const PANEL_WRAP: React.CSSProperties = { maxWidth: 680, padding: "32px 24px", background: "var(--m-bg-0)" };
+
+export const Queued: Story = {
+  name: "State / Queued",
+  render: () => (
+    <div style={PANEL_WRAP}>
+      <SyncProgressPanel
+        sourceLabel="GitHub · acme"
+        sourceId="github-acme"
+        stage="queued"
+        onCancel={() => undefined}
+      />
+    </div>
+  ),
+};
+
+export const Discovering: Story = {
+  name: "State / Discovering",
+  render: () => (
+    <div style={PANEL_WRAP}>
+      <SyncProgressPanel
+        sourceLabel="GitHub · acme"
+        sourceId="github-acme"
+        stage="discovering"
+        subStage="Listing repositories"
+        eventsIngested={0}
+        onCancel={() => undefined}
+      />
+    </div>
+  ),
+};
+
+export const BackfillingProgress: Story = {
+  name: "State / Backfilling (with progress)",
+  render: () => (
+    <div style={PANEL_WRAP}>
+      <SyncProgressPanel
+        sourceLabel="GitHub · acme"
+        sourceId="github-acme"
+        stage="backfilling"
+        subStage="Fetching pull requests"
+        eventsIngested={4_520}
+        totalEstimate={8_420}
+        onCancel={() => undefined}
+        onPause={() => undefined}
+      />
+    </div>
+  ),
+};
+
+export const BackfillingIndeterminate: Story = {
+  name: "State / Backfilling (indeterminate)",
+  render: () => (
+    <div style={PANEL_WRAP}>
+      <SyncProgressPanel
+        sourceLabel="Jira · prod"
+        sourceId="jira-prod"
+        stage="backfilling"
+        subStage="Fetching issues"
+        indeterminate
+        onCancel={() => undefined}
+      />
+    </div>
+  ),
+};
+
+export const Incremental: Story = {
+  name: "State / Incremental (live)",
+  render: () => (
+    <div style={PANEL_WRAP}>
+      <SyncProgressPanel
+        sourceLabel="GitHub · acme"
+        sourceId="github-acme"
+        stage="incremental"
+        eventsIngested={8_420}
+        totalEstimate={8_420}
+        lastSyncedAt={new Date(Date.now() - 300_000).toISOString()}
+        onPause={() => undefined}
+      />
+    </div>
+  ),
+};
+
+export const Paused: Story = {
+  name: "State / Paused",
+  render: () => (
+    <div style={PANEL_WRAP}>
+      <SyncProgressPanel
+        sourceLabel="GitHub · acme"
+        sourceId="github-acme"
+        stage="paused"
+        eventsIngested={6_120}
+        totalEstimate={8_420}
+        lastSyncedAt={new Date(Date.now() - 1_200_000).toISOString()}
+        onResume={() => undefined}
+      />
+    </div>
+  ),
+};
+
+export const RateLimited: Story = {
+  name: "State / Rate limited",
+  render: () => (
+    <div style={PANEL_WRAP}>
+      <SyncProgressPanel
+        sourceLabel="GitHub · acme"
+        sourceId="github-acme"
+        stage="rate_limited"
+        eventsIngested={6_120}
+        totalEstimate={8_420}
+        rateLimit={{ window: "1h", remaining: 0, resetAt: new Date(Date.now() + 3_600_000).toISOString() }}
+        onRetry={() => undefined}
+      />
+    </div>
+  ),
+};
+
+export const Completed: Story = {
+  name: "State / Completed",
+  render: () => (
+    <div style={PANEL_WRAP}>
+      <SyncProgressPanel
+        sourceLabel="GitHub · acme"
+        sourceId="github-acme"
+        stage="completed"
+        eventsIngested={8_420}
+        totalEstimate={8_420}
+        lastSyncedAt={new Date(Date.now() - 600_000).toISOString()}
+      />
+    </div>
+  ),
+};
+
+export const Failed: Story = {
+  name: "State / Failed",
+  render: () => (
+    <div style={PANEL_WRAP}>
+      <SyncProgressPanel
+        sourceLabel="Jira · prod"
+        sourceId="jira-prod"
+        stage="failed"
+        eventsIngested={1_820}
+        totalEstimate={6_400}
+        onRetry={() => undefined}
+      />
+    </div>
+  ),
+};
+
+/**
+ * Cancelled — user-initiated stop before completion.
+ * Visual: neutral/stale tone (not error red). Shows "Sync was cancelled" message.
+ * Restart sync CTA for secondary action.
+ *
+ * NOTE: The component renders the `cancelled` stage via the status badge and
+ * `STAGE_LABEL["cancelled"]` copy. The `onRetry` prop powers the Restart button.
+ */
+export const Cancelled: Story = {
+  name: "State / Cancelled",
+  render: () => (
+    <div style={PANEL_WRAP}>
+      <SyncProgressPanel
+        sourceLabel="GitHub · acme"
+        sourceId="github-acme"
+        stage="cancelled"
+        eventsIngested={3_200}
+        totalEstimate={8_420}
+        onRetry={() => undefined}
+      />
+    </div>
+  ),
+};
