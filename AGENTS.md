@@ -138,6 +138,33 @@ Production package classes: `metraly-*`. Storybook helpers: `msf__*`. No `brand-
 
 Storybook is a validation layer. It must consume the package, not fork it.
 
+### Makefile-first workflow
+
+Use Makefile targets first.
+If a Make target exists for an operation, do not use raw `docker`, `npm`, or `go` commands as the primary path.
+Add/update a Make target when common workflow coverage is missing.
+
+### Brandbook build boundary
+
+App/docs consume built `@metraly/ui` artifacts only.
+Do not allow app/docs-side patches to brandbook internals as an integration path.
+Brandbook changes must be built and validated in this repository before any app integration claim.
+
+### Build and dependency order
+
+Brandbook build/validation must complete before app UI build/check flows that consume `@metraly/ui`.
+Do not treat app-side verification against stale package artifacts as valid integration proof.
+
+### Source import boundary
+
+Expose integration surfaces through package/public entrypoints only.
+Do not permit direct relative imports into `packages/ui/src/*` from app/docs repositories.
+
+
+### Docs-code truth precedence
+
+When docs and implementation disagree, implementation is the source of truth.
+Update docs only after code/build verification so documentation reflects actual behavior.
 ### Validation commands
 
 ```bash
@@ -145,6 +172,12 @@ npm run check
 npm run build-storybook
 ```
 
+
+### App integration workflow
+
+`@metraly/ui` consumers depend on `packages/ui/dist`.
+Before app runtime verification, run brandbook package build and confirm `dist/` is fresh.
+Do not require app repos to import brandbook source files directly; integration boundary is package exports (`@metraly/ui`, `@metraly/ui/styles.css`).
 ### Commit discipline
 
 Use focused commits. Example: `fix(brandbook): align storybook with metraly design-system tokens`
