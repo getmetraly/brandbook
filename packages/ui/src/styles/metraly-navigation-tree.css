@@ -219,6 +219,25 @@
   flex: 1 1 auto;
 }
 
+/* Row container for NavigationItemFrame with interactive meta sibling */
+.metraly-navigation-item-frame-row {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+.metraly-navigation-item-frame-row > .metraly-navigation-item-frame {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+}
+
+.metraly-navigation-item-frame-row > .metraly-navigation-item-frame__meta {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+}
+
 .metraly-navigation-tree__frame {
   flex: 1 1 auto;
   min-width: 0;

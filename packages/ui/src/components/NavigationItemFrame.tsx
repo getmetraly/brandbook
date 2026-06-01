@@ -21,18 +21,15 @@ function cx(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
 }
 
-function content({ active, icon, label, meta, marker, children }: NavigationItemFrameProps) {
-  return (
-    <>
-      {active ? <span className="metraly-navigation-item-frame__accent" aria-hidden="true" /> : null}
-      {marker !== undefined ? <span className="metraly-navigation-item-frame__marker" aria-hidden="true">{marker}</span> : null}
-      {icon ? <span className="metraly-navigation-item-frame__icon" aria-hidden="true">{icon}</span> : null}
-      <span className="metraly-navigation-item-frame__label">{label}</span>
-      {meta !== undefined ? <span className="metraly-navigation-item-frame__meta">{meta}</span> : null}
-      {children}
-    </>
-  );
-}
+const elementContent = (props: NavigationItemFrameProps) => (
+  <>
+    {props.active ? <span className="metraly-navigation-item-frame__accent" aria-hidden="true" /> : null}
+    {props.marker !== undefined ? <span className="metraly-navigation-item-frame__marker" aria-hidden="true">{props.marker}</span> : null}
+    {props.icon ? <span className="metraly-navigation-item-frame__icon" aria-hidden="true">{props.icon}</span> : null}
+    <span className="metraly-navigation-item-frame__label">{props.label}</span>
+    {props.children}
+  </>
+);
 
 export function NavigationItemFrame({
   as = "button",
@@ -63,27 +60,28 @@ export function NavigationItemFrame({
     "data-state": disabled ? "disabled" : active ? "selected" : "default",
   } as React.HTMLAttributes<HTMLElement> & { "data-tone": string; "data-state": string };
 
-  if (as === "a" && href && !disabled) {
+  const props: NavigationItemFrameProps = { as, href, active, disabled, icon, label, meta, marker, tone, accent, className, children };
+
+  const renderElement = () => {
+    if (as === "a" && href && !disabled) {
+      return <a {...(shared as React.AnchorHTMLAttributes<HTMLAnchorElement>)} href={href}>{elementContent(props)}</a>;
+    }
+    if (as === "span") {
+      return <span {...(shared as React.HTMLAttributes<HTMLSpanElement>)}>{elementContent(props)}</span>;
+    }
+    return <button {...(shared as React.ButtonHTMLAttributes<HTMLButtonElement>)} type="button" disabled={disabled}>{elementContent(props)}</button>;
+  };
+
+  if (meta !== undefined) {
     return (
-      <a {...(shared as React.AnchorHTMLAttributes<HTMLAnchorElement>)} href={href}>
-        {content({ active, icon, label, meta, marker, children })}
-      </a>
+      <div className="metraly-navigation-item-frame-row">
+        {renderElement()}
+        <span className="metraly-navigation-item-frame__meta">{meta}</span>
+      </div>
     );
   }
 
-  if (as === "span") {
-    return (
-      <span {...(shared as React.HTMLAttributes<HTMLSpanElement>)}>
-        {content({ active, icon, label, meta, marker, children })}
-      </span>
-    );
-  }
-
-  return (
-    <button {...(shared as React.ButtonHTMLAttributes<HTMLButtonElement>)} type="button" disabled={disabled}>
-      {content({ active, icon, label, meta, marker, children })}
-    </button>
-  );
+  return renderElement();
 }
 
 export default NavigationItemFrame;
